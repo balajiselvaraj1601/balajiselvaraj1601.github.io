@@ -1,0 +1,70 @@
+---
+type Status = 'available' | 'limited' | 'closed';
+
+interface Props {
+  status: Status;
+  label: string;
+  class?: string;
+}
+
+const { status, label, class: cls } = Astro.props;
+---
+
+<span
+  class:list={['avail', `avail--${status}`, cls]}
+  data-status={status}
+>
+  <span class="avail__dot" aria-hidden="true"></span>
+  <span class="avail__label">{label}</span>
+</span>
+
+<style>
+  .avail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--accent-soft);
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.08em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .avail__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--avail-dot, #22c55e);
+    box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--avail-dot, #22c55e) 22%, transparent);
+  }
+  .avail--available {
+    --avail-dot: #22c55e;
+  }
+  .avail--limited {
+    --avail-dot: #eab308;
+  }
+  .avail--closed {
+    --avail-dot: var(--accent-red);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .avail__dot {
+      animation: avail-pulse 2.4s ease-in-out infinite;
+    }
+  }
+  @keyframes avail-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--avail-dot) 22%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 6px
+        color-mix(in srgb, var(--avail-dot) 8%, transparent);
+    }
+  }
+</style>

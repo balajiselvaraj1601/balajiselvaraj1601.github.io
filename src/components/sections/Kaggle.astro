@@ -1,49 +1,103 @@
 ---
 import Section from '@components/Section.astro';
-import LinkList from '@components/LinkList.astro';
-import Icon from '@components/Icon.astro';
 import { kaggle, site } from '@lib/content';
 ---
 
-<Section id="kaggle" title={site.sections.kaggle.title}>
-  <div class="kaggle__rank card">
-    <p class="kaggle__rank-text">{kaggle.rank}</p>
-    <a
-      class="kaggle__profile"
-      href={kaggle.profile}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      View Kaggle profile
-      <Icon name="external" size={15} />
-    </a>
+<Section id="kaggle" title={site.sections.kaggle.title} variant="alt">
+  <div class="kaggle-hero card reveal">
+    <div>
+      <div class="kaggle-rank-big">
+        {kaggle.rank}{kaggle.rankDenominator && <span>/{kaggle.rankDenominator}</span>}
+      </div>
+      {
+        kaggle.rankDetail && (
+          <div class="kaggle-rank-detail">{kaggle.rankDetail}</div>
+        )
+      }
+    </div>
+    <div class="kaggle-desc">
+      {kaggle.headline && <h3>{kaggle.headline}</h3>}
+      {kaggle.description && <p>{kaggle.description}</p>}
+      <a class="btn btn-secondary" href={kaggle.profile} target="_blank" rel="noopener noreferrer">
+        View Kaggle profile
+      </a>
+    </div>
   </div>
 
-  <LinkList items={kaggle.items} class="kaggle__list" />
+  <div class="comp-list reveal">
+    {kaggle.items.map((item) => (
+      <a class="comp-tag" href={item.url} target="_blank" rel="noopener noreferrer">
+        {item.label}
+      </a>
+    ))}
+  </div>
 </Section>
 
 <style>
-  .kaggle__rank {
-    padding: var(--space-6);
-    margin-bottom: var(--space-6);
+  .kaggle-hero {
+    padding: 2rem;
     display: flex;
+    gap: 2rem;
     align-items: center;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: var(--space-3);
+    margin-bottom: 1.5rem;
   }
-  .kaggle__rank-text {
-    font-size: 1.15rem;
-    font-weight: 650;
-    margin: 0;
+  .kaggle-rank-big {
+    font-family: var(--font-mono);
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--heading);
+    line-height: 1;
+  }
+  .kaggle-rank-big span {
+    color: var(--accent-light);
+    font-size: 1.5rem;
+  }
+  .kaggle-rank-detail {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent-light);
+    letter-spacing: 0.08em;
+    margin-top: 0.3rem;
+  }
+  .kaggle-desc {
+    flex: 1;
+    min-width: 200px;
+  }
+  .kaggle-desc h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .kaggle-desc p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
     max-width: none;
   }
-  .kaggle__profile {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: var(--fs-small);
-    font-weight: 600;
+  .comp-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.75rem;
+  }
+  .comp-tag {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.8rem;
+    color: var(--text);
     text-decoration: none;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+  .comp-tag::before {
+    content: '🏆';
+    font-size: 0.75rem;
+  }
+  .comp-tag:hover {
+    border-color: var(--accent);
+    color: var(--heading);
   }
 </style>

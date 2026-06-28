@@ -144,7 +144,7 @@ if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
 
 ### Phone number appeared on site
 
-**Fix:** Remove from `content/*.json` immediately. Never add `type: "phone"` to contact.
+**Fix:** Remove from JSON under `content/` immediately. Never add `type: "phone"` to contact.
 Re-derive from résumé following curation rules in [content/README.md](../content/README.md).
 
 Verify:

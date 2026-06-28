@@ -1,45 +1,75 @@
 ---
-import { site, visibleNav } from '@lib/content';
-import Icon from './Icon.astro';
+import { site, navItems } from '@lib/content';
+import Monogram from '@components/Monogram.astro';
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (path: string) => (path.replace(/\/$/, '') || '/') === current;
+const internalNavItems = navItems.filter((item) => !item.external);
+const resumeItem = navItems.find((item) => item.id === 'resume');
+const resumeLabel = resumeItem?.label ?? site.resume.label;
+const resumePath = resumeItem?.path ?? site.resume.path;
+
+const [firstName, ...rest] = site.name.split(' ');
+const lastName = rest.join(' ');
 ---
 
 <header class="site-header" id="site-header">
   <div class="container site-header__inner">
-    <a href="#hero" class="brand">{site.name}</a>
+    <a href="/" class="brand" aria-label={site.name}>
+      <span class="brand__wordmark" aria-hidden="true">
+        {firstName}{' '}
+        <span class="brand__accent">{lastName}</span>
+      </span>
+      <span class="brand__mark" aria-hidden="true">
+        <Monogram size={36} />
+      </span>
+    </a>
 
     <nav class="nav" id="primary-nav" aria-label="Primary">
       <ul class="nav__list">
         {
-          visibleNav.map((item) => (
+          internalNavItems.map((item) => (
             <li>
-              <a class="nav__link" href={`#${item.id}`} data-nav={item.id}>
+              <a
+                class="nav__link"
+                href={item.path}
+                aria-current={isActive(item.path) ? 'page' : undefined}
+              >
                 {item.label}
               </a>
             </li>
           ))
         }
       </ul>
+      <div class="nav__mobile-actions" role="group" aria-label="Primary actions">
+        <a
+          class="btn btn-secondary nav-resume"
+          href={resumePath}
+          aria-label={site.resume.label}
+        >
+          {resumeLabel}
+        </a>
+        <a class="btn btn-primary nav-cta" href="/contact">Get in Touch</a>
+      </div>
     </nav>
 
     <div class="site-header__actions">
       <a
-        class="btn btn-primary resume-btn"
-        href={site.resume.path}
-        target="_blank"
-        rel="noopener noreferrer"
+        class="btn btn-secondary nav-resume"
+        href={resumePath}
+        aria-label={site.resume.label}
       >
-        <Icon name="download" size={16} />
-        <span class="resume-btn__label">Résumé</span>
+        {resumeLabel}
       </a>
-
+      <a class="btn btn-primary nav-cta" href="/contact">Get in Touch</a>
       <button
         type="button"
         class="theme-toggle"
         id="theme-toggle"
         aria-label="Toggle color theme"
       >
-        <Icon name="sun" size={18} class="theme-toggle__sun" />
-        <Icon name="moon" size={18} class="theme-toggle__moon" />
+        <span class="theme-toggle__sun" aria-hidden="true">☀</span>
+        <span class="theme-toggle__moon" aria-hidden="true">☾</span>
       </button>
 
       <button
@@ -50,8 +80,8 @@ import Icon from './Icon.astro';
         aria-expanded="false"
         aria-controls="primary-nav"
       >
-        <Icon name="menu" size={22} class="nav-toggle__open" />
-        <Icon name="close" size={22} class="nav-toggle__close" />
+        <span class="nav-toggle__open" aria-hidden="true">☰</span>
+        <span class="nav-toggle__close" aria-hidden="true">✕</span>
       </button>
     </div>
   </div>
@@ -59,77 +89,133 @@ import Icon from './Icon.astro';
 
 <style>
   .site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 50;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: saturate(180%) blur(10px);
-    border-bottom: 1px solid transparent;
-    transition: border-color var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header {
+      transition: background-color var(--dur) var(--ease),
+        border-color var(--dur) var(--ease),
+        box-shadow var(--dur) var(--ease);
+    }
+    .site-header__inner {
+      transition: min-height var(--dur) var(--ease);
+    }
   }
   .site-header.is-scrolled {
-    border-bottom-color: var(--border);
-    box-shadow: var(--shadow);
+    background: color-mix(in srgb, var(--bg) 95%, transparent);
+    border-bottom-color: var(--border-strong);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+  .site-header.is-scrolled .site-header__inner {
+    min-height: 52px;
   }
   .site-header__inner {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    justify-content: space-between;
     min-height: var(--header-h);
+    gap: var(--space-3);
   }
   .brand {
-    font-weight: 700;
-    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--heading);
+    letter-spacing: 0.02em;
     text-decoration: none;
-    letter-spacing: -0.02em;
-    margin-right: auto;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
   }
-
+  .brand__wordmark {
+    display: inline;
+  }
+  .brand__mark {
+    display: none;
+  }
+  .brand__accent {
+    color: var(--accent-light);
+  }
+  @media (max-width: 480px) {
+    .brand__wordmark {
+      display: none;
+    }
+    .brand__mark {
+      display: inline-flex;
+    }
+  }
   .nav__list {
     display: flex;
-    gap: var(--space-2);
+    gap: 0.25rem;
     list-style: none;
     margin: 0;
     padding: 0;
-    flex-wrap: wrap;
+  }
+  .nav__mobile-actions {
+    display: none;
   }
   .nav__link {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
+    position: relative;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: var(--fs-small);
-    font-weight: 500;
-    white-space: nowrap;
-    transition: color var(--dur) var(--ease),
-      background-color var(--dur) var(--ease);
+    padding: 0.4rem 0.85rem;
+    border-radius: 4px;
+    transition: color 0.2s;
   }
   .nav__link:hover {
-    color: var(--text);
+    color: var(--heading);
   }
-  .nav__link[aria-current='true'] {
-    color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
+  .nav__link[aria-current='page'] {
+    color: var(--heading);
   }
-
+  .nav__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: 0.15rem;
+    height: 2px;
+    background: var(--accent-light);
+    border-radius: 2px;
+  }
   .site-header__actions {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    flex-shrink: 0;
+  }
+  .nav-cta,
+  .nav-resume {
+    font-size: 0.75rem;
+    padding: 0.45rem 1.1rem;
+    white-space: nowrap;
+  }
+  .nav-resume {
+    background: color-mix(in srgb, var(--bg-elev) 72%, transparent);
   }
   .theme-toggle,
   .nav-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-sm);
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
     border: 1px solid var(--border);
     background: var(--bg-elev);
     color: var(--text);
+    font-size: 1rem;
   }
   .theme-toggle:hover,
   .nav-toggle:hover {
@@ -138,53 +224,56 @@ import Icon from './Icon.astro';
   .nav-toggle {
     display: none;
   }
-
-  /* Theme toggle icon swap driven by [data-theme] on <html> */
   :global(html[data-theme='dark']) .theme-toggle__moon,
   :global(html:not([data-theme='dark'])) .theme-toggle__sun {
     display: none;
   }
-
-  /* ── Responsive: collapse nav into a mobile menu below tablet ─────────── */
-  @media (max-width: 900px) {
+  @media (max-width: 1024px) {
+    .nav {
+      display: none;
+    }
     .nav-toggle {
       display: inline-flex;
     }
-    .resume-btn__label {
+    .site-header__actions .nav-cta,
+    .site-header__actions .nav-resume {
       display: none;
     }
-    .nav {
+    .nav.is-open {
+      display: block;
       position: fixed;
       inset: var(--header-h) 0 0 0;
       background: var(--bg);
       padding: var(--space-6);
-      transform: translateX(100%);
-      visibility: hidden;
-      transition: transform var(--dur) var(--ease),
-        visibility var(--dur) var(--ease);
       overflow-y: auto;
+      border-top: 1px solid var(--border);
     }
-    .nav.is-open {
-      transform: translateX(0);
-      visibility: visible;
-    }
-    .nav__list {
+    .nav.is-open .nav__list {
       flex-direction: column;
       gap: var(--space-1);
     }
-    .nav__link {
+    .nav.is-open .nav__link {
       display: block;
       padding: var(--space-3) var(--space-4);
-      font-size: 1.05rem;
+      font-size: 1rem;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .nav {
-        transition: none;
-      }
+    .nav.is-open .nav__link[aria-current='page']::after {
+      left: var(--space-4);
+      right: auto;
+      width: 16px;
+    }
+    .nav.is-open .nav__mobile-actions {
+      display: grid;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--border);
+    }
+    .nav.is-open .nav__mobile-actions .btn {
+      justify-content: center;
+      width: 100%;
     }
   }
-
-  /* When closed on desktop, both toggle icons: show only menu icon on mobile */
   .nav-toggle__close {
     display: none;
   }
@@ -192,120 +281,11 @@ import Icon from './Icon.astro';
     display: none;
   }
   .nav-toggle[aria-expanded='true'] .nav-toggle__close {
-    display: inline-block;
+    display: inline;
   }
 </style>
 
 <script>
-  // ── Theme toggle ───────────────────────────────────────────────────────
-  const toggle = document.getElementById('theme-toggle');
-  toggle?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try {
-      localStorage.setItem('theme', next);
-    } catch {}
-  });
-
-  // ── Sticky header elevation on scroll ──────────────────────────────────
-  const header = document.getElementById('site-header');
-  const onScroll = () => {
-    header?.classList.toggle('is-scrolled', window.scrollY > 8);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // ── Mobile menu (focus-trapped, Esc to close) ──────────────────────────
-  const navToggle = document.getElementById('nav-toggle');
-  const nav = document.getElementById('primary-nav');
-  const links = nav ? Array.from(nav.querySelectorAll('a')) : [];
-
-  function setMenu(open: boolean) {
-    nav?.classList.toggle('is-open', open);
-    navToggle?.setAttribute('aria-expanded', String(open));
-    navToggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    document.body.style.overflow = open ? 'hidden' : '';
-    if (open) links[0]?.focus();
-  }
-  const isOpen = () => navToggle?.getAttribute('aria-expanded') === 'true';
-
-  navToggle?.addEventListener('click', () => setMenu(!isOpen()));
-
-  // Close on link click (in-page navigation) and return focus.
-  links.forEach((a) =>
-    a.addEventListener('click', () => {
-      if (isOpen()) setMenu(false);
-    })
-  );
-
-  document.addEventListener('keydown', (e) => {
-    if (!isOpen()) return;
-    if (e.key === 'Escape') {
-      setMenu(false);
-      (navToggle as HTMLElement)?.focus();
-    }
-    if (e.key === 'Tab') {
-      // simple focus trap across nav links + toggle
-      const focusables = [navToggle, ...links].filter(Boolean) as HTMLElement[];
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  });
-
-  // Reset menu state when resizing back to desktop.
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900 && isOpen()) setMenu(false);
-  });
-
-  // ── Scroll-spy active nav indicator ────────────────────────────────────
-  const navLinks = Array.from(
-    document.querySelectorAll<HTMLAnchorElement>('.nav__link[data-nav]')
-  );
-  const byId = new Map(navLinks.map((l) => [l.dataset.nav, l]));
-  const sections = navLinks
-    .map((l) => document.getElementById(l.dataset.nav!))
-    .filter(Boolean) as HTMLElement[];
-
-  if ('IntersectionObserver' in window && sections.length) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            navLinks.forEach((l) => l.removeAttribute('aria-current'));
-            byId.get(entry.target.id)?.setAttribute('aria-current', 'true');
-          }
-        });
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
-    );
-    sections.forEach((s) => observer.observe(s));
-  }
-
-  // ── Entrance reveal ─────────────────────────────────────────────────────
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
-  if (reduce || !('IntersectionObserver' in window)) {
-    reveals.forEach((el) => el.classList.add('is-visible'));
-  } else {
-    const ro = new IntersectionObserver(
-      (entries, obs) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible');
-            obs.unobserve(e.target);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
-    );
-    reveals.forEach((el) => ro.observe(el));
-  }
+  import { initSiteChrome } from '../scripts/site-chrome';
+  initSiteChrome();
 </script>

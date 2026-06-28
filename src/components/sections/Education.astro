@@ -1,57 +1,87 @@
 ---
 import Section from '@components/Section.astro';
+import Icon from '@components/Icon.astro';
 import { education, site } from '@lib/content';
+
+function formatGpa(gpa?: string) {
+  if (!gpa) return '';
+  return gpa.toLowerCase().startsWith('cgpa') ? gpa : `CGPA ${gpa}`;
+}
 ---
 
-<Section id="education" title={site.sections.education.title}>
-  <div class="edu">
+<Section id="education" title={site.sections.education.title} variant="default">
+  <div class="edu-list reveal">
     {
-      education.records.map((r) => (
-        <article class="edu__record card">
-          <h3 class="edu__degree">{r.degree}</h3>
-          <p class="edu__inst">{r.institution}</p>
-          <p class="edu__meta">
-            <span>{r.period}</span>
-            {r.gpa && <span>· {r.gpa}</span>}
-            {r.achievement && <span class="edu__badge">{r.achievement}</span>}
+      education.records.map((edu) => (
+      <div class="edu-block">
+        <div class="edu-icon" aria-hidden="true">
+          <Icon name="graduation" size={24} />
+        </div>
+        <div class="edu-text">
+          <h4>Education</h4>
+          <h3>{edu.degree}</h3>
+          <p>
+            {edu.institution} · {edu.period}
+            {edu.gpa && ` · ${formatGpa(edu.gpa)}`}
           </p>
-        </article>
+        </div>
+        {edu.achievement && <div class="gold-badge">{edu.achievement}</div>}
+      </div>
       ))
     }
   </div>
 </Section>
 
 <style>
-  .edu {
+  .edu-list {
     display: grid;
     gap: var(--space-4);
   }
-  .edu__record {
-    padding: var(--space-6);
-    max-width: var(--maxw-text);
-  }
-  .edu__degree {
-    font-size: 1.15rem;
-  }
-  .edu__inst {
-    color: var(--text);
-    margin-top: 2px;
-  }
-  .edu__meta {
+  .edu-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
     display: flex;
-    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 640px;
+  }
+  .edu-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
     align-items: center;
-    gap: var(--space-2);
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--accent-ll);
+  }
+  .edu-text h4 {
+    margin-bottom: 0.3rem;
+  }
+  .edu-text h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .edu-text p {
+    font-size: 0.8rem;
     color: var(--text-muted);
-    font-size: var(--fs-small);
-    margin-top: var(--space-2);
+    margin-top: 0.2rem;
     max-width: none;
   }
-  .edu__badge {
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
-    color: var(--accent);
-    font-weight: 600;
-    padding: 2px 10px;
-    border-radius: 999px;
+  .gold-badge {
+    margin-left: auto;
+    background: linear-gradient(135deg, #f5c518, #c8960c);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    flex-shrink: 0;
   }
 </style>

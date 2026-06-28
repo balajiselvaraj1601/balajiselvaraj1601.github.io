@@ -28,7 +28,8 @@ npm run preview
 ### Build & content
 
 - [ ] `npm run build` completes with no errors
-- [ ] All 14 sections visible and in correct nav order
+- [ ] Configured routes load: `/`, `/experience`, `/projects`, `/research`, `/recognition`, `/contact`
+- [ ] Each route renders the sections listed in `content/site.json`
 - [ ] No phone number on page (`grep -ri phone content/` returns nothing)
 - [ ] Résumé PDF downloads: `/assets/resume/balaji-selvaraj-resume.pdf`
 - [ ] OG image loads: `/assets/og/og-image.png`
@@ -37,7 +38,7 @@ npm run preview
 
 - [ ] Light/dark toggle works and persists on reload
 - [ ] Mobile menu: opens, focus trapped, Esc closes, links navigate
-- [ ] Scroll-spy highlights active section in nav
+- [ ] Header highlights the active route and dot navigation highlights active sections where present
 - [ ] All external links open (LinkedIn, Kaggle, publications)
 - [ ] 404 page renders at `/404.html`
 
@@ -141,7 +142,7 @@ Deploy is skipped on staging; build job still validates every push.
 
 | Task | When | How |
 |------|------|-----|
-| Update copy | Résumé changes | Re-derive `content/*.json` → push |
+| Update copy | Résumé changes | Re-derive JSON under `content/` -> push |
 | Update résumé PDF | New export | Replace `public/assets/resume/*.pdf` → push |
 | Content-only change | Anytime | Edit JSON → `npm run build` → push |
 | Dependency update | Cautiously | Never bump `@astrojs/sitemap` without Astro 5 migration |

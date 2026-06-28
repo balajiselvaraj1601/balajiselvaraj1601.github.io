@@ -2,6 +2,7 @@ import type { z } from 'zod';
 import {
   siteSchema,
   profileSchema,
+  impactSchema,
   textListSchema,
   experienceSchema,
   projectsSchema,
@@ -10,29 +11,24 @@ import {
   awardsSchema,
   linkListSchema,
   kaggleSchema,
+  affiliationsSchema,
 } from '@schemas';
 
-// Raw JSON imports (resolveJsonModule). `content/` is the SSOT; these are the
-// only places the JSON enters the app.
 import siteRaw from '@content/site.json';
-import profileRaw from '@content/profile.json';
-import strategicImpactRaw from '@content/strategic-impact.json';
-import experienceRaw from '@content/experience.json';
-import projectsRaw from '@content/projects.json';
-import generativeAiRaw from '@content/generative-ai.json';
-import skillsRaw from '@content/skills.json';
-import mentorshipRaw from '@content/mentorship.json';
-import educationRaw from '@content/education.json';
-import awardsRaw from '@content/awards.json';
-import publicationsRaw from '@content/publications.json';
-import conferencesRaw from '@content/conferences.json';
-import kaggleRaw from '@content/kaggle.json';
+import profileRaw from '@content/person/profile.json';
+import affiliationsRaw from '@content/person/affiliations.json';
+import strategicImpactRaw from '@content/work/strategic-impact.json';
+import experienceRaw from '@content/work/experience.json';
+import projectsRaw from '@content/work/projects.json';
+import skillsRaw from '@content/work/skills.json';
+import mentorshipRaw from '@content/work/mentorship.json';
+import generativeAiRaw from '@content/research/generative-ai.json';
+import publicationsRaw from '@content/research/publications.json';
+import conferencesRaw from '@content/research/conferences.json';
+import educationRaw from '@content/recognition/education.json';
+import awardsRaw from '@content/recognition/awards.json';
+import kaggleRaw from '@content/recognition/kaggle.json';
 
-/**
- * Parse-or-throw: validates raw JSON against its schema. A failure here fails
- * `astro build` with a precise path to the offending field — content drift is
- * caught at build time, never shipped.
- */
 function load<T extends z.ZodTypeAny>(
   name: string,
   schema: T,
@@ -49,55 +45,70 @@ function load<T extends z.ZodTypeAny>(
 }
 
 export const site = load('site.json', siteSchema, siteRaw);
-export const profile = load('profile.json', profileSchema, profileRaw);
+export const profile = load('person/profile.json', profileSchema, profileRaw);
 export const strategicImpact = load(
-  'strategic-impact.json',
-  textListSchema,
+  'work/strategic-impact.json',
+  impactSchema,
   strategicImpactRaw
 );
 export const experience = load(
-  'experience.json',
+  'work/experience.json',
   experienceSchema,
   experienceRaw
 );
-export const projects = load('projects.json', projectsSchema, projectsRaw);
+export const projects = load('work/projects.json', projectsSchema, projectsRaw);
 export const generativeAi = load(
-  'generative-ai.json',
+  'research/generative-ai.json',
   textListSchema,
   generativeAiRaw
 );
-export const skills = load('skills.json', skillsSchema, skillsRaw);
+export const skills = load('work/skills.json', skillsSchema, skillsRaw);
 export const mentorship = load(
-  'mentorship.json',
+  'work/mentorship.json',
   textListSchema,
   mentorshipRaw
 );
-export const education = load('education.json', educationSchema, educationRaw);
-export const awards = load('awards.json', awardsSchema, awardsRaw);
+export const education = load(
+  'recognition/education.json',
+  educationSchema,
+  educationRaw
+);
+export const awards = load('recognition/awards.json', awardsSchema, awardsRaw);
 export const publications = load(
-  'publications.json',
+  'research/publications.json',
   linkListSchema,
   publicationsRaw
 );
 export const conferences = load(
-  'conferences.json',
+  'research/conferences.json',
   linkListSchema,
   conferencesRaw
 );
-export const kaggle = load('kaggle.json', kaggleSchema, kaggleRaw);
+export const kaggle = load('recognition/kaggle.json', kaggleSchema, kaggleRaw);
+export const affiliations = load(
+  'person/affiliations.json',
+  affiliationsSchema,
+  affiliationsRaw
+);
 
-/**
- * Map of section id → content for that section, used by index.astro to render
- * sections in the order declared by `site.json.nav` (order never hardcoded).
- */
 export const sectionData = {
   hero: profile,
   about: profile,
   impact: strategicImpact,
-  experience,
-  projects,
-  'generative-ai': generativeAi,
+  vision: profile,
+  'featured-projects': projects,
+  leadership: profile,
   skills,
+  timeline: experience,
+  affiliations,
+  'featured-publications': publications,
+  'contact-teaser': profile,
+  experience,
+  'experience-intro': experience,
+  projects,
+  'projects-intro': projects,
+  'featured-case-studies': projects,
+  'generative-ai': generativeAi,
   mentorship,
   education,
   awards,
@@ -107,7 +118,17 @@ export const sectionData = {
   contact: profile,
 } as const;
 
-/** Only sections marked visible in site.json, in nav order. */
-export const visibleNav = site.nav.filter(
-  (item) => site.sections[item.id]?.visible !== false
-);
+/** Content-driven pages only — excludes external nav entries (e.g. Resume PDF). */
+export const pages = site.pages.flatMap((p) => {
+  if (p.external) return [];
+
+  return [
+    {
+      ...p,
+      sections: p.sections.filter((id) => site.sections[id]?.visible !== false),
+    },
+  ];
+});
+
+/** All nav entries including external links. */
+export const navItems = site.pages;

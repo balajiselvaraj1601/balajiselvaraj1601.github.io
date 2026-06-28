@@ -1,0 +1,123 @@
+---
+interface Props {
+  sections: string[];
+}
+const { sections } = Astro.props;
+
+const labels: Record<string, string> = {
+  hero: 'Hero',
+  about: 'About',
+  impact: 'Impact',
+  'featured-projects': 'Projects',
+  leadership: 'Leadership',
+  skills: 'Skills',
+  timeline: 'Timeline',
+  affiliations: 'Affiliations',
+  'featured-publications': 'Research',
+  'contact-teaser': 'Contact',
+  experience: 'Experience',
+  mentorship: 'Mentorship',
+  projects: 'Projects',
+  'generative-ai': 'Generative AI',
+  publications: 'Publications',
+  conferences: 'Conferences',
+  education: 'Education',
+  awards: 'Awards',
+  kaggle: 'Kaggle',
+  contact: 'Contact',
+};
+---
+
+{
+  sections.length >= 2 && (
+    <nav class="dot-nav" id="dot-nav" aria-label="Section navigation">
+      {sections.map((id) => (
+        <button
+          type="button"
+          class="dot-nav__dot"
+          data-target={id}
+          title={labels[id] ?? id}
+          aria-label={labels[id] ?? id}
+        />
+      ))}
+    </nav>
+  )
+}
+
+<style>
+  .dot-nav {
+    position: fixed;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .dot-nav__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    background: var(--text-muted);
+    cursor: pointer;
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .dot-nav__dot:hover {
+    background: var(--accent-ll);
+  }
+  .dot-nav__dot.is-active {
+    background: var(--accent-light);
+    transform: scale(1.5);
+  }
+  @media (max-width: 900px) {
+    .dot-nav {
+      display: none;
+    }
+  }
+</style>
+
+<script define:vars={{ sectionIds: sections }}>
+  const nav = document.getElementById('dot-nav');
+  if (!nav || sectionIds.length < 2) {
+    /* no-op */
+  } else {
+    const dots = Array.from(nav.querySelectorAll('.dot-nav__dot'));
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const target = document.getElementById(dot.dataset.target ?? '');
+        if (target) {
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    const setActive = (id) => {
+      dots.forEach((d) => {
+        d.classList.toggle('is-active', d.dataset.target === id);
+      });
+    };
+
+    const observed = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if ('IntersectionObserver' in window && observed.length) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          if (visible[0]?.target.id) setActive(visible[0].target.id);
+        },
+        { rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5] }
+      );
+      observed.forEach((el) => io.observe(el));
+      if (observed[0]?.id) setActive(observed[0].id);
+    }
+  }
+</script>

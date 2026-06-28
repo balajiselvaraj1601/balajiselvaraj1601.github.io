@@ -1,0 +1,84 @@
+---
+import Icon from '@components/Icon.astro';
+import { resolveIcon, type IconName } from '@lib/icons';
+
+interface Props {
+  icon?: string;
+  venue: string;
+  title: string;
+  description?: string;
+  href?: string;
+}
+const { icon, venue, title, description, href } = Astro.props;
+const iconName = resolveIcon(icon, 'document') as IconName;
+---
+
+<article class="rcard">
+  <div class="rcard-icon" aria-hidden="true">
+    <Icon name={iconName} size={22} />
+  </div>
+  <div class="venue">{venue}</div>
+  {
+    href ? (
+      <h3>
+        <a href={href} target="_blank" rel="noopener noreferrer">{title}</a>
+      </h3>
+    ) : (
+      <h3>{title}</h3>
+    )
+  }
+  {description && <p>{description}</p>}
+</article>
+
+<style>
+  .rcard {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    height: 100%;
+  }
+  .rcard:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .rcard-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--accent-ll);
+  }
+  .venue {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent-ll);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .rcard h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .rcard h3 a {
+    color: var(--heading);
+    text-decoration: none;
+  }
+  .rcard h3 a:hover {
+    color: var(--accent-light);
+  }
+  .rcard p {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: none;
+  }
+</style>

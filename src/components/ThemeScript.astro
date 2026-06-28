@@ -6,14 +6,16 @@
 
 <script is:inline>
   (function () {
+    // Mark JS as available so CSS can safely hide .reveal elements before the
+    // IntersectionObserver fades them in. Without JS this class is absent and
+    // the reveal styles never apply, so content is always visible.
+    document.documentElement.classList.add('js');
     try {
       var stored = localStorage.getItem('theme');
       var theme =
         stored === 'light' || stored === 'dark'
           ? stored
-          : window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light';
+          : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
     } catch (e) {
       /* localStorage unavailable — CSS prefers-color-scheme fallback applies */

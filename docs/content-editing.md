@@ -4,33 +4,37 @@ How to change what the site says without touching components.
 
 ## Golden rule
 
-**All copy lives in `content/*.json`.** Components render data; they do not embed text.
+**All copy lives in JSON under `content/`.** Components render data; they do not embed text.
 If you need a new field, update `src/schemas.ts` first, then the JSON, then the component.
 
 ## Workflow
 
-1. Edit the relevant `content/*.json` file.
+1. Edit the relevant JSON file under `content/`.
 2. Run `npm run build` — Zod validation runs automatically.
 3. Fix any schema errors (the build output shows the exact field path).
 4. Preview with `npm run preview` and spot-check the section.
+
+If the change affects page structure, section order, or the overall narrative, update
+`content/site.json` first and keep the route files generic.
 
 ## File reference
 
 | File | Sections affected | Typical edits |
 |------|-------------------|---------------|
-| `site.json` | Global meta, nav, SEO, résumé link | Title, tagline, nav labels, hide a section |
-| `profile.json` | Hero, About, Contact | Summary lines, email, LinkedIn, Kaggle |
-| `strategic-impact.json` | Strategic Impact | Bullet items |
-| `experience.json` | Experience timeline | Roles, projects, bullets, tier |
-| `projects.json` | Project cards | Summaries, highlights, tags (derived view) |
-| `generative-ai.json` | Generative AI | Bullet items |
-| `skills.json` | Skills | Categories and skill chips |
-| `mentorship.json` | Mentorship | Bullet items |
-| `education.json` | Education | Degree records |
-| `awards.json` | Awards | Label + detail rows |
-| `publications.json` | Publications | Title + URL links |
-| `conferences.json` | Conferences | Title + URL links |
-| `kaggle.json` | Kaggle | Rank line + competition links |
+| `site.json` | Global meta, nav, pages, SEO, résumé link | Title, tagline, nav labels, page sections, hide a section |
+| `person/profile.json` | Hero, About, Leadership, Contact | Headline, metrics, CTAs, about cards, contact interests |
+| `person/affiliations.json` | Affiliations strip | Organization names |
+| `work/strategic-impact.json` | Strategic Impact | `metrics[]` and `highlights[]` |
+| `work/experience.json` | Experience timeline, Career timeline | Roles, optional `mission`, bullets, tier |
+| `work/projects.json` | Project cards, Featured projects | Summaries, case-study fields, `featured`, tags |
+| `work/skills.json` | Skills | Categories and skill chips |
+| `work/mentorship.json` | Mentorship | Bullet items |
+| `research/generative-ai.json` | Generative AI | Bullet items |
+| `research/publications.json` | Publications | Title + URL links |
+| `research/conferences.json` | Conferences | Title + URL links |
+| `recognition/education.json` | Education | Degree records |
+| `recognition/awards.json` | Awards | Label + detail rows |
+| `recognition/kaggle.json` | Kaggle | Rank line + competition links |
 
 Provenance and résumé mapping: [Content map](./content-map.md) · [content/README.md](../content/README.md).
 
@@ -47,13 +51,18 @@ Edit `content/site.json`:
 }
 ```
 
-Also update `profile.json` → `title` if the hero should match.
+Also update `person/profile.json` → `title` if the hero should match.
 
-### Reorder or hide a section
+### Reorder, move, or hide a section
 
-Edit `content/site.json` → `nav` array (order) and `sections[id].visible` (show/hide).
+Edit `content/site.json`:
 
-Do **not** reorder sections in `src/pages/index.astro` — it reads `visibleNav` from `site.json`.
+- **Reorder within a page** — change the order of ids in that page's `pages[].sections` array.
+- **Move to another page** — move the id from one page's `sections` array to another's.
+- **Show/hide** — toggle `sections[id].visible`.
+
+Do **not** reorder sections in the route files under `src/pages/` — each route renders the
+section list from its `pages` entry in `site.json` via `SectionRenderer`.
 
 ### Update SEO meta
 
@@ -75,7 +84,7 @@ OG image path is relative to site root. Implementation: [SEO](./seo.md).
 
 ### Add an experience bullet
 
-Edit `content/experience.json` → find the role → project → `bullets` array:
+Edit `content/work/experience.json` → find the role → project → `bullets` array:
 
 ```json
 {
@@ -88,7 +97,7 @@ Use `"tier": "secondary"` for supporting bullets (rendered with muted styling).
 
 ### Add a project card
 
-Edit `content/projects.json` → `projects` array. Required fields:
+Edit `content/work/projects.json` → `projects` array. Required fields:
 
 ```json
 {
@@ -104,11 +113,11 @@ Edit `content/projects.json` → `projects` array. Required fields:
 }
 ```
 
-Keep summaries consistent with `experience.json` — `projects.json` is a derived card view.
+Keep summaries consistent with `work/experience.json` — `work/projects.json` is a derived card view.
 
 ### Update contact links
 
-Edit `content/profile.json` → `contact` array. Allowed public types: `email`, `linkedin`,
+Edit `content/person/profile.json` → `contact` array. Allowed public types: `email`, `linkedin`,
 `kaggle`, `location`.
 
 ```json
@@ -129,8 +138,8 @@ Schemas live in `src/schemas.ts`. Key constraints:
 
 | Schema | Notable rules |
 |--------|---------------|
-| `siteSchema` | `nav[].id` must match `sections` keys; `resume.path` is a site-root path |
-| `profileSchema` | `summary` is string array; `contact[].href` nullable for location |
+| `siteSchema` | internal `pages[]` entries require `seo` and `sections`; external entries require `external: true`; `resume.path` is a site-root path |
+| `profileSchema` | hero/about/contact fields drive the public profile; `contact[].href` is nullable for location |
 | `experienceSchema` | `tier` must be `"primary"` or `"secondary"`; `period.end` nullable |
 | `projectsSchema` | `id` must be unique slug; `highlights` and `tags` are string arrays |
 | `linkListSchema` | Publications/conferences: `url` must be valid URL |
@@ -147,7 +156,7 @@ Adding a new field:
 
 When the upstream résumé changes (`resume_builder/.../resume_healthcare.json`):
 
-1. Re-derive affected `content/*.json` files (do not edit resume and portfolio independently).
+1. Re-derive affected JSON files under `content/` (do not edit resume and portfolio independently).
 2. Follow the mapping in [Content map](./content-map.md).
 3. Re-run privacy greps — no phone, no references:
 

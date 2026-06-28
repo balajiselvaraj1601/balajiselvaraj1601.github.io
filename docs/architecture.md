@@ -5,7 +5,7 @@ Technical overview of the Astro 4 portfolio site.
 ## High-level data flow
 
 ```
-content/*.json
+content/**/*.json
     │
     ▼
 src/lib/content.ts  ── validates against ──►  src/schemas.ts (Zod)
@@ -14,7 +14,7 @@ src/lib/content.ts  ── validates against ──►  src/schemas.ts (Zod)
 src/components/sections/*.astro  +  shared components
     │
     ▼
-src/pages/index.astro  (renders sections in site.json.nav order)
+src/components/SectionRenderer.astro  +  src/pages/*.astro  (renders site.json.pages)
     │
     ▼
 src/layouts/Layout.astro  (chrome: head, header, footer)
@@ -44,16 +44,17 @@ GitHub Pages  (via .github/workflows/deploy.yml)
 | `astro.config.mjs` | `SITE_URL`, `base: '/'`, sitemap integration |
 | `src/schemas.ts` | Content shape contracts (SSOT for types) |
 | `src/lib/content.ts` | Imports JSON, validates, exports typed data |
-| `content/site.json` | Nav order, section visibility, SEO, résumé path |
-| `src/pages/index.astro` | Section id → component map; iterates `visibleNav` |
+| `content/site.json` | Page/route definitions (`pages`), section visibility, SEO, résumé path |
+| `src/pages/*.astro` | One route per page; each looks up its `pages` entry and renders via `SectionRenderer` |
+| `src/components/SectionRenderer.astro` | Section id → component map (SSOT); renders an ordered list of section ids |
 | `src/components/BaseHead.astro` | Meta, OG, Twitter, JSON-LD |
 | `src/components/ThemeScript.astro` | Inline theme bootstrap (no flash) |
-| `src/components/Header.astro` | Nav, scroll-spy, mobile menu, theme toggle, résumé CTA |
+| `src/components/Header.astro` | Route nav (server-side active state), mobile menu, theme toggle, résumé CTA |
 | `public/.nojekyll` | Prevents Jekyll from stripping `_astro/` on Pages |
 
 ## Content layer
 
-All site copy lives in `content/*.json`. Components import from `@lib/content` — they never
+All site copy lives in JSON under `content/`. Components import from `@lib/content` — they never
 embed strings for section content.
 
 Validation is **fail-fast**: `load()` in `content.ts` calls `schema.safeParse()` and throws
@@ -63,20 +64,29 @@ TypeScript types are derived via `z.infer<typeof schema>` — no parallel hand-w
 
 ## Rendering model
 
-### Single-page layout
+### Multi-page layout
 
-The site is one HTML page with anchored sections (`#hero`, `#about`, …). Section order comes
-from `site.json.nav`, filtered by `sections[id].visible`.
+The site is a set of routes (`/`, `/experience`, `/projects`, `/research`, `/recognition`, `/contact`), one
+per entry in `site.json.pages`. Each page groups several sections; section order within a page
+comes from that page's `sections` array, filtered by `sections[id].visible`.
 
-`index.astro` maps section ids to Astro components:
+`SectionRenderer.astro` owns the section id → component map (SSOT); each route file looks up its
+page and renders its sections:
 
 ```typescript
+// SectionRenderer.astro
 const SECTIONS = { hero: Hero, about: About, /* … */ };
-visibleNav.map((item) => <SECTIONS[item.id] />)
+sections.map((id) => <SECTIONS[id] />)
+
+// e.g. src/pages/experience.astro
+const page = pages.find((p) => p.id === 'experience')!;
+<SectionRenderer sections={page.sections} />
 ```
 
-Adding a section requires: JSON file, Zod schema, section component, entry in `SECTIONS` map,
-and nav/sections entries in `site.json`.
+Adding a section requires: JSON file under the relevant `content/` domain folder, Zod schema, section component, entry in the
+`SectionRenderer` `SECTIONS` map, a `sections[id]` entry in `site.json`, and listing the id in
+the relevant page's `sections` array. Adding a whole page requires a new `pages` entry plus a
+matching route file under `src/pages/`.
 
 ### Client JavaScript
 
@@ -84,7 +94,7 @@ JS is limited to progressive enhancement in `Header.astro`:
 
 - Theme toggle + `localStorage` persistence
 - Mobile menu (focus trap, Esc to close)
-- Scroll-spy active nav indicator
+- Active route state in the header and section dot navigation where configured
 - Entrance reveal animations (skipped when `prefers-reduced-motion`)
 
 Core content is fully readable without JavaScript.

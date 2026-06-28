@@ -1,0 +1,34 @@
+---
+import Section from '@components/Section.astro';
+import MetricCard from '@components/MetricCard.astro';
+import { projects, site } from '@lib/content';
+
+const title = site.sections['projects-intro'].title;
+---
+
+<Section
+  id="projects-intro"
+  title={title}
+  eyebrow="Selected Work"
+  subtitle={projects.intro}
+  variant="default"
+>
+  {
+    projects.snapshot && projects.snapshot.length > 0 && (
+      <div class="snapshot-grid reveal">
+        {projects.snapshot.map((m) => (
+          <MetricCard value={m.value} label={m.label} />
+        ))}
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+</style>

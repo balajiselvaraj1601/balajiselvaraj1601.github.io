@@ -1,0 +1,9 @@
+{
+  "title": "Affiliations",
+  "items": [
+    { "name": "AstraZeneca" },
+    { "name": "Broad Institute" },
+    { "name": "IIT Madras" },
+    { "name": "EU Research Consortium" }
+  ]
+}

@@ -1,9 +1,10 @@
 ---
 import Section from '@components/Section.astro';
-import BulletList from '@components/BulletList.astro';
 import { mentorship, site } from '@lib/content';
 ---
 
-<Section id="mentorship" title={site.sections.mentorship.title}>
-  <BulletList items={mentorship.items} />
+<Section id="mentorship" title={site.sections.mentorship.title} variant="default">
+  <ul class="bullet-list reveal">
+    {mentorship.items.map((item) => <li>{item.text}</li>)}
+  </ul>
 </Section>

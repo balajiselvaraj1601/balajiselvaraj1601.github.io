@@ -1,20 +1,35 @@
 ---
 import Section from '@components/Section.astro';
+import LeadershipCard from '@components/LeadershipCard.astro';
+import { aboutCardIcon } from '@lib/icons';
 import { profile, site } from '@lib/content';
 const title = site.sections.about.title;
 ---
 
-<Section id="about" title={title} class="about">
-  <div class="about__body">
-    {profile.summary.map((line) => <p>{line}</p>)}
+<Section id="about" title={title} variant="default">
+  <p class="about__intro reveal">{profile.aboutIntro}</p>
+  <div class="about-grid reveal">
+    {profile.aboutCards.map((card) => (
+      <LeadershipCard
+        icon={aboutCardIcon(card.title)}
+        title={card.title}
+        subtitle={card.items.slice(0, 2).join(' · ')}
+      />
+    ))}
   </div>
 </Section>
 
 <style>
-  .about__body {
-    display: grid;
-    gap: var(--space-4);
+  .about__intro {
+    font-size: 1.05rem;
     max-width: var(--maxw-text);
-    font-size: 1.1rem;
+    margin-bottom: var(--space-10);
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
   }
 </style>

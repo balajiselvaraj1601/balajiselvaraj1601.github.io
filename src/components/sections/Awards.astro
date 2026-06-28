@@ -1,9 +1,21 @@
 ---
 import Section from '@components/Section.astro';
-import LabeledDetailList from '@components/LabeledDetailList.astro';
+import AwardPill from '@components/AwardPill.astro';
 import { awards, site } from '@lib/content';
 ---
 
-<Section id="awards" title={site.sections.awards.title}>
-  <LabeledDetailList items={awards.items} />
+<Section id="awards" title={site.sections.awards.title} variant="default">
+  <div class="awards-grid reveal">
+    {awards.items.map((a) => (
+      <AwardPill label={a.label} detail={a.detail} variant={a.variant} />
+    ))}
+  </div>
 </Section>
+
+<style>
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+</style>

@@ -1,9 +1,12 @@
 ---
 import Section from '@components/Section.astro';
-import BulletList from '@components/BulletList.astro';
+import ResearchDomainMap from '@components/ResearchDomainMap.astro';
 import { generativeAi, site } from '@lib/content';
 ---
 
-<Section id="generative-ai" title={site.sections['generative-ai'].title}>
-  <BulletList items={generativeAi.items} />
+<Section id="generative-ai" title={site.sections['generative-ai'].title} variant="alt">
+  <ResearchDomainMap />
+  <ul class="bullet-list reveal">
+    {generativeAi.items.map((item) => <li>{item.text}</li>)}
+  </ul>
 </Section>

@@ -14,27 +14,29 @@ implement them. The site should read as **credible, senior, and technical** — 
 
 ## Color tokens (semantic — provide both themes)
 
-| Token | Light | Dark | Use |
-|-------|-------|------|-----|
-| `--bg` | `#ffffff` | `#0b0d10` | Page background |
-| `--bg-elev` | `#f6f7f9` | `#14171c` | Cards, elevated surfaces |
-| `--text` | `#16191d` | `#e8eaed` | Primary text |
-| `--text-muted` | `#5b6470` | `#9aa3ad` | Secondary text, captions |
-| `--border` | `#e3e6ea` | `#262b32` | Dividers, card borders |
-| `--accent` | `#2563eb` | `#5b8cff` | Links, active nav, primary CTA |
-| `--accent-contrast` | `#ffffff` | `#0b0d10` | Text on accent fills |
-| `--focus-ring` | `#2563eb` | `#8ab0ff` | Keyboard focus outline |
+Purple biopharma palette. Dark theme is the primary design target; light theme uses derived tints.
+
+| Token | Dark | Light | Use |
+|-------|------|-------|-----|
+| `--bg` | `#0D0B1E` | `#FAF8FF` | Page background |
+| `--bg-alt` / `--bg-elev` | `#13102B` / `#1A1530` | `#F0EBFA` / `#FFFFFF` | Alt sections / cards |
+| `--text` | `#E8E0F5` | `#1A1530` | Primary text |
+| `--text-muted` | `#9085B8` | `#5C5470` | Secondary text |
+| `--border` | `rgba(108,47,191,0.25)` | `rgba(108,47,191,0.18)` | Dividers, card borders |
+| `--accent` | `#6C2FBF` | `#6C2FBF` | Links, active nav, primary CTA |
+| `--accent-light` | `#9B5EE8` | `#9B5EE8` | Hover, emphasis |
+| `--accent-red` | `#C0182A` | `#C0182A` | Secondary accent (awards, tags) |
+| `--focus-ring` | `#9B5EE8` | `#6C2FBF` | Keyboard focus outline |
 
 > These are sensible defaults, not mandates. Whatever values are chosen must pass **WCAG AA
 > contrast** in both themes (see `accessibility.md`). Verify text/background and accent/background pairs.
 
 ## Typography
 
-- **Scale (suggested, rem):** h1 `2.5–3`, h2 `1.75–2`, h3 `1.25`, body `1.0–1.125`, small `0.875`.
-- **Body measure:** ~65–80 characters per line for readability.
-- **Weights:** regular for body, medium/semibold for headings; avoid ultra-thin weights.
-- **Font choice is a stack decision.** A clean grotesque/sans for UI (e.g. Inter-like) and a
-  comfortable reading face for body are both fine. Self-host fonts for performance/privacy.
+- **Display:** DM Serif Display (headings, brand logotype)
+- **Body/UI:** Inter Variable (sans)
+- **Labels:** JetBrains Mono (eyebrows, meta, footer)
+- **Scale (rem):** h1 `clamp(2.8rem, 6vw, 5.5rem)`, h2 `clamp(2rem, 4vw, 3rem)`, body `0.95–1.0625`, eyebrow `0.72`
 
 ## Spacing & layout
 

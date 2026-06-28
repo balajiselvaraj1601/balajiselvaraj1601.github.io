@@ -1,0 +1,10 @@
+---
+interface Props {
+  text: string;
+  variant?: 'default' | 'red';
+  class?: string;
+}
+const { text, variant = 'default', class: cls } = Astro.props;
+---
+
+<p class:list={['eyebrow', { 'eyebrow--red': variant === 'red' }, cls]}>{text}</p>

@@ -1,0 +1,36 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  class?: string;
+}
+const { value, label, class: cls } = Astro.props;
+---
+
+<div class:list={['metric-card', 'card', cls]}>
+  <p class="metric-card__value">{value}</p>
+  <p class="metric-card__label">{label}</p>
+</div>
+
+<style>
+  .metric-card {
+    padding: var(--space-6);
+    text-align: center;
+  }
+  .metric-card__value {
+    font-family: var(--font-display);
+    font-size: var(--fs-metric);
+    font-weight: 600;
+    color: var(--accent);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    max-width: none;
+    margin-bottom: var(--space-2);
+  }
+  .metric-card__label {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    max-width: none;
+    line-height: 1.4;
+  }
+</style>

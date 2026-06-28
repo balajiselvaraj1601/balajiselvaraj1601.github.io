@@ -1,9 +1,23 @@
 ---
 import Section from '@components/Section.astro';
-import LinkList from '@components/LinkList.astro';
+import ResearchCard from '@components/ResearchCard.astro';
 import { conferences, site } from '@lib/content';
 ---
 
-<Section id="conferences" title={site.sections.conferences.title}>
-  <LinkList items={conferences.items} />
+<Section id="conferences" title={site.sections.conferences.title} variant="default">
+  <div class="research-grid reveal">
+    {
+      conferences.items.map((p) => (
+        <ResearchCard venue={p.label} title={p.title} href={p.url} icon="presentation" />
+      ))
+    }
+  </div>
 </Section>
+
+<style>
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

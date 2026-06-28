@@ -29,7 +29,7 @@ npm ci    # use npm ci, not npm install — respects package-lock.json pins
 npm run dev
 ```
 
-Opens at http://localhost:4321 with hot module replacement. Edit `content/*.json` or
+Opens at http://localhost:4321 with hot module replacement. Edit JSON under `content/` or
 `src/components/**` and the browser refreshes automatically.
 
 ### Production build
@@ -54,8 +54,8 @@ behavior exactly as they will appear on GitHub Pages.
 
 | Goal | Edit | Do not edit |
 |------|------|-------------|
-| Change site copy | `content/*.json` | Section components (for copy) |
-| Change section order / visibility | `content/site.json` | `src/pages/index.astro` order |
+| Change site copy | JSON under `content/` | Section components (for copy) |
+| Change route sections / visibility | `content/site.json` | `src/pages/*.astro` order |
 | Change styling | `src/styles/global.css`, component `<style>` blocks | — |
 | Change SEO defaults | `content/site.json` → `seo` | Hardcode meta in components |
 | Replace résumé / OG image | `public/assets/**` | — |
@@ -73,7 +73,7 @@ portfolio_site/
 │   ├── components/    Reusable UI + sections/
 │   ├── layouts/       Layout.astro
 │   ├── lib/content.ts Loader + validation
-│   ├── pages/         index.astro, 404.astro
+│   ├── pages/         index, experience, projects, research, recognition, contact, 404
 │   ├── schemas.ts     Zod schemas for content/
 │   └── styles/        global.css
 ├── astro.config.mjs   SITE_URL, base path, integrations
@@ -90,7 +90,7 @@ npm run build && npm run preview
 
 Spot-check:
 
-- All sections render in nav order
+- All configured routes render their `site.json` sections
 - Résumé PDF downloads from header
 - Light/dark toggle persists on reload
 - Mobile menu opens, traps focus, closes on Esc

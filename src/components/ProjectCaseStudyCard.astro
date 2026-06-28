@@ -1,0 +1,195 @@
+---
+import Chip from '@components/Chip.astro';
+import PipelineStrip from '@components/PipelineStrip.astro';
+
+interface Props {
+  name: string;
+  role: string;
+  org: string;
+  period: string;
+  domain: string;
+  summary: string;
+  tags: string[];
+  problem?: string;
+  solution?: string;
+  architecture?: string;
+  businessImpact?: string;
+  outcome?: string;
+  lessons?: string;
+}
+
+const {
+  name,
+  role,
+  org,
+  period,
+  domain,
+  summary,
+  tags,
+  problem,
+  solution,
+  architecture,
+  businessImpact,
+  outcome,
+  lessons,
+} = Astro.props;
+
+const blocks: Array<{ label: string; body: string }> = [];
+if (problem) blocks.push({ label: 'Problem', body: problem });
+if (solution) blocks.push({ label: 'Solution', body: solution });
+if (architecture) blocks.push({ label: 'Architecture', body: architecture });
+if (businessImpact) blocks.push({ label: 'Business Impact', body: businessImpact });
+if (outcome) blocks.push({ label: 'Outcome', body: outcome });
+if (lessons) blocks.push({ label: 'Lessons', body: lessons });
+---
+
+<article class="case-study card card--accent">
+  <header class="cs-head">
+    <p class="cs-meta">
+      <span class="cs-domain">{domain}</span>
+      <span class="cs-dot" aria-hidden="true">·</span>
+      <span class="cs-period">{period}</span>
+    </p>
+    <h3 class="cs-name">{name}</h3>
+    <p class="cs-role">{role} · {org}</p>
+    <p class="cs-summary">{summary}</p>
+    {
+      tags.length > 0 && (
+        <ul class="cs-tags" aria-label="Project tags">
+          {tags.map((t) => (
+            <li>
+              <Chip>{t}</Chip>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </header>
+
+  <PipelineStrip
+    problem={problem}
+    solution={solution}
+    architecture={architecture}
+    businessImpact={businessImpact}
+  />
+
+  {
+    blocks.length > 0 && (
+      <dl class="cs-blocks">
+        {blocks.map((b) => (
+          <div class="cs-block">
+            <dt>{b.label}</dt>
+            <dd>{b.body}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+</article>
+
+<style>
+  .case-study {
+    padding: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .cs-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cs-meta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    max-width: none;
+  }
+  .cs-dot {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  .cs-period {
+    color: var(--text-muted);
+  }
+
+  .cs-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--heading);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+  .cs-role {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    margin: 0;
+    max-width: none;
+  }
+  .cs-summary {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.65;
+    margin: 0;
+    max-width: var(--maxw-text);
+  }
+
+  .cs-tags {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-1) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .cs-blocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-6) var(--space-8);
+    margin: 0;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .cs-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .cs-block dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ll);
+    font-weight: 600;
+  }
+  .cs-block dd {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.65;
+    margin: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 600px) {
+    .case-study {
+      padding: var(--space-6);
+    }
+    .cs-name {
+      font-size: 1.25rem;
+    }
+    .cs-blocks {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

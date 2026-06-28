@@ -1,0 +1,53 @@
+---
+interface Props {
+  label: string;
+  detail: string;
+  variant?: 'purple' | 'red' | 'gold';
+}
+const { label, detail, variant = 'purple' } = Astro.props;
+---
+
+<article class="award-pill">
+  <div class:list={['award-pip', variant]} aria-hidden="true"></div>
+  <div class="award-text">
+    <strong>{label}</strong>
+    {detail}
+  </div>
+</article>
+
+<style>
+  .award-pill {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .award-pip {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+  }
+  .award-pip.red {
+    background: var(--accent-red-light);
+  }
+  .award-pip.gold {
+    background: #f5c518;
+  }
+  .award-text {
+    font-size: 0.83rem;
+    color: var(--text);
+    line-height: 1.5;
+    max-width: none;
+  }
+  .award-text strong {
+    color: var(--heading);
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+</style>

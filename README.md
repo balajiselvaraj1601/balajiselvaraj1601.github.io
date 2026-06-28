@@ -2,7 +2,7 @@
 
 A personal portfolio for **Balaji Selvaraj** (Technical AI Leader), built from his résumé
 content. It is a **static [Astro](https://astro.build) 4 site** that renders entirely from a
-structured, Zod-validated content layer (`content/*.json`) and deploys to **GitHub Pages**
+structured, Zod-validated content layer (`content/**/*.json`) and deploys to **GitHub Pages**
 via GitHub Actions.
 
 - **Live URL:** https://balajiselvaraj1601.github.io (GitHub Pages user site)
@@ -19,17 +19,19 @@ portfolio_site/
 ├── tsconfig.json          TS strict + JSON module resolution
 ├── src/
 │   ├── pages/             index.astro, 404.astro
+│   │                       experience, projects, research, recognition, contact routes
 │   ├── layouts/           Layout.astro
-│   ├── components/        Header, Footer, BaseHead, Section, Card, … + sections/ (14 section components)
-│   ├── lib/content.ts     Loads content/*.json and validates against schemas.ts
+│   ├── components/        Header, Footer, BaseHead, shared primitives + sections/
+│   ├── lib/content.ts     Loads content/**/*.json and validates against schemas.ts
 │   ├── schemas.ts         Zod schemas for every content file (build-time validation)
 │   └── styles/global.css  Design tokens, light/dark theme, utilities
 ├── content/               ★ Single source of truth — site content (curated from résumé)
 │   ├── README.md            Provenance + curation rules
-│   ├── site.json            Site meta, nav order, section visibility, SEO defaults, theme
-│   ├── profile.json         Hero / About / Contact (email + LinkedIn + Kaggle; no phone)
-│   └── strategic-impact, experience, projects, generative-ai, skills, mentorship,
-│       education, awards, publications, conferences, kaggle  (.json)
+│   ├── site.json            Site meta, pages/routes, section visibility, SEO defaults, theme
+│   ├── person/              Profile and affiliations
+│   ├── work/                Impact, experience, projects, skills, mentorship
+│   ├── research/            Generative AI, publications, conferences
+│   └── recognition/         Education, awards, Kaggle
 ├── public/                Static assets served as-is
 │   ├── assets/            favicons, icons/, og/og-image.png, resume/balaji-selvaraj-resume.pdf
 │   ├── robots.txt         References the absolute Sitemap URL (keep in sync with SITE_URL)
@@ -44,7 +46,7 @@ portfolio_site/
 
 ## Principles
 
-- **Content-driven (SSOT):** the site renders from `content/*.json`. Don't hardcode copy in
+- **Content-driven (SSOT):** the site renders from JSON under `content/`. Don't hardcode copy in
   components — change a JSON file to change the site. Each file is validated at build time
   against `src/schemas.ts`; an invalid shape fails the build. Content is **derived from the
   résumé** — see `content/README.md` for provenance and re-derivation.

@@ -20,10 +20,10 @@ const origin = Astro.site ?? new URL(Astro.url.origin);
 const canonical = new URL(path, origin).href;
 const ogImage = new URL(site.seo.ogImage, origin).href;
 
-// JSON-LD Person — derived from profile.json (seo.md template, kept in sync).
+// JSON-LD Person — derived from content/person/profile.json.
 const linkedin = profile.contact.find((c) => c.type === 'linkedin')?.href;
 const kaggle = profile.contact.find((c) => c.type === 'kaggle')?.href;
-const email = profile.contact.find((c) => c.type === 'email')?.href;
+const email = profile.contact.find((c) => c.type === 'email')?.value;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -51,8 +51,8 @@ const jsonLd = {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Theme color per scheme -->
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0b0d10" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#faf8ff" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#0d0b1e" media="(prefers-color-scheme: dark)" />
 
 <!-- Icons & manifest -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

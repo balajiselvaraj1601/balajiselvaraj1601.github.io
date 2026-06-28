@@ -13,7 +13,7 @@ injects them via `src/components/BaseHead.astro`.
 | Canonical URL | ✅ | Derived from `Astro.site` + page path |
 | OpenGraph tags | ✅ | `BaseHead.astro` |
 | Twitter card | ✅ | `summary_large_image` |
-| JSON-LD `Person` | ✅ | Built from `profile.json` + `site.seo.keywords` |
+| JSON-LD `Person` | ✅ | Built from `content/person/profile.json` + `site.seo.keywords` |
 | Sitemap | ✅ | `@astrojs/sitemap` → `dist/sitemap-index.xml` |
 | robots.txt | ✅ | `public/robots.txt` |
 | OG image | ✅ | `/assets/og/og-image.png` (1200×630) |
@@ -51,7 +51,7 @@ To change copy: edit `content/site.json` → `seo`. To change the image: replace
 
 ## JSON-LD — `Person`
 
-Populated at build time from `profile.json` and `site.seo.keywords`:
+Populated at build time from `content/person/profile.json` and `site.seo.keywords`:
 
 ```json
 {
@@ -75,7 +75,7 @@ Populated at build time from `profile.json` and `site.seo.keywords`:
 }
 ```
 
-Keep in sync with `content/profile.json`. If project detail routes are added later, consider
+Keep in sync with `content/person/profile.json`. If project detail routes are added later, consider
 `CreativeWork` JSON-LD per project.
 
 Validate: [Google Rich Results Test](https://search.google.com/test/rich-results).

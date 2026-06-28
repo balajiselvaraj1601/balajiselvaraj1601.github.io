@@ -1,81 +1,187 @@
 ---
 import Section from '@components/Section.astro';
+import ContactLink from '@components/ContactLink.astro';
 import Icon from '@components/Icon.astro';
-import { profile, site } from '@lib/content';
+import { profile, site, education } from '@lib/content';
+
+const publicContact = profile.contact.filter((c) => c.type !== 'phone');
+const edu = education.records[0];
+const { contactPage } = profile;
+
+function formatGpa(gpa?: string) {
+  if (!gpa) return '';
+  return gpa.toLowerCase().startsWith('cgpa') ? gpa : `CGPA ${gpa}`;
+}
 ---
 
-<Section id="contact" title={site.sections.contact.title}>
-  <p class="contact__lead">
-    Open to AI leadership roles, research collaborations, and conversations with peers.
-  </p>
-  <ul class="contact__list">
-    {
-      profile.contact.map((c) => (
-        <li class="contact__item">
-          {c.href ? (
-            <a
-              class="contact__link"
+<Section id="contact" title={contactPage.title} eyebrow={contactPage.eyebrow} variant="alt">
+  <div class="contact-layout reveal">
+    <div class="contact-left">
+      <p class="contact-subtitle">{profile.contactIntro}</p>
+      <div class="contact-links">
+        {
+          publicContact.map((c) => (
+            <ContactLink
+              label={c.label}
+              value={c.value}
               href={c.href}
-              {...c.href.startsWith('http')
-                ? { target: '_blank', rel: 'noopener noreferrer' }
-                : {}}
-            >
-              <Icon name={c.icon as any} size={20} />
-              <span>{c.label}</span>
-            </a>
-          ) : (
-            <span class="contact__link contact__link--static">
-              <Icon name={c.icon as any} size={20} />
-              <span>{c.label}</span>
-            </span>
-          )}
-        </li>
-      ))
-    }
-  </ul>
+              icon={c.icon}
+            />
+          ))
+        }
+      </div>
+
+      {
+        edu && (
+          <div class="edu-block">
+            <div class="edu-icon" aria-hidden="true">
+              <Icon name="graduation" size={24} />
+            </div>
+            <div class="edu-text">
+              <h4>Education</h4>
+              <h3>{edu.degree}</h3>
+              <p>
+                {edu.institution} · {edu.period}
+                {edu.gpa && ` · ${formatGpa(edu.gpa)}`}
+              </p>
+            </div>
+            {
+              edu.achievement && (
+                <div class="gold-badge">{edu.achievement}</div>
+              )
+            }
+          </div>
+        )
+      }
+    </div>
+
+    <div class="contact-right">
+      <h3 class="contact-right__title">{contactPage.interestsHeading}</h3>
+      <ul class="interests-list">
+        {profile.contactInterests.map((interest) => (
+          <li>{interest}</li>
+        ))}
+      </ul>
+
+      <div class="cv-card card">
+        <p class="eyebrow">{contactPage.resumeEyebrow}</p>
+        <p class="cv-desc">{contactPage.resumeDescription}</p>
+        <a class="btn btn-primary" href={site.resume.path} target="_blank" rel="noopener noreferrer">
+          {contactPage.resumeLabel}
+        </a>
+      </div>
+    </div>
+  </div>
 </Section>
 
 <style>
-  .contact__lead {
-    margin-bottom: var(--space-8);
-    font-size: 1.1rem;
-    max-width: var(--maxw-text);
-  }
-  .contact__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .contact-layout {
     display: grid;
-    gap: var(--space-3);
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 1rem;
   }
-  @media (min-width: 640px) {
-    .contact__list {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 720px;
-    }
+  .contact-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    max-width: none;
   }
-  .contact__link {
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .edu-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .edu-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg-elev);
-    color: var(--text);
-    text-decoration: none;
-    transition: border-color var(--dur) var(--ease);
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--accent-ll);
   }
-  a.contact__link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+  .edu-text h4 {
+    margin-bottom: 0.3rem;
   }
-  .contact__link :global(svg) {
-    color: var(--accent);
-    flex: none;
+  .edu-text h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
   }
-  .contact__link--static {
+  .edu-text p {
+    font-size: 0.8rem;
     color: var(--text-muted);
+    margin-top: 0.2rem;
+    max-width: none;
+  }
+  .gold-badge {
+    margin-left: auto;
+    background: linear-gradient(135deg, #f5c518, #c8960c);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+  .contact-right__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.75rem;
+  }
+  .interests-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .interests-list li {
+    font-size: 0.88rem;
+    padding-left: 1rem;
+    position: relative;
+    max-width: none;
+  }
+  .interests-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent-light);
+    font-size: 0.7rem;
+  }
+  .cv-card {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .cv-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    max-width: none;
+  }
+  @media (max-width: 900px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 </style>

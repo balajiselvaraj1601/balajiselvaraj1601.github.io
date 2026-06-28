@@ -1,9 +1,118 @@
 ---
 import Section from '@components/Section.astro';
-import BulletList from '@components/BulletList.astro';
+import JourneyRow from '@components/JourneyRow.astro';
+import ImpactCard from '@components/ImpactCard.astro';
+import LeadershipCard from '@components/LeadershipCard.astro';
+import MetricCard from '@components/MetricCard.astro';
 import { strategicImpact, site } from '@lib/content';
+
+const meta = site.sections.impact;
 ---
 
-<Section id="impact" title={site.sections.impact.title}>
-  <BulletList items={strategicImpact.items} />
+<Section
+  id="impact"
+  title={strategicImpact.headline ?? meta.title}
+  eyebrow="AI Leadership & Strategic Impact"
+  subtitle={strategicImpact.subtitle}
+  variant="alt"
+>
+  {
+    strategicImpact.journey && strategicImpact.journey.length > 0 && (
+      <JourneyRow journey={strategicImpact.journey} />
+    )
+  }
+
+  {
+    strategicImpact.metrics.length > 0 && (
+      <div class="impact-metrics reveal" aria-label="Strategic impact metrics">
+        {strategicImpact.metrics.map((metric) => (
+          <MetricCard value={metric.value} label={metric.label} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    strategicImpact.programs && strategicImpact.programs.length > 0 && (
+      <div class="impact-grid reveal">
+        {strategicImpact.programs.map((p) => (
+          <ImpactCard {...p} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    strategicImpact.leadershipCards &&
+      strategicImpact.leadershipCards.length > 0 && (
+        <div class="leadership-block reveal">
+          <p class="eyebrow eyebrow--red leadership-block__eyebrow">
+            Leadership & Organizational Impact
+          </p>
+          <div class="leadership-cards">
+            {strategicImpact.leadershipCards.map((c) => (
+              <LeadershipCard {...c} />
+            ))}
+          </div>
+        </div>
+      )
+  }
+
+  {
+    strategicImpact.highlights.length > 0 && (
+      <ul class="impact-highlights reveal">
+        {strategicImpact.highlights.map((highlight) => (
+          <li>{highlight.text}</li>
+        ))}
+      </ul>
+    )
+  }
 </Section>
+
+<style>
+  .impact-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-8) 0 var(--space-12);
+  }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: var(--space-12);
+  }
+  .leadership-block {
+    margin-top: 3rem;
+  }
+  .leadership-block__eyebrow {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .leadership-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  .impact-highlights {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-10) auto 0;
+    max-width: 820px;
+    display: grid;
+    gap: var(--space-4);
+  }
+  .impact-highlights li {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  @media (max-width: 900px) {
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,43 +1,111 @@
 {
   "name": "Balaji Selvaraj",
   "title": "Technical AI Leader",
-  "tagline": "Technical AI Leader building production AI for oncology, drug safety, and biopharma R&D.",
+  "tagline": "Building production AI that transforms drug discovery, oncology, and patient safety at AstraZeneca.",
   "location": "Gothenburg, Sweden",
-  "nav": [
-    { "id": "hero", "label": "Home" },
-    { "id": "about", "label": "About" },
-    { "id": "impact", "label": "Impact" },
-    { "id": "experience", "label": "Experience" },
-    { "id": "projects", "label": "Projects" },
-    { "id": "generative-ai", "label": "Generative AI" },
-    { "id": "skills", "label": "Skills" },
-    { "id": "mentorship", "label": "Mentorship" },
-    { "id": "education", "label": "Education" },
-    { "id": "awards", "label": "Awards" },
-    { "id": "publications", "label": "Publications" },
-    { "id": "conferences", "label": "Conferences" },
-    { "id": "kaggle", "label": "Kaggle" },
-    { "id": "contact", "label": "Contact" }
+  "pages": [
+    {
+      "id": "home",
+      "label": "About",
+      "path": "/",
+      "seo": {
+        "title": "Balaji Selvaraj — Technical AI Leader",
+        "description": "Technical AI Leader delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. Kaggle top 0.3%."
+      },
+      "sections": [
+        "hero",
+        "about",
+        "impact",
+        "featured-projects",
+        "contact-teaser"
+      ]
+    },
+    {
+      "id": "experience",
+      "label": "Experience",
+      "path": "/experience",
+      "seo": {
+        "title": "Experience — Balaji Selvaraj",
+        "description": "12+ years building and leading production AI across drug safety, oncology, and clinical imaging — career timeline, role-by-role impact, and mentorship."
+      },
+      "sections": ["experience-intro", "timeline", "experience", "mentorship", "impact", "contact-teaser"]
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "path": "/projects",
+      "seo": {
+        "title": "Projects — Balaji Selvaraj",
+        "description": "Selected enterprise AI systems across oncology, drug safety, and biopharma R&D."
+      },
+      "sections": ["projects-intro", "featured-case-studies", "projects", "contact-teaser"]
+    },
+    {
+      "id": "research",
+      "label": "Research",
+      "path": "/research",
+      "seo": {
+        "title": "Research — Balaji Selvaraj",
+        "description": "Publications, conference talks, and generative-AI research across medical imaging and drug development."
+      },
+      "sections": ["generative-ai", "publications", "conferences", "contact-teaser"]
+    },
+    {
+      "id": "recognition",
+      "label": "Recognition",
+      "path": "/recognition",
+      "seo": {
+        "title": "Recognition — Balaji Selvaraj",
+        "description": "Education, awards, and Kaggle competition results."
+      },
+      "sections": ["awards", "kaggle", "education", "contact-teaser"]
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "path": "/contact",
+      "seo": {
+        "title": "Contact — Balaji Selvaraj",
+        "description": "Get in touch with Balaji Selvaraj, Technical AI Leader based in Gothenburg, Sweden."
+      },
+      "sections": ["contact"]
+    },
+    {
+      "id": "resume",
+      "label": "Resume",
+      "path": "/assets/resume/balaji-selvaraj-resume.pdf",
+      "external": true
+    }
   ],
   "sections": {
-    "hero": { "title": "", "source": "profile.json", "visible": true },
-    "about": { "title": "About", "source": "profile.json", "visible": true },
-    "impact": { "title": "Strategic Impact", "source": "strategic-impact.json", "visible": true },
-    "experience": { "title": "Experience", "source": "experience.json", "visible": true },
-    "projects": { "title": "Selected Projects", "source": "projects.json", "visible": true },
-    "generative-ai": { "title": "Generative AI", "source": "generative-ai.json", "visible": true },
-    "skills": { "title": "Skills, Tools & Technologies", "source": "skills.json", "visible": true },
-    "mentorship": { "title": "Mentorship", "source": "mentorship.json", "visible": true },
-    "education": { "title": "Education", "source": "education.json", "visible": true },
-    "awards": { "title": "Awards & Recognition", "source": "awards.json", "visible": true },
-    "publications": { "title": "Publications", "source": "publications.json", "visible": true },
-    "conferences": { "title": "Conferences", "source": "conferences.json", "visible": true },
-    "kaggle": { "title": "Kaggle Competitions", "source": "kaggle.json", "visible": true },
-    "contact": { "title": "Contact", "source": "profile.json", "visible": true }
+    "hero": { "title": "", "source": "person/profile.json", "visible": true },
+    "about": { "title": "About", "source": "person/profile.json", "visible": true },
+    "impact": { "title": "Strategic Impact", "source": "work/strategic-impact.json", "visible": true },
+    "vision": { "title": "Vision", "source": "person/profile.json", "visible": true },
+    "featured-projects": { "title": "Featured Projects", "source": "work/projects.json", "visible": true },
+    "leadership": { "title": "Leadership", "source": "person/profile.json", "visible": true },
+    "skills": { "title": "Technology Expertise", "source": "work/skills.json", "visible": true },
+    "timeline": { "title": "Career Timeline", "source": "work/experience.json", "visible": true },
+    "affiliations": { "title": "Affiliations", "source": "person/affiliations.json", "visible": true },
+    "featured-publications": { "title": "Featured Publications", "source": "research/publications.json", "visible": true },
+    "contact-teaser": { "title": "Contact", "source": "person/profile.json", "visible": true },
+    "experience": { "title": "Experience", "source": "work/experience.json", "visible": true },
+    "experience-intro": { "title": "Experience", "source": "work/experience.json", "visible": true },
+    "projects-intro": { "title": "Selected Projects", "source": "work/projects.json", "visible": true },
+    "featured-case-studies": { "title": "Flagship Case Studies", "source": "work/projects.json", "visible": true },
+    "projects": { "title": "Other Work", "source": "work/projects.json", "visible": true },
+    "generative-ai": { "title": "Generative AI", "source": "research/generative-ai.json", "visible": true },
+    "mentorship": { "title": "Mentorship", "source": "work/mentorship.json", "visible": true },
+    "education": { "title": "Education", "source": "recognition/education.json", "visible": true },
+    "awards": { "title": "Awards & Recognition", "source": "recognition/awards.json", "visible": true },
+    "publications": { "title": "Publications", "source": "research/publications.json", "visible": true },
+    "conferences": { "title": "Conferences", "source": "research/conferences.json", "visible": true },
+    "kaggle": { "title": "Kaggle Competitions", "source": "recognition/kaggle.json", "visible": true },
+    "contact": { "title": "Contact", "source": "person/profile.json, recognition/education.json", "visible": true }
   },
   "seo": {
     "title": "Balaji Selvaraj — Technical AI Leader",
-    "description": "Technical AI Leader with 12+ years across product, services, and startups. Leading distributed AI teams delivering oncology, drug-safety, and biopharma R&D AI at AstraZeneca. Kaggle top 0.3%.",
+    "description": "Technical AI Leader delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. 12+ years across product, services, and startups. Kaggle top 0.3%.",
     "keywords": [
       "Technical AI Leader", "Applied AI", "Machine Learning", "Deep Learning",
       "Medical Imaging AI", "Drug Safety AI", "Foundation Models", "Oncology AI",
@@ -52,7 +120,7 @@
   },
   "theme": {
     "tokensRef": "docs/design-direction.md",
-    "default": "system",
+    "default": "dark",
     "modes": ["light", "dark"]
   }
 }

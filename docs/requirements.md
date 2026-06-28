@@ -9,7 +9,7 @@
 - **Owner:** Balaji Selvaraj — Technical AI Leader (oncology / drug-safety / biopharma R&D AI).
 - **Goal:** a fast, credible, public personal portfolio, deployable to GitHub Pages.
 - **Audience:** hiring managers, research collaborators, conference/industry peers.
-- **Content source:** `../content/*.json` (single source of truth; see `content-map.md`).
+- **Content source:** JSON under `../content/` (single source of truth; see `content-map.md`).
 
 ---
 
@@ -30,13 +30,13 @@
   + detail), Generative AI, Skills/Tech, Mentorship, Education, Awards, Publications,
   Conferences, Kaggle, Contact.
 - **M7** **Projects** support a card/grid overview plus an expanded detail view per project
-  (`content/projects.json`), with tags and highlights.
+  (`content/work/projects.json`), with tags and highlights.
 - **M8** **Experience** renders as a chronological timeline of roles → projects → bullets,
   preserving bullet `tier` (primary/secondary) for emphasis.
 
 ### Navigation
 - **M9** Sticky/persistent header nav with links to each section.
-- **M10** **Active-section indicator** (scroll-spy for single-page, or active route for multi-page).
+- **M10** **Navigation state** with active route in the header and section dot navigation where configured.
 - **M11** Accessible mobile menu (hamburger) with keyboard + screen-reader support.
 - **M12** Smooth in-page anchor scrolling that respects `prefers-reduced-motion`.
 
@@ -57,7 +57,7 @@
   (Full checklist in `accessibility.md`.)
 
 ### Architecture & content
-- **M20** **Content-driven**: all copy comes from `content/*.json`; no content hardcoded in
+- **M20** **Content-driven**: all copy comes from JSON under `content/`; no content hardcoded in
   components. Changing a JSON file changes the rendered site (SSOT).
 - **M21** Reusable, composable section/component structure (no copy-pasted section markup).
 
@@ -114,7 +114,7 @@
 
 ## Acceptance criteria (stage-exit)
 
-- [x] All `content/*.json` files are valid and consumed by the UI without edits.
+- [x] All JSON files under `content/` are valid and consumed by the UI without edits.
 - [x] Privacy honored: no phone number and no References appear anywhere in shipped content.
 - [x] The Must list is satisfiable by a static export to GitHub Pages.
 - [x] A developer can build against `content/` + these docs without re-reading the source resume.

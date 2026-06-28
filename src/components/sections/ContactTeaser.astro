@@ -1,0 +1,82 @@
+---
+import Section from '@components/Section.astro';
+import ContactLink from '@components/ContactLink.astro';
+import { profile, site } from '@lib/content';
+
+const title = site.sections['contact-teaser'].title;
+const publicContact = profile.contact.filter((c) => c.type !== 'phone');
+const { contactPage } = profile;
+---
+
+<Section id="contact-teaser" title={title} variant="default">
+  <div class="contact-teaser reveal">
+    <div class="contact-teaser__left">
+      <h3 class="contact-teaser__heading">
+        {contactPage.title}
+      </h3>
+      <p class="contact-teaser__sub">{profile.contactIntro}</p>
+      <div class="contact-links">
+        {
+          publicContact.slice(0, 3).map((c) => (
+            <ContactLink
+              label={c.label}
+              value={c.value}
+              href={c.href}
+              icon={c.icon}
+            />
+          ))
+        }
+      </div>
+    </div>
+    <div class="contact-teaser__cv card">
+      <p class="eyebrow">{contactPage.resumeEyebrow}</p>
+      <p class="cv-desc">{contactPage.resumeDescription}</p>
+      <a class="btn btn-primary" href={site.resume.path} target="_blank" rel="noopener noreferrer">
+        {contactPage.resumeLabel}
+      </a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .contact-teaser {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-teaser__heading {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    color: var(--heading);
+  }
+  .contact-teaser__sub {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    max-width: none;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .contact-teaser__cv {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .cv-desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    max-width: none;
+  }
+  @media (max-width: 900px) {
+    .contact-teaser {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

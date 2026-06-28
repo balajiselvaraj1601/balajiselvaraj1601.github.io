@@ -1,50 +1,70 @@
 ---
 import Section from '@components/Section.astro';
-import Chip from '@components/Chip.astro';
 import { skills, site } from '@lib/content';
+
+const title = site.sections.skills.title;
 ---
 
-<Section id="skills" title={site.sections.skills.title}>
-  <div class="skills">
-    {
-      skills.categories.map((cat) => (
-        <div class="skills__group">
-          <h3 class="skills__label">{cat.label}</h3>
-          <ul class="skills__chips">
-            {cat.skills.map((s) => (
-              <li>
-                <Chip>{s}</Chip>
-              </li>
-            ))}
-          </ul>
+<Section id="skills" title={title} eyebrow="Technology Expertise" variant="default">
+  {skills.note && <p class="skills-note reveal">{skills.note}</p>}
+  <div class="skills-panel reveal">
+    {skills.categories.map((cat) => (
+      <div class="skill-group">
+        <h4>{cat.label}</h4>
+        <div class="skill-tags">
+          {cat.skills.map((s, i) => (
+            <span class:list={['skill-tag', { hot: i < 3 }]}>{s}</span>
+          ))}
         </div>
-      ))
-    }
+      </div>
+    ))}
   </div>
 </Section>
 
 <style>
-  .skills {
-    display: grid;
-    gap: var(--space-8);
-  }
-  @media (min-width: 768px) {
-    .skills {
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-8) var(--space-12);
-    }
-  }
-  .skills__label {
-    font-size: 1rem;
+  .skills-note {
     color: var(--text-muted);
-    margin-bottom: var(--space-3);
+    font-size: var(--fs-small);
+    margin: 0 0 var(--space-8);
+    max-width: 720px;
   }
-  .skills__chips {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .skills-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-8);
+    align-items: start;
+  }
+  .skill-group {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-6);
+  }
+  .skill-group h4 {
+    margin-bottom: 1rem;
+  }
+  .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: 0.5rem;
+  }
+  .skill-tag {
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.35rem 0.7rem;
+    color: var(--text);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover {
+    border-color: var(--accent-light);
+    color: var(--heading);
+  }
+  .skill-tag.hot {
+    border-color: rgba(108, 47, 191, 0.4);
+    color: var(--accent-ll);
+    background: var(--accent-soft);
   }
 </style>

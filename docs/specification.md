@@ -6,35 +6,26 @@ is the "how it's structured".
 
 ## 1. Information architecture
 
-Recommended primary structure: **single-page** with anchored sections (simplest for GitHub
-Pages, best for a portfolio's linear narrative), with **two optional sub-routes** for depth.
+Primary structure: **multi-page**, grouping the full section set (see `content/site.json →
+sections`) into a few themed routes (keeps the nav short while giving heavy content its own URL).
 
 ```
-/                      Single-page portfolio (all sections, anchored)
-  #hero
-  #about
-  #impact
-  #experience
-  #projects
-  #generative-ai
-  #skills
-  #mentorship
-  #education
-  #awards
-  #publications
-  #conferences
-  #kaggle
-  #contact
-/projects/:id          (optional) dedicated project detail page — mirrors projects.json[id]
-/404                   custom not-found page
+/              About (Home)  → hero, about, featured-projects, impact, contact-teaser
+/experience    Experience    → experience-intro, timeline, experience, mentorship, impact, contact-teaser
+/projects      Projects      → projects-intro, featured-case-studies, projects, contact-teaser
+/research      Research      → generative-ai, publications, conferences, contact-teaser
+/recognition   Recognition   → awards, kaggle, education, contact-teaser
+/contact       Contact       → contact
+/404           custom not-found page
 ```
 
-Section order is defined once in `content/site.json → nav`. The renderer must iterate that
-array — do not hardcode section order in markup.
+Nav also includes **Resume** (external PDF link from `site.json.pages` with `"external": true`).
 
-> Routing is a stack decision. If the chosen stack favors multi-page (one route per section),
-> keep the **same ids and order** from `site.json`. The content contract below is identical
-> either way.
+Routes and their section grouping are defined once in `content/site.json → pages` (each page has
+an `id`, `path`, `label`, `seo`, and an ordered `sections` array). The renderer
+(`SectionRenderer`) iterates each page's `sections` — do not hardcode section order or grouping
+in markup. Section ids and the per-section content contract below are independent of how sections
+are grouped into pages.
 
 ## 2. Component hierarchy (logical, framework-neutral)
 
@@ -44,50 +35,72 @@ App / Layout
 ├── ThemeProvider (light/dark, system default, persisted)
 ├── Header
 │   ├── Brand (name)
-│   ├── Nav (from site.json.nav, active-section indicator)
+│   ├── Nav (from site.json.pages, active-route indicator)
 │   ├── ThemeToggle
 │   └── ResumeDownloadButton (site.json.resume)
 ├── Main
-│   ├── HeroSection            ← profile.json (name, title, tagline, primary CTAs)
-│   ├── AboutSection           ← profile.json.summary[]
-│   ├── ImpactSection          ← strategic-impact.json.items[]      (BulletList)
-│   ├── ExperienceSection      ← experience.json.roles[]            (Timeline)
+│   ├── HeroSection            ← person/profile.json (headline, metrics[], ctas[])
+│   ├── AboutSection           ← person/profile.json (aboutIntro, aboutCards[])
+│   ├── FeaturedProjectsSection← work/projects.json (featured: true)
+│   ├── ImpactSection          ← work/strategic-impact.json (journey/programs/leadershipCards)
+│   ├── VisionSection          ← person/profile.json.vision (heading, paragraphs[])
+│   ├── LeadershipSection      ← person/profile.json.leadershipPhilosophy
+│   ├── SkillsSection          ← work/skills.json
+│   ├── CareerTimelineSection  ← work/experience.json.roles[] (compact rail)
+│   ├── AffiliationsSection    ← person/affiliations.json
+│   ├── FeaturedPublications   ← research/publications.json (top items)
+│   ├── ContactTeaserSection   ← person/profile.json (CTA to /contact)
+│   ├── ExperienceIntroSection ← work/experience.json (title, intro, snapshot[])   (MetricCard)
+│   ├── ExperienceSection      ← work/experience.json.roles[]            (Timeline)
 │   │   └── RoleCard → ProjectGroup → Bullet (respects tier)
-│   ├── ProjectsSection        ← projects.json.projects[]           (CardGrid)
+│   ├── ProjectsIntroSection   ← work/projects.json (title, intro, snapshot[])     (MetricCard)
+│   ├── FeaturedCaseStudies    ← work/projects.json (featured: true)    (ProjectCaseStudyCard)
+│   ├── ProjectsSection        ← work/projects.json.projects[]           (CardGrid)
 │   │   └── ProjectCard → (optional) ProjectDetail
-│   ├── GenerativeAISection    ← generative-ai.json.items[]         (BulletList)
-│   ├── SkillsSection          ← skills.json.categories[]           (CategoryGroup → Chip)
-│   ├── MentorshipSection      ← mentorship.json.items[]            (BulletList)
-│   ├── EducationSection       ← education.json.records[]
-│   ├── AwardsSection          ← awards.json.items[]                (LabeledDetailList)
-│   ├── PublicationsSection    ← publications.json.items[]          (LinkList)
-│   ├── ConferencesSection     ← conferences.json.items[]           (LinkList)
-│   ├── KaggleSection          ← kaggle.json (rank + items[])       (LinkList)
-│   └── ContactSection         ← profile.json.contact[]
+│   ├── GenerativeAISection    ← research/generative-ai.json.items[]         (inline text list)
+│   ├── SkillsSection          ← work/skills.json.categories[]           (CategoryGroup → Chip)
+│   ├── MentorshipSection      ← work/mentorship.json.items[]            (inline text list)
+│   ├── EducationSection       ← recognition/education.json.records[]
+│   ├── AwardsSection          ← recognition/awards.json.items[]                (AwardPill)
+│   ├── PublicationsSection    ← research/publications.json.items[]          (ResearchCard)
+│   ├── ConferencesSection     ← research/conferences.json.items[]          (ResearchCard)
+│   ├── KaggleSection          ← recognition/kaggle.json (rank + items[])       (inline link list)
+│   └── ContactSection         ← person/profile.json.contact[]            (ContactLink)
 └── Footer (copyright, social links, back-to-top)
 ```
 
 Reused primitives (define once, use everywhere): `Section` (heading + anchor + container),
-`BulletList`, `LinkList`, `LabeledDetailList`, `Chip/Tag`, `Card`, `IconLink`.
+`MetricCard`, `Chip`, `ResearchCard`, `AwardPill`, `ContactLink`,
+`ProjectCaseStudyCard`.
 
 ## 3. Per-section content contract
 
 | Section | Source file | Shape consumed | Rendering notes |
 |---------|-------------|----------------|-----------------|
-| Hero | `profile.json` | `name`, `title`, `location`, primary CTAs | Above the fold; CTAs → Projects, Contact, Resume |
-| About | `profile.json` | `summary[]` (5 lines) | One paragraph or 5 short lines |
-| Strategic Impact | `strategic-impact.json` | `items[].text` | Emphasize $ / metrics; ordered as given |
-| Experience | `experience.json` | `roles[] → projects[] → bullets[]` | Timeline; `tier:"secondary"` = de-emphasized |
-| Projects | `projects.json` | `projects[]` (`name`, `summary`, `highlights[]`, `tags[]`, `domain`) | Card grid; optional detail view |
-| Generative AI | `generative-ai.json` | `items[].text` | Bullet list |
-| Skills | `skills.json` | `categories[] → skills[]` | Grouped chips by category |
-| Mentorship | `mentorship.json` | `items[].text` | Bullet list |
-| Education | `education.json` | `records[]` | Degree, institution, period, gpa, achievement |
-| Awards | `awards.json` | `items[]` (`label`, `detail`) | Label + detail rows |
-| Publications | `publications.json` | `items[]` (`label`, `title`, `url`) | External links |
-| Conferences | `conferences.json` | `items[]` (`label`, `title`, `url`) | External links; `[SPEAKER]/[PRESENTER]` tags in label |
-| Kaggle | `kaggle.json` | `rank`, `profile`, `items[]` (`label`, `url`) | Show rank prominently; link each competition |
-| Contact | `profile.json` | `contact[]` (email, linkedin, kaggle, location) | `mailto:` for email; external links `rel="noopener noreferrer"` |
+| Hero | `person/profile.json` | `headline`, `metrics[]`, `ctas[]`, photo | Split layout; metric cards; value-oriented CTAs |
+| About | `person/profile.json` | `aboutIntro`, `aboutCards[]` | Intro paragraph + scan cards |
+| Featured Projects | `work/projects.json` | `projects[]` where `featured: true` | Top 3 cards; link to `/projects` |
+| Strategic Impact | `work/strategic-impact.json` | `journey[]`, `programs[]`, `leadershipCards[]` | Journey row + program cards + leadership cards |
+| Vision | `person/profile.json` | `vision.heading`, `vision.paragraphs[]` | Narrative prose block (`variant="alt"`) |
+| Leadership | `person/profile.json` | `leadershipPhilosophy.statement` | Pull-quote block |
+| Skills | `work/skills.json` | `categories[] -> skills[]` | Grouped skill chips |
+| Career Timeline | `work/experience.json` | `roles[]` (org, position, period, mission) | Compact vertical rail |
+| Affiliations | `person/affiliations.json` | `items[].name` | Text badge strip |
+| Featured Publications | `research/publications.json` | `items[]` (top N) | Link cards; CTA to `/research` |
+| Contact Teaser | `person/profile.json` | (static lead + CTA) | Button to `/contact` |
+| Experience Intro | `work/experience.json` | `title`, `intro`, `snapshot[]` | Section lead-in + metric cards |
+| Experience | `work/experience.json` | `roles[] -> projects[] -> bullets[]` | Full timeline; optional `mission` per role |
+| Projects Intro | `work/projects.json` | `title`, `intro`, `snapshot[]` | Section lead-in + metric cards |
+| Featured Case Studies | `work/projects.json` | `projects[]` where `featured: true` | Flagship case-study cards (full detail) |
+| Projects | `work/projects.json` | case-study fields + `highlights[]`, `tags[]` | Problem/solution/architecture/impact blocks |
+| Generative AI | `research/generative-ai.json` | `items[].text` | Bullet list |
+| Mentorship | `work/mentorship.json` | `items[].text` | Bullet list |
+| Education | `recognition/education.json` | `records[]` | Degree, institution, period, gpa, achievement |
+| Awards | `recognition/awards.json` | `items[]` (`label`, `detail`) | Label + detail rows |
+| Publications | `research/publications.json` | `items[]` (`label`, `title`, `url`) | External links |
+| Conferences | `research/conferences.json` | `items[]` (`label`, `title`, `url`) | External links; `[SPEAKER]/[PRESENTER]` tags in label |
+| Kaggle | `recognition/kaggle.json` | `rank`, `profile`, `items[]` (`label`, `url`) | Show rank prominently; link each competition |
+| Contact | `person/profile.json` | `contact[]` (email, linkedin, kaggle, location) | `mailto:` for email; external links `rel="noopener noreferrer"` |
 
 The renderer should map `site.json.sections[id].source` → file, and `…title` → heading text.
 
@@ -103,7 +116,7 @@ The renderer should map `site.json.sections[id].source` → file, and `…title`
 ## 5. Navigation behavior
 
 - Sticky header; condense/elevate on scroll (subtle).
-- Active-section indicator via scroll-spy (single-page) or active route (multi-page).
+- Active-route indicator in the header; optional dot navigation highlights the active section.
 - Anchor clicks smooth-scroll with offset for the sticky header; honor `prefers-reduced-motion`.
 - Mobile menu: focus-trapped while open, `Esc` closes, returns focus to the toggle.
 - "Back to top" affordance in the footer.

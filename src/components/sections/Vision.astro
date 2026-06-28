@@ -1,0 +1,75 @@
+---
+import Section from '@components/Section.astro';
+import { profile, site } from '@lib/content';
+
+const vision = profile.vision;
+const title = site.sections.vision.title;
+---
+
+{vision && (
+  <Section id="vision" title={title} subtitle={vision.heading} variant="alt">
+    <div class="vision__body reveal">
+      {vision.paragraphs.map((para) => (
+        <p class="vision__para">{para}</p>
+      ))}
+    </div>
+
+    {vision.collaborations.length > 0 && (
+      <div class="vision__collabs reveal">
+        {vision.collaborations.map((c) => (
+          <div class="vision__collab card">
+            <h3 class="vision__collab-org">{c.org}</h3>
+            <p class="vision__collab-detail">{c.detail}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {vision.mentorship && (
+      <p class="vision__mentorship reveal">{vision.mentorship}</p>
+    )}
+  </Section>
+)}
+
+<style>
+  .vision__body {
+    max-width: var(--maxw-text);
+    margin-bottom: var(--space-10);
+  }
+  .vision__para {
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: var(--space-4);
+  }
+  .vision__para:last-child {
+    margin-bottom: 0;
+  }
+  .vision__collabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+  .vision__collab {
+    padding: var(--space-6);
+  }
+  .vision__collab-org {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-2);
+  }
+  .vision__collab-detail {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .vision__mentorship {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    line-height: 1.7;
+    border-left: 3px solid var(--accent);
+    padding-left: var(--space-4);
+    max-width: var(--maxw-text);
+  }
+</style>

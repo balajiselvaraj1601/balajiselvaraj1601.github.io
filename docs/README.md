@@ -9,7 +9,7 @@ deployed to GitHub Pages at https://balajiselvaraj1601.github.io.
 |-----|----------|---------|
 | [Getting started](./getting-started.md) | Developers | Install, run, build, preview |
 | [Go-live checklist](./go-live-checklist.md) | Owner / DevOps | Publish to GitHub Pages step-by-step |
-| [Content editing](./content-editing.md) | Content owner | Change site copy via `content/*.json` |
+| [Content editing](./content-editing.md) | Content owner | Change site copy via JSON under `content/` |
 | [Assets](./assets.md) | Content owner | Résumé PDF, OG image, favicons, images |
 
 ## Architecture & specs

@@ -28,8 +28,8 @@ public/
 
 | Asset | Path | Referenced by |
 |-------|------|---------------|
-| Résumé PDF | `public/assets/resume/balaji-selvaraj-resume.pdf` | `content/site.json` → `resume.path` |
-| OG image | `public/assets/og/og-image.png` | `content/site.json` → `seo.ogImage` |
+| Résumé PDF | `public/assets/resume/balaji-selvaraj-resume.pdf` | `content/site.json` -> `resume.path` |
+| OG image | `public/assets/og/og-image.png` | `content/site.json` -> `seo.ogImage` |
 | Favicon SVG | `public/favicon.svg` | `BaseHead.astro`, manifest |
 | Favicon ICO | `public/favicon.ico` | `BaseHead.astro` |
 | PNG icons | `public/assets/icons/*.png` | `site.webmanifest`, `BaseHead.astro` |
@@ -101,14 +101,48 @@ Manifest icons:
 
 ## Optional images
 
-`public/assets/images/` is reserved for a professional headshot or section imagery.
-Currently empty (`.gitkeep` only). To add a headshot:
+`public/assets/images/` holds optimized headshots and section imagery served by the site
+(e.g. `balaji.png`, referenced from `content/person/profile.json` -> `photo`).
 
-1. Place the file in `public/assets/images/` (e.g. `headshot.webp`)
-2. Reference it from the relevant section component
-3. Always include descriptive `alt` text
+To add or replace a headshot:
 
-Keep files optimized — prefer WebP, reasonable dimensions, lazy-load below the fold.
+1. Compress the source image outside the repo or in a temporary working folder.
+2. Place only the published copy in `public/assets/images/`.
+3. Set `content/person/profile.json` -> `photo` to the public path (e.g. `/assets/images/balaji.png`).
+4. Always include descriptive `alt` text in the content/component.
+
+Keep published files optimized — prefer WebP, reasonable dimensions, lazy-load below the fold.
+
+### Hero portrait
+
+The home-page hero (`src/components/sections/Hero.astro`) renders a square portrait via
+`<Portrait>`. The current production asset is a single optimized PNG:
+
+| File | Format | Size | Used as |
+|------|--------|------|---------|
+| `public/assets/images/balaji.png` | PNG, 480×480 | Portrait image |
+
+References from content: `content/person/profile.json` -> `portrait.src`, `portrait.alt`,
+`portrait.width`, and `portrait.height`.
+
+Example regeneration command, run from a local source image outside the repo:
+
+```bash
+node -e "
+const sharp = require('sharp');
+const src = '/path/to/profile-original.jpg';
+(async () => {
+  const m = await sharp(src).metadata();
+  const side = Math.min(m.width, m.height);
+  const left = Math.floor((m.width - side) / 2);
+  const top  = Math.floor((m.height - side) / 2);
+  await sharp(src)
+    .extract({ left, top, width: side, height: side })
+    .resize(480, 480)
+    .png({ compressionLevel: 9 })
+    .toFile('public/assets/images/balaji.png');
+})();"
+```
 
 ## robots.txt
 
@@ -127,7 +161,7 @@ domain changes.
 ## What not to commit
 
 - Generated `dist/` (git-ignored — CI rebuilds)
-- Large unoptimized originals — compress before adding to `public/`
+- Large unoptimized originals in `public/` or the repo root
 - Private documents, references, or phone-containing résumé variants
 
 ## Related docs

@@ -1,0 +1,49 @@
+---
+import Section from '@components/Section.astro';
+import { affiliations, site } from '@lib/content';
+
+const title = site.sections.affiliations.title;
+---
+
+<Section id="affiliations" title={title} variant="default">
+  <div class="collab-list reveal">
+    {
+      affiliations.items.map((a) => (
+        <div class="collab-item">
+          <div class="collab-dot" aria-hidden="true"></div>
+          <div class="collab-text">{a.name}</div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  .collab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .collab-item {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .collab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+  }
+  .collab-text {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    max-width: none;
+  }
+</style>

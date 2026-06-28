@@ -1,0 +1,37 @@
+---
+import Section from '@components/Section.astro';
+import { profile, site } from '@lib/content';
+
+const title = site.sections.leadership.title;
+---
+
+<Section
+  id="leadership"
+  title={title}
+  hideTitle
+  variant="default"
+  class="leadership-section"
+>
+  <blockquote class="leadership__quote card reveal">
+    <p class="leadership__statement">{profile.leadershipPhilosophy.statement}</p>
+  </blockquote>
+</Section>
+
+<style>
+  .leadership__quote {
+    padding: var(--space-8) var(--space-10);
+    border-left: 4px solid var(--accent);
+    max-width: var(--maxw-text);
+    margin-inline: auto;
+    text-align: center;
+  }
+  .leadership__statement {
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text);
+    max-width: none;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import Hero from '@components/sections/Hero.astro';
+import About from '@components/sections/About.astro';
+import Impact from '@components/sections/Impact.astro';
+import Vision from '@components/sections/Vision.astro';
+import FeaturedProjects from '@components/sections/FeaturedProjects.astro';
+import LeadershipPhilosophy from '@components/sections/LeadershipPhilosophy.astro';
+import Skills from '@components/sections/Skills.astro';
+import CareerTimeline from '@components/sections/CareerTimeline.astro';
+import Affiliations from '@components/sections/Affiliations.astro';
+import FeaturedPublications from '@components/sections/FeaturedPublications.astro';
+import ContactTeaser from '@components/sections/ContactTeaser.astro';
+import Experience from '@components/sections/Experience.astro';
+import ExperienceIntro from '@components/sections/ExperienceIntro.astro';
+import Projects from '@components/sections/Projects.astro';
+import ProjectsIntro from '@components/sections/ProjectsIntro.astro';
+import FeaturedCaseStudies from '@components/sections/FeaturedCaseStudies.astro';
+import GenerativeAI from '@components/sections/GenerativeAI.astro';
+import Mentorship from '@components/sections/Mentorship.astro';
+import Education from '@components/sections/Education.astro';
+import Awards from '@components/sections/Awards.astro';
+import Publications from '@components/sections/Publications.astro';
+import Conferences from '@components/sections/Conferences.astro';
+import Kaggle from '@components/sections/Kaggle.astro';
+import Contact from '@components/sections/Contact.astro';
+
+const SECTIONS: Record<string, any> = {
+  hero: Hero,
+  about: About,
+  impact: Impact,
+  vision: Vision,
+  'featured-projects': FeaturedProjects,
+  leadership: LeadershipPhilosophy,
+  skills: Skills,
+  timeline: CareerTimeline,
+  affiliations: Affiliations,
+  'featured-publications': FeaturedPublications,
+  'contact-teaser': ContactTeaser,
+  experience: Experience,
+  'experience-intro': ExperienceIntro,
+  projects: Projects,
+  'projects-intro': ProjectsIntro,
+  'featured-case-studies': FeaturedCaseStudies,
+  'generative-ai': GenerativeAI,
+  mentorship: Mentorship,
+  education: Education,
+  awards: Awards,
+  publications: Publications,
+  conferences: Conferences,
+  kaggle: Kaggle,
+  contact: Contact,
+};
+
+interface Props {
+  sections: string[];
+  /** Page id from site.json — used for section variants (e.g. compact timeline/skills on home). */
+  pageId?: string;
+}
+
+const { sections, pageId } = Astro.props;
+---
+
+{
+  sections.map((id) => {
+    const Section = SECTIONS[id];
+    if (!Section) return null;
+    if (id === 'timeline' && pageId === 'home') return <Section compact />;
+    if (id === 'timeline' && pageId === 'experience') return <Section showCta={false} />;
+    return <Section />;
+  })
+}

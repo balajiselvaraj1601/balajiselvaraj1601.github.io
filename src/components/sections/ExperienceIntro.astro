@@ -1,0 +1,32 @@
+---
+import Section from '@components/Section.astro';
+import MetricCard from '@components/MetricCard.astro';
+import { experience } from '@lib/content';
+---
+
+<Section
+  id="experience-intro"
+  title={experience.title}
+  eyebrow="Career"
+  subtitle={experience.intro}
+  variant="default"
+>
+  {
+    experience.snapshot && experience.snapshot.length > 0 && (
+      <div class="snapshot-grid reveal">
+        {experience.snapshot.map((m) => (
+          <MetricCard value={m.value} label={m.label} />
+        ))}
+      </div>
+    )
+  }
+</Section>
+
+<style>
+  .snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+</style>

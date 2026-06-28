@@ -1,0 +1,11 @@
+{
+  "title": "Awards & Recognition",
+  "items": [
+    { "label": "EVP Level R&D Award", "detail": "Biopharma Science & Innovation, AstraZeneca", "variant": "gold" },
+    { "label": "CIO Level IT Excellence", "detail": "AI for CT Analysis", "variant": "gold" },
+    { "label": "Senior Director Level", "detail": "GraphITE Oncology Contribution", "variant": "purple" },
+    { "label": "10× Director Level Awards", "detail": "AstraZeneca", "variant": "purple" },
+    { "label": "8× Associate Director Level Awards", "detail": "AstraZeneca", "variant": "purple" },
+    { "label": "NCAT Top 4 Nationally", "detail": "Academic — IIT Delhi", "variant": "red" }
+  ]
+}

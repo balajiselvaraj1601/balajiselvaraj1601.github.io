@@ -1,8 +1,8 @@
 ---
 import { profile } from '@lib/content';
-import Icon from '@components/Icon.astro';
-import AvailabilityBadge from '@components/AvailabilityBadge.astro';
-import Portrait from '@components/Portrait.astro';
+import Icon from '@components/ui/Icon.astro';
+import AvailabilityBadge from '@components/ui/AvailabilityBadge.astro';
+import Portrait from '@components/cards/Portrait.astro';
 
 function isExternal(href: string) {
   return href.startsWith('http') || href.startsWith('/assets/');

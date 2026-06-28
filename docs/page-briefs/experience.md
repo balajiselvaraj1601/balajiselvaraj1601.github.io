@@ -12,10 +12,10 @@
 | `experience` | `content/work/experience.json` | How does it work? | heavy |
 | `mentorship` | `content/work/mentorship.json` | Why should I trust it? | light |
 | `impact` | `content/work/strategic-impact.json` | Why should I care? | heavy |
-| `contact-teaser` | `content/person/profile.json` | What should I do next? | accent |
+| `contact` | `content/person/profile.json` | What should I do next? | accent |
 
 ## Structure
 
-`experience-intro` -> `timeline` -> `experience` -> `mentorship` -> `impact` -> `contact-teaser`
+`experience-intro` -> `timeline` -> `experience` -> `mentorship` -> `impact` -> `contact`
 
-The page must orient the visitor with a fast career scan, expand into role-level evidence, preserve bullet tiers, and close with leadership/contact intent.
+The page must orient the visitor with a fast career scan, expand into role-level evidence, preserve bullet tiers, and close with the full contact section.

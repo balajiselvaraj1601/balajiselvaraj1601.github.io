@@ -232,7 +232,7 @@ OUTPUT FORMAT
 {
   "slug": "{slug}",
   "files_created": ["public/assets/images/..."],
-  "content_updates": [{"file": "content/competitions/....md", "field": "thumbnail", "value": "/assets/images/..."}],
+  "content_updates": [{"file": "content/drafts/competitions/....md", "field": "thumbnail", "value": "/assets/images/..."}],
   "build": "pass"
 }
 ```

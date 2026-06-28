@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-process_logos.py — Normalize and trim logo images in logos/.
+process_logos.py — Normalize and trim logo images in assets/source/logos/.
 
 Detects mislabeled formats (SVG/WebP/AVIF saved as .png), rasterizes SVG via
 Playwright (image_gen/scripts/render.py), trims unnecessary white borders, and
@@ -477,12 +477,12 @@ def summarize(reports: list[FileReport]) -> dict[str, int]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Normalize and trim logo PNGs in logos/.")
+    parser = argparse.ArgumentParser(description="Normalize and trim logo PNGs in assets/source/logos/.")
     parser.add_argument(
         "--logos-dir",
         type=Path,
-        default=repo_root() / "logos",
-        help="Directory containing logo files (default: logos/)",
+        default=repo_root() / "assets" / "source" / "logos",
+        help="Directory containing logo files (default: assets/source/logos/)",
     )
     parser.add_argument(
         "--apply",

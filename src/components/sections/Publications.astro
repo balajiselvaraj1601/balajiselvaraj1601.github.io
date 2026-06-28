@@ -1,7 +1,17 @@
 ---
-import Section from '@components/Section.astro';
-import ResearchLinkGrid from '@components/ResearchLinkGrid.astro';
+import Section from '@components/ui/Section.astro';
+import ResearchLinkGrid from '@components/cards/ResearchLinkGrid.astro';
 import { publications, site } from '@lib/content';
+
+interface Props {
+  showMoreHref?: string;
+  showMoreLabel?: string;
+}
+
+const {
+  showMoreHref,
+  showMoreLabel = 'All research →',
+} = Astro.props;
 ---
 
 <Section
@@ -10,4 +20,20 @@ import { publications, site } from '@lib/content';
   variant="default"
 >
   <ResearchLinkGrid items={publications.items} />
+  {
+    showMoreHref && (
+      <p class="pub-more reveal">
+        <a class="btn btn-secondary" href={showMoreHref}>
+          {showMoreLabel}
+        </a>
+      </p>
+    )
+  }
 </Section>
+
+<style>
+  .pub-more {
+    margin-top: var(--space-8);
+    max-width: none;
+  }
+</style>

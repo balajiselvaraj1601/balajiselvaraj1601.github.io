@@ -1,8 +1,8 @@
 ---
-import Section from '@components/Section.astro';
-import ProjectAccordion from '@components/ProjectAccordion.astro';
-import Chip from '@components/Chip.astro';
-import EntityLink from '@components/EntityLink.astro';
+import Section from '@components/ui/Section.astro';
+import ProjectAccordion from '@components/cards/ProjectAccordion.astro';
+import Chip from '@components/ui/Chip.astro';
+import EntityLink from '@components/ui/EntityLink.astro';
 import { experience, site, getEntityUrl, logoSrc } from '@lib/content';
 
 function periodLabel(p: { start: string; end: string | null; endLabel: string }) {

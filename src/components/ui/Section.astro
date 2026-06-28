@@ -1,0 +1,48 @@
+---
+import Eyebrow from '@components/ui/Eyebrow.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  hideTitle?: boolean;
+  eyebrow?: string;
+  eyebrowVariant?: 'default' | 'red';
+  subtitle?: string;
+  variant?: 'default' | 'alt' | 'full' | 'impact';
+  class?: string;
+}
+const {
+  id,
+  title,
+  hideTitle = false,
+  eyebrow,
+  eyebrowVariant = 'default',
+  subtitle,
+  variant = 'default',
+  class: cls,
+} = Astro.props;
+const headingId = `${id}-heading`;
+---
+
+<section
+  id={id}
+  class:list={[
+    'section',
+    'reveal',
+    { 'section--alt': variant === 'alt', 'section--full': variant === 'full', 'section--impact': variant === 'impact' },
+    cls,
+  ]}
+  aria-labelledby={headingId}
+>
+  <div class="container">
+    {eyebrow && <Eyebrow text={eyebrow} variant={eyebrowVariant} />}
+    <h2
+      id={headingId}
+      class:list={['section__title', { 'visually-hidden': hideTitle }]}
+    >
+      {title}
+    </h2>
+    {subtitle && <p class="section__subtitle">{subtitle}</p>}
+    <slot />
+  </div>
+</section>

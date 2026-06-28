@@ -372,6 +372,27 @@ export const linkListSchema = z.object({
   items: z.array(LabeledLink),
 });
 
+const SpeakingEngagement = z.object({
+  role: z.string(),
+  event: z.string(),
+  location: z.string(),
+  date: z.string(),
+  title: z.string(),
+  description: z.string(),
+  url: z.string().url(),
+  youtube: z.string().url().optional(),
+  image: z.string().optional(),
+  logo: z.string().optional(),
+  logoBadge: z.boolean().optional(),
+  tags: z.array(z.string()).min(1),
+});
+
+export const speakersSchema = z.object({
+  title: z.string(),
+  subtitle: z.string(),
+  items: z.array(SpeakingEngagement),
+});
+
 /* ── kaggle.json ───────────────────────────────────────────────────────── */
 export const kaggleSchema = z.object({
   title: z.string(),
@@ -411,6 +432,7 @@ export type Skills = z.infer<typeof skillsSchema>;
 export type Education = z.infer<typeof educationSchema>;
 export type Awards = z.infer<typeof awardsSchema>;
 export type LinkList = z.infer<typeof linkListSchema>;
+export type Speakers = z.infer<typeof speakersSchema>;
 export type Kaggle = z.infer<typeof kaggleSchema>;
 export type Affiliations = z.infer<typeof affiliationsSchema>;
 export type Entities = z.infer<typeof entitiesSchema>;

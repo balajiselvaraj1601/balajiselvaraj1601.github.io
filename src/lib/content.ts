@@ -12,6 +12,7 @@ import {
   educationSchema,
   awardsSchema,
   linkListSchema,
+  speakersSchema,
   kaggleSchema,
   affiliationsSchema,
   entitiesSchema,
@@ -97,7 +98,7 @@ export const conferences = load(
 );
 export const speakers = load(
   'research/speakers.json',
-  linkListSchema,
+  speakersSchema,
   speakersRaw
 );
 export const kaggle = load('recognition/kaggle.json', kaggleSchema, kaggleRaw);
@@ -147,15 +148,11 @@ export const sectionData = {
   hero: profile,
   about: profile,
   impact: strategicImpact,
-  vision: profile,
   'vision-board': visionBoard,
-  'featured-projects': projects,
   leadership: profile,
   skills,
   timeline: experience,
   affiliations,
-  'featured-publications': publications,
-  'contact-teaser': profile,
   experience,
   'experience-intro': experience,
   projects,

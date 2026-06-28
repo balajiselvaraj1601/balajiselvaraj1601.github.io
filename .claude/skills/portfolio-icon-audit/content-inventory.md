@@ -76,10 +76,10 @@ Only projects with explicit `"icon"` in JSON; all others fall back to `folder` v
 
 | entity_id | slug | alt | file expected | component |
 |---|---|---|---|---|
-| vb-hub.idea.center | `kaggle` | Kaggle | `logos/kaggle.svg` | `HubCircle.astro` |
-| vb-hub.vision.center | `brain` | Multimodal AI | `logos/brain.svg` | |
-| vb-program.broad.badge | `broad-institute` | Broad Institute | `logos/broad-institute.svg` | `ProgramBadgeCard.astro` |
-| vb-program.aacr.badge | `aacr` | AACR | `logos/aacr.svg` | |
+| vb-hub.idea.center | `kaggle` | Kaggle | `assets/source/logos/kaggle.png` | `cards/HubCircle.astro` |
+| vb-hub.vision.center | `brain` | Multimodal AI | `public/assets/logos/brain.png` | |
+| vb-program.broad.badge | `broad-institute` | Broad Institute | `assets/source/logos/broad-institute.png` | `cards/ProgramBadgeCard.astro` |
+| vb-program.aacr.badge | `aacr` | AACR | `assets/source/logos/aacr.png` | |
 
 ### affiliations.json — optional logo field
 
@@ -192,7 +192,7 @@ Used by `FeaturedProjects.astro` and `ProjectAccordion.astro` on `/projects`.
 | photo | `profile.photo` | `/assets/images/balaji.png` | legacy alias |
 | resume | `site.json` → `resume.path` | `/assets/resume/balaji-selvaraj-resume.pdf` | not an image |
 
-### content/competitions/*.md (untracked / not wired)
+### content/drafts/competitions/*.md (unwired / not in build)
 
 16 competition markdown files. Typical frontmatter: `id`, `name`, `organizer`, `year`.  
 No thumbnail field yet — propose `thumbnail: /assets/images/competitions/{slug}.png` when integrated.

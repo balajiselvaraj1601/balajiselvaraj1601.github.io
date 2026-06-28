@@ -69,7 +69,7 @@ Walk every source in [content-inventory.md](content-inventory.md). For each enti
 2. **Heuristic-only** — `projects.json` → `projectIcon()`, `aboutCards` → `aboutCardIcon()`, `ResearchDomainMap.astro`, `PipelineStrip.astro`
 3. **Logo refs** — `vision-board.json` `VisionMark`; `affiliations.json` names (flag `needs_schema`)
 4. **Site brand** — `site.json`, `BaseHead.astro`, `site.webmanifest`
-5. **Content images** — `profile.portrait`, `content/competitions/*.md`
+5. **Content images** — `profile.portrait`, `content/drafts/competitions/*.md`
 6. **Orphans** — `TechIconRow.astro` (ignores `icon` field); Header Unicode vs idle `Icon.astro` keys
 
 Also list files on disk:
@@ -216,7 +216,7 @@ Re-run Phases A–C. All rows should be `resolved` or explicitly deferred.
 
 - Extend `affiliationsSchema` / wire `Affiliations.astro` for logos
 - Wire `TechIconRow.astro` to render `techStack[].icon`
-- Integrate `content/competitions/` into site routes
+- Integrate `content/drafts/competitions/` into site routes
 - Add new `IconName` keys without updating both `icons.ts` and `Icon.astro`
 
 These are follow-up implementation tasks after assets exist.

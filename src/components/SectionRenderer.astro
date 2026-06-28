@@ -1,17 +1,13 @@
 ---
-import Divider from '@components/Divider.astro';
+import Divider from '@components/ui/Divider.astro';
 import Hero from '@components/sections/Hero.astro';
 import About from '@components/sections/About.astro';
 import Impact from '@components/sections/Impact.astro';
-import Vision from '@components/sections/Vision.astro';
 import VisionBoard from '@components/sections/VisionBoard.astro';
-import FeaturedProjects from '@components/sections/FeaturedProjects.astro';
 import LeadershipPhilosophy from '@components/sections/LeadershipPhilosophy.astro';
 import Skills from '@components/sections/Skills.astro';
 import CareerTimeline from '@components/sections/CareerTimeline.astro';
 import Affiliations from '@components/sections/Affiliations.astro';
-import FeaturedPublications from '@components/sections/FeaturedPublications.astro';
-import ContactTeaser from '@components/sections/ContactTeaser.astro';
 import Experience from '@components/sections/Experience.astro';
 import ExperienceIntro from '@components/sections/ExperienceIntro.astro';
 import Projects from '@components/sections/Projects.astro';
@@ -31,15 +27,11 @@ const SECTIONS: Record<string, any> = {
   hero: Hero,
   about: About,
   impact: Impact,
-  vision: Vision,
   'vision-board': VisionBoard,
-  'featured-projects': FeaturedProjects,
   leadership: LeadershipPhilosophy,
   skills: Skills,
   timeline: CareerTimeline,
   affiliations: Affiliations,
-  'featured-publications': FeaturedPublications,
-  'contact-teaser': ContactTeaser,
   experience: Experience,
   'experience-intro': ExperienceIntro,
   projects: Projects,
@@ -58,7 +50,7 @@ const SECTIONS: Record<string, any> = {
 
 interface Props {
   sections: string[];
-  /** Page id from site.json — used for section variants (e.g. compact timeline/skills on home). */
+  /** Page id from site.json — used for section variants (e.g. compact timeline on home). */
   pageId?: string;
 }
 
@@ -69,12 +61,13 @@ const { sections, pageId } = Astro.props;
   sections.map((id, index) => {
     const Section = SECTIONS[id];
     if (!Section) return null;
-    if (id === 'skills' && pageId === 'home') return null;
     const showDivider = index > 0 && id !== 'hero';
 
     let section = null;
-    if (id === 'vision' && pageId === 'home') {
-      section = <Section withSkills />;
+    if (id === 'featured-case-studies' && pageId === 'home') {
+      section = <Section showMoreHref="/projects" />;
+    } else if (id === 'publications' && pageId === 'home') {
+      section = <Section showMoreHref="/research" />;
     } else if (id === 'timeline' && pageId === 'home') {
       section = <Section compact />;
     } else if (id === 'timeline' && pageId === 'experience') {

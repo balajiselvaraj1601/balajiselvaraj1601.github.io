@@ -29,6 +29,5 @@ Thumbs.db
 __pycache__/
 *.pyc
 
-# Logo-pipeline working dir & stray renders
-/logos/
-/publications.png
+# Logo-pipeline source workspace (processed output goes to public/assets/logos/)
+/assets/source/logos/

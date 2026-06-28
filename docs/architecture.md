@@ -37,6 +37,30 @@ GitHub Pages  (via .github/workflows/deploy.yml)
 | Hosting | GitHub Pages | User site at domain root |
 | CI | GitHub Actions | Build on push; deploy gated to user-site repo |
 
+## Repo layout
+
+```
+portfolio_site/
+├── assets/source/logos/     Logo pipeline input (+ _originals/ backups)
+├── content/                 Zod-validated JSON (SSOT for public copy)
+│   └── drafts/competitions/ Unwired competition markdown (future routes)
+├── docs/
+│   ├── audits/              file-migration.csv, logo-manifest.csv
+│   ├── reference/           Design prototype + scratch screenshots
+│   └── page-briefs/         Per-route content specs
+├── public/assets/           Published static URLs (do not rename paths)
+├── scripts/                 Node/Python maintenance tooling
+└── src/
+    ├── components/
+    │   ├── SectionRenderer.astro
+    │   ├── chrome/          Header, Footer, BaseHead, …
+    │   ├── ui/              Chip, Icon, Section, …
+    │   ├── cards/           ImpactCard, HubCircle, …
+    │   └── sections/        Page section components
+    ├── layouts/  lib/  pages/  scripts/  styles/
+    └── schemas.ts
+```
+
 ## Key files
 
 | File | Role |
@@ -47,9 +71,9 @@ GitHub Pages  (via .github/workflows/deploy.yml)
 | `content/site.json` | Page/route definitions (`pages`), section visibility, SEO, résumé path |
 | `src/pages/*.astro` | One route per page; each looks up its `pages` entry and renders via `SectionRenderer` |
 | `src/components/SectionRenderer.astro` | Section id → component map (SSOT); renders an ordered list of section ids |
-| `src/components/BaseHead.astro` | Meta, OG, Twitter, JSON-LD |
-| `src/components/ThemeScript.astro` | Inline theme bootstrap (no flash) |
-| `src/components/Header.astro` | Route nav (server-side active state), mobile menu, theme toggle, résumé CTA |
+| `src/components/chrome/BaseHead.astro` | Meta, OG, Twitter, JSON-LD |
+| `src/components/chrome/ThemeScript.astro` | Inline theme bootstrap (no flash) |
+| `src/components/chrome/Header.astro` | Route nav (server-side active state), mobile menu, theme toggle, résumé CTA |
 | `public/.nojekyll` | Prevents Jekyll from stripping `_astro/` on Pages |
 
 ## Content layer

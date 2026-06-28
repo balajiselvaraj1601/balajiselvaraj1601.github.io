@@ -1,23 +1,24 @@
 ---
-import Section from '@components/Section.astro';
-import ResearchCard from '@components/ResearchCard.astro';
+import SpeakingCard from '@components/cards/SpeakingCard.astro';
+import Section from '@components/ui/Section.astro';
 import { speakers, site } from '@lib/content';
 ---
 
-<Section id="speakers" title={site.sections.speakers.title} variant="default">
-  <div class="research-grid reveal">
-    {
-      speakers.items.map((p) => (
-        <ResearchCard venue={p.label} title={p.title} href={p.url} youtube={p.youtube} image={p.image} logo={p.logo} icon="presentation" />
-      ))
-    }
+<Section
+  id="speakers"
+  title={site.sections.speakers.title}
+  subtitle={speakers.subtitle}
+  variant="default"
+>
+  <div class="speaking-grid reveal">
+    {speakers.items.map((item) => <SpeakingCard item={item} />)}
   </div>
 </Section>
 
 <style>
-  .research-grid {
+  .speaking-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
     gap: 1.5rem;
   }
 </style>

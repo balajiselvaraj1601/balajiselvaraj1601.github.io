@@ -1,0 +1,274 @@
+---
+import Chip from '@components/ui/Chip.astro';
+import { logoSrc } from '@lib/content';
+import { logoUsesBadge } from '@lib/logo-display';
+import type { Speakers } from '@schemas';
+
+type Item = Speakers['items'][number];
+
+interface Props {
+  item: Item;
+}
+
+const { item } = Astro.props;
+const logoUrl = logoSrc(item.logo);
+const showLogoBadge = logoUsesBadge(item.logo, item.logoBadge);
+
+/** Extract an 11-char YouTube video id from common URL shapes. */
+function youtubeId(url?: string): string | null {
+  if (!url) return null;
+  const m = url.match(
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/
+  );
+  return m ? m[1] : null;
+}
+
+const ytId = youtubeId(item.youtube);
+const ytThumb = ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : null;
+---
+
+<article class="speaking-card">
+  <header class="speaking-card__head">
+    {
+      logoUrl ? (
+        showLogoBadge ? (
+          <div class="speaking-card__logo speaking-card__logo--badge">
+            <img src={logoUrl} alt={`${item.event} logo`} loading="lazy" />
+          </div>
+        ) : (
+          <div class="speaking-card__logo">
+            <img src={logoUrl} alt={`${item.event} logo`} loading="lazy" />
+          </div>
+        )
+      ) : null
+    }
+    <div class="speaking-card__meta">
+      <span class="speaking-card__role">{item.role}</span>
+      <strong class="speaking-card__event">{item.event}</strong>
+      <span class="speaking-card__location">{item.location}</span>
+    </div>
+    <time class="speaking-card__date" datetime={item.date}>{item.date}</time>
+  </header>
+
+  <h3 class="speaking-card__title">
+    <a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a>
+  </h3>
+  <p class="speaking-card__desc">{item.description}</p>
+
+  {
+    ytId && item.youtube && (
+      <a
+        class="speaking-card__media speaking-card__media--video"
+        href={item.youtube}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Watch ${item.title} on YouTube`}
+      >
+        <img src={ytThumb!} alt="" loading="lazy" />
+        <span class="speaking-card__play" aria-hidden="true">
+          <svg viewBox="0 0 68 48" width="68" height="48" focusable="false">
+            <path
+              class="speaking-card__play-bg"
+              d="M66.52 7.74c-.78-2.93-2.94-5.41-5.73-6.19C55.79.13 34 0 34 0S12.21.13 6.21 1.55C3.42 2.33 1.26 4.81.48 7.74.06 9.4 0 11.02 0 12.54s.06 3.14.48 4.8c.78 2.93 2.94 5.41 5.73 6.19C12.21 24.87 34 25 34 25s21.79-.13 27.79-1.47c2.79-.78 4.95-3.26 5.73-6.19.42-1.66.48-3.22.48-4.8s-.06-3.14-.48-4.8z"
+            />
+            <path class="speaking-card__play-icon" d="M 45,24 27,14 27,34" />
+          </svg>
+        </span>
+      </a>
+    )
+  }
+
+  {
+    item.image && (
+      <div class="speaking-card__media">
+        <img src={item.image} alt={`${item.event} — ${item.title}`} loading="lazy" />
+      </div>
+    )
+  }
+
+  {
+    item.tags.length > 0 && (
+      <ul class="speaking-card__tags" aria-label="Topics">
+        {item.tags.map((tag) => (
+          <li>
+            <Chip>{tag}</Chip>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</article>
+
+<style>
+  .speaking-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    height: 100%;
+    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+
+  .speaking-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  .speaking-card__head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.85rem 1rem;
+    align-items: start;
+  }
+
+  .speaking-card__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    min-height: 52px;
+  }
+
+  .speaking-card__logo--badge {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    padding: 6px 10px;
+  }
+
+  .speaking-card__logo img {
+    display: block;
+    max-height: 32px;
+    width: auto;
+    max-width: 72px;
+    object-fit: contain;
+  }
+
+  .speaking-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .speaking-card__role {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+  }
+
+  .speaking-card__event {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--heading);
+  }
+
+  .speaking-card__location {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .speaking-card__date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .speaking-card__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .speaking-card__title a {
+    color: var(--heading);
+    text-decoration: none;
+  }
+
+  .speaking-card__title a:hover {
+    color: var(--accent-light);
+  }
+
+  .speaking-card__desc {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0;
+    max-width: none;
+  }
+
+  .speaking-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #000;
+  }
+
+  .speaking-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .speaking-card__media--video {
+    display: block;
+    text-decoration: none;
+  }
+
+  .speaking-card__media--video:hover .speaking-card__play-bg {
+    fill: #f00;
+  }
+
+  .speaking-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .speaking-card__play-bg {
+    fill: rgba(0, 0, 0, 0.75);
+    transition: fill var(--dur) var(--ease);
+  }
+
+  .speaking-card__play-icon {
+    fill: #fff;
+  }
+
+  .speaking-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+  }
+
+  @media (max-width: 520px) {
+    .speaking-card__head {
+      grid-template-columns: auto 1fr;
+    }
+
+    .speaking-card__date {
+      grid-column: 2;
+      text-align: left;
+      white-space: normal;
+    }
+  }
+</style>

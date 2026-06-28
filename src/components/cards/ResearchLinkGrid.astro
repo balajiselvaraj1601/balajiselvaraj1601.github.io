@@ -1,0 +1,36 @@
+---
+import ResearchCard from '@components/cards/ResearchCard.astro';
+import type { LinkList } from '@schemas';
+
+interface Props {
+  items: LinkList['items'];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="research-grid reveal">
+  {
+    items.map((p) => (
+      <ResearchCard
+        variant="stacked"
+        venue={p.label}
+        title={p.title}
+        description={p.description}
+        href={p.url}
+        youtube={p.youtube}
+        image={p.image}
+        logo={p.logo}
+        logoBadge={p.logoBadge}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

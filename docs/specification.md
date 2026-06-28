@@ -10,12 +10,12 @@ Primary structure: **multi-page**, grouping the full section set (see `content/s
 sections`) into a few themed routes (keeps the nav short while giving heavy content its own URL).
 
 ```
-/              About (Home)  → hero, about, featured-projects, impact, vision, leadership,
-                               timeline, affiliations, featured-publications, contact-teaser
-/experience    Experience    → experience-intro, experience, mentorship, impact, contact-teaser
-/projects      Projects      → projects-intro, featured-case-studies, projects, contact-teaser
-/research      Research      → publications, conferences, speakers, kaggle
-/recognition   Recognition   → awards, education, contact-teaser
+/              About (Home)  → hero, about, featured-case-studies, impact, vision-board,
+                               leadership, skills, timeline, affiliations, publications, contact
+/experience    Experience    → experience-intro, timeline, experience, mentorship, impact, contact
+/projects      Projects      → projects-intro, featured-case-studies, projects, contact
+/research      Research      → generative-ai, publications, conferences, speakers, contact
+/recognition   Recognition   → awards, kaggle, education, contact
 /vision        Vision        → vision-board
 /contact       Contact       → contact
 /404           custom not-found page
@@ -43,15 +43,15 @@ App / Layout
 ├── Main
 │   ├── HeroSection            ← person/profile.json (headline, metrics[], ctas[])
 │   ├── AboutSection           ← person/profile.json (aboutIntro, aboutCards[])
-│   ├── FeaturedProjectsSection← work/projects.json (featured: true)
+│   ├── FeaturedCaseStudies    ← work/projects.json (featured: true)    (ProjectCaseStudyCard)
 │   ├── ImpactSection          ← work/strategic-impact.json (journey/programs/leadershipCards)
-│   ├── VisionSection          ← person/profile.json.vision (heading, paragraphs[])
+│   ├── VisionBoardSection     ← work/vision-board.json (infographic hubs/programs/orgCards)
 │   ├── LeadershipSection      ← person/profile.json.leadershipPhilosophy
-│   ├── SkillsSection          ← work/skills.json
+│   ├── SkillsSection          ← work/skills.json.categories[]           (CategoryGroup → Chip)
 │   ├── CareerTimelineSection  ← work/experience.json.roles[] (compact rail)
 │   ├── AffiliationsSection    ← person/affiliations.json
-│   ├── FeaturedPublications   ← research/publications.json (top items)
-│   ├── ContactTeaserSection   ← person/profile.json (CTA to /contact)
+│   ├── PublicationsSection    ← research/publications.json.items[]      (ResearchLinkGrid)
+│   ├── ContactSection         ← person/profile.json.contact[]           (full connect layout)
 │   ├── ExperienceIntroSection ← work/experience.json (title, intro, snapshot[])   (MetricCard)
 │   ├── ExperienceSection      ← work/experience.json.roles[]            (Timeline)
 │   │   └── RoleCard → ProjectGroup → Bullet (respects tier)
@@ -60,14 +60,14 @@ App / Layout
 │   ├── ProjectsSection        ← work/projects.json.projects[]           (CardGrid)
 │   │   └── ProjectCard → (optional) ProjectDetail
 │   ├── GenerativeAISection    ← research/generative-ai.json.items[]         (inline text list)
-│   ├── SkillsSection          ← work/skills.json.categories[]           (CategoryGroup → Chip)
 │   ├── MentorshipSection      ← work/mentorship.json.items[]            (inline text list)
 │   ├── EducationSection       ← recognition/education.json.records[]
 │   ├── AwardsSection          ← recognition/awards.json.items[]                (AwardPill)
-│   ├── PublicationsSection    ← research/publications.json.items[]          (ResearchCard)
-│   ├── ConferencesSection     ← research/conferences.json.items[]          (ResearchCard)
+│   ├── PublicationsSection    ← research/publications.json.items[]          (ResearchLinkGrid)
+│   ├── ConferencesSection     ← research/conferences.json.items[]          (ResearchLinkGrid)
+│   ├── SpeakersSection        ← research/speakers.json.items[]             (ResearchLinkGrid)
 │   ├── KaggleSection          ← recognition/kaggle.json (rank + items[])       (inline link list)
-│   └── ContactSection         ← person/profile.json.contact[]            (ContactLink)
+│   └── ContactSection         ← person/profile.json.contact[]            (full connect layout)
 └── Footer (copyright, social links, back-to-top)
 ```
 
@@ -81,30 +81,26 @@ Reused primitives (define once, use everywhere): `Section` (heading + anchor + c
 |---------|-------------|----------------|-----------------|
 | Hero | `person/profile.json` | `headline`, `metrics[]`, `ctas[]`, photo | Split layout; metric cards; value-oriented CTAs |
 | About | `person/profile.json` | `aboutIntro`, `aboutCards[]` | Intro paragraph + scan cards |
-| Featured Projects | `work/projects.json` | `projects[]` where `featured: true` | Top 3 cards; link to `/projects` |
+| Featured Case Studies | `work/projects.json` | `projects[]` where `featured: true` | Flagship case-study cards (full detail); optional CTA to `/projects` on home |
 | Strategic Impact | `work/strategic-impact.json` | `metrics[]`, `highlights[]`, optional `journey[]`, `programs[]`, `leadershipCards[]` | Metric grid + highlights; optional journey/programs/cards on `/experience` |
-| Vision | `person/profile.json` | `vision.heading`, `vision.paragraphs[]` | Narrative prose block (`variant="alt"`) |
+| Vision Board | `work/vision-board.json` | `hubs[]`, `programs[]`, `orgCards[]` | Infographic layout on `/` and `/vision` |
 | Leadership | `person/profile.json` | `leadershipPhilosophy.statement` | Pull-quote block |
 | Skills | `work/skills.json` | `categories[] -> skills[]` | Grouped skill chips |
-| Career Timeline | `work/experience.json` | `roles[]` (org, position, period, mission) | Compact vertical rail |
+| Career Timeline | `work/experience.json` | `roles[]` (org, position, period, mission) | Compact vertical rail on home; full rail on `/experience` |
 | Affiliations | `person/affiliations.json` | `items[].name`, optional `items[].logo` | Org list with optional logo SVG in `public/assets/logos/` |
-| Featured Publications | `research/publications.json` | `items[]` (top N) | Link cards; CTA to `/research` |
-| Contact Teaser | `person/profile.json` | (static lead + CTA) | Button to `/contact` |
+| Publications | `research/publications.json` | `items[]` (`label`, `title`, `url`, `description`) | Stacked ResearchLinkGrid; optional CTA to `/research` on home |
+| Contact | `person/profile.json` | `contact[]`, `contactPage`, `contactQuote` | Full connect layout on all routes that include `contact` |
 | Experience Intro | `work/experience.json` | `title`, `intro`, `snapshot[]` | Section lead-in + metric cards |
 | Experience | `work/experience.json` | `roles[] -> projects[] -> bullets[]` | Full timeline; optional `mission` per role |
 | Projects Intro | `work/projects.json` | `title`, `intro`, `snapshot[]` | Section lead-in + metric cards |
-| Featured Case Studies | `work/projects.json` | `projects[]` where `featured: true` | Flagship case-study cards (full detail) |
 | Projects | `work/projects.json` | case-study fields + `highlights[]`, `tags[]` | Problem/solution/architecture/impact blocks |
 | Generative AI | `research/generative-ai.json` | `items[].text` | Bullet list |
 | Mentorship | `work/mentorship.json` | `items[].text` | Bullet list |
 | Education | `recognition/education.json` | `records[]` | Degree, institution, period, gpa, achievement |
 | Awards | `recognition/awards.json` | `items[]` (`label`, `detail`) | Label + detail rows |
-| Publications | `research/publications.json` | `items[]` (`label`, `title`, `url`) | External links |
-| Conferences | `research/conferences.json` | `items[]` (`label`, `title`, `url`) | External links; `[SPEAKER]/[PRESENTER]` tags in label |
-| Speakers | `research/speakers.json` | `items[]` (`label`, `title`, `url`) | Speaking engagements (ResearchCard) |
-| Vision Board | `work/vision-board.json` | `hubs[]`, `programs[]`, `orgCards[]` | Infographic layout on `/vision` |
-| Kaggle | `recognition/kaggle.json` | `rank`, `profile`, `items[]` (`label`, `url`) | Show rank prominently; link each competition (also on `/research`) |
-| Contact | `person/profile.json` | `contact[]` (email, linkedin, kaggle, location) | `mailto:` for email; external links `rel="noopener noreferrer"` |
+| Conferences | `research/conferences.json` | `items[]` (`label`, `title`, `url`) | Stacked ResearchLinkGrid; `[SPEAKER]/[PRESENTER]` tags in label |
+| Speakers | `research/speakers.json` | `items[]` (`label`, `title`, `url`, optional `youtube`, `image`) | Stacked ResearchLinkGrid |
+| Kaggle | `recognition/kaggle.json` | `rank`, `profile`, `items[]` (`label`, `url`) | Show rank prominently; link each competition on `/recognition` |
 
 The renderer should map `site.json.sections[id].source` → file, and `…title` → heading text.
 

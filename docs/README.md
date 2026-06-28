@@ -30,6 +30,7 @@ deployed to GitHub Pages at https://balajiselvaraj1601.github.io.
 | [Accessibility](./accessibility.md) | WCAG 2.1 AA checklist |
 | [Deployment](./deployment.md) | GitHub Pages target, CI/CD, artifact checklist |
 | [Troubleshooting](./troubleshooting.md) | Common build, deploy, and content errors |
+| [Audits](./audits/file-migration.csv) | Repo file inventory and migration map |
 
 ## Related files outside `docs/`
 

@@ -65,6 +65,7 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
                 </div>
               )}
               <h3>{role.position}</h3>
+              {role.blurb && <p class="role-blurb">{role.blurb}</p>}
               <div class="role-meta">
                 <span>
                   <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
@@ -218,6 +219,14 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
+  }
+  .role-blurb {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 680px;
+    margin-bottom: 0.6rem;
   }
   .role-meta {
     display: flex;

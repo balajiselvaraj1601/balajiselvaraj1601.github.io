@@ -21,6 +21,7 @@ import Conferences from '@components/sections/Conferences.astro';
 import Speakers from '@components/sections/Speakers.astro';
 import Kaggle from '@components/sections/Kaggle.astro';
 import Contact from '@components/sections/Contact.astro';
+import { sectionViewMap } from '@lib/content';
 
 const SECTIONS: Record<string, any> = {
   hero: Hero,
@@ -50,9 +51,11 @@ interface Props {
   sections: string[];
   /** Page id from site.json — used for section variants (e.g. compact timeline on home). */
   pageId?: string;
+  /** When true, wrap sections with data-nav-views for client-side view filtering. */
+  navViews?: boolean;
 }
 
-const { sections, pageId } = Astro.props;
+const { sections, pageId, navViews = false } = Astro.props;
 ---
 
 {
@@ -62,11 +65,7 @@ const { sections, pageId } = Astro.props;
     const showDivider = index > 0 && id !== 'hero';
 
     let section = null;
-    if (id === 'featured-case-studies' && pageId === 'home') {
-      section = <Section showMoreHref="/projects" />;
-    } else if (id === 'publications' && pageId === 'home') {
-      section = <Section showMoreHref="/research" />;
-    } else if (id === 'timeline' && pageId === 'home') {
+    if (id === 'timeline' && pageId === 'home') {
       section = <Section compact />;
     } else if (id === 'timeline' && pageId === 'experience') {
       section = <Section showCta={false} />;
@@ -74,11 +73,21 @@ const { sections, pageId } = Astro.props;
       section = <Section />;
     }
 
-    return (
+    const views = navViews ? sectionViewMap[id]?.join(' ') : undefined;
+
+    const block = (
       <>
-        {showDivider && <Divider />}
-        {section}
+        {showDivider && <Divider data-nav-divider={navViews || undefined} />}
+        {navViews && views ? (
+          <div class="section-view-root" data-nav-views={views} data-section-id={id}>
+            {section}
+          </div>
+        ) : (
+          section
+        )}
       </>
     );
+
+    return block;
   })
 }

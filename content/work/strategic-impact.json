@@ -31,62 +31,6 @@
       "variant": "red"
     }
   ],
-  "programs": [
-    {
-      "title": "Drug Safety Platform",
-      "icon": "pill",
-      "tag": "SVP Backed · $3M+ Initiative",
-      "tagVariant": "red",
-      "cardVariant": "purple",
-      "bullets": [
-        "Projected $20M–$50M in annual savings by reducing animal studies.",
-        "Compressed safety timelines from five to three years.",
-        "Secured project funding and led development with a 12-member team.",
-        "Architected a model-agnostic multimodal platform integrating omics, imaging, and molecular data."
-      ]
-    },
-    {
-      "title": "Broad Institute Collaboration",
-      "entity": "broad-institute",
-      "icon": "institution",
-      "tag": "Senior Group Leader Partnership",
-      "tagVariant": "purple",
-      "cardVariant": "purple",
-      "bullets": [
-        "Initiated collaboration with Dr. Shantanu Singh (Senior Group Leader).",
-        "Co-developing computational pipelines for Cell Painting and omics.",
-        "Developing multimodal computation pipelines at the research frontier.",
-        "Bridging pharma R&D with academic research excellence."
-      ]
-    },
-    {
-      "title": "Persister Analysis — Oncology",
-      "icon": "microscope",
-      "tag": "Chief Scientist Backed · €14M EU Consortium",
-      "tagVariant": "red",
-      "cardVariant": "red",
-      "bullets": [
-        "Persister-Seq Consortium across 14 partner institutions in Europe.",
-        "Novel tumor recurrence prediction using single-cell transcriptomics.",
-        "Achieved 90% F1 on internal benchmarks; 13%+ over state-of-the-art.",
-        "Secured project and led end-to-end development."
-      ]
-    },
-    {
-      "title": "AACR 2025 Conference",
-      "entity": "aacr",
-      "icon": "presentation",
-      "tag": "Conference Presenter",
-      "tagVariant": "red",
-      "cardVariant": "red",
-      "bullets": [
-        "Presented at AACR 2025 — the top oncology research conference globally.",
-        "AI-driven identification of drug-tolerant persister cells in lung cancer.",
-        "Three-month AI pipeline development cycle with two AI engineers.",
-        "Also presented at AACR 2024 and 2023 on CT tumor segmentation."
-      ]
-    }
-  ],
   "leadershipCards": [
     { "icon": "trophy", "title": "EVP Level Award", "subtitle": "For Drug Safety Platform" },
     { "icon": "chart", "title": "Gartner Submission", "entity": "gartner", "subtitle": "GITC Chennai Multimodal Vision" },
@@ -97,8 +41,6 @@
     { "icon": "globe", "title": "Global Management", "subtitle": "UK · Sweden · India · Mexico · China" }
   ],
   "highlights": [
-    { "text": "Secured $0.5M to lead AI development within a $3M+ SVP-sponsored AstraZeneca initiative projected to deliver $20M-$50M in annual savings." },
-    { "text": "Secured and led a Chief Scientist-sponsored AI initiative within a €14M EU research consortium spanning 14 partner institutions across Europe." },
     { "text": "Translated bottom-up AI vision into executive-sponsored strategic initiatives — an SVP-sponsored program and a Chief Scientist-sponsored program." }
   ]
 }

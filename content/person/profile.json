@@ -2,7 +2,7 @@
   "name": "Balaji Selvaraj",
   "title": "Technical AI Leader",
   "location": "Gothenburg, Sweden",
-  "headline": "Delivering AI programs that earn executive sponsorship and measurable clinical impact — from oncology imaging to drug-safety platforms across AstraZeneca R&D.",
+  "headline": "From oncology imaging to drug-safety platforms, I build AI systems that deliver measurable outcomes across AstraZeneca R&D.",
   "heroQuote": {
     "tamil": "உள்ளுவதெல்லாம் உயர்வுள்ளல்",
     "translation": "Let all your thoughts be lofty.",
@@ -17,14 +17,13 @@
     "tail": "into clinical impact"
   },
   "metrics": [
-    { "value": "12+", "label": "Years in AI & ML" },
-    { "value": "652", "label": "Kaggle Global Rank / 200K+" },
     { "value": "$50M", "label": "Projected Annual Savings" },
-    { "value": "5", "label": "Countries, 12-Member Team" }
+    { "value": "Top 0.3%", "label": "Kaggle, among 200K+" },
+    { "value": "12+", "label": "Years in AI & ML" }
   ],
   "ctas": [
-    { "label": "View Impact →", "href": "/#impact", "variant": "primary" },
-    { "label": "Download Resume", "href": "/assets/resume/balaji-selvaraj-resume.pdf", "variant": "secondary" }
+    { "label": "Let's talk", "href": "/#contact", "variant": "primary" },
+    { "label": "Download Resume", "href": "/assets/resume/balaji-selvaraj-resume.pdf", "variant": "secondary", "icon": "download" }
   ],
   "portrait": {
     "src": "/assets/images/balaji.png",
@@ -34,7 +33,7 @@
   },
   "credentialHook": "Kaggle top 0.3% globally · 652 among 200K+ data scientists",
   "photo": "/assets/images/balaji.png",
-  "aboutIntro": "Technical AI Leader with 12+ years of experience spanning product, services, and startup environments, leading a globally distributed AI team across five countries. I deliver AI programs across oncology, drug safety, and biopharma R&D, supporting AstraZeneca's three R&D priority areas over three consecutive years.",
+  "aboutIntro": "I build AI organizations that ship measurable outcomes — not research prototypes left on the shelf. Over 12+ years across product, services, and startup environments, that principle has shaped how I lead teams and deliver AI programs spanning oncology, drug safety, and biopharma R&D in support of AstraZeneca's R&D priority areas.",
   "aboutCards": [
     {
       "title": "Industries",
@@ -49,8 +48,6 @@
     {
       "title": "Leadership",
       "items": [
-        "Scaled team from 1 → 12 engineers",
-        "Distributed across 5 countries",
         "Cross-functional stakeholder alignment",
         "SVP- and Chief Scientist-sponsored programs"
       ]
@@ -67,15 +64,36 @@
     {
       "title": "Recognition",
       "items": [
-        "Top 0.3% Kaggle globally",
-        "12+ years applied AI",
         "Conference speaker",
         "Awards across competitions and research"
       ]
     }
   ],
   "leadershipPhilosophy": {
-    "statement": "I build AI organizations that deliver measurable business outcomes — not research prototypes left on the shelf."
+    "statement": "I build AI organizations that deliver measurable business outcomes — not research prototypes left on the shelf.",
+    "intro": "Delivering on that conviction is less about any single model and more about the people, alignment, and decisions around it. A few principles guide how I build teams and the work they ship.",
+    "themes": [
+      {
+        "title": "Hiring & Scaling",
+        "description": "Grew the team from a single engineer to 12, distributed across five countries — hiring for both technical depth and range.",
+        "icon": "team"
+      },
+      {
+        "title": "Mentoring",
+        "description": "Mentor AI/ML engineers and graduate trainees, helping them grow into full-time industry and research roles.",
+        "icon": "graduation"
+      },
+      {
+        "title": "Cross-functional & Executive Alignment",
+        "description": "Partner across functions and earn SVP- and Chief Scientist-level sponsorship to keep programs funded, focused, and connected to R&D priorities.",
+        "icon": "handshake"
+      },
+      {
+        "title": "Outcome-Driven Decisions",
+        "description": "Prioritize the work that ships measurable impact over research that stays on the shelf.",
+        "icon": "target"
+      }
+    ]
   },
   "vision": {
     "heading": "Multimodal AI at the edge of biology",
@@ -146,7 +164,7 @@
     {
       "type": "kaggle",
       "label": "Kaggle",
-      "value": "Top 0.3% globally · Rank #652 worldwide",
+      "value": "@dhakshiin1601",
       "href": "https://www.kaggle.com/dhakshiin1601",
       "icon": "kaggle"
     },

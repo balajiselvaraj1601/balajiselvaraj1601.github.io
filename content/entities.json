@@ -54,5 +54,9 @@
   "uppsala-university": {
     "name": "Uppsala University",
     "url": "https://www.uu.se/en"
+  },
+  "ai-sweden": {
+    "name": "AI Sweden",
+    "url": "https://www.ai.se/en"
   }
 }

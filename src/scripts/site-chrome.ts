@@ -1,4 +1,4 @@
-export function initSiteChrome() {
+export function initSiteChrome(navViewsConfig?: import('./section-views').SectionViewsOptions) {
   const toggle = document.getElementById('theme-toggle');
   toggle?.addEventListener('click', () => {
     const root = document.documentElement;
@@ -65,6 +65,12 @@ export function initSiteChrome() {
 
   initReveal();
   initHeaderScrollState();
+
+  if (navViewsConfig) {
+    import('./section-views').then(({ initSectionViews }) => {
+      initSectionViews(navViewsConfig);
+    });
+  }
 }
 
 function initHeaderScrollState() {

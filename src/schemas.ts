@@ -37,6 +37,8 @@ const ContentPage = z.object({
   external: z.literal(false).optional(),
   seo: PageSeo,
   sections: z.array(z.string()),
+  viewSections: z.array(z.string()).optional(),
+  viewAnchor: z.string().optional(),
 });
 const ExternalPage = z.object({
   id: z.string(),
@@ -103,13 +105,26 @@ export const profileSchema = z.object({
       label: z.string(),
       href: z.string(),
       variant: z.enum(['primary', 'default', 'secondary']).optional(),
+      icon: iconNameSchema.optional(),
     })
   ),
   aboutIntro: z.string(),
   aboutCards: z.array(
     z.object({ title: z.string(), items: z.array(z.string()) })
   ),
-  leadershipPhilosophy: z.object({ statement: z.string() }),
+  leadershipPhilosophy: z.object({
+    statement: z.string(),
+    intro: z.string().optional(),
+    themes: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          icon: iconNameSchema.optional(),
+        })
+      )
+      .optional(),
+  }),
   vision: z
     .object({
       heading: z.string(),
@@ -224,6 +239,8 @@ const VisionMark = z.discriminatedUnion('kind', [
 ]);
 export const visionBoardSchema = z.object({
   header: z.string(),
+  eyebrow: z.string().optional(),
+  intro: z.string().optional(),
   hubs: z.array(
     z.object({
       id: z.string(),
@@ -233,24 +250,53 @@ export const visionBoardSchema = z.object({
       satellites: z.array(iconNameSchema),
     })
   ),
-  programs: z.array(
-    z.object({
-      title: z.string(),
-      label: z.string(),
-      variant: VariantColor,
-      badge: VisionMark,
-      lines: z.array(z.string()),
-      entity: EntitySlug,
+  programs: z
+    .array(
+      z.object({
+        title: z.string(),
+        label: z.string(),
+        variant: VariantColor,
+        badge: VisionMark,
+        lines: z.array(z.string()),
+        entity: EntitySlug,
+      })
+    )
+    .optional(),
+  orgHeader: z.string().optional(),
+  orgCards: z
+    .array(
+      z.object({
+        icon: iconNameSchema,
+        title: z.string(),
+        lines: z.array(z.string()),
+      })
+    )
+    .optional(),
+  principles: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        icon: iconNameSchema.optional(),
+      })
+    )
+    .optional(),
+  quote: z
+    .object({
+      tamil: z.string().optional(),
+      translation: z.string(),
+      author: z.string(),
+      image: z.string().optional(),
+      imageAlt: z.string().optional(),
     })
-  ),
-  orgHeader: z.string(),
-  orgCards: z.array(
-    z.object({
-      icon: iconNameSchema,
-      title: z.string(),
-      lines: z.array(z.string()),
+    .optional(),
+  technicalVision: z
+    .object({
+      heading: z.string(),
+      headingEmphasis: z.string().optional(),
+      paragraphs: z.array(z.string()),
     })
-  ),
+    .optional(),
 });
 
 /* ── generative-ai / mentorship (text-item lists) ──────────────────────── */
@@ -272,6 +318,7 @@ export const experienceSchema = z.object({
       entity: EntitySlug,
       location: z.string().optional(),
       mission: z.string().optional(),
+      blurb: z.string().optional(),
       tech: z.array(z.string()).optional(),
       period: z.object({
         start: z.string(),
@@ -407,6 +454,7 @@ export const collaborationsSchema = z.object({
       name: z.string(),
       logo: z.string().optional(),
       entity: EntitySlug,
+      detail: z.string().optional(),
     })
   ),
 });

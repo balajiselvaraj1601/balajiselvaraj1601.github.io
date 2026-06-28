@@ -5,16 +5,41 @@ import HubCircle from '@components/cards/HubCircle.astro';
 import ProgramBadgeCard from '@components/cards/ProgramBadgeCard.astro';
 import OrgImpactCard from '@components/cards/OrgImpactCard.astro';
 import Icon from '@components/ui/Icon.astro';
-import { visionBoard } from '@lib/content';
+import { visionBoard, profile } from '@lib/content';
 
-const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
+const { header, eyebrow, intro, hubs, principles, programs, orgHeader, orgCards } =
+  visionBoard;
+const quote = profile.heroQuote;
 ---
 
 <Section id="vision-board" title="" hideTitle variant="full" class="vboard">
   <BoardHeader title={header} flank="in" />
 
-  <div class="vboard__flow reveal">
-    <div class="vboard__hubs">
+  {(eyebrow || intro) && (
+    <div class="vboard__lede reveal">
+      {eyebrow && <p class="vboard__eyebrow">{eyebrow}</p>}
+      {intro && <p class="vboard__intro">{intro}</p>}
+    </div>
+  )}
+
+  {principles && principles.length > 0 && (
+    <div class="vboard__principles reveal">
+      {principles.map((p) => (
+        <article class="card vboard__principle">
+          {p.icon && (
+            <span class="vboard__principle-icon" aria-hidden="true">
+              <Icon name={p.icon} size={26} />
+            </span>
+          )}
+          <h3 class="vboard__principle-title">{p.title}</h3>
+          <p class="vboard__principle-desc">{p.description}</p>
+        </article>
+      ))}
+    </div>
+  )}
+
+  {hubs && hubs.length > 0 && (
+    <div class="vboard__hubs reveal" aria-hidden="true">
       {hubs.map((hub) => (
         <HubCircle
           center={hub.center}
@@ -24,13 +49,30 @@ const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
         />
       ))}
     </div>
+  )}
 
-    <span class="vboard__arrow" aria-hidden="true">
-      <Icon name="chevron-right" size={26} />
-      <Icon name="chevron-right" size={26} />
-    </span>
+  {quote && (
+    <figure class="vboard__quote reveal">
+      {quote.image && (
+        <img
+          class="vboard__quote-img"
+          src={quote.image}
+          alt={quote.imageAlt ?? ''}
+          loading="lazy"
+        />
+      )}
+      <blockquote class="vboard__quote-body">
+        {quote.tamil && <p class="vboard__quote-tamil">{quote.tamil}</p>}
+        <p class="vboard__quote-translation">“{quote.translation}”</p>
+        <figcaption class="vboard__quote-author">— {quote.author}</figcaption>
+      </blockquote>
+    </figure>
+  )}
 
-    <div class="vboard__programs">
+  {/* Legacy achievement infographic — retained but guarded; data now lives in
+      Impact / Case Studies and is intentionally absent from this page. */}
+  {programs && programs.length > 0 && (
+    <div class="vboard__programs reveal">
       {programs.map((p) => (
         <ProgramBadgeCard
           title={p.title}
@@ -42,16 +84,18 @@ const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
         />
       ))}
     </div>
-  </div>
+  )}
 
-  <div class="vboard__org reveal">
-    <BoardHeader title={orgHeader} flank="out" />
-    <div class="vboard__org-grid">
-      {orgCards.map((c) => (
-        <OrgImpactCard icon={c.icon} title={c.title} lines={c.lines} />
-      ))}
+  {orgCards && orgCards.length > 0 && (
+    <div class="vboard__org reveal">
+      {orgHeader && <BoardHeader title={orgHeader} flank="out" />}
+      <div class="vboard__org-grid">
+        {orgCards.map((c) => (
+          <OrgImpactCard icon={c.icon} title={c.title} lines={c.lines} />
+        ))}
+      </div>
     </div>
-  </div>
+  )}
 </Section>
 
 <style>
@@ -59,33 +103,110 @@ const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
     max-width: 1240px;
   }
 
-  /* ── top flow: hubs → arrow → 2×2 program grid ──────────────────────── */
-  .vboard__flow {
+  /* ── lede ────────────────────────────────────────────────────────────── */
+  .vboard__lede {
+    text-align: center;
+    margin-top: var(--space-8);
+  }
+  .vboard__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent-ll);
+    margin-bottom: var(--space-2);
+  }
+  .vboard__intro {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: var(--maxw-text);
+    margin-inline: auto;
+  }
+
+  /* ── principles grid ─────────────────────────────────────────────────── */
+  .vboard__principles {
     display: grid;
-    grid-template-columns: auto auto 1fr;
-    align-items: center;
-    gap: var(--space-8);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
     margin-top: var(--space-12);
   }
+  .vboard__principle {
+    padding: var(--space-8);
+    border-top: 3px solid var(--accent);
+  }
+  .vboard__principle-icon {
+    display: inline-flex;
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+  }
+  .vboard__principle-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--heading);
+    margin-bottom: var(--space-2);
+  }
+  .vboard__principle-desc {
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 0.92rem;
+    max-width: none;
+  }
+
+  /* ── hubs (abstract decoration) ──────────────────────────────────────── */
   .vboard__hubs {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
+    flex-wrap: wrap;
+  }
+
+  /* ── relocated quote ─────────────────────────────────────────────────── */
+  .vboard__quote {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: var(--space-6);
+    margin-top: var(--space-16);
+    max-width: var(--maxw-text);
+    margin-inline: auto;
+    text-align: center;
   }
-  .vboard__arrow {
-    display: inline-flex;
-    color: var(--accent);
+  .vboard__quote-img {
+    width: 84px;
+    height: 84px;
+    object-fit: contain;
+    flex-shrink: 0;
   }
-  .vboard__arrow :global(svg) {
-    margin-inline: -7px;
+  .vboard__quote-body {
+    margin: 0;
   }
+  .vboard__quote-tamil {
+    font-size: 1.25rem;
+    color: var(--heading);
+    margin-bottom: var(--space-2);
+  }
+  .vboard__quote-translation {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text);
+    margin-bottom: var(--space-2);
+  }
+  .vboard__quote-author {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* ── legacy infographic ──────────────────────────────────────────────── */
   .vboard__programs {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-6);
+    margin-top: var(--space-12);
   }
-
-  /* ── bottom band: org/leadership cards ──────────────────────────────── */
   .vboard__org {
     margin-top: var(--space-16);
   }
@@ -96,32 +217,22 @@ const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
     margin-top: var(--space-10);
   }
 
-  /* ── responsive ─────────────────────────────────────────────────────── */
-  @media (max-width: 1100px) {
-    .vboard__flow {
+  /* ── responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .vboard__principles {
       grid-template-columns: 1fr;
-      justify-items: center;
-      gap: var(--space-10);
-    }
-    .vboard__arrow {
-      transform: rotate(90deg);
-    }
-    .vboard__programs {
-      width: 100%;
     }
     .vboard__org-grid {
       grid-template-columns: repeat(4, 1fr);
     }
   }
-  @media (max-width: 760px) {
-    .vboard__hubs {
+  @media (max-width: 600px) {
+    .vboard__quote {
       flex-direction: column;
     }
     .vboard__org-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-  }
-  @media (max-width: 560px) {
     .vboard__programs {
       grid-template-columns: 1fr;
     }

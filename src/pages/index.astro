@@ -1,7 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import SectionRenderer from '@components/SectionRenderer.astro';
-import { pages } from '@lib/content';
+import { homeSections, pages } from '@lib/content';
 
 const page = pages.find((p) => p.id === 'home')!;
 ---
@@ -10,7 +10,8 @@ const page = pages.find((p) => p.id === 'home')!;
   path={page.path}
   title={page.seo.title}
   description={page.seo.description}
-  dotNavSections={page.sections ?? []}
+  dotNavSections={homeSections}
+  singlePageViews={true}
 >
-  <SectionRenderer sections={page.sections} pageId={page.id} />
+  <SectionRenderer sections={homeSections} pageId={page.id} navViews={true} />
 </Layout>

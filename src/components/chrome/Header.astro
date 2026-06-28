@@ -1,14 +1,33 @@
 ---
-import { site, navItems } from '@lib/content';
+import { site, navItems, navHref } from '@lib/content';
 import Monogram from '@components/chrome/Monogram.astro';
 import Icon from '@components/ui/Icon.astro';
 
+interface Props {
+  singlePageViews?: boolean;
+}
+
+const { singlePageViews = false } = Astro.props;
+
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (path: string) => (path.replace(/\/$/, '') || '/') === current;
-const internalNavItems = navItems.filter((item) => !item.external);
+const isHome = current === '/';
+
+type ContentNavItem = Extract<(typeof navItems)[number], { external?: false }>;
+
+function isContentPage(item: (typeof navItems)[number]): item is ContentNavItem {
+  return !('external' in item && item.external);
+}
+
+const internalNavItems = navItems.filter(isContentPage).map((item) => ({
+  label: item.label,
+  href: singlePageViews ? navHref(item) : item.path,
+  viewAnchor: item.viewAnchor ?? item.id,
+}));
+
 const resumeItem = navItems.find((item) => item.id === 'resume');
 const resumeLabel = resumeItem?.label ?? site.resume.label;
 const resumePath = resumeItem?.path ?? site.resume.path;
+const contactHref = singlePageViews ? '/#contact' : '/contact';
 
 const [firstName, ...rest] = site.name.split(' ');
 const lastName = rest.join(' ');
@@ -33,8 +52,17 @@ const lastName = rest.join(' ');
             <li>
               <a
                 class="nav__link"
-                href={item.path}
-                aria-current={isActive(item.path) ? 'page' : undefined}
+                href={item.href}
+                data-view-anchor={singlePageViews ? item.viewAnchor : undefined}
+                aria-current={
+                  singlePageViews
+                    ? item.viewAnchor === 'about' && isHome
+                      ? 'page'
+                      : undefined
+                    : (item.href.replace(/\/$/, '') || '/') === current
+                      ? 'page'
+                      : undefined
+                }
               >
                 {item.label}
               </a>
@@ -50,7 +78,7 @@ const lastName = rest.join(' ');
         >
           {resumeLabel}
         </a>
-        <a class="btn btn-primary nav-cta" href="/contact">Get in Touch</a>
+        <a class="btn btn-primary nav-cta" href={contactHref} data-view-anchor={singlePageViews ? 'contact' : undefined}>Get in Touch</a>
       </div>
     </nav>
 
@@ -62,7 +90,7 @@ const lastName = rest.join(' ');
       >
         {resumeLabel}
       </a>
-      <a class="btn btn-primary nav-cta" href="/contact">Get in Touch</a>
+      <a class="btn btn-primary nav-cta" href={contactHref} data-view-anchor={singlePageViews ? 'contact' : undefined}>Get in Touch</a>
       <button
         type="button"
         class="save-btn"
@@ -308,8 +336,6 @@ const lastName = rest.join(' ');
 </style>
 
 <script>
-  import { initSiteChrome } from '../../scripts/site-chrome';
   import { savePage } from '../../scripts/save-page';
-  initSiteChrome();
   document.getElementById('save-btn')?.addEventListener('click', savePage);
 </script>

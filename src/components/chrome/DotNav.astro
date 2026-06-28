@@ -1,8 +1,9 @@
 ---
 interface Props {
   sections: string[];
+  singlePageViews?: boolean;
 }
-const { sections } = Astro.props;
+const { sections, singlePageViews = false } = Astro.props;
 
 const labels: Record<string, string> = {
   hero: 'Hero',
@@ -13,9 +14,11 @@ const labels: Record<string, string> = {
   leadership: 'Leadership',
   skills: 'Skills',
   timeline: 'Timeline',
-  publications: 'Research',
+  'experience-intro': 'Experience',
   experience: 'Experience',
   mentorship: 'Mentorship',
+  'projects-intro': 'Projects',
+  publications: 'Publications',
   projects: 'Projects',
   'generative-ai': 'Generative AI',
   conferences: 'Conferences',
@@ -27,21 +30,20 @@ const labels: Record<string, string> = {
 };
 ---
 
-{
-  sections.length >= 2 && (
-    <nav class="dot-nav" id="dot-nav" aria-label="Section navigation">
-      {sections.map((id) => (
-        <button
-          type="button"
-          class="dot-nav__dot"
-          data-target={id}
-          title={labels[id] ?? id}
-          aria-label={labels[id] ?? id}
-        />
-      ))}
-    </nav>
-  )
-}
+<nav class="dot-nav" id="dot-nav" aria-label="Section navigation" hidden={sections.length < 2}>
+  {
+    sections.map((id) => (
+      <button
+        type="button"
+        class="dot-nav__dot"
+        data-target={id}
+        title={labels[id] ?? id}
+        aria-label={labels[id] ?? id}
+        hidden
+      />
+    ))
+  }
+</nav>
 
 <style>
   .dot-nav {
@@ -54,6 +56,9 @@ const labels: Record<string, string> = {
     flex-direction: column;
     gap: 0.75rem;
   }
+  .dot-nav[hidden] {
+    display: none;
+  }
   .dot-nav__dot {
     width: 8px;
     height: 8px;
@@ -63,6 +68,9 @@ const labels: Record<string, string> = {
     background: var(--text-muted);
     cursor: pointer;
     transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .dot-nav__dot[hidden] {
+    display: none;
   }
   .dot-nav__dot:hover {
     background: var(--accent-ll);
@@ -78,12 +86,59 @@ const labels: Record<string, string> = {
   }
 </style>
 
-<script define:vars={{ sectionIds: sections }}>
+<script define:vars={{ sectionIds: sections, singlePageViews }}>
+  const NAV_VIEW_CHANGE = 'nav-view-change';
+
   const nav = document.getElementById('dot-nav');
-  if (!nav || sectionIds.length < 2) {
+  if (!nav) {
     /* no-op */
   } else {
+    let observer = null;
     const dots = Array.from(nav.querySelectorAll('.dot-nav__dot'));
+
+    const visibleSectionIds = () =>
+      dots.filter((d) => !d.hidden).map((d) => d.dataset.target ?? '');
+
+    const setActive = (id) => {
+      dots.forEach((d) => {
+        d.classList.toggle('is-active', d.dataset.target === id);
+      });
+    };
+
+    const bindObserver = () => {
+      if (observer) observer.disconnect();
+      const ids = visibleSectionIds();
+      const observed = ids.map((id) => document.getElementById(id)).filter(Boolean);
+
+      nav.hidden = ids.length < 2;
+      if (ids.length < 2) return;
+
+      if (!('IntersectionObserver' in window) || !observed.length) {
+        if (observed[0]?.id) setActive(observed[0].id);
+        return;
+      }
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          if (visible[0]?.target.id) setActive(visible[0].target.id);
+        },
+        { rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5] }
+      );
+      observed.forEach((el) => observer.observe(el));
+      if (observed[0]?.id) setActive(observed[0].id);
+    };
+
+    const applyViewSections = (ids) => {
+      const active = new Set(ids);
+      dots.forEach((dot) => {
+        const show = active.has(dot.dataset.target ?? '');
+        dot.hidden = !show;
+      });
+      bindObserver();
+    };
 
     dots.forEach((dot) => {
       dot.addEventListener('click', () => {
@@ -95,28 +150,15 @@ const labels: Record<string, string> = {
       });
     });
 
-    const setActive = (id) => {
-      dots.forEach((d) => {
-        d.classList.toggle('is-active', d.dataset.target === id);
+    if (singlePageViews) {
+      document.addEventListener(NAV_VIEW_CHANGE, (event) => {
+        applyViewSections(event.detail?.sectionIds ?? []);
       });
-    };
-
-    const observed = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    if ('IntersectionObserver' in window && observed.length) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((e) => e.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          if (visible[0]?.target.id) setActive(visible[0].target.id);
-        },
-        { rootMargin: '-40% 0px -40% 0px', threshold: [0, 0.25, 0.5] }
-      );
-      observed.forEach((el) => io.observe(el));
-      if (observed[0]?.id) setActive(observed[0].id);
+    } else {
+      dots.forEach((dot) => {
+        dot.hidden = false;
+      });
+      bindObserver();
     }
   }
 </script>

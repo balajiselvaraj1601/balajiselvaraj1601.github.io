@@ -1,8 +1,10 @@
 ---
 import Section from '@components/ui/Section.astro';
+import Icon from '@components/ui/Icon.astro';
 import { profile, site } from '@lib/content';
 
 const title = site.sections.leadership.title;
+const { statement, intro, themes } = profile.leadershipPhilosophy;
 ---
 
 <Section
@@ -13,8 +15,26 @@ const title = site.sections.leadership.title;
   class="leadership-section"
 >
   <blockquote class="leadership__quote card reveal">
-    <p class="leadership__statement">{profile.leadershipPhilosophy.statement}</p>
+    <p class="leadership__statement">{statement}</p>
   </blockquote>
+
+  {intro && <p class="leadership__intro reveal">{intro}</p>}
+
+  {themes && themes.length > 0 && (
+    <ul class="leadership__themes reveal" role="list">
+      {themes.map((theme) => (
+        <li class="leadership__theme card">
+          {theme.icon && (
+            <span class="leadership__theme-icon" aria-hidden="true">
+              <Icon name={theme.icon} size={22} />
+            </span>
+          )}
+          <h3 class="leadership__theme-title">{theme.title}</h3>
+          <p class="leadership__theme-desc">{theme.description}</p>
+        </li>
+      ))}
+    </ul>
+  )}
 </Section>
 
 <style>
@@ -32,6 +52,53 @@ const title = site.sections.leadership.title;
     font-style: italic;
     line-height: 1.5;
     color: var(--text);
+    max-width: none;
+  }
+  .leadership__intro {
+    max-width: var(--maxw-text);
+    margin: var(--space-8) auto 0;
+    text-align: center;
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1.02rem;
+  }
+  .leadership__themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--stack-sm);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-10) auto 0;
+  }
+  .leadership__theme {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: var(--card-padding);
+  }
+  .leadership__theme-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--accent-ll);
+  }
+  .leadership__theme-title {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--heading);
+    margin: 0;
+  }
+  .leadership__theme-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
     max-width: none;
   }
 </style>

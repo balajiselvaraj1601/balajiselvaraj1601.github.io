@@ -1,0 +1,22 @@
+---
+interface Props {
+  anchor: string;
+}
+const { anchor } = Astro.props;
+const target = anchor === 'about' ? '/' : `/#${anchor}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting…</title>
+    <script define:vars={{ target }}>
+      location.replace(target);
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${target}`} />
+    </noscript>
+  </head>
+  <body></body>
+</html>

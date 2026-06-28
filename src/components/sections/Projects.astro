@@ -23,6 +23,9 @@ interface Group {
   items: Project[];
 }
 
+// Cap visible tags at 3; full set stays in projects.json.
+const MAX_VISIBLE_TAGS = 3;
+
 const others = projects.projects.filter((p) => !p.featured);
 const groups: Group[] = [
   {
@@ -65,11 +68,18 @@ const groups: Group[] = [
                 )}
                 {p.tags.length > 0 && (
                   <ul class="pc-tags" aria-label="Project tags">
-                    {p.tags.map((t) => (
+                    {p.tags.slice(0, MAX_VISIBLE_TAGS).map((t) => (
                       <li>
                         <Chip>{t}</Chip>
                       </li>
                     ))}
+                    {p.tags.length > MAX_VISIBLE_TAGS && (
+                      <li>
+                        <Chip class="pc-tag-more">
+                          +{p.tags.length - MAX_VISIBLE_TAGS} more
+                        </Chip>
+                      </li>
+                    )}
                   </ul>
                 )}
               </li>
@@ -167,5 +177,8 @@ const groups: Group[] = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
+  }
+  .pc-tag-more {
+    border-style: dashed;
   }
 </style>

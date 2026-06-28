@@ -1,5 +1,7 @@
 {
-  "header": "AI Leadership & Strategic Impact",
+  "header": "How I Build AI Organizations",
+  "eyebrow": "Leadership Philosophy",
+  "intro": "The principles behind how I build and scale AI organizations.",
   "hubs": [
     {
       "id": "idea",
@@ -16,46 +18,26 @@
       "satellites": ["graph", "document", "table", "pulse", "image", "blocks"]
     }
   ],
-  "programs": [
+  "principles": [
     {
-      "title": "Drug Safety",
-      "label": "SVP Backed",
-      "variant": "purple",
-      "badge": { "kind": "icon", "name": "pill" },
-      "lines": ["20–50M$ Annual Savings", "Secured Project (for my group)", "Lead Development"]
+      "title": "Outcomes over prototypes",
+      "description": "I build AI organizations around measurable business outcomes — not research prototypes left on the shelf.",
+      "icon": "target"
     },
     {
-      "title": "Broad Institute",
-      "entity": "broad-institute",
-      "label": "Senior Group Leader",
-      "variant": "purple",
-      "badge": { "kind": "logo", "asset": "broad-institute", "alt": "Broad Institute" },
-      "lines": ["Initiated Collaboration", "Mr. Shantanu Singh", "MultiModal computation pipelines"]
+      "title": "Research, engineering, and business as one system",
+      "description": "I connect research, engineering, and business so work moves from the lab into clinical and commercial impact.",
+      "icon": "blocks"
     },
     {
-      "title": "Persister Analysis",
-      "label": "Chief Scientist Backed",
-      "variant": "red",
-      "badge": { "kind": "icon", "name": "microscope" },
-      "lines": ["Persister-Seq Consortium", "Secured Project (for my group)", "Lead Development"]
+      "title": "Distributed teams that operate as one",
+      "description": "I grow globally distributed teams and align them around shared goals, so collaboration crosses time zones and disciplines.",
+      "icon": "team"
     },
     {
-      "title": "AACR Conference",
-      "entity": "aacr",
-      "label": "Conference Presentation",
-      "variant": "red",
-      "badge": { "kind": "logo", "asset": "aacr", "alt": "AACR" },
-      "lines": ["Presented in 2025", "3 month AI pipeline development", "2 AI engineers"]
+      "title": "Build for executive sponsorship",
+      "description": "I frame technical work in the language of strategy, so AI programs earn the executive sponsorship they need to scale.",
+      "icon": "handshake"
     }
-  ],
-  "orgHeader": "Leadership & Organizational Impact",
-  "orgCards": [
-    { "icon": "trophy", "title": "EVP Level AWARD", "lines": ["For Drug Safety Platform"] },
-    { "icon": "presentation", "title": "Gartner Submission", "lines": ["GITC Chennai", "Multimodal Vision"] },
-    { "icon": "funding", "title": "Secured 0.5M$ Funds", "lines": ["Multiple times for Team"] },
-    { "icon": "chart", "title": "3 Scorecard", "lines": ["Aligned Projects"] },
-    { "icon": "target", "title": "Strategic Team Positioning", "lines": ["within (7 Internal Groups", "3 Startups)"] },
-    { "icon": "team", "title": "Scaled Team", "lines": ["1 to 12 members"] },
-    { "icon": "globe", "title": "Global Team Management", "lines": ["UK, Sweden,", "India, Mexico, China"] }
   ]
 }

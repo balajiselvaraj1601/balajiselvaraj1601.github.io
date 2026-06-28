@@ -174,3 +174,75 @@ export const pages = site.pages.flatMap((p) => {
 
 /** All nav entries including external links. */
 export const navItems = site.pages;
+
+type ContentPageEntry = Extract<(typeof site.pages)[number], { external?: false }>;
+
+function isContentPage(
+  p: (typeof site.pages)[number]
+): p is ContentPageEntry {
+  return !('external' in p && p.external);
+}
+
+const homePage = site.pages.find(
+  (p): p is ContentPageEntry => isContentPage(p) && p.id === 'home'
+);
+if (!homePage) throw new Error('site.json: missing home page');
+
+/** Full ordered section list rendered on `/`. */
+export const homeSections = homePage.sections.filter(
+  (id) => site.sections[id]?.visible !== false
+);
+
+/** Nav views — content pages with view metadata for section filtering. */
+export const navViews = site.pages.flatMap((p) => {
+  if (!isContentPage(p) || !p.viewSections?.length) return [];
+  const viewAnchor = p.viewAnchor ?? p.id;
+  return [
+    {
+      id: p.id,
+      label: p.label,
+      path: p.path,
+      viewAnchor,
+      viewSections: p.viewSections.filter(
+        (id) => site.sections[id]?.visible !== false
+      ),
+    },
+  ];
+});
+
+/** Map each section id to the page view ids that include it. */
+export const sectionViewMap: Record<string, string[]> = {};
+for (const view of navViews) {
+  for (const sectionId of view.viewSections) {
+    if (!sectionViewMap[sectionId]) sectionViewMap[sectionId] = [];
+    if (!sectionViewMap[sectionId].includes(view.viewAnchor)) {
+      sectionViewMap[sectionId].push(view.viewAnchor);
+    }
+  }
+}
+
+// Validate view wiring at build time.
+const homeSectionSet = new Set(homeSections);
+for (const view of navViews) {
+  for (const sectionId of view.viewSections) {
+    if (!homeSectionSet.has(sectionId)) {
+      throw new Error(
+        `site.json: view "${view.id}" references section "${sectionId}" not in home.sections`
+      );
+    }
+  }
+}
+for (const sectionId of homeSections) {
+  if (!sectionViewMap[sectionId]?.length) {
+    throw new Error(
+      `site.json: home section "${sectionId}" is not assigned to any viewSections`
+    );
+  }
+}
+
+/** Resolve a nav href for a content page (hash on home for views). */
+export function navHref(page: ContentPageEntry): string {
+  if (page.id === 'home') return '/';
+  const anchor = page.viewAnchor ?? page.id;
+  return `/#${anchor}`;
+}

@@ -1,3 +1,11 @@
 ---
+interface Props {
+  'data-nav-divider'?: boolean;
+}
+const { 'data-nav-divider': navDivider } = Astro.props;
 ---
-<hr class="divider" aria-hidden="true" />
+<hr
+  class="divider"
+  aria-hidden="true"
+  data-nav-divider={navDivider ? '' : undefined}
+/>

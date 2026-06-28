@@ -1,9 +1,9 @@
 # Page Brief - Home
 
 **Page:** `home`  
-**Route:** `/`
+**Route:** `/` (single-page shell; nav views filter visible sections)
 
-## Items
+## About view (`viewSections`)
 
 | Item (section id) | Source | Question | Weight |
 |---|---|---|---|
@@ -15,12 +15,18 @@
 | `leadership` | `content/person/profile.json` | Why should I trust it? | light |
 | `skills` | `content/work/skills.json` | How does it work? | medium |
 | `timeline` | `content/work/experience.json` | Why should I trust it? | medium |
-| `affiliations` | `content/person/affiliations.json` | Why should I trust it? | light |
-| `publications` | `content/research/publications.json` | Why should I trust it? | medium |
-| `contact` | `content/person/profile.json` | What should I do next? | accent |
 
-## Structure
+Publications are **not** in the About view — use the Research view (`/#research`).
 
-`hero` -> `about` -> `featured-case-studies` -> `impact` -> `vision-board` -> `leadership` -> `skills` -> `timeline` -> `affiliations` -> `publications` -> `contact`
+## Full DOM order on `/`
 
-The page must establish Balaji's positioning, show concrete systems and measurable impact, add technical/research trust signals, and end with the full contact section (same as `/contact`).
+`hero` → `about` → `featured-case-studies` → `impact` → `vision-board` → `leadership` →
+`skills` → `timeline` → `experience-intro` → `experience` → `mentorship` → `projects-intro` →
+`projects` → `publications` → `conferences` → `speakers` → `awards` → `kaggle` → `education` →
+`contact`
+
+Other nav views show subsets of this list. See `content/site.json → pages[].viewSections`.
+
+The About view establishes positioning, concrete systems, measurable impact, and career trust
+signals. Research, projects, experience, recognition, vision, and contact each have dedicated
+views via header nav.

@@ -21,112 +21,63 @@ content/**/*.json -> src/lib/content.ts -> src/schemas.ts -> src/components/Sect
 
 ## Page structure
 
-Routing is defined once in `content/site.json → pages`. Each route file under
-`src/pages/` looks up its page entry and renders via `SectionRenderer.astro`.
-Section contracts and component details: `docs/specification.md` and
-`docs/page-briefs/`.
+The site is a **single-page home** (`/`) that renders every section once. Header nav
+activates **views** (About, Experience, Projects, Research, …) via client-side filtering
+in `src/scripts/section-views.ts`. Legacy paths (`/research`, `/experience`, …) redirect
+to `/#{viewAnchor}` on `/`.
+
+Routing and view wiring live in `content/site.json → pages`:
+- **`home.sections`** — full DOM order on `/` (each section id once).
+- **`pages[].viewSections`** — sections shown when that nav item is active.
+- **`pages[].viewAnchor`** — URL hash for the view (home uses `about`).
+
+Section contracts: `docs/specification.md` and `docs/page-briefs/`.
 
 ### Route map
 
 ```text
-/              About (home)     → hero, about, featured-case-studies, impact, vision-board,
-                                  leadership, skills, timeline, affiliations, publications, contact
-/experience    Experience       → experience-intro, experience, mentorship, impact, contact
-/projects      Projects         → projects-intro, featured-case-studies, projects, contact
-/research      Research         → generative-ai, publications, conferences, speakers, contact
-/recognition   Recognition      → awards, kaggle, education, contact
-/vision        Vision           → vision-board
-/contact       Contact          → contact
-/assets/...    Resume (PDF)     → external nav link (not a rendered page)
+/              About (home)     → all sections; default view shows About subset
+/#experience   Experience view  → experience-intro, experience, mentorship, impact
+/#projects     Projects view    → projects-intro, featured-case-studies, projects
+/#research     Research view    → publications, conferences, speakers
+/#recognition  Recognition view → awards, kaggle, education
+/#vision       Vision view      → vision-board
+/#contact      Contact view     → contact
+/experience … /contact         → redirect stubs → /#{viewAnchor}
+/assets/...    Resume (PDF)     → external nav link
 ```
 
-| Route | Page id | Nav label | Sections (in order) |
+| View | Page id | Nav label | `viewSections` |
 |---|---|---|---|
-| `/` | `home` | About | hero, about, featured-case-studies, impact, vision-board, leadership, skills, timeline, affiliations, publications, contact |
-| `/experience` | `experience` | Experience | experience-intro, experience, mentorship, impact, contact |
-| `/projects` | `projects` | Projects | projects-intro, featured-case-studies, projects, contact |
-| `/research` | `research` | Research | generative-ai, publications, conferences, speakers, contact |
-| `/recognition` | `recognition` | Recognition | awards, kaggle, education, contact |
-| `/vision` | `vision` | Vision | vision-board |
-| `/contact` | `contact` | Contact | contact |
-| PDF | `resume` | Resume | external (`pages[].external: true`) |
+| `/` (default) | `home` | About | hero, about, featured-case-studies, impact, vision-board, leadership, skills, timeline |
+| `/#experience` | `experience` | Experience | experience-intro, experience, mentorship, impact |
+| `/#projects` | `projects` | Projects | projects-intro, featured-case-studies, projects |
+| `/#research` | `research` | Research | publications, conferences, speakers |
+| `/#recognition` | `recognition` | Recognition | awards, kaggle, education |
+| `/#vision` | `vision` | Vision | vision-board |
+| `/#contact` | `contact` | Contact | contact |
 
-### Shared-section parity
+**Full home DOM order** (20 sections): hero → about → featured-case-studies → impact →
+vision-board → leadership → skills → timeline → experience-intro → experience → mentorship →
+projects-intro → projects → publications → conferences → speakers → awards → kaggle →
+education → contact.
 
-When a section id appears on home and on a dedicated page, it **must** use the same
-section component and the same content — no teaser or legacy preview components.
+### Shared sections across views
 
-- **Home-only differences** are allowed only via `SectionRenderer` `pageId` props, not
-  separate components.
-- **Page-only sections** (e.g. `conferences`, `mentorship`, `projects`) intentionally
-  stay off home; home is curated, not a full mirror of every route.
-
-| Section id | Shared between | Component |
+| Section id | Views | Component |
 |---|---|---|
-| `featured-case-studies` | `/`, `/projects` | `FeaturedCaseStudies.astro` |
-| `impact` | `/`, `/experience` | `Impact.astro` |
-| `vision-board` | `/`, `/vision` | `VisionBoard.astro` |
-| `publications` | `/`, `/research` | `Publications.astro` |
-| `contact` | `/`, `/experience`, `/projects`, `/research`, `/recognition`, `/contact` | `Contact.astro` |
-
-Home-only sections: `hero`, `about`, `leadership`, `skills`, `timeline`, `affiliations`.
+| `featured-case-studies` | About, Projects | `FeaturedCaseStudies.astro` |
+| `impact` | About, Experience | `Impact.astro` |
+| `vision-board` | About, Vision | `VisionBoard.astro` |
 
 ### `SectionRenderer` pageId variants
 
-Behavior not visible in `site.json` — check `src/components/SectionRenderer.astro`
-when editing home routing:
-
 | Condition | Prop | Effect |
 |---|---|---|
-| `featured-case-studies` + `pageId === 'home'` | `showMoreHref="/projects"` | Adds “View all projects →” CTA |
-| `publications` + `pageId === 'home'` | `showMoreHref="/research"` | Adds “All research →” CTA |
 | `timeline` + `pageId === 'home'` | `compact` | Hides “Full experience →” CTA on static rail |
-| `timeline` + `pageId === 'experience'` | `showCta={false}` | **Dead branch** — experience page no longer lists `timeline` |
 
-The interactive career timeline on `/experience` lives inside `Experience.astro`
-(tabbed rail + role panels). Home uses standalone `CareerTimeline.astro` as a compact
-preview.
-
-## Known structural problems
-
-Documented IA debt — do not reintroduce teaser/preview drift without an explicit decision.
-
-### A. Information architecture tension
-
-1. **Home is a mega-landing, not “About” only** — 11 sections spanning projects, research,
-   vision, and contact. Nav label `About` understates scope.
-2. **Heavy duplication** — Home embeds full flagship case studies, full publications list,
-   full vision-board infographic, full impact block, and full contact. Users who scroll
-   home then open `/projects`, `/research`, `/vision`, or `/contact` see repeated content.
-3. **`/vision` is a thin route** — Single section identical to home; no `contact` closer
-   (unlike experience, projects, research, recognition).
-4. **`/contact` is largely redundant** — Same `contact` section appears at the bottom of
-   five other pages plus home; header “Get in Touch” still links to `/contact`.
-
-### B. Inconsistent home preview patterns
-
-| Home section | Behavior | Issue |
-|---|---|---|
-| `featured-case-studies` | Full cards + CTA to `/projects` | Good — CTA leads to additional `projects` not on home |
-| `publications` | Full list + CTA to `/research` | Good — CTA leads to generative-ai, conferences, speakers |
-| `timeline` | `compact` (no CTA) | No link to `/experience` unlike other home CTAs |
-| `impact`, `vision-board`, `contact` | Full sections, no CTA | No “see more on dedicated page” affordance |
-
-### C. Stale / dead code and metadata
-
-| Item | Problem |
-|---|---|
-| `SectionRenderer` `timeline && pageId === 'experience'` | Dead branch — remove in follow-up |
-| `src/components/sections/Vision.astro` | Orphan — not in `SectionRenderer`; `profile.vision` unused |
-| `site.json → sections.contact.source` | Lists `recognition/education.json` but `Contact.astro` only reads `profile` |
-| `contactPage.resume*` in `profile.json` | Leftover from deleted `ContactTeaser`; unused by `Contact.astro` |
-
-### D. Maintenance hazard
-
-- **Two sources of truth**: `site.json` (which sections) + `SectionRenderer` (home
-  variants). Editing routing requires checking both files.
-- **Per-route intent** lives in `docs/page-briefs/`; keep in sync when changing
-  `site.json → pages`.
+When `navViews={true}`, sections are wrapped with `data-nav-views` for client filtering.
+See `src/scripts/section-views.ts` and `sectionViewMap` in `src/lib/content.ts`.
 
 ## Hard Rules
 

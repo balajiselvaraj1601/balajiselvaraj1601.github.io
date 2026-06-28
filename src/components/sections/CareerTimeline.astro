@@ -31,13 +31,14 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
           <div class="tl-company">
             <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
           </div>
+          {role.blurb && <p class="tl-blurb">{role.blurb}</p>}
         </li>
       ))
     }
   </ol>
   {!compact && showCta && (
     <p class="timeline-more reveal">
-      <a class="btn btn-secondary" href="/experience">Full experience →</a>
+      <a class="btn btn-secondary" href="/#experience">Full experience →</a>
     </p>
   )}
 </Section>
@@ -99,6 +100,14 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
     color: var(--text-muted);
     margin-top: 0.15rem;
   }
+  .tl-blurb {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    opacity: 0.85;
+  }
   .timeline-more {
     margin-top: var(--section-cta-gap);
     max-width: none;
@@ -121,6 +130,9 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
       flex-shrink: 0;
     }
     .tl-dot {
+      display: none;
+    }
+    .tl-blurb {
       display: none;
     }
   }

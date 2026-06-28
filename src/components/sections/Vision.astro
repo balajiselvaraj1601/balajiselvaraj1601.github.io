@@ -1,15 +1,9 @@
 ---
 import Section from '@components/ui/Section.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
-import { profile, skills, site, getEntityUrl, logoSrc } from '@lib/content';
+import { profile, collaborations, getEntityUrl, logoSrc } from '@lib/content';
 
-interface Props {
-  withSkills?: boolean;
-}
-
-const { withSkills = false } = Astro.props;
 const vision = profile.vision;
-const title = site.sections.vision.title;
 
 function splitHeading(heading: string, emphasis?: string) {
   if (!emphasis || !heading.includes(emphasis)) {
@@ -22,60 +16,36 @@ function splitHeading(heading: string, emphasis?: string) {
     after: heading.slice(index + emphasis.length),
   };
 }
+
+const headingParts = vision
+  ? splitHeading(vision.heading, vision.headingEmphasis)
+  : null;
+const collabItems = collaborations.items;
 ---
 
 {vision && (
   <Section
     id="vision"
-    title={withSkills ? '' : title}
-    hideTitle={withSkills}
-    eyebrow={withSkills ? 'Skills & Vision' : undefined}
-    subtitle={withSkills ? undefined : vision.heading}
-    variant={withSkills ? 'default' : 'alt'}
+    title="Technical Vision"
+    hideTitle
+    eyebrow="Technical Vision"
+    variant="alt"
   >
-    <div class:list={['vision-layout', { 'vision-layout--split': withSkills }]}>
+    <div class="vision-layout">
       <div class="vision-text reveal">
-        {
-          withSkills && (() => {
-            const parts = splitHeading(vision.heading, vision.headingEmphasis);
-            return (
-              <h2 class="vision__title">
-                {parts.before}
-                {parts.emphasis ? <em>{parts.emphasis}</em> : null}
-                {parts.after}
-              </h2>
-            );
-          })()
-        }
+        {headingParts && (
+          <h2 class="vision__title">
+            {headingParts.before}
+            {headingParts.emphasis ? <em>{headingParts.emphasis}</em> : null}
+            {headingParts.after}
+          </h2>
+        )}
 
         <div class="vision__body">
           {vision.paragraphs.map((para) => (
             <p class="vision__para">{para}</p>
           ))}
         </div>
-
-        {vision.collaborations.length > 0 && (
-          <div class="vision__collabs">
-            <h4 class="vision__collabs-heading">External Collaborations</h4>
-            {vision.collaborations.map((c) => (
-              <div class="collab-item">
-                {logoSrc(c.entity) ? (
-                  <div class="collab-logo">
-                    <img src={logoSrc(c.entity)} alt={`${c.org} logo`} loading="lazy" />
-                  </div>
-                ) : (
-                  <div class="collab-dot" aria-hidden="true"></div>
-                )}
-                <div class="collab-text">
-                  <strong>
-                    <EntityLink href={getEntityUrl(c.entity)} label={c.org} />
-                  </strong>
-                  {' '}— {c.detail}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
 
         {vision.mentorship && (
           <div class="vision__mentorship-block">
@@ -85,30 +55,40 @@ function splitHeading(heading: string, emphasis?: string) {
         )}
       </div>
 
-      {
-        withSkills && (
-          <div class="skills-panel reveal">
-            {skills.categories.map((cat) => (
-              <div class="skill-group">
-                <h4>{cat.label}</h4>
-                <div class="skill-tags">
-                  {cat.skills.map((s, i) => (
-                    <span class:list={['skill-tag', { hot: i < 3 }]}>{s}</span>
-                  ))}
+      {collabItems.length > 0 && (
+        <div class="vision__collabs reveal">
+          <h4 class="vision__collabs-heading">External Collaborations</h4>
+          {collabItems.map((c) => (
+            <div class="collab-item">
+              {logoSrc(c.logo ?? c.entity) ? (
+                <div class="collab-logo">
+                  <img
+                    src={logoSrc(c.logo ?? c.entity)}
+                    alt={`${c.name} logo`}
+                    loading="lazy"
+                  />
                 </div>
+              ) : (
+                <div class="collab-dot" aria-hidden="true"></div>
+              )}
+              <div class="collab-text">
+                <strong>
+                  <EntityLink href={getEntityUrl(c.entity)} label={c.name} />
+                </strong>
+                {c.detail ? <> — {c.detail}</> : null}
               </div>
-            ))}
-          </div>
-        )
-      }
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   </Section>
 )}
 
 <style>
-  .vision-layout--split {
+  .vision-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr;
     gap: 3rem;
     align-items: start;
     margin-top: 1rem;
@@ -126,26 +106,19 @@ function splitHeading(heading: string, emphasis?: string) {
     color: var(--accent-ll);
   }
   .vision__body {
-    max-width: var(--maxw-text);
     margin-bottom: var(--space-8);
-  }
-  .vision-layout--split .vision__body {
-    max-width: none;
   }
   .vision__para {
     color: var(--text-muted);
     line-height: 1.85;
     margin-bottom: var(--space-4);
     font-size: 0.92rem;
+    max-width: none;
   }
   .vision__para:last-child {
     margin-bottom: 0;
   }
-  .vision__collabs {
-    margin-bottom: var(--space-8);
-  }
-  .vision__collabs-heading,
-  .vision__mentorship-block h4 {
+  .vision__collabs-heading {
     margin-bottom: 1rem;
   }
   .collab-item {
@@ -160,6 +133,11 @@ function splitHeading(heading: string, emphasis?: string) {
   }
   .collab-item:last-child {
     margin-bottom: 0;
+  }
+  .collab-logo img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
   }
   .collab-dot {
     width: 8px;
@@ -177,52 +155,17 @@ function splitHeading(heading: string, emphasis?: string) {
   .collab-text strong {
     color: var(--heading);
   }
+  .vision__mentorship-block h4 {
+    margin-bottom: 1rem;
+  }
   .vision__mentorship {
     font-size: 0.88rem;
     color: var(--text-muted);
     line-height: 1.7;
     max-width: none;
   }
-  .skills-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .skill-group {
-    margin-bottom: 2.5rem;
-  }
-  .skill-group:last-child {
-    margin-bottom: 0;
-  }
-  .skill-group h4 {
-    margin-bottom: 1rem;
-  }
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .skill-tag {
-    font-size: 0.78rem;
-    font-weight: 500;
-    background: var(--bg-chip);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.35rem 0.7rem;
-    color: var(--text);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .skill-tag:hover {
-    border-color: var(--accent-light);
-    color: var(--heading);
-  }
-  .skill-tag.hot {
-    border-color: rgba(108, 47, 191, 0.4);
-    color: var(--accent-ll);
-    background: var(--accent-soft);
-  }
   @media (max-width: 900px) {
-    .vision-layout--split {
+    .vision-layout {
       grid-template-columns: 1fr;
       gap: 2rem;
     }

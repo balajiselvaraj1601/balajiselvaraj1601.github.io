@@ -88,37 +88,35 @@ TypeScript types are derived via `z.infer<typeof schema>` — no parallel hand-w
 
 ## Rendering model
 
-### Multi-page layout
+### Single-page home with nav views
 
-The site is a set of routes (`/`, `/experience`, `/projects`, `/research`, `/recognition`, `/vision`, `/contact`), one
-per entry in `site.json.pages`. Each page groups several sections; section order within a page
-comes from that page's `sections` array, filtered by `sections[id].visible`.
+All sections render once on `/` in the order defined by `site.json → pages[id=home].sections`.
+Header nav does not load separate pages — it activates a **view** that shows only the sections
+listed in that page entry's `viewSections`, using hash URLs (`/#research`, `/#experience`, …).
 
-`SectionRenderer.astro` owns the section id → component map (SSOT); each route file looks up its
-page and renders its sections:
+Legacy route files under `src/pages/` (`experience.astro`, `research.astro`, …) are thin
+redirect stubs to the matching hash on `/`.
 
 ```typescript
-// SectionRenderer.astro
-const SECTIONS = { hero: Hero, about: About, /* … */ };
-sections.map((id) => <SECTIONS[id] />)
+// index.astro
+<SectionRenderer sections={homeSections} pageId="home" navViews={true} />
 
-// e.g. src/pages/experience.astro
-const page = pages.find((p) => p.id === 'experience')!;
-<SectionRenderer sections={page.sections} />
+// section-views.ts (client)
+activateView('research', views); // shows publications, conferences, speakers
 ```
 
-Adding a section requires: JSON file under the relevant `content/` domain folder, Zod schema, section component, entry in the
-`SectionRenderer` `SECTIONS` map, a `sections[id]` entry in `site.json`, and listing the id in
-the relevant page's `sections` array. Adding a whole page requires a new `pages` entry plus a
-matching route file under `src/pages/`.
+Adding a section requires: JSON under `content/`, Zod schema, section component, entry in
+`SectionRenderer`, `sections[id]` in `site.json`, listing in `home.sections`, and assignment
+to at least one `viewSections` array. `content.ts` validates view wiring at build time.
 
 ### Client JavaScript
 
-JS is limited to progressive enhancement in `Header.astro`:
+JS provides progressive enhancement on `/`:
 
+- Nav view filtering (`section-views.ts`) — without JS, all sections remain visible
 - Theme toggle + `localStorage` persistence
 - Mobile menu (focus trap, Esc to close)
-- Active route state in the header and section dot navigation where configured
+- Active view state in header; dot nav filtered to active view
 - Entrance reveal animations (skipped when `prefers-reduced-motion`)
 
 Core content is fully readable without JavaScript.

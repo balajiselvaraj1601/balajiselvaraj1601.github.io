@@ -6,6 +6,7 @@ import Header from '@components/chrome/Header.astro';
 import Footer from '@components/chrome/Footer.astro';
 import DotNav from '@components/chrome/DotNav.astro';
 import HeroCanvas from '@components/cards/HeroCanvas.astro';
+import { navViews } from '@lib/content';
 
 interface Props {
   title?: string;
@@ -13,6 +14,7 @@ interface Props {
   path?: string;
   chrome?: boolean;
   dotNavSections?: string[];
+  singlePageViews?: boolean;
 }
 const {
   title,
@@ -20,7 +22,19 @@ const {
   path = '/',
   chrome = true,
   dotNavSections = [],
+  singlePageViews = false,
 } = Astro.props;
+
+const homeView = navViews.find((v) => v.id === 'home');
+const navViewsConfig = singlePageViews
+  ? {
+      views: navViews.map((v) => ({
+        viewAnchor: v.viewAnchor,
+        viewSections: v.viewSections,
+      })),
+      defaultView: homeView?.viewAnchor ?? 'about',
+    }
+  : undefined;
 ---
 
 <!doctype html>
@@ -40,14 +54,30 @@ const {
   <body>
     <HeroCanvas />
     <a href="#main" class="skip-link">Skip to content</a>
-    {chrome && <Header />}
+    {chrome && <Header singlePageViews={singlePageViews} />}
     {chrome && dotNavSections.length >= 2 && (
-      <DotNav sections={dotNavSections} />
+      <DotNav sections={dotNavSections} singlePageViews={singlePageViews} />
     )}
     <main id="main">
       <slot />
     </main>
     {chrome && <Footer />}
+    {
+      chrome && navViewsConfig && (
+        <script define:vars={{ navViewsConfig }}>
+          import { initSiteChrome } from '../scripts/site-chrome';
+          initSiteChrome(navViewsConfig);
+        </script>
+      )
+    }
+    {
+      chrome && !navViewsConfig && (
+        <script>
+          import { initSiteChrome } from '../scripts/site-chrome';
+          initSiteChrome();
+        </script>
+      )
+    }
   </body>
 </html>
 

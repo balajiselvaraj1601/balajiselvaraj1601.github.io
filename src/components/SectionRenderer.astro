@@ -1,4 +1,5 @@
 ---
+import Divider from '@components/Divider.astro';
 import Hero from '@components/sections/Hero.astro';
 import About from '@components/sections/About.astro';
 import Impact from '@components/sections/Impact.astro';
@@ -61,11 +62,28 @@ const { sections, pageId } = Astro.props;
 ---
 
 {
-  sections.map((id) => {
+  sections.map((id, index) => {
     const Section = SECTIONS[id];
     if (!Section) return null;
-    if (id === 'timeline' && pageId === 'home') return <Section compact />;
-    if (id === 'timeline' && pageId === 'experience') return <Section showCta={false} />;
-    return <Section />;
+    if (id === 'skills' && pageId === 'home') return null;
+    const showDivider = index > 0 && id !== 'hero';
+
+    let section = null;
+    if (id === 'vision' && pageId === 'home') {
+      section = <Section withSkills />;
+    } else if (id === 'timeline' && pageId === 'home') {
+      section = <Section compact />;
+    } else if (id === 'timeline' && pageId === 'experience') {
+      section = <Section showCta={false} />;
+    } else {
+      section = <Section />;
+    }
+
+    return (
+      <>
+        {showDivider && <Divider />}
+        {section}
+      </>
+    );
   })
 }

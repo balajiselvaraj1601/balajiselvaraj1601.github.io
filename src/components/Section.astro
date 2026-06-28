@@ -8,7 +8,7 @@ interface Props {
   eyebrow?: string;
   eyebrowVariant?: 'default' | 'red';
   subtitle?: string;
-  variant?: 'default' | 'alt' | 'full';
+  variant?: 'default' | 'alt' | 'full' | 'impact';
   class?: string;
 }
 const {
@@ -29,7 +29,7 @@ const headingId = `${id}-heading`;
   class:list={[
     'section',
     'reveal',
-    { 'section--alt': variant === 'alt', 'section--full': variant === 'full' },
+    { 'section--alt': variant === 'alt', 'section--full': variant === 'full', 'section--impact': variant === 'impact' },
     cls,
   ]}
   aria-labelledby={headingId}

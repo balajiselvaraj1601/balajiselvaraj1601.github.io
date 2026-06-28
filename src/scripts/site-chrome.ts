@@ -1,72 +1,4 @@
-const DEBUG_ENDPOINT =
-  'http://127.0.0.1:7426/ingest/236063c4-9add-41bb-8509-4456c2602e11';
-const DEBUG_SESSION = '88c134';
-
-function debugLog(
-  hypothesisId: string,
-  location: string,
-  message: string,
-  data: Record<string, unknown>,
-  runId = 'pre-fix'
-) {
-  // #region agent log
-  fetch(DEBUG_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Debug-Session-Id': DEBUG_SESSION,
-    },
-    body: JSON.stringify({
-      sessionId: DEBUG_SESSION,
-      runId,
-      hypothesisId,
-      location,
-      message,
-      data,
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
-}
-
-const HOME_BRIEF_SECTIONS = [
-  'hero',
-  'about',
-  'featured-projects',
-  'impact',
-  'vision',
-  'leadership',
-  'skills',
-  'timeline',
-  'affiliations',
-  'featured-publications',
-  'contact-teaser',
-];
-
-export function initPageSectionAudit(runId = 'pre-fix') {
-  const params = new URLSearchParams(window.location.search);
-  const resolvedRunId = params.get('debugRun') ?? runId;
-  const path = window.location.pathname.replace(/\/$/, '') || '/';
-  const rendered = Array.from(
-    document.querySelectorAll<HTMLElement>('main section[id]')
-  ).map((section) => section.id);
-  const missing =
-    path === '/' || path === ''
-      ? HOME_BRIEF_SECTIONS.filter((id) => !rendered.includes(id))
-      : [];
-
-  debugLog('H1', 'site-chrome.ts:initPageSectionAudit', 'Page section audit', {
-    path,
-    rendered,
-    missingFromBrief: missing,
-    renderedCount: rendered.length,
-    briefCount: path === '/' || path === '' ? HOME_BRIEF_SECTIONS.length : null,
-  }, resolvedRunId);
-}
-
 export function initSiteChrome() {
-  initPageSectionAudit();
-
   const toggle = document.getElementById('theme-toggle');
   toggle?.addEventListener('click', () => {
     const root = document.documentElement;
@@ -172,43 +104,12 @@ function initReveal() {
   });
 }
 
-export function initExperiencePanel(runId = 'pre-fix') {
-  const params = new URLSearchParams(window.location.search);
-  const resolvedRunId = params.get('debugRun') ?? runId;
+export function initExperiencePanel() {
   const root = document.querySelector<HTMLElement>('.work-layout');
-  if (!root) {
-    debugLog(
-      'H3',
-      'site-chrome.ts:initExperiencePanel',
-      'Experience layout missing',
-      { found: false },
-      resolvedRunId
-    );
-    return;
-  }
+  if (!root) return;
 
   const items = Array.from(root.querySelectorAll<HTMLButtonElement>('.tl-item'));
   const panels = Array.from(root.querySelectorAll<HTMLElement>('.work-panel'));
-
-  const bulletTexts = Array.from(
-    root.querySelectorAll<HTMLLIElement>('.proj-inner .bullet-list li')
-  )
-    .slice(0, 3)
-    .map((li) => li.textContent?.trim() ?? '');
-
-  debugLog(
-    'H2',
-    'site-chrome.ts:initExperiencePanel',
-    'Experience panel init',
-    {
-      itemCount: items.length,
-      panelCount: panels.length,
-      sampleBullets: bulletTexts,
-      emptyBulletCount: bulletTexts.filter((text) => !text).length,
-    },
-    runId
-  );
-
   if (!items.length || !panels.length) return;
 
   function activate(item: HTMLButtonElement) {

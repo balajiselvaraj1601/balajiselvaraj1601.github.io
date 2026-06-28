@@ -171,23 +171,15 @@ const lastName = rest.join(' ');
     text-decoration: none;
     padding: 0.4rem 0.85rem;
     border-radius: 4px;
-    transition: color 0.2s;
+    transition: color 0.2s, background-color 0.2s;
   }
-  .nav__link:hover {
-    color: var(--heading);
-  }
+  .nav__link:hover,
   .nav__link[aria-current='page'] {
     color: var(--heading);
+    background: var(--accent-soft);
   }
   .nav__link[aria-current='page']::after {
-    content: '';
-    position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
-    bottom: 0.15rem;
-    height: 2px;
-    background: var(--accent-light);
-    border-radius: 2px;
+    content: none;
   }
   .site-header__actions {
     display: flex;
@@ -258,9 +250,7 @@ const lastName = rest.join(' ');
       font-size: 1rem;
     }
     .nav.is-open .nav__link[aria-current='page']::after {
-      left: var(--space-4);
-      right: auto;
-      width: 16px;
+      content: none;
     }
     .nav.is-open .nav__mobile-actions {
       display: grid;

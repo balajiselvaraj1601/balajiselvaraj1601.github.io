@@ -1,75 +1,220 @@
 ---
 import Section from '@components/Section.astro';
-import { profile, site } from '@lib/content';
+import { profile, skills, site } from '@lib/content';
 
+interface Props {
+  withSkills?: boolean;
+}
+
+const { withSkills = false } = Astro.props;
 const vision = profile.vision;
 const title = site.sections.vision.title;
+
+function splitHeading(heading: string, emphasis?: string) {
+  if (!emphasis || !heading.includes(emphasis)) {
+    return { before: heading, emphasis: null as string | null, after: '' };
+  }
+  const index = heading.indexOf(emphasis);
+  return {
+    before: heading.slice(0, index),
+    emphasis,
+    after: heading.slice(index + emphasis.length),
+  };
+}
 ---
 
 {vision && (
-  <Section id="vision" title={title} subtitle={vision.heading} variant="alt">
-    <div class="vision__body reveal">
-      {vision.paragraphs.map((para) => (
-        <p class="vision__para">{para}</p>
-      ))}
-    </div>
+  <Section
+    id="vision"
+    title={withSkills ? '' : title}
+    hideTitle={withSkills}
+    eyebrow={withSkills ? 'Skills & Vision' : undefined}
+    subtitle={withSkills ? undefined : vision.heading}
+    variant={withSkills ? 'default' : 'alt'}
+  >
+    <div class:list={['vision-layout', { 'vision-layout--split': withSkills }]}>
+      <div class="vision-text reveal">
+        {
+          withSkills && (() => {
+            const parts = splitHeading(vision.heading, vision.headingEmphasis);
+            return (
+              <h2 class="vision__title">
+                {parts.before}
+                {parts.emphasis ? <em>{parts.emphasis}</em> : null}
+                {parts.after}
+              </h2>
+            );
+          })()
+        }
 
-    {vision.collaborations.length > 0 && (
-      <div class="vision__collabs reveal">
-        {vision.collaborations.map((c) => (
-          <div class="vision__collab card">
-            <h3 class="vision__collab-org">{c.org}</h3>
-            <p class="vision__collab-detail">{c.detail}</p>
+        <div class="vision__body">
+          {vision.paragraphs.map((para) => (
+            <p class="vision__para">{para}</p>
+          ))}
+        </div>
+
+        {vision.collaborations.length > 0 && (
+          <div class="vision__collabs">
+            <h4 class="vision__collabs-heading">External Collaborations</h4>
+            {vision.collaborations.map((c) => (
+              <div class="collab-item">
+                <div class="collab-dot" aria-hidden="true"></div>
+                <div class="collab-text">
+                  <strong>{c.org}</strong> — {c.detail}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    )}
+        )}
 
-    {vision.mentorship && (
-      <p class="vision__mentorship reveal">{vision.mentorship}</p>
-    )}
+        {vision.mentorship && (
+          <div class="vision__mentorship-block">
+            <h4>Mentorship</h4>
+            <p class="vision__mentorship">{vision.mentorship}</p>
+          </div>
+        )}
+      </div>
+
+      {
+        withSkills && (
+          <div class="skills-panel reveal">
+            {skills.categories.map((cat) => (
+              <div class="skill-group">
+                <h4>{cat.label}</h4>
+                <div class="skill-tags">
+                  {cat.skills.map((s, i) => (
+                    <span class:list={['skill-tag', { hot: i < 3 }]}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )
+      }
+    </div>
   </Section>
 )}
 
 <style>
+  .vision-layout--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 1rem;
+  }
+  .vision__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--heading);
+    margin-bottom: 1rem;
+  }
+  .vision__title em {
+    font-style: italic;
+    color: var(--accent-ll);
+  }
   .vision__body {
     max-width: var(--maxw-text);
-    margin-bottom: var(--space-10);
+    margin-bottom: var(--space-8);
+  }
+  .vision-layout--split .vision__body {
+    max-width: none;
   }
   .vision__para {
     color: var(--text-muted);
     line-height: 1.85;
     margin-bottom: var(--space-4);
+    font-size: 0.92rem;
   }
   .vision__para:last-child {
     margin-bottom: 0;
   }
   .vision__collabs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-4);
     margin-bottom: var(--space-8);
   }
-  .vision__collab {
-    padding: var(--space-6);
+  .vision__collabs-heading,
+  .vision__mentorship-block h4 {
+    margin-bottom: 1rem;
   }
-  .vision__collab-org {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: var(--space-2);
+  .collab-item {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
   }
-  .vision__collab-detail {
-    font-size: var(--fs-small);
-    color: var(--text-muted);
+  .collab-item:last-child {
+    margin-bottom: 0;
+  }
+  .collab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    flex-shrink: 0;
+    margin-top: 0.4rem;
+  }
+  .collab-text {
+    font-size: 0.85rem;
     line-height: 1.6;
+    max-width: none;
+  }
+  .collab-text strong {
+    color: var(--heading);
   }
   .vision__mentorship {
-    font-size: var(--fs-small);
+    font-size: 0.88rem;
     color: var(--text-muted);
     line-height: 1.7;
-    border-left: 3px solid var(--accent);
-    padding-left: var(--space-4);
-    max-width: var(--maxw-text);
+    max-width: none;
+  }
+  .skills-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .skill-group {
+    margin-bottom: 2.5rem;
+  }
+  .skill-group:last-child {
+    margin-bottom: 0;
+  }
+  .skill-group h4 {
+    margin-bottom: 1rem;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .skill-tag {
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: var(--bg-chip);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.35rem 0.7rem;
+    color: var(--text);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover {
+    border-color: var(--accent-light);
+    color: var(--heading);
+  }
+  .skill-tag.hot {
+    border-color: rgba(108, 47, 191, 0.4);
+    color: var(--accent-ll);
+    background: var(--accent-soft);
+  }
+  @media (max-width: 900px) {
+    .vision-layout--split {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
   }
 </style>

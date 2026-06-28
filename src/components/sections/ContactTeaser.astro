@@ -6,13 +6,28 @@ import { profile, site } from '@lib/content';
 const title = site.sections['contact-teaser'].title;
 const publicContact = profile.contact.filter((c) => c.type !== 'phone');
 const { contactPage } = profile;
+const titleHighlight = contactPage.titleHighlight;
+const titleIndex =
+  titleHighlight && contactPage.title.includes(titleHighlight)
+    ? contactPage.title.indexOf(titleHighlight)
+    : -1;
 ---
 
 <Section id="contact-teaser" title={title} variant="default">
   <div class="contact-teaser reveal">
     <div class="contact-teaser__left">
       <h3 class="contact-teaser__heading">
-        {contactPage.title}
+        {
+          titleIndex >= 0 && titleHighlight ? (
+            <>
+              {contactPage.title.slice(0, titleIndex)}
+              <span class="accent">{titleHighlight}</span>
+              {contactPage.title.slice(titleIndex + titleHighlight.length)}
+            </>
+          ) : (
+            contactPage.title
+          )
+        }
       </h3>
       <p class="contact-teaser__sub">{profile.contactIntro}</p>
       <div class="contact-links">

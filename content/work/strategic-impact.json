@@ -1,6 +1,7 @@
 {
   "title": "Strategic Impact",
   "headline": "From Kaggle idea to executive-sponsored programs",
+  "headlineHighlight": "Kaggle idea",
   "subtitle": "Independently sourced, pitched, and secured two major AI initiatives — one SVP-sponsored saving $20–50M annually, one Chief Scientist-sponsored within a €14M EU consortium.",
   "metrics": [
     { "value": "$20–50M", "label": "Projected annual savings" },

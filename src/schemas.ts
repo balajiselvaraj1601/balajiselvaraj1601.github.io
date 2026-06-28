@@ -94,6 +94,7 @@ export const profileSchema = z.object({
   vision: z
     .object({
       heading: z.string(),
+      headingEmphasis: z.string().optional(),
       paragraphs: z.array(z.string()),
       collaborations: z.array(
         z.object({ org: z.string(), detail: z.string() })
@@ -105,6 +106,7 @@ export const profileSchema = z.object({
   contactIntro: z.string().optional(),
   contactPage: z.object({
     title: z.string(),
+    titleHighlight: z.string().optional(),
     eyebrow: z.string(),
     interestsHeading: z.string(),
     resumeEyebrow: z.string(),
@@ -152,6 +154,7 @@ export const profileSchema = z.object({
 export const impactSchema = z.object({
   title: z.string(),
   headline: z.string().optional(),
+  headlineHighlight: z.string().optional(),
   subtitle: z.string().optional(),
   metrics: z.array(MetricItem),
   highlights: z.array(TextItem),

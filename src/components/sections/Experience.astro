@@ -12,10 +12,14 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
 
 <Section
   id="experience"
-  title="Building AI at the frontier of medicine"
+  title=""
+  hideTitle
   eyebrow="Experience"
   variant="default"
 >
+  <h2 class="experience__title section__title">
+    Building AI at the <span class="accent">frontier</span> of medicine
+  </h2>
   <div class="work-layout">
     <div class="work-timeline" role="tablist" aria-label="Career timeline">
       <div class="timeline-line" aria-hidden="true"></div>
@@ -97,6 +101,9 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
 </Section>
 
 <style>
+  .experience__title {
+    margin-bottom: var(--space-6);
+  }
   .work-layout {
     display: grid;
     grid-template-columns: 220px 1fr;

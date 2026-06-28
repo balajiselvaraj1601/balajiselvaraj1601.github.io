@@ -15,8 +15,13 @@
       "sections": [
         "hero",
         "about",
-        "impact",
         "featured-projects",
+        "impact",
+        "vision",
+        "leadership",
+        "timeline",
+        "affiliations",
+        "featured-publications",
         "contact-teaser"
       ]
     },

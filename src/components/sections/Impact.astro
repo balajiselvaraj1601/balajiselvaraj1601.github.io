@@ -7,15 +7,34 @@ import MetricCard from '@components/MetricCard.astro';
 import { strategicImpact, site } from '@lib/content';
 
 const meta = site.sections.impact;
+const title = strategicImpact.headline ?? meta.title;
+const highlight = strategicImpact.headlineHighlight;
+const highlightIndex =
+  highlight && title.includes(highlight) ? title.indexOf(highlight) : -1;
 ---
 
 <Section
   id="impact"
-  title={strategicImpact.headline ?? meta.title}
+  title=""
+  hideTitle
   eyebrow="AI Leadership & Strategic Impact"
   subtitle={strategicImpact.subtitle}
-  variant="alt"
+  variant="impact"
+  class="impact-section"
 >
+  <h2 class="impact__title section__title">
+    {
+      highlightIndex >= 0 && highlight ? (
+        <>
+          {title.slice(0, highlightIndex)}
+          <span class="accent">{highlight}</span>
+          {title.slice(highlightIndex + highlight.length)}
+        </>
+      ) : (
+        title
+      )
+    }
+  </h2>
   {
     strategicImpact.journey && strategicImpact.journey.length > 0 && (
       <JourneyRow journey={strategicImpact.journey} />
@@ -70,6 +89,18 @@ const meta = site.sections.impact;
 </Section>
 
 <style>
+  :global(.impact-section .eyebrow),
+  .impact__title {
+    text-align: center;
+  }
+  :global(.impact-section .section__subtitle) {
+    text-align: center;
+    margin-inline: auto;
+    max-width: 580px;
+  }
+  .impact__title {
+    margin-bottom: var(--space-4);
+  }
   .impact-metrics {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

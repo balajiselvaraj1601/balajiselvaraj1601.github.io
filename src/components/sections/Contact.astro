@@ -12,11 +12,38 @@ function formatGpa(gpa?: string) {
   if (!gpa) return '';
   return gpa.toLowerCase().startsWith('cgpa') ? gpa : `CGPA ${gpa}`;
 }
+
+const titleParts = contactPage.titleHighlight
+  ? {
+      before: contactPage.title.slice(
+        0,
+        contactPage.title.indexOf(contactPage.titleHighlight)
+      ),
+      highlight: contactPage.titleHighlight,
+      after: contactPage.title.slice(
+        contactPage.title.indexOf(contactPage.titleHighlight) +
+          contactPage.titleHighlight.length
+      ),
+    }
+  : null;
 ---
 
-<Section id="contact" title={contactPage.title} eyebrow={contactPage.eyebrow} variant="alt">
+<Section id="contact" title="" hideTitle eyebrow={contactPage.eyebrow} variant="alt">
   <div class="contact-layout reveal">
     <div class="contact-left">
+      <h2 class="contact__title">
+        {
+          titleParts ? (
+            <>
+              {titleParts.before}
+              <span class="accent">{titleParts.highlight}</span>
+              {titleParts.after}
+            </>
+          ) : (
+            contactPage.title
+          )
+        }
+      </h2>
       <p class="contact-subtitle">{profile.contactIntro}</p>
       <div class="contact-links">
         {
@@ -80,6 +107,14 @@ function formatGpa(gpa?: string) {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     margin-top: 1rem;
+  }
+  .contact__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--heading);
+    margin-bottom: 0.75rem;
   }
   .contact-subtitle {
     color: var(--text-muted);

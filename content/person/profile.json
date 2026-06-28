@@ -85,6 +85,7 @@
   },
   "vision": {
     "heading": "Multimodal AI at the edge of biology",
+    "headingEmphasis": "edge of biology",
     "paragraphs": [
       "Shaped an innovative multimodal AI vision aligned with AstraZeneca's 2030 Gene & Cell Therapy ambitions — a vision independently developed bottom-up and later submitted to Gartner by GITC Chennai.",
       "The philosophy: integrate heterogeneous biological signals — omics, imaging, molecular, single-cell — into unified learned representations that generalize across compounds, diseases, and data sources.",
@@ -119,6 +120,7 @@
   "contactIntro": "Open to discussing AI leadership opportunities, research collaborations, and advisory roles in biopharma and precision medicine.",
   "contactPage": {
     "title": "Let's build something important",
+    "titleHighlight": "important",
     "eyebrow": "Contact",
     "interestsHeading": "Interested in",
     "resumeEyebrow": "Download CV",

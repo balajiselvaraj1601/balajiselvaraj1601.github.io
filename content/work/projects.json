@@ -43,10 +43,10 @@
       "solution": "Engineered a single-cell transcriptomics pipeline enriched with Med-PaLM LLM embeddings and knowledge graph representations.",
       "architecture": "Generalizable pipeline across organoids, xenografts, and clinical studies with Optuna-driven hyperparameter optimization.",
       "businessImpact": "Chief Scientist-sponsored initiative advancing AstraZeneca oncology R&D priority areas.",
-      "outcome": "90% F1 on internal benchmarks; 13%+ improvement over SOTA on public datasets; 30% compute time reduction.",
+      "outcome": "90% F1 on internal benchmarks; 13%+ improvement over state-of-the-art on public datasets; 30% compute time reduction.",
       "lessons": "LLM embeddings and knowledge graphs can materially improve signal quality when raw transcriptomics alone is insufficient.",
       "highlights": [
-        "90% F1 on internal benchmarks across Osimertinib-treated cell lines; 13%+ over SOTA on public datasets.",
+        "90% F1 on internal benchmarks across Osimertinib-treated cell lines; 13%+ over state-of-the-art on public datasets.",
         "Integrated Med-PaLM LLM embeddings and AZ Biological Insights Knowledge Graph representations.",
         "Reduced pipeline compute time 30% via Optuna-driven hyperparameter search."
       ],
@@ -81,12 +81,12 @@
       "org": "AstraZeneca, India",
       "period": "2022–2023",
       "role": "Engineer",
-      "summary": "Next-generation CT tumor segmentation pipeline delivered in 6 months, with Dice scores 46% above SOTA, enabling $0.5M in follow-on funding.",
+      "summary": "Next-generation CT tumor segmentation pipeline delivered in 6 months, with Dice scores 46% above state-of-the-art, enabling $0.5M in follow-on funding.",
       "problem": "NSCLC tumor segmentation benchmarks required significant improvement to unlock follow-on funding and clinical utility.",
       "solution": "Radiologist-inspired dynamic window function and test-time augmentation in a distributed training pipeline.",
       "architecture": "Model and data parallelism reducing training time 20% and GPU memory 15–20%.",
       "businessImpact": "Enabled $0.5M in follow-on funding; exceeded stakeholder targets by 4–5x on NSCLC benchmarks.",
-      "outcome": "Dice scores 46% above SOTA; validated across independent clinical trial datasets including POSEIDON.",
+      "outcome": "Dice scores 46% above state-of-the-art; validated across independent clinical trial datasets including POSEIDON.",
       "highlights": [
         "Radiologist-inspired dynamic window function and test-time augmentation improved Dice by 11% and 7%.",
         "Exceeded stakeholder targets by 4–5x on NSCLC tumor segmentation benchmarks.",
@@ -105,11 +105,11 @@
       "problem": "Histopathology AI required expensive GPU compute and lacked reusable infrastructure for pathologist annotation workflows.",
       "solution": "End-to-end AWS ML pipeline with contrastive and inpainting foundation model variants and GxP-compliant annotation tooling.",
       "architecture": "Distributed training, model interpretability, and inference on AWS with Label Studio for pathologists.",
-      "businessImpact": "Delivered 2 model variants at 60% lower GPU compute cost; matched SOTA benchmark performance.",
+      "businessImpact": "Delivered 2 model variants at 60% lower GPU compute cost; matched state-of-the-art benchmark performance.",
       "outcome": "Led a 4-member team; platform adopted for internal AI-Bench environment.",
       "highlights": [
         "End-to-end AWS ML pipeline: ingestion, preprocessing, distributed training, interpretability, inference.",
-        "Contrastive foundation models matched SOTA at reduced GPU compute cost.",
+        "Contrastive foundation models matched state-of-the-art at reduced GPU compute cost.",
         "GxP-compliant Label Studio annotation tooling for pathologists; led a four-member team."
       ],
       "tags": ["Self-Supervised Learning", "Contrastive Learning", "Digital Pathology", "AWS"],

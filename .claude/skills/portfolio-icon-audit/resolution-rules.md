@@ -35,8 +35,14 @@ Order of precedence:
 1. **Explicit JSON value** — `iconNameSchema.safeParse(value)` in `src/lib/icons.ts`
 2. **Heuristic functions** — `projectIcon(domain, id)`, `aboutCardIcon(title)`
 3. **Keyword map** (below) — match against title, name, id, domain text
-4. **New IconName** — only if no existing key fits; requires `Icon.astro` + `icons.ts` update
-5. **Never** leave invalid strings in JSON — build will fail Zod validation
+4. **UI icon acquisition** — load `workspace/.claude/skills/ui-icon-acquisition/SKILL.md`:
+   - Search Lucide for semantic match
+   - Iconify API fallback (prefer `lucide:` prefix)
+   - Normalize to 24×24 stroke path for `Icon.astro`
+5. **New IconName** — only if steps 1–4 exhausted; requires `Icon.astro` + `icons.ts` update
+6. **Never** leave invalid strings in JSON — build will fail Zod validation
+
+Run `ui-icon-acquisition/references/reject-checklist.md` before adding registry keys.
 
 ### Keyword → IconName map
 
@@ -135,8 +141,12 @@ Flag status `fallback` when:
 |---|---|
 | Existing site logos in `public/assets/logos/` | Style reference (monochrome, simple geometry) |
 | [Simple Icons](https://simpleicons.org/) | Tech brands with MIT-licensed SVGs |
+| Lucide / Iconify (`lucide:` prefix) | Semantic UI icons via `ui-icon-acquisition` |
 | Official press / brand kits | Org logos when license permits local hosting |
 | Generated monogram | Official asset unavailable or license unclear |
+
+For org/site brand marks, run `brand-logo-evaluation` scoring before authoring.
+Author via `image_gen/.claude/skills/logo-emblem-author/SKILL.md`.
 
 ---
 
@@ -162,11 +172,12 @@ For tech brands: Simple Icons slug often matches (`pytorch`, `amazonaws` for AWS
 
 ## 6. Site brand resolution
 
-Verify against `docs/assets.md`:
+Verify against `docs/assets.md`. For `fallback` or refresh candidates, run
+`brand-logo-evaluation` (Phase C.5 in portfolio-icon-audit):
 
 | Asset | Check |
 |---|---|
-| favicon.svg | File exists; consider accent alignment with `#6C2FBF` |
+| favicon.svg | File exists; accent `#6C2FBF` (not legacy `#2563eb`); 16 px legibility |
 | favicon.ico | File exists |
 | icon-192.png | 192×192 |
 | icon-512.png | 512×512 |
@@ -174,7 +185,9 @@ Verify against `docs/assets.md`:
 | og-image.png | 1200×630, < 1 MB |
 | balaji.png | Portrait loads; reasonable file size (< 500 KB target) |
 
-Flag `missing` or `fallback` if dimensions wrong or file absent.
+Theme checks: light (`#FAF8FF`) and dark (`#0D0B1E`) backgrounds; monochrome pass.
+
+Flag `missing` or `fallback` if dimensions wrong, file absent, or evaluation fails stress test.
 
 ---
 

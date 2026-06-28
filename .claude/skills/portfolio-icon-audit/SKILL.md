@@ -1,6 +1,6 @@
 ---
 name: portfolio-icon-audit
-description: >
+description: >-
   Audit and resolve icons, logos, and images for the Astro portfolio site.
   Inventories all content JSON, heuristics, and public assets; maps each entity
   to an existing IconName, logo SVG, or site brand file; delegates missing assets
@@ -9,7 +9,7 @@ description: >
   portfolio visual assets, or before adding new content sections.
 ---
 
-# Portfolio Icon & Logo Audit
+# Portfolio icon & logo audit Skill
 
 Orchestrate a full audit of visual assets across the portfolio site. **Claude inventories and resolves; Cursor generates missing assets.**
 
@@ -51,6 +51,7 @@ Audit Progress:
 - [ ] Phase A — Inventory
 - [ ] Phase B — Classify
 - [ ] Phase C — Resolve
+- [ ] Phase C.5 — Evaluate (site_brand / org_logo)
 - [ ] Phase D — Report
 - [ ] Phase E — Delegate missing (Cursor)
 - [ ] Phase F — Verify (after Cursor returns)
@@ -98,10 +99,11 @@ Assign each row `asset_class`:
 Apply [resolution-rules.md](resolution-rules.md):
 
 1. **Semantic:** `iconNameSchema.safeParse(value)` → heuristics (`projectIcon`, `aboutCardIcon`, keyword map)
-2. **Logo:** file exists at `public/assets/logos/{slug}.svg`
-3. **Tech logo:** file exists at `public/assets/logos/tech/{slug}.svg`
-4. **Site brand:** file on disk + dimensions per `docs/assets.md`
-5. **Content image:** path resolves under `public/`
+2. **Before inventing a new IconName:** load `workspace/.claude/skills/ui-icon-acquisition/SKILL.md` — Lucide → Iconify → keyword map
+3. **Logo:** file exists at `public/assets/logos/{slug}.svg`
+4. **Tech logo:** file exists at `public/assets/logos/tech/{slug}.svg`
+5. **Site brand:** file on disk + dimensions per `docs/assets.md`
+6. **Content image:** path resolves under `public/`
 
 Mark status:
 
@@ -112,15 +114,28 @@ Mark status:
 | `missing` | No asset — queue for Cursor |
 | `needs_schema` | Content has no field yet (e.g. affiliations logos) |
 
+### Phase C.5 — Evaluate (site_brand / org_logo)
+
+For rows with `asset_class` `site_brand` or `org_logo` marked `fallback`, or when
+the user requests a brand refresh:
+
+1. Load `workspace/.claude/skills/brand-logo-evaluation/SKILL.md`
+2. Run weighted scoring on existing mark vs recommended direction
+3. Run theme compatibility checklist (16 px favicon, light/dark, monochrome)
+4. Include evaluation summary in Phase D report — do not auto-regenerate unless user asks
+
+Skip Phase C.5 for `semantic`, `tech_logo`, and `content_image` rows.
+
 ### Phase D — Report
 
 Deliver markdown report with:
 
 1. **Summary** — counts by status and asset_class
 2. **Resolved** — no action needed
-3. **Fallback** — recommended semantic key or logo slug upgrade
+3. **Fallback** — recommended semantic key or logo slug upgrade; Phase C.5 scores if run
 4. **Missing** — queued for delegation (list slugs)
 5. **Schema gaps** — implementation follow-ups after assets exist
+6. **Brand evaluation** — Phase C.5 scoring table (when applicable)
 
 Do not edit content JSON or components unless the user explicitly asks — this skill audits and delegates by default.
 
@@ -139,7 +154,9 @@ Do not edit content JSON or components unless the user explicitly asks — this 
   -p "<delegation package>"
 ```
 
-For SVG authoring, Cursor works in `image_gen/` following `image_gen/SKILL.md` §8 (Icon/Badge/Emblem).
+For SVG authoring, Cursor works in `image_gen/` following
+`image_gen/.claude/skills/logo-emblem-author/SKILL.md` (not generic §8 alone).
+For semantic icons, follow `workspace/.claude/skills/ui-icon-acquisition/SKILL.md`.
 
 **Portfolio brand tokens** (from `docs/design-direction.md`):
 
@@ -169,6 +186,13 @@ npm run build
 npm run preview   # spot-check broken images
 ```
 
+**Theme checks** (site_brand / org_logo):
+
+- Favicon recognizable at 16×16 px
+- Logo legible on light (`#FAF8FF`) and dark (`#0D0B1E`) backgrounds
+- Monochrome black and white variants pass (or CSS `currentColor` / vars)
+- OG image meets `docs/assets.md` spec (1200×630, < 1 MB)
+
 Re-run Phases A–C. All rows should be `resolved` or explicitly deferred.
 
 ---
@@ -177,8 +201,11 @@ Re-run Phases A–C. All rows should be `resolved` or explicitly deferred.
 
 | Skill | Role |
 |---|---|
+| `ui-icon-acquisition` | Lucide → Iconify workflow for semantic icons |
+| `brand-logo-evaluation` | Score site_brand / org_logo candidates (Phase C.5) |
+| `logo-emblem-author` | Cursor authors logo SVGs in image_gen |
 | `delegation` | Package format for every Cursor handoff |
-| `image_gen` | Cursor executes SVG authoring + `render.py` |
+| `image_gen` | Router + `render.py` for raster derivatives |
 | `refine-image` | Optional polish pass on generated marks |
 
 **Never** use Claude's built-in image generation for production assets — always delegate to Cursor running the `image_gen` pipeline.

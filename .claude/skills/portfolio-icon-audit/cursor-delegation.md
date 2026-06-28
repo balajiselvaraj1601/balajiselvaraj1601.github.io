@@ -34,7 +34,8 @@ CONTEXT
 
 CONSTRAINTS
 - Asset files only unless TASK explicitly includes schema or content JSON updates.
-- Follow image_gen/SKILL.md for SVG authoring; §8 Icon/Badge/Emblem for logos.
+- Follow image_gen/.claude/skills/logo-emblem-author/SKILL.md for logo/badge SVG authoring.
+- Follow workspace/.claude/skills/ui-icon-acquisition/SKILL.md for semantic IconName paths.
 - Run `npm run build` in portfolio_site before handoff.
 - Do not commit unless user asks.
 
@@ -73,9 +74,11 @@ CONTEXT
 - Max 3 colors; bold geometry; readable at 32px
 
 CONSTRAINTS
+- Monochrome-first; theme via CSS vars (logo-emblem-author/references/theme-svg.md).
 - Monochrome or duotone using portfolio accent #6C2FBF on dark #0D0B1E OR neutral white/gray mark.
 - If official SVG available (press kit / Simple Icons), use it only when license permits local hosting.
 - Otherwise: abstract monogram (initials + shape), not a counterfeit trademark.
+- Run brand-logo-evaluation reject checklist before handoff.
 - Do NOT edit affiliations.json or schemas unless explicitly requested.
 
 OUTPUT FORMAT
@@ -88,8 +91,8 @@ OUTPUT FORMAT
 
 WORKFLOW
 1. cd /home/engineer/workspace/image_gen
-2. Read SKILL.md + references/image-types.md §8 + references/design-system.md
-3. Write outputs/{slug}.svg
+2. Read logo-emblem-author/SKILL.md + references/monochrome-template.md
+3. Write outputs/{slug}.svg (monochrome-first)
 4. Copy to /home/engineer/workspace/portfolio_site/public/assets/logos/{slug}.svg
 5. cd portfolio_site && npm run build
 ```
@@ -145,6 +148,7 @@ CONTEXT
 - Field: {field}
 - Style: 24×24 viewBox, stroke width ~1.5–2, fill="none" on strokes, match existing Icon.astro paths
 - Reference icons: pill, microscope, blocks in src/components/Icon.astro
+- Acquisition: workspace/.claude/skills/ui-icon-acquisition/SKILL.md (Lucide → Iconify)
 
 CONSTRAINTS
 - Add key to iconNameSchema in src/lib/icons.ts (alphabetical-ish order in enum).
@@ -184,8 +188,10 @@ CONTEXT
 
 CONSTRAINTS
 - Follow docs/assets.md dimensions and paths exactly.
-- Author master SVG in image_gen/outputs/portfolio-brand-v1.svg
+- Author master SVG in image_gen/outputs/portfolio-brand-v1.svg via logo-emblem-author/SKILL.md
+- Run brand-logo-evaluation theme checklist; monochrome-first.
 - Render PNGs with: uv run python scripts/render.py outputs/portfolio-brand-v1.svg --width {N} --output {name}.png
+- Export variant kit per brand-logo-evaluation/references/variant-kit.md
 - Update public/favicon.svg, public/assets/icons/*, public/assets/og/og-image.png
 - Regenerate favicon.ico from 32/64 PNG if possible
 - Run npm run build && npm run preview

@@ -17,9 +17,11 @@ const LabeledLink = z.object({
   label: z.string(),
   title: z.string(),
   url: z.string().url(),
+  description: z.string().optional(),
   youtube: z.string().url().optional(),
   image: z.string().optional(),
   logo: z.string().optional(),
+  logoBadge: z.boolean().optional(),
 });
 const VariantColor = z.enum(['purple', 'red']);
 const EntitySlug = z.string().optional();

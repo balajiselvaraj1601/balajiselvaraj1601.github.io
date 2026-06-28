@@ -1,29 +1,13 @@
 ---
 import Section from '@components/Section.astro';
-import ResearchCard from '@components/ResearchCard.astro';
+import ResearchLinkGrid from '@components/ResearchLinkGrid.astro';
 import { publications, site } from '@lib/content';
 ---
 
 <Section
   id="publications"
   title={site.sections.publications.title}
-  eyebrow="Research & Recognition"
-  subtitle="Published, presented, and peer-recognized"
   variant="default"
 >
-  <div class="research-grid reveal">
-    {
-      publications.items.map((p) => (
-        <ResearchCard venue={p.label} title={p.title} href={p.url} youtube={p.youtube} image={p.image} logo={p.logo} />
-      ))
-    }
-  </div>
+  <ResearchLinkGrid items={publications.items} />
 </Section>
-
-<style>
-  .research-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 1.5rem;
-  }
-</style>

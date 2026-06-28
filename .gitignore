@@ -24,3 +24,11 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Python pipeline cache
+__pycache__/
+*.pyc
+
+# Logo-pipeline working dir & stray renders
+/logos/
+/publications.png

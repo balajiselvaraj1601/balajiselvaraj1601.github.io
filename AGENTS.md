@@ -42,6 +42,9 @@ content/**/*.json -> src/lib/content.ts -> src/schemas.ts -> src/components/Sect
 | Area | Read |
 |---|---|
 | Icon / logo audit (Claude skill) | `.claude/skills/portfolio-icon-audit/SKILL.md` |
+| UI icon sourcing (Lucide / Iconify) | `../.claude/skills/ui-icon-acquisition/SKILL.md` |
+| Logo evaluation / favicon scoring | `../.claude/skills/brand-logo-evaluation/SKILL.md` |
+| Logo SVG authoring | `../image_gen/.claude/skills/logo-emblem-author/SKILL.md` |
 | Setup and commands | `docs/getting-started.md` |
 | Architecture and data flow | `docs/architecture.md` |
 | Content editing | `docs/content-editing.md`, `content/README.md` |

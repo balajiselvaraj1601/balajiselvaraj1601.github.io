@@ -1,6 +1,8 @@
 ---
 import Icon from '@components/Icon.astro';
+import EntityLink from '@components/EntityLink.astro';
 import { resolveIcon, type IconName } from '@lib/icons';
+import { getEntityUrl } from '@lib/content';
 import type { VisionBoard } from '@schemas';
 
 type Program = VisionBoard['programs'][number];
@@ -11,14 +13,17 @@ interface Props {
   variant: Program['variant'];
   badge: Program['badge'];
   lines: string[];
+  entity?: string;
 }
 
-const { title, label, variant, badge, lines } = Astro.props;
+const { title, label, variant, badge, lines, entity } = Astro.props;
 ---
 
 <article class:list={['pcard', `pcard--${variant}`]}>
   <header class="pcard__head">
-    <h3 class="pcard__title">{title}</h3>
+    <h3 class="pcard__title">
+      <EntityLink href={getEntityUrl(entity)} label={title} class="pcard__title-link" />
+    </h3>
     <p class="pcard__label">{label}</p>
   </header>
 
@@ -66,6 +71,13 @@ const { title, label, variant, badge, lines } = Astro.props;
     line-height: 1.2;
     margin: 0;
     color: #fff;
+  }
+  .pcard__title :global(.pcard__title-link) {
+    color: #fff;
+  }
+  .pcard__title :global(.pcard__title-link:hover) {
+    color: #fff;
+    opacity: 0.92;
   }
   .pcard__label {
     font-family: var(--font-mono);

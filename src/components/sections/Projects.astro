@@ -1,7 +1,8 @@
 ---
 import Section from '@components/Section.astro';
 import Chip from '@components/Chip.astro';
-import { projects, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { projects, site, getEntityUrl } from '@lib/content';
 import type { Project } from '@schemas';
 
 const title = site.sections.projects.title;
@@ -50,7 +51,10 @@ const groups: Group[] = [
                   <span>{p.period}</span>
                 </p>
                 <h4 class="pc-name">{p.name}</h4>
-                <p class="pc-role">{p.role} · {p.org}</p>
+                <p class="pc-role">
+                  {p.role} ·{' '}
+                  <EntityLink href={getEntityUrl(p.entity)} label={p.org} />
+                </p>
                 <p class="pc-summary">{p.summary}</p>
                 {p.highlights.length > 0 && (
                   <ul class="pc-highlights">

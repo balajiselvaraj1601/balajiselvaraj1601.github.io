@@ -1,13 +1,16 @@
 ---
 import Icon from '@components/Icon.astro';
+import EntityLink from '@components/EntityLink.astro';
 import { resolveIcon, type IconName } from '@lib/icons';
+import { getEntityUrl } from '@lib/content';
 
 interface Props {
   icon: string;
   title: string;
   subtitle: string;
+  entity?: string;
 }
-const { icon, title, subtitle } = Astro.props;
+const { icon, title, subtitle, entity } = Astro.props;
 const iconName = resolveIcon(icon, 'diamond') as IconName;
 ---
 
@@ -15,7 +18,9 @@ const iconName = resolveIcon(icon, 'diamond') as IconName;
   <div class="lcard-icon" aria-hidden="true">
     <Icon name={iconName} size={22} />
   </div>
-  <div class="lcard-title">{title}</div>
+  <div class="lcard-title">
+    <EntityLink href={getEntityUrl(entity)} label={title} />
+  </div>
   <div class="lcard-sub">{subtitle}</div>
 </article>
 

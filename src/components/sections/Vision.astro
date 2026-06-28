@@ -1,6 +1,7 @@
 ---
 import Section from '@components/Section.astro';
-import { profile, skills, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { profile, skills, site, getEntityUrl } from '@lib/content';
 
 interface Props {
   withSkills?: boolean;
@@ -60,7 +61,10 @@ function splitHeading(heading: string, emphasis?: string) {
               <div class="collab-item">
                 <div class="collab-dot" aria-hidden="true"></div>
                 <div class="collab-text">
-                  <strong>{c.org}</strong> — {c.detail}
+                  <strong>
+                    <EntityLink href={getEntityUrl(c.entity)} label={c.org} />
+                  </strong>
+                  {' '}— {c.detail}
                 </div>
               </div>
             ))}

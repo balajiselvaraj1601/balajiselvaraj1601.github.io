@@ -1,0 +1,54 @@
+{
+  "astrazeneca": {
+    "name": "AstraZeneca",
+    "url": "https://www.astrazeneca.com"
+  },
+  "broad-institute": {
+    "name": "Broad Institute",
+    "url": "https://www.broadinstitute.org"
+  },
+  "iit-madras": {
+    "name": "IIT Madras",
+    "url": "https://www.iitm.ac.in"
+  },
+  "htic": {
+    "name": "HTIC, IIT Madras",
+    "url": "https://www.hticiitm.org"
+  },
+  "hcl": {
+    "name": "HCLTech",
+    "url": "https://www.hcltech.com"
+  },
+  "healthware": {
+    "name": "Healthware",
+    "url": "https://healthwareindia.com"
+  },
+  "cshl": {
+    "name": "Cold Spring Harbor Laboratory",
+    "url": "https://www.cshl.edu"
+  },
+  "riken-bsi": {
+    "name": "RIKEN Brain Science Institute",
+    "url": "https://bri.riken.jp/en/"
+  },
+  "aacr": {
+    "name": "AACR",
+    "url": "https://www.aacr.org"
+  },
+  "persist-seq": {
+    "name": "PERSIST-SEQ EU Consortium",
+    "url": "https://persist-seq.org"
+  },
+  "srec": {
+    "name": "Sri Ramakrishna Engineering College",
+    "url": "https://srec.ac.in"
+  },
+  "kaggle": {
+    "name": "Kaggle",
+    "url": "https://www.kaggle.com"
+  },
+  "gartner": {
+    "name": "Gartner",
+    "url": "https://www.gartner.com"
+  }
+}

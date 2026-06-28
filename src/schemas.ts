@@ -22,6 +22,11 @@ const LabeledLink = z.object({
   logo: z.string().optional(),
 });
 const VariantColor = z.enum(['purple', 'red']);
+const EntitySlug = z.string().optional();
+const EntityRecord = z.object({
+  name: z.string(),
+  url: z.string().url(),
+});
 const PageSeo = z.object({ title: z.string(), description: z.string() });
 const ContentPage = z.object({
   id: z.string(),
@@ -107,7 +112,7 @@ export const profileSchema = z.object({
       headingEmphasis: z.string().optional(),
       paragraphs: z.array(z.string()),
       collaborations: z.array(
-        z.object({ org: z.string(), detail: z.string() })
+        z.object({ org: z.string(), detail: z.string(), entity: EntitySlug })
       ),
       mentorship: z.string().optional(),
     })
@@ -198,6 +203,7 @@ export const impactSchema = z.object({
         tagVariant: VariantColor.optional(),
         cardVariant: VariantColor.optional(),
         bullets: z.array(z.string()),
+        entity: EntitySlug,
       })
     )
     .optional(),
@@ -207,6 +213,7 @@ export const impactSchema = z.object({
         icon: iconNameSchema,
         title: z.string(),
         subtitle: z.string(),
+        entity: EntitySlug,
       })
     )
     .optional(),
@@ -237,6 +244,7 @@ export const visionBoardSchema = z.object({
       variant: VariantColor,
       badge: VisionMark,
       lines: z.array(z.string()),
+      entity: EntitySlug,
     })
   ),
   orgHeader: z.string(),
@@ -265,6 +273,7 @@ export const experienceSchema = z.object({
       id: z.string(),
       position: z.string(),
       organization: z.string(),
+      entity: EntitySlug,
       location: z.string().optional(),
       mission: z.string().optional(),
       tech: z.array(z.string()).optional(),
@@ -301,6 +310,7 @@ export const projectsSchema = z.object({
       id: z.string(),
       name: z.string(),
       org: z.string(),
+      entity: EntitySlug,
       period: z.string(),
       role: z.string(),
       summary: z.string(),
@@ -334,6 +344,7 @@ export const educationSchema = z.object({
     z.object({
       degree: z.string(),
       institution: z.string(),
+      entity: EntitySlug,
       period: z.string(),
       gpa: z.string().optional(),
       achievement: z.string().optional(),
@@ -371,10 +382,19 @@ export const kaggleSchema = z.object({
   items: z.array(z.object({ label: z.string(), url: z.string().url() })),
 });
 
+/* ── entities.json ─────────────────────────────────────────────────────── */
+export const entitiesSchema = z.record(z.string(), EntityRecord);
+
 /* ── affiliations.json ─────────────────────────────────────────────────── */
 export const affiliationsSchema = z.object({
   title: z.string(),
-  items: z.array(z.object({ name: z.string(), logo: z.string().optional() })),
+  items: z.array(
+    z.object({
+      name: z.string(),
+      logo: z.string().optional(),
+      entity: EntitySlug,
+    })
+  ),
 });
 
 /* ── derived types (SSOT → z.infer, no parallel interfaces) ────────────── */
@@ -391,6 +411,8 @@ export type Awards = z.infer<typeof awardsSchema>;
 export type LinkList = z.infer<typeof linkListSchema>;
 export type Kaggle = z.infer<typeof kaggleSchema>;
 export type Affiliations = z.infer<typeof affiliationsSchema>;
+export type Entities = z.infer<typeof entitiesSchema>;
+export type EntityRecord = z.infer<typeof EntityRecord>;
 
 export type Page = Site['pages'][number];
 export type ContactItem = Profile['contact'][number];

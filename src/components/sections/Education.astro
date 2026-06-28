@@ -1,7 +1,8 @@
 ---
 import Section from '@components/Section.astro';
 import Icon from '@components/Icon.astro';
-import { education, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { education, site, getEntityUrl } from '@lib/content';
 
 function formatGpa(gpa?: string) {
   if (!gpa) return '';
@@ -21,7 +22,7 @@ function formatGpa(gpa?: string) {
           <h4>Education</h4>
           <h3>{edu.degree}</h3>
           <p>
-            {edu.institution} · {edu.period}
+            <EntityLink href={getEntityUrl(edu.entity)} label={edu.institution} /> · {edu.period}
             {edu.gpa && ` · ${formatGpa(edu.gpa)}`}
           </p>
         </div>

@@ -1,6 +1,7 @@
 ---
 import Section from '@components/Section.astro';
-import { affiliations, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { affiliations, site, getEntityUrl, resolveAffiliationEntity } from '@lib/content';
 
 const title = site.sections.affiliations.title;
 ---
@@ -19,7 +20,12 @@ const title = site.sections.affiliations.title;
               <div class="collab-dot" aria-hidden="true"></div>
             )
           }
-          <div class="collab-text">{a.name}</div>
+          <div class="collab-text">
+            <EntityLink
+              href={getEntityUrl(resolveAffiliationEntity(a))}
+              label={a.name}
+            />
+          </div>
         </div>
       ))
     }

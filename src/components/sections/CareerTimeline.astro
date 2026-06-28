@@ -1,6 +1,7 @@
 ---
 import Section from '@components/Section.astro';
-import { experience, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { experience, site, getEntityUrl } from '@lib/content';
 
 interface Props {
   compact?: boolean;
@@ -27,7 +28,9 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
           <div class="tl-dot" aria-hidden="true"></div>
           <div class="tl-year">{periodLabel(role.period)}</div>
           <div class="tl-role">{role.position}</div>
-          <div class="tl-company">{role.organization}</div>
+          <div class="tl-company">
+            <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
+          </div>
         </li>
       ))
     }

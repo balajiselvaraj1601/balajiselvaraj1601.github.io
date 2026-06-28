@@ -23,7 +23,8 @@ If the change affects page structure, section order, or the overall narrative, u
 |------|-------------------|---------------|
 | `site.json` | Global meta, nav, pages, SEO, résumé link | Title, tagline, nav labels, page sections, hide a section |
 | `person/profile.json` | Hero, About, Vision, Leadership, Contact | Headline, metrics, CTAs, about cards, vision, contact interests, `contactPage` copy |
-| `person/affiliations.json` | Affiliations strip | Organization names; optional `logo` slug → `public/assets/logos/{slug}.svg` |
+| `person/affiliations.json` | Affiliations strip | Organization names; optional `logo` slug → `public/assets/logos/{slug}.svg`; optional `entity` slug → URL in `entities.json` |
+| `entities.json` | Entity links (global registry) | Slug → `{ name, url }` for organizations referenced across sections |
 | `work/strategic-impact.json` | Strategic Impact | `metrics[]`, `highlights[]`; optional `journey[]`, `programs[]`, `leadershipCards[]` for rich layout |
 | `work/vision-board.json` | Vision page (`/vision`) | Infographic hubs, program cards, org impact cards |
 | `work/experience.json` | Experience timeline, Career timeline, Experience intro | Roles, optional `mission`, `snapshot[]`, bullets, tier |
@@ -134,6 +135,27 @@ Edit `content/person/profile.json` → `contact` array. Allowed public types: `e
 
 **Never add a phone number** — public-site privacy rule.
 
+### Link an organization
+
+1. Add or verify the slug in `content/entities.json`:
+
+```json
+{
+  "broad-institute": {
+    "name": "Broad Institute",
+    "url": "https://www.broadinstitute.org"
+  }
+}
+```
+
+2. Reference the slug from content JSON via optional `entity` (affiliations may omit it when `logo` matches the registry slug):
+
+```json
+{ "organization": "HCL Technology, India", "entity": "hcl" }
+```
+
+3. Run `npm run build` — URLs are validated once in `entities.json`; components render links via `EntityLink`.
+
 ## Schema rules
 
 Schemas live in `src/schemas.ts`. Key constraints:
@@ -143,9 +165,10 @@ Schemas live in `src/schemas.ts`. Key constraints:
 | `siteSchema` | internal `pages[]` entries require `seo` and `sections`; external entries require `external: true`; `resume.path` is a site-root path |
 | `profileSchema` | hero/about/contact fields drive the public profile; optional `vision`, `contactPage`, `techStack`; `contact[].href` nullable for location |
 | `impactSchema` | `metrics[]` + `highlights[]` required; optional `journey[]`, `programs[]`, `leadershipCards[]` |
-| `affiliationsSchema` | `items[].name` required; optional `items[].logo` slug |
-| `experienceSchema` | `tier` must be `"primary"` or `"secondary"`; `period.end` nullable |
-| `projectsSchema` | `id` must be unique slug; `highlights` and `tags` are string arrays |
+| `affiliationsSchema` | `items[].name` required; optional `items[].logo` and `items[].entity` slugs |
+| `entitiesSchema` | Record of slug → `{ name, url }`; all `url` values must be valid |
+| `experienceSchema` | `tier` must be `"primary"` or `"secondary"`; `period.end` nullable; optional `roles[].entity` |
+| `projectsSchema` | `id` must be unique slug; optional `projects[].entity` |
 | `linkListSchema` | Publications/conferences: `url` must be valid URL |
 | `kaggleSchema` | `profile` URL required; `items[].url` must be valid |
 

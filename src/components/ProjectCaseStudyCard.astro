@@ -1,11 +1,14 @@
 ---
 import Chip from '@components/Chip.astro';
 import PipelineStrip from '@components/PipelineStrip.astro';
+import EntityLink from '@components/EntityLink.astro';
+import { getEntityUrl } from '@lib/content';
 
 interface Props {
   name: string;
   role: string;
   org: string;
+  entity?: string;
   period: string;
   domain: string;
   summary: string;
@@ -22,6 +25,7 @@ const {
   name,
   role,
   org,
+  entity,
   period,
   domain,
   summary,
@@ -51,7 +55,9 @@ if (lessons) blocks.push({ label: 'Lessons', body: lessons });
       <span class="cs-period">{period}</span>
     </p>
     <h3 class="cs-name">{name}</h3>
-    <p class="cs-role">{role} · {org}</p>
+    <p class="cs-role">
+      {role} · <EntityLink href={getEntityUrl(entity)} label={org} />
+    </p>
     <p class="cs-summary">{summary}</p>
     {
       tags.length > 0 && (

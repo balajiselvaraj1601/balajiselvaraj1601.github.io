@@ -1,6 +1,8 @@
 ---
 import Icon from '@components/Icon.astro';
+import EntityLink from '@components/EntityLink.astro';
 import { resolveIcon, type IconName } from '@lib/icons';
+import { getEntityUrl } from '@lib/content';
 
 interface Props {
   title: string;
@@ -9,6 +11,7 @@ interface Props {
   tagVariant?: 'purple' | 'red';
   cardVariant?: 'purple' | 'red';
   bullets: string[];
+  entity?: string;
 }
 const {
   title,
@@ -17,6 +20,7 @@ const {
   tagVariant = 'red',
   cardVariant = 'purple',
   bullets,
+  entity,
 } = Astro.props;
 const iconName = resolveIcon(icon, 'target') as IconName;
 ---
@@ -27,7 +31,9 @@ const iconName = resolveIcon(icon, 'target') as IconName;
       <Icon name={iconName} size={22} />
     </div>
     <div>
-      <h3>{title}</h3>
+      <h3>
+        <EntityLink href={getEntityUrl(entity)} label={title} />
+      </h3>
       <span class:list={['backed-tag', { 'backed-tag--purple': tagVariant === 'purple' }]}>{tag}</span>
     </div>
   </div>

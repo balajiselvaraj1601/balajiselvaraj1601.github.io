@@ -107,6 +107,7 @@
         }
       ],
       "id": "az-sweden",
+      "entity": "astrazeneca",
       "location": "Gothenburg, Sweden"
     },
     {
@@ -147,7 +148,8 @@
           ]
         }
       ],
-      "id": "az-l2"
+      "id": "az-l2",
+      "entity": "astrazeneca"
     },
     {
       "position": "Senior Consultant Level 1",
@@ -209,7 +211,8 @@
           ]
         }
       ],
-      "id": "az-l1"
+      "id": "az-l1",
+      "entity": "astrazeneca"
     },
     {
       "position": "Lead Engineer",
@@ -274,6 +277,7 @@
         }
       ],
       "id": "hcl",
+      "entity": "hcl",
       "location": "India"
     },
     {
@@ -353,6 +357,7 @@
         }
       ],
       "id": "iit",
+      "entity": "htic",
       "location": "Chennai, India"
     },
     {
@@ -401,6 +406,7 @@
         }
       ],
       "id": "healthware",
+      "entity": "healthware",
       "location": "India"
     }
   ]

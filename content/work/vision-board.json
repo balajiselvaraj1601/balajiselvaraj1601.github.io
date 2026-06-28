@@ -26,6 +26,7 @@
     },
     {
       "title": "Broad Institute",
+      "entity": "broad-institute",
       "label": "Senior Group Leader",
       "variant": "purple",
       "badge": { "kind": "logo", "asset": "broad-institute", "alt": "Broad Institute" },
@@ -40,6 +41,7 @@
     },
     {
       "title": "AACR Conference",
+      "entity": "aacr",
       "label": "Conference Presentation",
       "variant": "red",
       "badge": { "kind": "logo", "asset": "aacr", "alt": "AACR" },

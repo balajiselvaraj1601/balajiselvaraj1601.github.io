@@ -13,6 +13,7 @@ import {
   linkListSchema,
   kaggleSchema,
   affiliationsSchema,
+  entitiesSchema,
 } from '@schemas';
 
 import siteRaw from '@content/site.json';
@@ -31,6 +32,7 @@ import speakersRaw from '@content/research/speakers.json';
 import educationRaw from '@content/recognition/education.json';
 import awardsRaw from '@content/recognition/awards.json';
 import kaggleRaw from '@content/recognition/kaggle.json';
+import entitiesRaw from '@content/entities.json';
 
 function load<T extends z.ZodTypeAny>(
   name: string,
@@ -103,6 +105,27 @@ export const affiliations = load(
   affiliationsSchema,
   affiliationsRaw
 );
+export const entities = load('entities.json', entitiesSchema, entitiesRaw);
+
+/** Resolve a canonical entity URL from a content slug (or logo slug). */
+export function getEntityUrl(slug?: string): string | undefined {
+  if (!slug) return undefined;
+  return entities[slug]?.url;
+}
+
+/** Resolve a canonical entity display name from a content slug. */
+export function getEntityName(slug?: string): string | undefined {
+  if (!slug) return undefined;
+  return entities[slug]?.name;
+}
+
+/** Affiliation items may omit `entity` when `logo` slug matches the registry. */
+export function resolveAffiliationEntity(item: {
+  entity?: string;
+  logo?: string;
+}): string | undefined {
+  return item.entity ?? item.logo;
+}
 
 export const sectionData = {
   hero: profile,

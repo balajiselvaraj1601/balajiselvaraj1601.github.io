@@ -94,18 +94,22 @@
     "collaborations": [
       {
         "org": "Broad Institute",
+        "entity": "broad-institute",
         "detail": "Dr. Shantanu Singh (Senior Group Leader): co-developing Cell Painting & omics computational pipelines"
       },
       {
         "org": "IIT Madras",
+        "entity": "iit-madras",
         "detail": "Research collaboration to co-develop cutting-edge AI models and computational pipelines"
       },
       {
         "org": "Cold Spring Harbor Laboratory",
+        "entity": "cshl",
         "detail": "Neuron connectivity toolbox delivery to Dr. Partha Mitra"
       },
       {
         "org": "RIKEN Brain Science Institute",
+        "entity": "riken-bsi",
         "detail": "Neuroscience imaging and 3D reconstruction algorithms"
       }
     ]

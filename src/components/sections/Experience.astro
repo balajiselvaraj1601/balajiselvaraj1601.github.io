@@ -2,7 +2,8 @@
 import Section from '@components/Section.astro';
 import ProjectAccordion from '@components/ProjectAccordion.astro';
 import Chip from '@components/Chip.astro';
-import { experience, site } from '@lib/content';
+import EntityLink from '@components/EntityLink.astro';
+import { experience, site, getEntityUrl } from '@lib/content';
 
 function periodLabel(p: { start: string; end: string | null; endLabel: string }) {
   const end = p.endLabel || p.end || '';
@@ -38,7 +39,9 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
             <div class="tl-dot" aria-hidden="true"></div>
             <div class="tl-year">{periodLabel(role.period)}</div>
             <div class="tl-role">{role.position}</div>
-            <div class="tl-company">{role.organization}</div>
+            <div class="tl-company">
+              <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
+            </div>
           </button>
         ))
       }
@@ -57,7 +60,9 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
             <div class="role-header">
               <h3>{role.position}</h3>
               <div class="role-meta">
-                <span>{role.organization}</span>
+                <span>
+                  <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
+                </span>
                 {role.location && <span>{role.location}</span>}
                 <span>{periodLabel(role.period)}</span>
               </div>

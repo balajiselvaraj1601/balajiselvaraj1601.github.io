@@ -47,6 +47,7 @@
     },
     {
       "title": "Broad Institute Collaboration",
+      "entity": "broad-institute",
       "icon": "institution",
       "tag": "Senior Group Leader Partnership",
       "tagVariant": "purple",
@@ -73,6 +74,7 @@
     },
     {
       "title": "AACR 2025 Conference",
+      "entity": "aacr",
       "icon": "presentation",
       "tag": "Conference Presenter",
       "tagVariant": "red",
@@ -87,7 +89,7 @@
   ],
   "leadershipCards": [
     { "icon": "trophy", "title": "EVP Level Award", "subtitle": "For Drug Safety Platform" },
-    { "icon": "chart", "title": "Gartner Submission", "subtitle": "GITC Chennai Multimodal Vision" },
+    { "icon": "chart", "title": "Gartner Submission", "entity": "gartner", "subtitle": "GITC Chennai Multimodal Vision" },
     { "icon": "funding", "title": "$0.5M+ Secured", "subtitle": "Multiple times for team" },
     { "icon": "target", "title": "3 Scorecard", "subtitle": "Aligned projects" },
     { "icon": "link", "title": "Strategic Positioning", "subtitle": "7 internal groups · 3 startups" },

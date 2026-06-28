@@ -1,0 +1,37 @@
+---
+interface Props {
+  href?: string;
+  label: string;
+  class?: string;
+}
+
+const { href, label, class: className } = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class:list={['entity-link', className]}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {label}
+    </a>
+  ) : (
+    <span class={className}>{label}</span>
+  )
+}
+
+<style>
+  .entity-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur) var(--ease);
+  }
+  .entity-link:hover {
+    color: var(--accent-ll);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

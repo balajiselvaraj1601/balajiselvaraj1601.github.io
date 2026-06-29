@@ -9,6 +9,12 @@ interface Props {
   eyebrowVariant?: 'default' | 'red';
   subtitle?: string;
   variant?: 'default' | 'alt' | 'full' | 'impact';
+  /**
+   * Explicit accessible name for the section, used only when `title` is empty
+   * (e.g. sections that render their own heading). Ignored when a real `title`
+   * is provided, since the emitted <h2> already labels the section.
+   */
+  ariaLabel?: string;
   class?: string;
 }
 const {
@@ -19,9 +25,14 @@ const {
   eyebrowVariant = 'default',
   subtitle,
   variant = 'default',
+  ariaLabel,
   class: cls,
 } = Astro.props;
 const headingId = `${id}-heading`;
+// Only emit the labelling <h2> when there is real title text. Sections that
+// pass title="" (and render their own heading) would otherwise get an empty
+// accessible name via a dangling aria-labelledby pointing at an empty heading.
+const hasTitle = title.trim().length > 0;
 ---
 
 <section
@@ -29,19 +40,28 @@ const headingId = `${id}-heading`;
   class:list={[
     'section',
     'reveal',
-    { 'section--alt': variant === 'alt', 'section--full': variant === 'full', 'section--impact': variant === 'impact' },
+    {
+      'section--alt': variant === 'alt',
+      'section--full': variant === 'full',
+      'section--impact': variant === 'impact',
+    },
     cls,
   ]}
-  aria-labelledby={headingId}
+  aria-labelledby={hasTitle ? headingId : undefined}
+  aria-label={!hasTitle ? ariaLabel : undefined}
 >
   <div class="container">
     {eyebrow && <Eyebrow text={eyebrow} variant={eyebrowVariant} />}
-    <h2
-      id={headingId}
-      class:list={['section__title', { 'visually-hidden': hideTitle }]}
-    >
-      {title}
-    </h2>
+    {
+      hasTitle && (
+        <h2
+          id={headingId}
+          class:list={['section__title', { 'visually-hidden': hideTitle }]}
+        >
+          {title}
+        </h2>
+      )
+    }
     {subtitle && <p class="section__subtitle">{subtitle}</p>}
     <slot />
   </div>

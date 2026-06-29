@@ -12,7 +12,11 @@ import { iconNameSchema } from './lib/icons';
 
 /* ── shared primitives ─────────────────────────────────────────────────── */
 const TextItem = z.object({ text: z.string() });
-const MetricItem = z.object({ value: z.string(), label: z.string() });
+export const MetricItem = z.object({
+  value: z.string(),
+  label: z.string(),
+  detail: z.string().optional(),
+});
 const LabeledLink = z.object({
   label: z.string(),
   title: z.string(),
@@ -48,54 +52,56 @@ const ExternalPage = z.object({
 });
 
 /* ── site.json ─────────────────────────────────────────────────────────── */
-export const siteSchema = z.object({
-  name: z.string(),
-  title: z.string(),
-  tagline: z.string(),
-  location: z.string(),
-  pages: z.array(z.union([ContentPage, ExternalPage])),
-  sections: z.record(
-    z.object({
-      title: z.string(),
-      source: z.string(),
-      visible: z.boolean(),
-    })
-  ),
-  seo: z.object({
+export const siteSchema = z
+  .object({
+    name: z.string(),
     title: z.string(),
-    description: z.string(),
-    keywords: z.array(z.string()),
-    ogImage: z.string(),
-    twitterCard: z.string(),
-  }),
-  resume: z.object({ label: z.string(), path: z.string() }),
-  theme: z.object({
-    tokensRef: z.string(),
-    default: z.string(),
-    modes: z.array(z.string()),
-  }),
-}).superRefine((data, ctx) => {
-  for (const page of data.pages) {
-    if ('external' in page && page.external) continue;
+    tagline: z.string(),
+    location: z.string(),
+    pages: z.array(z.union([ContentPage, ExternalPage])),
+    sections: z.record(
+      z.object({
+        title: z.string(),
+        source: z.string(),
+        visible: z.boolean(),
+      })
+    ),
+    seo: z.object({
+      title: z.string(),
+      description: z.string(),
+      keywords: z.array(z.string()),
+      ogImage: z.string(),
+      twitterCard: z.string(),
+    }),
+    resume: z.object({ label: z.string(), path: z.string() }),
+    theme: z.object({
+      tokensRef: z.string(),
+      default: z.string(),
+      modes: z.array(z.string()),
+    }),
+  })
+  .superRefine((data, ctx) => {
+    for (const page of data.pages) {
+      if ('external' in page && page.external) continue;
 
-    if (!page.viewSections?.length) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `site.json: page "${page.id}" must define viewSections`,
-      });
-      continue;
-    }
-
-    for (const sectionId of page.viewSections) {
-      if (!data.sections[sectionId]) {
+      if (!page.viewSections?.length) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: `site.json: page "${page.id}" viewSections references unknown section "${sectionId}"`,
+          message: `site.json: page "${page.id}" must define viewSections`,
         });
+        continue;
+      }
+
+      for (const sectionId of page.viewSections) {
+        if (!data.sections[sectionId]) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `site.json: page "${page.id}" viewSections references unknown section "${sectionId}"`,
+          });
+        }
       }
     }
-  }
-});
+  });
 
 /* ── profile.json ──────────────────────────────────────────────────────── */
 export const profileSchema = z.object({
@@ -130,12 +136,21 @@ export const profileSchema = z.object({
     })
   ),
   aboutIntro: z.string(),
-  aboutCards: z.array(
-    z.object({ title: z.string(), items: z.array(z.string()) })
-  ),
+  aboutCards: z
+    .array(z.object({ title: z.string(), items: z.array(z.string()) }))
+    .optional(),
   leadershipPhilosophy: z.object({
-    statement: z.string(),
+    statement: z.string().optional(),
     intro: z.string().optional(),
+    differentiators: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          icon: iconNameSchema.optional(),
+        })
+      )
+      .optional(),
     themes: z
       .array(
         z.object({
@@ -226,19 +241,6 @@ export const impactSchema = z.object({
       })
     )
     .optional(),
-  programs: z
-    .array(
-      z.object({
-        title: z.string(),
-        icon: iconNameSchema,
-        tag: z.string(),
-        tagVariant: VariantColor.optional(),
-        cardVariant: VariantColor.optional(),
-        bullets: z.array(z.string()),
-        entity: EntitySlug,
-      })
-    )
-    .optional(),
   leadershipCards: z
     .array(
       z.object({
@@ -256,7 +258,11 @@ export const impactSchema = z.object({
 // longer prose in strategic-impact.json — same facts, condensed visual wording.
 const VisionMark = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('icon'), name: iconNameSchema }),
-  z.object({ kind: z.literal('logo'), asset: z.string(), alt: z.string().optional() }),
+  z.object({
+    kind: z.literal('logo'),
+    asset: z.string(),
+    alt: z.string().optional(),
+  }),
 ]);
 export const visionBoardSchema = z.object({
   header: z.string(),
@@ -320,7 +326,7 @@ export const visionBoardSchema = z.object({
     .optional(),
 });
 
-/* ── generative-ai / mentorship (text-item lists) ──────────────────────── */
+/* ── generative-ai (text-item list) ────────────────────────────────────── */
 export const textListSchema = z.object({
   title: z.string(),
   items: z.array(TextItem),
@@ -330,6 +336,8 @@ export const textListSchema = z.object({
 export const experienceSchema = z.object({
   title: z.string(),
   intro: z.string().optional(),
+  headline: z.string().optional(),
+  headlineHighlight: z.string().optional(),
   snapshot: z.array(MetricItem).optional(),
   roles: z.array(
     z.object({
@@ -369,6 +377,14 @@ export const projectsSchema = z.object({
   note: z.string().optional(),
   intro: z.string().optional(),
   snapshot: z.array(MetricItem).optional(),
+  groups: z
+    .array(
+      z.object({
+        id: z.string(),
+        heading: z.string(),
+      })
+    )
+    .optional(),
   projects: z.array(
     z.object({
       id: z.string(),
@@ -381,6 +397,8 @@ export const projectsSchema = z.object({
       highlights: z.array(z.string()),
       tags: z.array(z.string()),
       domain: z.string(),
+      group: z.string().optional(),
+      icon: iconNameSchema.optional(),
       featured: z.boolean().optional(),
       problem: z.string().optional(),
       solution: z.string().optional(),
@@ -392,37 +410,52 @@ export const projectsSchema = z.object({
   ),
 });
 
-/* ── skills.json ───────────────────────────────────────────────────────── */
-export const skillsSchema = z.object({
-  title: z.string(),
-  categories: z.array(
-    z.object({ label: z.string(), skills: z.array(z.string()) })
-  ),
+/* ── education.json ────────────────────────────────────────────────────── */
+export const educationRecordSchema = z.object({
+  id: z.string(),
+  degree: z.string(),
+  field: z.string().optional(),
+  institution: z.string(),
+  entity: EntitySlug,
+  period: z.string(),
+  gpa: z.string().optional(),
+  achievement: z.string().optional(),
+  achievementDetail: z.string().optional(),
+  summary: z.string().optional(),
 });
 
-/* ── education.json ────────────────────────────────────────────────────── */
 export const educationSchema = z.object({
   title: z.string(),
-  records: z.array(
-    z.object({
-      degree: z.string(),
-      institution: z.string(),
-      entity: EntitySlug,
-      period: z.string(),
-      gpa: z.string().optional(),
-      achievement: z.string().optional(),
-    })
-  ),
+  intro: z.string().optional(),
+  records: z.array(educationRecordSchema),
 });
 
 /* ── awards.json ───────────────────────────────────────────────────────── */
+// SSOT for the six nominator levels — drives summary tile grouping, accent
+// colors, and the filter controls in Awards.astro.
+export const awardLevelSchema = z.enum([
+  'EVP',
+  'CIO',
+  'Senior Director',
+  'Director',
+  'Associate Director',
+  'National Level',
+]);
 export const awardsSchema = z.object({
   title: z.string(),
   items: z.array(
     z.object({
-      label: z.string(),
-      detail: z.string(),
-      variant: z.enum(['purple', 'red', 'gold']).optional(),
+      id: z.string(),
+      title: z.string(),
+      nominator: z.string(),
+      designation: z.string(),
+      level: awardLevelSchema,
+      awardType: z.string(),
+      reason: z.string(),
+      date: z.string().optional(), // some awards (e.g. academic) have no recorded date
+      dateSort: z.string().optional(), // ISO YYYY-MM-DD, retained for reference
+      rank: z.number().int().positive(), // within-level impact rank (1 = highest)
+      message: z.string(),
     })
   ),
 });
@@ -438,6 +471,7 @@ const SpeakingEngagement = z.object({
   event: z.string(),
   location: z.string(),
   date: z.string(),
+  dateSort: z.string().optional(),
   title: z.string(),
   description: z.string(),
   url: z.string().url(),
@@ -453,6 +487,40 @@ export const speakersSchema = z.object({
 });
 
 /* ── kaggle.json ───────────────────────────────────────────────────────── */
+const KaggleCompetitionStats = z.object({
+  prizePool: z.string(),
+  entrants: z.string(),
+  submissions: z.string(),
+});
+
+export const kaggleCompetitionSchema = z.object({
+  id: z.string(),
+  compId: z.string(),
+  name: z.string(),
+  url: z.string().url(),
+  icon: iconNameSchema,
+  year: z.number(),
+  period: z.string(),
+  role: z.string(),
+  medal: z.enum(['Silver', 'Bronze']),
+  rank: z.string(),
+  percentile: z.string(),
+  summary: z.string(),
+  problem: z.string(),
+  solution: z.string(),
+  architecture: z.string().optional(),
+  outcome: z.string(),
+  lessons: z.string().optional(),
+  evaluationMetric: z.string().optional(),
+  realWorldImpact: z.string().optional(),
+  highlights: z.array(z.string()).optional(),
+  tags: z.array(z.string()),
+  domain: z.string(),
+  stats: KaggleCompetitionStats.optional(),
+  teamMembers: z.array(z.string()).optional(),
+  conferenceTrack: z.string().optional(),
+});
+
 export const kaggleSchema = z.object({
   title: z.string(),
   profile: z.string().url(),
@@ -461,7 +529,7 @@ export const kaggleSchema = z.object({
   rankDetail: z.string().optional(),
   headline: z.string().optional(),
   description: z.string().optional(),
-  items: z.array(z.object({ label: z.string(), url: z.string().url() })),
+  items: z.array(kaggleCompetitionSchema),
 });
 
 /* ── entities.json ─────────────────────────────────────────────────────── */
@@ -481,19 +549,21 @@ export const collaborationsSchema = z.object({
 });
 
 /* ── derived types (SSOT → z.infer, no parallel interfaces) ────────────── */
+export type MetricItem = z.infer<typeof MetricItem>;
 export type Site = z.infer<typeof siteSchema>;
 export type Profile = z.infer<typeof profileSchema>;
 export type Impact = z.infer<typeof impactSchema>;
 export type VisionBoard = z.infer<typeof visionBoardSchema>;
-export type TextList = z.infer<typeof textListSchema>;
 export type Experience = z.infer<typeof experienceSchema>;
 export type Projects = z.infer<typeof projectsSchema>;
-export type Skills = z.infer<typeof skillsSchema>;
 export type Education = z.infer<typeof educationSchema>;
+export type EducationRecord = z.infer<typeof educationRecordSchema>;
 export type Awards = z.infer<typeof awardsSchema>;
+export type AwardLevel = z.infer<typeof awardLevelSchema>;
 export type LinkList = z.infer<typeof linkListSchema>;
 export type Speakers = z.infer<typeof speakersSchema>;
 export type Kaggle = z.infer<typeof kaggleSchema>;
+export type KaggleCompetition = z.infer<typeof kaggleCompetitionSchema>;
 export type Collaborations = z.infer<typeof collaborationsSchema>;
 export type Entities = z.infer<typeof entitiesSchema>;
 export type EntityRecord = z.infer<typeof EntityRecord>;

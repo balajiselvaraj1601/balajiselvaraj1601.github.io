@@ -2,45 +2,68 @@ import { initSectionViews, type SectionViewsOptions } from './section-views';
 
 export function initSiteChrome(navViewsConfig?: SectionViewsOptions) {
   const toggle = document.getElementById('theme-toggle');
-  toggle?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try {
-      localStorage.setItem('theme', next);
-    } catch {}
-  });
+  if (toggle) {
+    const syncTogglePressed = () => {
+      const isDark =
+        document.documentElement.getAttribute('data-theme') === 'dark';
+      toggle.setAttribute('aria-pressed', String(isDark));
+    };
+    syncTogglePressed();
+    toggle.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next =
+        root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* persisting theme is best-effort; ignore storage failures */
+      }
+      syncTogglePressed();
+    });
+  }
 
   const navToggle = document.getElementById('nav-toggle');
   const nav = document.getElementById('primary-nav');
-  const links = nav ? Array.from(nav.querySelectorAll('a')) : [];
-  const getMenuFocusables = () =>
-    [...links, toggle, navToggle].filter(
-      (el): el is HTMLElement => el instanceof HTMLElement
-    );
+  const main = document.getElementById('main');
+  const footer = document.querySelector('.site-footer');
+  const headerActions = document.querySelector('.site-header__actions');
+
+  function getMenuFocusables(): HTMLElement[] {
+    if (!nav?.classList.contains('is-open')) return [];
+    const selector =
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const inNav = Array.from(nav.querySelectorAll<HTMLElement>(selector));
+    const toggleEl = navToggle instanceof HTMLElement ? [navToggle] : [];
+    return [...inNav, ...toggleEl];
+  }
 
   function setMenu(open: boolean) {
     nav?.classList.toggle('is-open', open);
     navToggle?.setAttribute('aria-expanded', String(open));
     navToggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.style.overflow = open ? 'hidden' : '';
-    if (open) links[0]?.focus();
+    main?.toggleAttribute('inert', open);
+    footer?.toggleAttribute('inert', open);
+    if (headerActions instanceof HTMLElement) {
+      headerActions.toggleAttribute('inert', open);
+    }
+    if (open) getMenuFocusables()[0]?.focus();
   }
   const isOpen = () => navToggle?.getAttribute('aria-expanded') === 'true';
 
   navToggle?.addEventListener('click', () => setMenu(!isOpen()));
-  links.forEach((a) =>
-    a.addEventListener('click', () => {
-      if (isOpen()) setMenu(false);
-    })
-  );
+  nav?.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest('a') && isOpen()) setMenu(false);
+  });
 
   document.addEventListener('keydown', (e) => {
     if (!isOpen()) return;
 
     if (e.key === 'Escape') {
       setMenu(false);
-      (navToggle as HTMLElement)?.focus();
+      navToggle?.focus();
       return;
     }
 
@@ -114,7 +137,9 @@ export function initExperiencePanel() {
   const root = document.querySelector<HTMLElement>('.work-layout');
   if (!root) return;
 
-  const items = Array.from(root.querySelectorAll<HTMLButtonElement>('.tl-item'));
+  const items = Array.from(
+    root.querySelectorAll<HTMLButtonElement>('.tl-item')
+  );
   const panels = Array.from(root.querySelectorAll<HTMLElement>('.work-panel'));
   if (!items.length || !panels.length) return;
 
@@ -145,10 +170,12 @@ export function initExperiencePanel() {
     item.addEventListener('click', () => activate(item));
     item.addEventListener('keydown', (e) => {
       const lastIndex = items.length - 1;
-      let nextIndex = index;
+      let nextIndex: number;
 
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') nextIndex = index + 1;
-      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') nextIndex = index - 1;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight')
+        nextIndex = index + 1;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft')
+        nextIndex = index - 1;
       else if (e.key === 'Home') nextIndex = 0;
       else if (e.key === 'End') nextIndex = lastIndex;
       else return;
@@ -161,6 +188,8 @@ export function initExperiencePanel() {
     });
   });
 
-  const selected = items.find((item) => item.getAttribute('aria-selected') === 'true');
+  const selected = items.find(
+    (item) => item.getAttribute('aria-selected') === 'true'
+  );
   activate(selected ?? items[0]);
 }

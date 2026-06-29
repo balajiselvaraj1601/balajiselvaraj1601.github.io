@@ -5,9 +5,11 @@ interface Props {
   title: string;
   /** Chevron direction flanking the title: 'in' points toward it, 'out' away. */
   flank?: 'in' | 'out';
+  /** Optional id on the rendered <h2> so a parent can aria-labelledby it. */
+  id?: string;
 }
 
-const { title, flank = 'in' } = Astro.props;
+const { title, flank = 'in', id } = Astro.props;
 ---
 
 <div class:list={['bhead', `bhead--${flank}`]}>
@@ -16,7 +18,7 @@ const { title, flank = 'in' } = Astro.props;
     <Icon name="chevron-right" size={16} />
     <Icon name="chevron-right" size={16} />
   </span>
-  <h2 class="bhead__title">{title}</h2>
+  <h2 class="bhead__title" id={id}>{title}</h2>
   <span class="bhead__chev bhead__chev--right" aria-hidden="true">
     <Icon name="chevron-right" size={16} />
     <Icon name="chevron-right" size={16} />

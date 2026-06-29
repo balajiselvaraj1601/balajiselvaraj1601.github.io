@@ -1,15 +1,18 @@
 ---
-interface Props {
-  value: string;
-  label: string;
+import type { MetricItem } from '@schemas';
+
+// SSOT: shape derives from the shared MetricItem schema (value/label/detail?).
+// `detail` is intentionally not rendered — this is a compact stat tile.
+interface Props extends MetricItem {
   class?: string;
 }
-const { value, label, class: cls } = Astro.props;
+const { value, label, detail, class: cls } = Astro.props;
 ---
 
 <div class:list={['metric-card', 'card', cls]}>
   <p class="metric-card__value">{value}</p>
   <p class="metric-card__label metric-label">{label}</p>
+  {detail && <p class="metric-card__detail">{detail}</p>}
 </div>
 
 <style>
@@ -28,6 +31,12 @@ const { value, label, class: cls } = Astro.props;
   }
   .metric-card__label {
     font-size: var(--fs-small);
+    max-width: none;
+  }
+  .metric-card__detail {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: var(--space-1);
     max-width: none;
   }
 </style>

@@ -1,5 +1,8 @@
 ---
-type Status = 'available' | 'limited' | 'closed';
+import type { Profile } from '@schemas';
+
+// Derive the status union from the schema (SSOT) rather than re-declaring it.
+type Status = NonNullable<Profile['availability']>['status'];
 
 interface Props {
   status: Status;
@@ -10,10 +13,7 @@ interface Props {
 const { status, label, class: cls } = Astro.props;
 ---
 
-<span
-  class:list={['avail', `avail--${status}`, cls]}
-  data-status={status}
->
+<span class:list={['avail', `avail--${status}`, cls]}>
   <span class="avail__dot" aria-hidden="true"></span>
   <span class="avail__label">{label}</span>
 </span>
@@ -24,7 +24,7 @@ const { status, label, class: cls } = Astro.props;
     align-items: center;
     gap: 0.55rem;
     padding: 0.35rem 0.9rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     border: 1px solid var(--border-strong);
     background: var(--accent-soft);
     font-family: var(--font-mono);
@@ -38,18 +38,22 @@ const { status, label, class: cls } = Astro.props;
     height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
-    background: var(--avail-dot, #22c55e);
+    background: var(--avail-dot, var(--status-available));
     box-shadow: 0 0 0 3px
-      color-mix(in srgb, var(--avail-dot, #22c55e) 22%, transparent);
+      color-mix(
+        in srgb,
+        var(--avail-dot, var(--status-available)) 22%,
+        transparent
+      );
   }
   .avail--available {
-    --avail-dot: #22c55e;
+    --avail-dot: var(--status-available);
   }
   .avail--limited {
-    --avail-dot: #eab308;
+    --avail-dot: var(--status-limited);
   }
   .avail--closed {
-    --avail-dot: var(--accent-red);
+    --avail-dot: var(--status-closed);
   }
   @media (prefers-reduced-motion: no-preference) {
     .avail__dot {
@@ -63,8 +67,7 @@ const { status, label, class: cls } = Astro.props;
         color-mix(in srgb, var(--avail-dot) 22%, transparent);
     }
     50% {
-      box-shadow: 0 0 0 6px
-        color-mix(in srgb, var(--avail-dot) 8%, transparent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--avail-dot) 8%, transparent);
     }
   }
 </style>

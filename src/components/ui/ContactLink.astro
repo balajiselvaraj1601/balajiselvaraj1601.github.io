@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 
 interface Props {
   label: string;
@@ -9,17 +9,28 @@ interface Props {
   icon: string;
 }
 const { label, value, href, icon } = Astro.props;
-const iconName = resolveIcon(icon, 'email') as IconName;
+const iconName = resolveIcon(icon, 'email');
 ---
 
 {
   href ? (
-    <a class="clink" href={href} {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-      <span class="clink-icon">
+    <a
+      class="clink"
+      href={href}
+      {...(href.startsWith('http')
+        ? { target: '_blank', rel: 'noopener noreferrer' }
+        : {})}
+    >
+      <span class="clink-icon" aria-hidden="true">
         <Icon name={iconName} size={20} />
       </span>
       <span class="clink-label">{label}</span>
-      <span class="clink-val">{value}</span>
+      <span class="clink-val">
+        {value}
+        {href.startsWith('http') && (
+          <span class="visually-hidden"> (opens in new window)</span>
+        )}
+      </span>
     </a>
   ) : (
     <div class="clink">
@@ -43,8 +54,10 @@ const iconName = resolveIcon(icon, 'email') as IconName;
     padding: 0.85rem 1rem;
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color 0.25s, color 0.25s;
+    border-radius: var(--radius-md);
+    transition:
+      border-color 0.25s,
+      color 0.25s;
   }
   a.clink:hover {
     border-color: var(--accent);

@@ -4,6 +4,10 @@ import ResearchLinkGrid from '@components/cards/ResearchLinkGrid.astro';
 import { conferences, site } from '@lib/content';
 ---
 
-<Section id="conferences" title={site.sections.conferences.title} variant="default">
+<Section
+  id="conferences"
+  title={site.sections.conferences.title}
+  variant="default"
+>
   <ResearchLinkGrid items={conferences.items} />
 </Section>

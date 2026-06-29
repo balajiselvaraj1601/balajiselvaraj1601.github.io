@@ -14,7 +14,9 @@ const isHome = current === '/';
 
 type ContentNavItem = Extract<(typeof navItems)[number], { external?: false }>;
 
-function isContentPage(item: (typeof navItems)[number]): item is ContentNavItem {
+function isContentPage(
+  item: (typeof navItems)[number]
+): item is ContentNavItem {
   return !('external' in item && item.external);
 }
 
@@ -70,7 +72,11 @@ const lastName = rest.join(' ');
           ))
         }
       </ul>
-      <div class="nav__mobile-actions" role="group" aria-label="Primary actions">
+      <div
+        class="nav__mobile-actions"
+        role="group"
+        aria-label="Primary actions"
+      >
         <a
           class="btn btn-secondary nav-resume"
           href={resumePath}
@@ -78,7 +84,12 @@ const lastName = rest.join(' ');
         >
           {resumeLabel}
         </a>
-        <a class="btn btn-primary nav-cta" href={contactHref} data-view-anchor={singlePageViews ? 'contact' : undefined}>Get in Touch</a>
+        <a
+          class="btn btn-primary nav-cta"
+          href={contactHref}
+          data-view-anchor={singlePageViews ? 'contact' : undefined}
+          >Get in Touch</a
+        >
       </div>
     </nav>
 
@@ -90,7 +101,12 @@ const lastName = rest.join(' ');
       >
         {resumeLabel}
       </a>
-      <a class="btn btn-primary nav-cta" href={contactHref} data-view-anchor={singlePageViews ? 'contact' : undefined}>Get in Touch</a>
+      <a
+        class="btn btn-primary nav-cta"
+        href={contactHref}
+        data-view-anchor={singlePageViews ? 'contact' : undefined}
+        >Get in Touch</a
+      >
       <button
         type="button"
         class="save-btn"
@@ -139,7 +155,8 @@ const lastName = rest.join(' ');
   }
   @media (prefers-reduced-motion: no-preference) {
     .site-header {
-      transition: background-color var(--dur) var(--ease),
+      transition:
+        background-color var(--dur) var(--ease),
         border-color var(--dur) var(--ease),
         box-shadow var(--dur) var(--ease);
     }
@@ -209,8 +226,10 @@ const lastName = rest.join(' ');
     color: var(--text-muted);
     text-decoration: none;
     padding: 0.4rem 0.85rem;
-    border-radius: 4px;
-    transition: color 0.2s, background-color 0.2s;
+    border-radius: var(--radius-xs);
+    transition:
+      color 0.2s,
+      background-color 0.2s;
   }
   .nav__link:hover,
   .nav__link[aria-current='page'] {
@@ -243,11 +262,17 @@ const lastName = rest.join(' ');
     justify-content: center;
     width: 36px;
     height: 36px;
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     border: 1px solid var(--border);
     background: var(--bg-elev);
     color: var(--text);
     font-size: 1rem;
+  }
+  @media (min-width: 1025px) {
+    .save-btn,
+    .theme-toggle {
+      display: inline-flex;
+    }
   }
   .save-btn {
     position: relative;
@@ -274,7 +299,9 @@ const lastName = rest.join(' ');
     display: block;
   }
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
   :global(html[data-theme='dark']) .theme-toggle__moon,
   :global(html:not([data-theme='dark'])) .theme-toggle__sun {

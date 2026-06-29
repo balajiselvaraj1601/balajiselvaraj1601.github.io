@@ -1,17 +1,14 @@
 ---
 import Icon from '@components/ui/Icon.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 import { getEntityUrl } from '@lib/content';
+import type { Impact } from '@schemas';
 
-interface Props {
-  icon: string;
-  title: string;
-  subtitle: string;
-  entity?: string;
-}
+// SSOT: props derive from the strategic-impact `leadershipCards` schema item.
+type Props = NonNullable<Impact['leadershipCards']>[number];
 const { icon, title, subtitle, entity } = Astro.props;
-const iconName = resolveIcon(icon, 'diamond') as IconName;
+const iconName = resolveIcon(icon, 'diamond');
 ---
 
 <article class="lcard">
@@ -28,10 +25,12 @@ const iconName = resolveIcon(icon, 'diamond') as IconName;
   .lcard {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     padding: var(--card-padding) var(--space-4);
     text-align: center;
-    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
     position: relative;
     overflow: hidden;
   }

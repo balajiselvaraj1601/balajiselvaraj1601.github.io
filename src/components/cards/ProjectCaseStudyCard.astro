@@ -4,23 +4,26 @@ import Icon from '@components/ui/Icon.astro';
 import PipelineStrip from '@components/cards/PipelineStrip.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
 import { getEntityUrl } from '@lib/content';
+import type { Project } from '@schemas';
 
-interface Props {
-  name: string;
-  role: string;
-  org: string;
-  entity?: string;
-  period: string;
-  domain: string;
-  summary: string;
-  tags: string[];
-  problem?: string;
-  solution?: string;
-  architecture?: string;
-  businessImpact?: string;
-  outcome?: string;
-  lessons?: string;
-}
+// Props are a schema-derived subset of a project record (SSOT: src/schemas.ts).
+type Props = Pick<
+  Project,
+  | 'name'
+  | 'role'
+  | 'org'
+  | 'entity'
+  | 'period'
+  | 'domain'
+  | 'summary'
+  | 'tags'
+  | 'problem'
+  | 'solution'
+  | 'architecture'
+  | 'businessImpact'
+  | 'outcome'
+  | 'lessons'
+>;
 
 const {
   name,

@@ -1,6 +1,6 @@
 ---
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 
 interface Bullet {
   text: string;
@@ -14,7 +14,7 @@ interface Props {
   open?: boolean;
 }
 const { name, subtitle, icon, bullets, open = false } = Astro.props;
-const iconName = resolveIcon(icon, 'folder') as IconName;
+const iconName = resolveIcon(icon, 'folder');
 ---
 
 <details class="proj-card" open={open}>
@@ -34,9 +34,13 @@ const iconName = resolveIcon(icon, 'folder') as IconName;
   </summary>
   <div class="proj-inner">
     <ul class="bullet-list">
-      {bullets.map((b) => (
-        <li class:list={[{ 'is-secondary': b.tier === 'secondary' }]}>{b.text}</li>
-      ))}
+      {
+        bullets.map((b) => (
+          <li class:list={[{ 'is-secondary': b.tier === 'secondary' }]}>
+            {b.text}
+          </li>
+        ))
+      }
     </ul>
   </div>
 </details>
@@ -45,7 +49,7 @@ const iconName = resolveIcon(icon, 'folder') as IconName;
   .proj-card {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     transition: border-color var(--dur) var(--ease);
   }
@@ -72,7 +76,7 @@ const iconName = resolveIcon(icon, 'folder') as IconName;
   .proj-icon {
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     flex-shrink: 0;
     background: var(--accent-soft);
     border: 1px solid var(--border-strong);

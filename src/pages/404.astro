@@ -2,7 +2,12 @@
 import Layout from '@layouts/Layout.astro';
 ---
 
-<Layout title="Page not found — Balaji Selvaraj" path="/404" description="The page you were looking for could not be found.">
+<Layout
+  title="Page not found — Balaji Selvaraj"
+  path="/404"
+  description="The page you were looking for could not be found."
+  singlePageViews={true}
+>
   <section class="notfound">
     <div class="container notfound__inner">
       <p class="notfound__code">404</p>

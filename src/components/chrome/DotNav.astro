@@ -1,9 +1,8 @@
 ---
 interface Props {
   sections: string[];
-  singlePageViews?: boolean;
 }
-const { sections, singlePageViews = false } = Astro.props;
+const { sections } = Astro.props;
 
 const labels: Record<string, string> = {
   hero: 'Hero',
@@ -13,10 +12,8 @@ const labels: Record<string, string> = {
   'technical-vision': 'Technical Vision',
   'vision-board': 'Vision Board',
   leadership: 'About',
-  skills: 'Skills',
   'experience-intro': 'Experience',
   experience: 'Experience',
-  mentorship: 'Mentorship',
   'projects-intro': 'Projects',
   publications: 'Publications',
   projects: 'Projects',
@@ -30,7 +27,12 @@ const labels: Record<string, string> = {
 };
 ---
 
-<nav class="dot-nav" id="dot-nav" aria-label="Section navigation" hidden={sections.length < 2}>
+<nav
+  class="dot-nav"
+  id="dot-nav"
+  aria-label="Section navigation"
+  hidden={sections.length < 2}
+>
   {
     sections.map((id) => (
       <button
@@ -67,7 +69,9 @@ const labels: Record<string, string> = {
     padding: 0;
     background: var(--text-muted);
     cursor: pointer;
-    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transition:
+      background var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
   }
   .dot-nav__dot[hidden] {
     display: none;
@@ -79,6 +83,10 @@ const labels: Record<string, string> = {
     background: var(--accent-light);
     transform: scale(1.5);
   }
+  .dot-nav__dot:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 3px;
+  }
   @media (max-width: 900px) {
     .dot-nav {
       display: none;
@@ -89,11 +97,14 @@ const labels: Record<string, string> = {
 <script>
   const nav = document.getElementById('dot-nav');
   if (nav) {
-    const dots = Array.from(nav.querySelectorAll('.dot-nav__dot'));
+    const dots = Array.from(nav.querySelectorAll<HTMLElement>('.dot-nav__dot'));
 
-    const setActive = (id) => {
+    const setActive = (id: string) => {
       dots.forEach((d) => {
-        d.classList.toggle('is-active', d.dataset.target === id);
+        const active = d.dataset.target === id;
+        d.classList.toggle('is-active', active);
+        if (active) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
       });
     };
 
@@ -104,15 +115,20 @@ const labels: Record<string, string> = {
       dot.addEventListener('click', () => {
         const target = document.getElementById(dot.dataset.target ?? '');
         if (target) {
-          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+          const reduce = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches;
+          target.scrollIntoView({
+            behavior: reduce ? 'auto' : 'smooth',
+            block: 'start',
+          });
         }
       });
     });
 
     const observed = dots
       .map((d) => document.getElementById(d.dataset.target ?? ''))
-      .filter(Boolean);
+      .filter((el): el is HTMLElement => el !== null);
 
     nav.hidden = observed.length < 2;
     if (observed.length >= 2 && 'IntersectionObserver' in window) {

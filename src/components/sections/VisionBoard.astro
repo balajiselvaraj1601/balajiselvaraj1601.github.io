@@ -7,76 +7,102 @@ import OrgImpactCard from '@components/cards/OrgImpactCard.astro';
 import Icon from '@components/ui/Icon.astro';
 import { visionBoard } from '@lib/content';
 
-const { header, eyebrow, intro, hubs, principles, programs, orgHeader, orgCards } =
-  visionBoard;
+const {
+  header,
+  eyebrow,
+  intro,
+  hubs,
+  principles,
+  programs,
+  orgHeader,
+  orgCards,
+} = visionBoard;
 ---
 
-<Section id="vision-board" title="" hideTitle variant="full" class="vboard">
+<Section
+  id="vision-board"
+  title={header}
+  hideTitle
+  variant="full"
+  class="vboard"
+>
   <BoardHeader title={header} flank="in" />
 
-  {(eyebrow || intro) && (
-    <div class="vboard__lede reveal">
-      {eyebrow && <p class="vboard__eyebrow">{eyebrow}</p>}
-      {intro && <p class="vboard__intro">{intro}</p>}
-    </div>
-  )}
+  {
+    (eyebrow || intro) && (
+      <div class="vboard__lede reveal">
+        {eyebrow && <p class="vboard__eyebrow">{eyebrow}</p>}
+        {intro && <p class="vboard__intro">{intro}</p>}
+      </div>
+    )
+  }
 
-  {principles && principles.length > 0 && (
-    <div class="vboard__principles reveal">
-      {principles.map((p) => (
-        <article class="card vboard__principle">
-          {p.icon && (
-            <span class="vboard__principle-icon" aria-hidden="true">
-              <Icon name={p.icon} size={26} />
-            </span>
-          )}
-          <h3 class="vboard__principle-title">{p.title}</h3>
-          <p class="vboard__principle-desc">{p.description}</p>
-        </article>
-      ))}
-    </div>
-  )}
-
-  {hubs && hubs.length > 0 && (
-    <div class="vboard__hubs reveal" aria-hidden="true">
-      {hubs.map((hub) => (
-        <HubCircle
-          center={hub.center}
-          satellites={hub.satellites}
-          label={hub.label}
-          variant={hub.variant}
-        />
-      ))}
-    </div>
-  )}
-
-  {/* Legacy achievement infographic — retained but guarded; data now lives in
-      Impact / Case Studies and is intentionally absent from this page. */}
-  {programs && programs.length > 0 && (
-    <div class="vboard__programs reveal">
-      {programs.map((p) => (
-        <ProgramBadgeCard
-          title={p.title}
-          label={p.label}
-          variant={p.variant}
-          badge={p.badge}
-          lines={p.lines}
-          entity={p.entity}
-        />
-      ))}
-    </div>
-  )}
-
-  {orgCards && orgCards.length > 0 && (
-    <div class="vboard__org reveal">
-      {orgHeader && <BoardHeader title={orgHeader} flank="out" />}
-      <div class="vboard__org-grid">
-        {orgCards.map((c) => (
-          <OrgImpactCard icon={c.icon} title={c.title} lines={c.lines} />
+  {
+    principles && principles.length > 0 && (
+      <div class="vboard__principles reveal">
+        {principles.map((p) => (
+          <article class="card vboard__principle">
+            {p.icon && (
+              <span class="vboard__principle-icon" aria-hidden="true">
+                <Icon name={p.icon} size={26} />
+              </span>
+            )}
+            <h3 class="vboard__principle-title">{p.title}</h3>
+            <p class="vboard__principle-desc">{p.description}</p>
+          </article>
         ))}
       </div>
-    </div>
-  )}
+    )
+  }
+
+  {
+    hubs && hubs.length > 0 && (
+      <div class="vboard__hubs reveal" aria-hidden="true">
+        {hubs.map((hub) => (
+          <HubCircle
+            center={hub.center}
+            satellites={hub.satellites}
+            label={hub.label}
+            variant={hub.variant}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    /* Legacy achievement infographic — retained but guarded; data now lives in
+      Impact / Case Studies and is intentionally absent from this page. */
+  }
+  {
+    programs && programs.length > 0 && (
+      <div class="vboard__programs reveal">
+        {programs.map((p) => (
+          <ProgramBadgeCard
+            title={p.title}
+            label={p.label}
+            variant={p.variant}
+            badge={p.badge}
+            lines={p.lines}
+            entity={p.entity}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    orgCards && orgCards.length > 0 && (
+      <div class="vboard__org reveal">
+        {orgHeader && <BoardHeader title={orgHeader} flank="out" />}
+        <div class="vboard__org-grid">
+          {orgCards.map((c) => (
+            <OrgImpactCard icon={c.icon} title={c.title} lines={c.lines} />
+          ))}
+        </div>
+      </div>
+    )
+  }
 </Section>
 
 <style>

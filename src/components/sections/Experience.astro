@@ -3,24 +3,50 @@ import Section from '@components/ui/Section.astro';
 import ProjectAccordion from '@components/cards/ProjectAccordion.astro';
 import Chip from '@components/ui/Chip.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
-import { experience, site, getEntityUrl, logoSrc } from '@lib/content';
+import { experience, getEntityUrl, logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 
-function periodLabel(p: { start: string; end: string | null; endLabel: string }) {
+function periodLabel(p: {
+  start: string;
+  end: string | null;
+  endLabel: string;
+}) {
   const end = p.endLabel || p.end || '';
   return end ? `${p.start} – ${end}` : p.start;
 }
+
+function splitHeadline(headline: string, highlight?: string) {
+  if (!highlight || !headline.includes(highlight)) {
+    return { before: headline, highlight: '', after: '' };
+  }
+  const idx = headline.indexOf(highlight);
+  return {
+    before: headline.slice(0, idx),
+    highlight,
+    after: headline.slice(idx + highlight.length),
+  };
+}
+
+const headline = experience.headline ?? experience.title;
+const titleParts = splitHeadline(headline, experience.headlineHighlight);
 ---
 
 <Section
   id="experience"
   title=""
   hideTitle
+  ariaLabel={headline}
   eyebrow="Experience"
   variant="default"
 >
-  <h2 class="experience__title section__title">
-    Building AI at the <span class="accent">frontier</span> of medicine
+  <h2 class="experience__title section__title" id="experience-heading">
+    {titleParts.before}
+    {
+      titleParts.highlight ? (
+        <span class="accent">{titleParts.highlight}</span>
+      ) : null
+    }
+    {titleParts.after}
   </h2>
   <div class="work-layout">
     <div class="work-timeline" role="tablist" aria-label="Career timeline">
@@ -37,11 +63,14 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
             tabindex={i === 0 ? '0' : '-1'}
             id={`tab-${role.id}`}
           >
-            <div class="tl-dot" aria-hidden="true"></div>
+            <div class="tl-dot" aria-hidden="true" />
             <div class="tl-year">{periodLabel(role.period)}</div>
             <div class="tl-role">{role.position}</div>
             <div class="tl-company">
-              <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
+              <EntityLink
+                href={getEntityUrl(role.entity)}
+                label={role.organization}
+              />
             </div>
           </button>
         ))
@@ -60,15 +89,27 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
           >
             <div class="role-header">
               {logoSrc(role.entity) && (
-                <div class:list={['role-logo', { 'role-logo--plain': !logoUsesBadge(role.entity) }]}>
-                  <img src={logoSrc(role.entity)} alt={`${role.organization} logo`} loading="lazy" />
+                <div
+                  class:list={[
+                    'role-logo',
+                    { 'role-logo--plain': !logoUsesBadge(role.entity) },
+                  ]}
+                >
+                  <img
+                    src={logoSrc(role.entity)}
+                    alt={`${role.organization} logo`}
+                    loading="lazy"
+                  />
                 </div>
               )}
               <h3>{role.position}</h3>
               {role.blurb && <p class="role-blurb">{role.blurb}</p>}
               <div class="role-meta">
                 <span>
-                  <EntityLink href={getEntityUrl(role.entity)} label={role.organization} />
+                  <EntityLink
+                    href={getEntityUrl(role.entity)}
+                    label={role.organization}
+                  />
                 </span>
                 {role.location && <span>{role.location}</span>}
                 <span>{periodLabel(role.period)}</span>
@@ -83,27 +124,29 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
               {role.mission && <p class="role-description">{role.mission}</p>}
             </div>
             <div class="projects-grid">
-              {
-                role.projects.map((project, pi) => (
-                  project.name ? (
-                    <ProjectAccordion
-                      name={project.name}
-                      subtitle={project.subtitle}
-                      icon={project.icon}
-                      bullets={project.bullets}
-                      open={pi === 0}
-                    />
-                  ) : (
-                    <ul class="bullet-list">
-                      {project.bullets.map((b) => (
-                        <li class:list={[{ 'is-secondary': b.tier === 'secondary' }]}>
-                          {b.text}
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                ))
-              }
+              {role.projects.map((project, pi) =>
+                project.name ? (
+                  <ProjectAccordion
+                    name={project.name}
+                    subtitle={project.subtitle}
+                    icon={project.icon}
+                    bullets={project.bullets}
+                    open={pi === 0}
+                  />
+                ) : (
+                  <ul class="bullet-list">
+                    {project.bullets.map((b) => (
+                      <li
+                        class:list={[
+                          { 'is-secondary': b.tier === 'secondary' },
+                        ]}
+                      >
+                        {b.text}
+                      </li>
+                    ))}
+                  </ul>
+                )
+              )}
             </div>
           </div>
         ))
@@ -130,7 +173,12 @@ function periodLabel(p: { start: string; end: string | null; endLabel: string })
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--accent), var(--accent-red), transparent);
+    background: linear-gradient(
+      to bottom,
+      var(--accent),
+      var(--accent-red),
+      transparent
+    );
   }
   .tl-item {
     position: relative;

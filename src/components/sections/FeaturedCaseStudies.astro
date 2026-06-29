@@ -8,10 +8,7 @@ interface Props {
   showMoreLabel?: string;
 }
 
-const {
-  showMoreHref,
-  showMoreLabel = 'View all projects →',
-} = Astro.props;
+const { showMoreHref, showMoreLabel = 'View all projects →' } = Astro.props;
 
 const featured = projects.projects.filter((p) => p.featured);
 const title = site.sections['featured-case-studies'].title;

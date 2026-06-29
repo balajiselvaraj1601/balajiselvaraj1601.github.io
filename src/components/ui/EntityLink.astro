@@ -16,7 +16,8 @@ const { href, label, class: className } = Astro.props;
       target="_blank"
       rel="noopener noreferrer"
     >
-      {label}<span class="visually-hidden"> (opens in new window)</span>
+      {label}
+      <span class="visually-hidden"> (opens in new window)</span>
     </a>
   ) : (
     <span class={className}>{label}</span>

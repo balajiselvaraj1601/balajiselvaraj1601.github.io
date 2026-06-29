@@ -1,15 +1,13 @@
 ---
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
+import type { VisionBoard } from '@schemas';
 
-interface Props {
-  icon: string;
-  title: string;
-  lines: string[];
-}
+// SSOT: props derive from the vision-board `orgCards` schema item.
+type Props = NonNullable<VisionBoard['orgCards']>[number];
 
 const { icon, title, lines } = Astro.props;
-const iconName = resolveIcon(icon, 'diamond') as IconName;
+const iconName = resolveIcon(icon, 'diamond');
 ---
 
 <article class="ocard">
@@ -32,7 +30,9 @@ const iconName = resolveIcon(icon, 'diamond') as IconName;
     border-radius: 0 var(--radius) var(--radius) 0;
     padding: var(--card-padding) var(--space-4) var(--space-5);
     text-align: center;
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .ocard:hover {
     transform: translateY(-4px);

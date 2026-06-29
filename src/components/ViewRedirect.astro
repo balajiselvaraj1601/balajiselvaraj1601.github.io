@@ -5,13 +5,14 @@ interface Props {
 const { anchor } = Astro.props;
 const target = anchor === 'about' ? '/' : `/#${anchor}`;
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex" />
     <title>Redirecting…</title>
-    <script define:vars={{ target }}>
+    <script is:inline define:vars={{ target }}>
       location.replace(target);
     </script>
     <noscript>

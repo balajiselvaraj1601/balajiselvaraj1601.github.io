@@ -1,6 +1,6 @@
 ---
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 import { logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
@@ -29,7 +29,7 @@ const {
   variant = 'default',
   logoBadge: logoBadgeOverride,
 } = Astro.props;
-const iconName = resolveIcon(icon, 'document') as IconName;
+const iconName = resolveIcon(icon, 'document');
 const isStacked = variant === 'stacked';
 const showLogoBadge = logoUsesBadge(logo, logoBadgeOverride);
 
@@ -57,13 +57,14 @@ const logoUrl = logoSrc(logo);
     )
   }
   {isStacked && <hr class="rcard-divider" />}
-  {
-    !isStacked && <div class="venue">{venue}</div>
-  }
+  {!isStacked && <div class="venue">{venue}</div>}
   {
     href ? (
       <h3>
-        <a href={href} target="_blank" rel="noopener noreferrer">{title}<span class="visually-hidden"> (opens in new window)</span></a>
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {title}
+          <span class="visually-hidden"> (opens in new window)</span>
+        </a>
       </h3>
     ) : (
       <h3>{title}</h3>
@@ -92,7 +93,6 @@ const logoUrl = logoSrc(logo);
           src={ytEmbed}
           title={`${title} — video`}
           loading="lazy"
-          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
@@ -108,7 +108,9 @@ const logoUrl = logoSrc(logo);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: var(--card-padding-lg);
-    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
     height: 100%;
   }
   .rcard:hover {
@@ -118,7 +120,7 @@ const logoUrl = logoSrc(logo);
   .rcard-icon {
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,9 +135,9 @@ const logoUrl = logoSrc(logo);
     min-height: 40px;
     padding: var(--space-2) var(--space-3);
     margin-bottom: 0.85rem;
-    background: #fff;
+    background: var(--logo-surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
   }
   .rcard-logo img {
@@ -226,10 +228,10 @@ const logoUrl = logoSrc(logo);
     width: 100%;
     aspect-ratio: 16 / 9;
     margin: 0.85rem 0 0.6rem;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--border);
-    background: #000;
+    background: var(--overlay-scrim);
   }
   .rcard-media img {
     position: absolute;
@@ -243,10 +245,10 @@ const logoUrl = logoSrc(logo);
     width: 100%;
     aspect-ratio: 16 / 9;
     margin: 0.85rem 0 0.6rem;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     border: 1px solid var(--border);
-    background: #000;
+    background: var(--overlay-scrim);
   }
   .rcard-video iframe {
     position: absolute;

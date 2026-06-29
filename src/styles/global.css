@@ -21,6 +21,7 @@
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
+  --space-20: 80px;
   --space-24: 96px;
 
   --section-py-start: var(--space-24);
@@ -36,8 +37,15 @@
 
   --maxw: 1200px;
   --maxw-text: 70ch;
-  --radius: 12px;
+  /* Corner radii — single source of truth. Components reference these tokens
+     instead of hardcoding px so the scale stays consistent site-wide. */
+  --radius-xs: 4px;
   --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius: 12px; /* default card/surface radius */
+  --radius-xl: 14px;
+  --radius-pill: 999px;
 
   /* Typography — canonical role → font mapping (keep components consistent):
        --font-display : headings (h1/h2, section/board titles), brand wordmark,
@@ -45,11 +53,12 @@
        --font-sans    : body, descriptions, sub-headings & card titles (h3/h4, 600), UI.
        --font-mono    : eyebrows, tags, labels, dates, venues, metadata, metric numbers.
      New components should reuse these tokens by role rather than picking per element. */
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system,
-    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
   --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas,
-    monospace;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   --fs-h1: clamp(2.8rem, 6vw, 5.5rem);
   --fs-h2: clamp(2rem, 4vw, 3rem);
@@ -64,6 +73,18 @@
   --dur: 200ms;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 60px;
+
+  /* Theme-independent semantic colors — single source of truth.
+     Logo marks ship on white; video chrome reads against dark thumbnails;
+     availability status hues are intentionally fixed across themes. */
+  --logo-surface: #ffffff;
+  --overlay-scrim: #000000;
+  --overlay-scrim-soft: rgba(0, 0, 0, 0.75);
+  --overlay-play: #ffffff;
+  --overlay-play-mark: #ff0000; /* YouTube brand red */
+  --status-available: #22c55e;
+  --status-limited: #eab308;
+  --status-closed: var(--accent-red);
 }
 
 /* Light theme — derived purple palette */
@@ -83,7 +104,8 @@
   --accent: #6c2fbf;
   --accent-soft: rgba(108, 47, 191, 0.1);
   --accent-strong: #7b3fd4;
-  --accent-light: #9b5ee8;
+  /* AA on --bg #faf8ff: 5.16:1 (was #9b5ee8 ≈3.9:1, failed AA for inline-link text) */
+  --accent-light: #8348d6;
   --accent-ll: #7b3fd4;
   --accent-contrast: #ffffff;
   --accent-red: #c0182a;
@@ -93,6 +115,17 @@
   --shadow: 0 1px 2px rgba(26, 21, 48, 0.06), 0 4px 16px rgba(26, 21, 48, 0.06);
   --shadow-sm: 0 1px 2px rgba(26, 21, 48, 0.05);
   --shadow-md: 0 10px 30px rgba(26, 21, 48, 0.1);
+  /* Award-level accents (SSOT: Awards summary tiles + cards). AA ≥3:1 on --bg-elev. */
+  --accent-gold: #b8860b; /* shared by EVP award level + education */
+  --lvl-evp: var(--accent-gold);
+  --lvl-cio: #6c2fbf;
+  --lvl-senior-director: #2563eb;
+  --lvl-director: #0f9488;
+  --lvl-associate-director: #c0182a;
+  --lvl-national: #db2777;
+  /* Medal accents — shared by Kaggle + Competition cards */
+  --medal-silver: #8395b4;
+  --medal-bronze: #b67e44;
   --hero-gradient: radial-gradient(
     120% 120% at 15% 0%,
     var(--accent-soft) 0%,
@@ -128,6 +161,15 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 22px rgba(0, 0, 0, 0.45);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.55);
+  --accent-gold: #f5c518;
+  --lvl-evp: var(--accent-gold);
+  --lvl-cio: #a87bf0;
+  --lvl-senior-director: #5b9bf0;
+  --lvl-director: #2dd4bf;
+  --lvl-associate-director: #f3868f;
+  --lvl-national: #f472b6;
+  --medal-silver: #aebfdc;
+  --medal-bronze: #d6a566;
   --hero-gradient: radial-gradient(
     60% 70% at 15% 0%,
     rgba(108, 47, 191, 0.12) 0%,
@@ -163,6 +205,15 @@
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 22px rgba(0, 0, 0, 0.45);
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.55);
+    --accent-gold: #f5c518;
+    --lvl-evp: var(--accent-gold);
+    --lvl-cio: #a87bf0;
+    --lvl-senior-director: #5b9bf0;
+    --lvl-director: #2dd4bf;
+    --lvl-associate-director: #f3868f;
+    --lvl-national: #f472b6;
+    --medal-silver: #aebfdc;
+    --medal-bronze: #d6a566;
     --hero-gradient: radial-gradient(
       60% 70% at 15% 0%,
       rgba(108, 47, 191, 0.12) 0%,
@@ -200,7 +251,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'cv11', 'ss01';
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  transition:
+    background-color var(--dur) var(--ease),
+    color var(--dur) var(--ease);
   overflow-x: hidden;
 }
 main {
@@ -347,7 +400,7 @@ button {
   align-items: center;
   gap: var(--space-2);
   padding: 0.75rem 1.75rem;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--accent-ll);
@@ -356,8 +409,11 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease),
-    transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  transition:
+    border-color var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    background-color var(--dur) var(--ease);
 }
 .btn:hover {
   border-color: var(--accent-light);
@@ -407,15 +463,308 @@ button {
   background: linear-gradient(to right, var(--accent), var(--accent-light));
 }
 .card--red::before {
-  background: linear-gradient(to right, var(--accent-red), var(--accent-red-light));
+  background: linear-gradient(
+    to right,
+    var(--accent-red),
+    var(--accent-red-light)
+  );
 }
 @media (prefers-reduced-motion: no-preference) {
   .card {
-    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
   }
   .card:hover {
     border-color: var(--border-strong);
     transform: translateY(-2px);
+  }
+}
+
+/* ── Recognition cards (shared: Awards + Kaggle) ─────────────────── */
+.recog-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--stack-lg);
+}
+
+.recog-tile {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent-card, var(--accent));
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+.recog-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 80% at 0% 0%,
+    color-mix(in srgb, var(--accent-card, var(--accent)) 14%, transparent),
+    transparent 60%
+  );
+}
+.recog-tile__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-card, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 14%,
+    transparent
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
+}
+.recog-tile__count {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--heading);
+}
+.recog-tile__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.recog-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--stack-md);
+}
+.recog-controls__count {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-right: auto;
+}
+.recog-tools {
+  display: flex;
+  gap: var(--space-3);
+}
+.recog-search {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.75rem;
+  min-height: 38px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  min-width: 200px;
+}
+.recog-search:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+.recog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  width: 100%;
+}
+.recog-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+  transition:
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    background var(--dur) var(--ease);
+}
+.recog-chip:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.recog-chip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+.recog-chip.is-active {
+  color: var(--heading);
+  border-color: var(--accent-card, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 16%,
+    transparent
+  );
+}
+
+.recog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.recog-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  background: linear-gradient(
+    180deg,
+    var(--bg-elev),
+    color-mix(in srgb, var(--bg-elev) 70%, var(--bg))
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 40%, var(--border));
+  border-top: 2px solid var(--accent-card, var(--accent));
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+.recog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-card, var(--accent));
+}
+.recog-card.hidden {
+  display: none;
+}
+
+.recog-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-card, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 14%,
+    transparent
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
+}
+
+.recog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--heading);
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 14%,
+    transparent
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 40%, transparent);
+}
+.recog-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--accent-card, var(--accent));
+}
+
+.recog-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--clamp, 4);
+  line-clamp: var(--clamp, 4);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.recog-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: var(--space-8);
+}
+
+/* shared type scale — title / label / value / body */
+.recog-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--heading);
+  margin: 0;
+}
+.recog-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.recog-title a:hover {
+  color: var(--accent-light);
+}
+.recog-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.recog-value {
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--text);
+  max-width: none;
+}
+.recog-body {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: none;
+}
+
+@media (max-width: 980px) {
+  .recog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .recog-grid {
+    grid-template-columns: 1fr;
+  }
+  .recog-tools {
+    width: 100%;
+  }
+  .recog-search {
+    flex: 1;
+    min-width: 0;
   }
 }
 
@@ -489,7 +838,9 @@ button {
   html.js .reveal {
     opacity: 0;
     transform: translateY(24px);
-    transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+    transition:
+      opacity 600ms var(--ease),
+      transform 600ms var(--ease);
   }
   html.js .reveal.is-visible {
     opacity: 1;

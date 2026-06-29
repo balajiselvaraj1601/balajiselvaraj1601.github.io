@@ -3,40 +3,19 @@ import Section from '@components/ui/Section.astro';
 import Chip from '@components/ui/Chip.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
 import { projects, site, getEntityUrl } from '@lib/content';
-import type { Project } from '@schemas';
 
 const title = site.sections.projects.title;
 
-function groupFor(project: Project) {
-  if (
-    project.domain.includes('Oncology') ||
-    project.domain.includes('Pathology')
-  ) {
-    return 'Oncology & Pathology';
-  }
-
-  return 'Vision & Imaging Foundations';
-}
-
-interface Group {
-  heading: string;
-  items: Project[];
-}
-
-// Cap visible tags at 3; full set stays in projects.json.
 const MAX_VISIBLE_TAGS = 3;
 
 const others = projects.projects.filter((p) => !p.featured);
-const groups: Group[] = [
-  {
-    heading: 'Oncology & Pathology',
-    items: others.filter((p) => groupFor(p) === 'Oncology & Pathology'),
-  },
-  {
-    heading: 'Vision & Imaging Foundations',
-    items: others.filter((p) => groupFor(p) === 'Vision & Imaging Foundations'),
-  },
-].filter((g) => g.items.length > 0);
+const groupDefs = projects.groups ?? [];
+const groups = groupDefs
+  .map((group) => ({
+    heading: group.heading,
+    items: others.filter((p) => p.group === group.id),
+  }))
+  .filter((g) => g.items.length > 0);
 ---
 
 <Section id="projects" title={title} eyebrow="Other Work" variant="default">
@@ -50,7 +29,9 @@ const groups: Group[] = [
               <li class="proj-compact card">
                 <p class="pc-meta">
                   <span>{p.domain}</span>
-                  <span class="pc-dot" aria-hidden="true">·</span>
+                  <span class="pc-dot" aria-hidden="true">
+                    ·
+                  </span>
                   <span>{p.period}</span>
                 </p>
                 <h4 class="pc-name">{p.name}</h4>
@@ -123,62 +104,49 @@ const groups: Group[] = [
   }
   .pc-meta {
     font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent-light);
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
     margin: 0;
-    max-width: none;
   }
   .pc-dot {
-    color: var(--text-muted);
-    opacity: 0.6;
-  }
-  .pc-meta > span:last-child {
-    color: var(--text-muted);
+    margin-inline: 0.35rem;
   }
   .pc-name {
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--heading);
-    line-height: var(--lh-tight);
     margin: 0;
   }
   .pc-role {
-    font-size: var(--fs-small);
+    font-size: 0.82rem;
     color: var(--text-muted);
     margin: 0;
-    max-width: none;
   }
   .pc-summary {
-    font-size: 0.9rem;
-    color: var(--text);
+    font-size: 0.88rem;
     line-height: 1.6;
+    color: var(--text);
     margin: 0;
-    max-width: none;
+    flex: 1;
   }
   .pc-highlights {
-    margin: var(--space-2) 0 0;
-    padding-left: 1.1rem;
+    list-style: disc;
+    padding-left: 1.2rem;
+    margin: 0;
+    font-size: 0.82rem;
     color: var(--text-muted);
-    font-size: 0.85rem;
-    line-height: 1.6;
-  }
-  .pc-highlights li + li {
-    margin-top: var(--space-2);
+    line-height: 1.5;
   }
   .pc-tags {
     list-style: none;
     padding: 0;
-    margin: var(--space-1) 0 0;
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
   }
   .pc-tag-more {
-    border-style: dashed;
+    opacity: 0.75;
   }
 </style>

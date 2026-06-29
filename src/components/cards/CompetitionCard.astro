@@ -1,0 +1,190 @@
+---
+import Icon from '@components/ui/Icon.astro';
+import { competitionIcon, resolveIcon } from '@lib/icons';
+import type { IconName } from '@lib/icons';
+import type { KaggleCompetition } from '@schemas';
+
+type Props = KaggleCompetition;
+
+const {
+  id,
+  icon,
+  name,
+  url,
+  role,
+  medal,
+  rank,
+  percentile,
+  period,
+  summary,
+  evaluationMetric,
+  domain,
+  tags,
+  stats,
+} = Astro.props;
+
+const headerIcon = resolveIcon(icon, competitionIcon(id, domain));
+
+// Total Entrants is DERIVED from stats.entrants — single source of truth, never
+// a separate content field.
+const totalEntrants = stats?.entrants;
+
+const medalClass = medal === 'Silver' ? 'blob--silver' : 'blob--bronze';
+
+// Fixed stat row mirroring the reference layout. Entries with no value drop out.
+const stats6: { icon: IconName; label: string; value?: string }[] = [
+  { icon: 'target', label: 'Role', value: role },
+  { icon: 'trophy', label: 'Medal', value: medal },
+  { icon: 'chart', label: 'Rank', value: rank },
+  { icon: 'diamond', label: 'Percentile', value: percentile },
+  { icon: 'calendar', label: 'Period', value: period },
+  { icon: 'team', label: 'Total Entrants', value: totalEntrants },
+];
+const visibleStats = stats6.filter((s) => s.value);
+---
+
+<article
+  class:list={['recog-card', medalClass]}
+  data-medal={medal}
+  data-name={name}
+  data-domain={domain}
+  data-tags={(tags ?? []).join(' ')}
+>
+  <header class="blob-head">
+    <div class="recog-icon" aria-hidden="true">
+      <Icon name={headerIcon} size={24} />
+    </div>
+    <h3 class="recog-title recog-clamp" style="--clamp: 2">
+      <a href={url} target="_blank" rel="noopener noreferrer"
+        >{name}<span class="visually-hidden"> (opens in new window)</span></a
+      >
+    </h3>
+  </header>
+
+  <dl class="blob-stats">
+    {
+      visibleStats.map((s) => (
+        <div class="blob-stat">
+          <span class="blob-stat__icon" aria-hidden="true">
+            <Icon name={s.icon} size={16} />
+          </span>
+          <dt class="recog-label">{s.label}</dt>
+          <dd class="recog-value">{s.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  {
+    summary && (
+      <div class="blob-block">
+        <div class="blob-block__head">
+          <span class="blob-block__icon" aria-hidden="true">
+            <Icon name="target" size={16} />
+          </span>
+          <span class="blob-block__label recog-label">Summary</span>
+        </div>
+        <p class="blob-block__body recog-body recog-clamp" style="--clamp: 3">
+          {summary}
+        </p>
+      </div>
+    )
+  }
+
+  {
+    evaluationMetric && (
+      <div class="blob-block blob-block--eval">
+        <div class="blob-block__head">
+          <span class="blob-block__icon" aria-hidden="true">
+            <Icon name="pulse" size={16} />
+          </span>
+          <span class="blob-block__label recog-label">Evaluation Metric</span>
+        </div>
+        <p class="blob-block__body recog-body">{evaluationMetric}</p>
+      </div>
+    )
+  }
+</article>
+
+<style>
+  /* Medal accent — drives border, icon tint, and stat dividers. Maps to the
+     shared --medal-* tokens (theme tuning lives once in global.css). */
+  .blob--silver {
+    --medal: var(--medal-silver);
+  }
+  .blob--bronze {
+    --medal: var(--medal-bronze);
+  }
+
+  /* Feed the medal accent into the shared .recog-card layer, which drives the
+     card shell (bg, border, border-top, hover) and the .recog-icon tint. */
+  .recog-card.blob--silver,
+  .recog-card.blob--bronze {
+    --accent-card: var(--medal);
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────── */
+  .blob-head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  /* ── Stat grid ──────────────────────────────────────────────────── */
+  .blob-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .blob-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2rem;
+    padding: var(--space-3) var(--space-2);
+    background: var(--bg-elev);
+  }
+  .blob-stat__icon {
+    color: var(--medal);
+    display: flex;
+  }
+  .blob-stat dd {
+    margin: 0;
+  }
+
+  /* ── Summary / Evaluation blocks ────────────────────────────────── */
+  .blob-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  /* Pin the Evaluation Metric block to the bottom so every card's footer aligns
+     regardless of summary length — the engine of equal-height blob cards. */
+  .blob-block--eval {
+    margin-top: auto;
+  }
+  .blob-block__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .blob-block__icon {
+    color: var(--accent-light);
+    display: flex;
+  }
+  .blob-block__body {
+    margin: 0;
+    max-width: none;
+  }
+  @media (max-width: 600px) {
+    .recog-card {
+      padding: var(--space-5);
+    }
+  }
+</style>

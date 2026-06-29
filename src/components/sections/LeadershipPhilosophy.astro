@@ -1,8 +1,6 @@
 ---
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
-import LeadershipCard from '@components/cards/LeadershipCard.astro';
-import { aboutCardIcon } from '@lib/icons';
 import {
   profile,
   site,
@@ -12,49 +10,73 @@ import {
 } from '@lib/content';
 
 const title = site.sections.leadership.title;
-const { statement, intro, themes } = profile.leadershipPhilosophy;
+const { statement, intro, differentiators, themes } =
+  profile.leadershipPhilosophy;
+const { aboutCards } = profile;
 ---
 
-<Section
-  id="leadership"
-  title={title}
-  hideTitle
-  variant="default"
-  class="leadership-section"
->
+<Section id="leadership" title={title} variant="default">
+  {statement && <p class="leadership__statement reveal">{statement}</p>}
+
   <p class="leadership__bio reveal">{profile.aboutIntro}</p>
 
-  <div class="leadership__cards reveal">
-    {profile.aboutCards.map((card) => (
-      <LeadershipCard
-        icon={aboutCardIcon(card.title)}
-        title={card.title}
-        subtitle={card.items.join(' · ')}
-      />
-    ))}
-  </div>
-
-  <blockquote class="leadership__quote card reveal">
-    <p class="leadership__statement">{statement}</p>
-  </blockquote>
+  {
+    aboutCards && aboutCards.length > 0 && (
+      <ul class="leadership__themes reveal" role="list">
+        {aboutCards.map((card) => (
+          <li class="leadership__theme card">
+            <h3 class="leadership__theme-title">{card.title}</h3>
+            <ul class="bullet-list">
+              {card.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 
   {intro && <p class="leadership__intro reveal">{intro}</p>}
 
-  {themes && themes.length > 0 && (
-    <ul class="leadership__themes reveal" role="list">
-      {themes.map((theme) => (
-        <li class="leadership__theme card">
-          {theme.icon && (
-            <span class="leadership__theme-icon" aria-hidden="true">
-              <Icon name={theme.icon} size={22} />
-            </span>
-          )}
-          <h3 class="leadership__theme-title">{theme.title}</h3>
-          <p class="leadership__theme-desc">{theme.description}</p>
-        </li>
-      ))}
-    </ul>
-  )}
+  {
+    differentiators && differentiators.length > 0 && (
+      <div class="leadership__diff reveal">
+        <h3 class="leadership__diff-heading">What sets me apart</h3>
+        <ul class="leadership__themes" role="list">
+          {differentiators.map((item) => (
+            <li class="leadership__theme card">
+              {item.icon && (
+                <span class="leadership__theme-icon" aria-hidden="true">
+                  <Icon name={item.icon} size={22} />
+                </span>
+              )}
+              <h4 class="leadership__theme-title">{item.title}</h4>
+              <p class="leadership__theme-desc">{item.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    themes && themes.length > 0 && (
+      <ul class="leadership__themes reveal" role="list">
+        {themes.map((theme) => (
+          <li class="leadership__theme card">
+            {theme.icon && (
+              <span class="leadership__theme-icon" aria-hidden="true">
+                <Icon name={theme.icon} size={22} />
+              </span>
+            )}
+            <h3 class="leadership__theme-title">{theme.title}</h3>
+            <p class="leadership__theme-desc">{theme.description}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 
   <div class="leadership__collabs reveal">
     <h3 class="leadership__collabs-heading">{collaborations.title}</h3>
@@ -84,6 +106,14 @@ const { statement, intro, themes } = profile.leadershipPhilosophy;
 </Section>
 
 <style>
+  .leadership__statement {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    line-height: var(--lh-tight);
+    color: var(--heading);
+    max-width: var(--maxw-text);
+    margin-bottom: var(--space-6);
+  }
   .leadership__bio {
     font-size: 1.05rem;
     max-width: var(--maxw-text);
@@ -91,35 +121,27 @@ const { statement, intro, themes } = profile.leadershipPhilosophy;
     color: var(--text-muted);
     line-height: 1.85;
   }
-  .leadership__cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: var(--stack-sm);
-    margin-bottom: var(--space-10);
-  }
-  .leadership__quote {
-    padding: var(--space-8) var(--space-10);
-    border-left: 4px solid var(--accent);
-    max-width: var(--maxw-text);
-    margin-inline: auto;
-    text-align: center;
-  }
-  .leadership__statement {
-    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-style: italic;
-    line-height: 1.5;
-    color: var(--text);
-    max-width: none;
-  }
   .leadership__intro {
+    font-size: var(--fs-body);
     max-width: var(--maxw-text);
-    margin: var(--space-8) auto 0;
-    text-align: center;
+    margin-top: var(--space-10);
     color: var(--text-muted);
-    line-height: 1.8;
-    font-size: 1.02rem;
+    line-height: var(--lh-body);
+  }
+  .leadership__diff {
+    margin-top: var(--space-10);
+  }
+  .leadership__diff-heading {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+  }
+  .leadership__diff .leadership__themes {
+    margin-top: 0;
   }
   .leadership__themes {
     display: grid;
@@ -193,15 +215,18 @@ const { statement, intro, themes } = profile.leadershipPhilosophy;
     min-width: 0;
     height: clamp(56px, 7vw, 80px);
     padding: var(--space-3) var(--space-4);
-    background: #fff;
+    background: var(--logo-surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .leadership__collab-mark:hover {
     border-color: var(--accent-light);
-    box-shadow: 0 0 0 1px rgba(155, 94, 232, 0.25);
+    box-shadow: 0 0 0 1px
+      color-mix(in srgb, var(--accent-light) 25%, transparent);
   }
   .leadership__collab-mark:focus-visible {
     outline: 2px solid var(--focus-ring);

@@ -17,12 +17,16 @@ interface Props {
 
 const { problem, solution, architecture, businessImpact } = Astro.props;
 
-const steps: Step[] = [
-  { label: 'Problem', icon: 'target', present: Boolean(problem) },
-  { label: 'Data & Design', icon: 'layers', present: Boolean(solution) },
-  { label: 'Platform', icon: 'blocks', present: Boolean(architecture) },
-  { label: 'Impact', icon: 'chart', present: Boolean(businessImpact) },
-].filter((s) => s.present);
+// `satisfies` supplies the contextual type so each `icon` literal is checked
+// against IconName (and stays narrowed) before `.filter` strips the type.
+const steps = (
+  [
+    { label: 'Problem', icon: 'target', present: Boolean(problem) },
+    { label: 'Data & Design', icon: 'layers', present: Boolean(solution) },
+    { label: 'Platform', icon: 'blocks', present: Boolean(architecture) },
+    { label: 'Impact', icon: 'chart', present: Boolean(businessImpact) },
+  ] satisfies Step[]
+).filter((s) => s.present);
 
 const show = steps.length >= 2;
 ---

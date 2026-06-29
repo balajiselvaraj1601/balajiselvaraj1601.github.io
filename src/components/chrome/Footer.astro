@@ -1,10 +1,12 @@
 ---
 import { site, profile } from '@lib/content';
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 
 const year = new Date().getFullYear();
-const socialLinks = profile.contact.filter((c) => c.href && c.type !== 'location');
+const socialLinks = profile.contact.filter(
+  (c) => c.href && c.type !== 'location'
+);
 const tagline = site.tagline.trim();
 ---
 
@@ -12,32 +14,42 @@ const tagline = site.tagline.trim();
   <div class="container site-footer__inner">
     <div class="site-footer__meta">
       <p class="site-footer__mono">
-        {site.name.toUpperCase()} · {site.title.toUpperCase()} · {site.location.toUpperCase()}
+        {site.name.toUpperCase()} · {site.title.toUpperCase()} · {
+          site.location.toUpperCase()
+        }
       </p>
       {tagline && <p class="site-footer__tagline">{tagline}</p>}
-      <p class="site-footer__copyright">© {year} {site.name}. All rights reserved.</p>
+      <p class="site-footer__copyright">
+        © {year}
+        {site.name}. All rights reserved.
+      </p>
     </div>
 
     <ul class="site-footer__social" aria-label="Social links">
       {
-        socialLinks.map((c) => (
-          <li>
-            <a
-              class="site-footer__social-link"
-              href={c.href!}
-              aria-label={c.label}
-              {...(c.href!.startsWith('http')
-                ? { target: '_blank', rel: 'noopener noreferrer' }
-                : {})}
-            >
-              <Icon name={resolveIcon(c.icon, 'email') as IconName} size={18} />
-            </a>
-          </li>
-        ))
+        socialLinks.map((c) => {
+          const external = c.href!.startsWith('http');
+          return (
+            <li>
+              <a
+                class="site-footer__social-link"
+                href={c.href!}
+                aria-label={
+                  external ? `${c.label} (opens in new tab)` : c.label
+                }
+                {...(external
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                <Icon name={resolveIcon(c.icon, 'email')} size={18} />
+              </a>
+            </li>
+          );
+        })
       }
     </ul>
 
-    <a href="#" class="site-footer__top" id="back-to-top">Back to top</a>
+    <a href="#main" class="site-footer__top" id="back-to-top">Back to top</a>
   </div>
 </footer>
 
@@ -100,11 +112,13 @@ const tagline = site.tagline.trim();
     width: 36px;
     height: 36px;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-xs);
     background: var(--bg-elev);
     color: var(--text-muted);
     text-decoration: none;
-    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
   }
   .site-footer__social-link:hover {
     border-color: var(--accent);
@@ -125,7 +139,9 @@ const tagline = site.tagline.trim();
 <script>
   document.getElementById('back-to-top')?.addEventListener('click', (e) => {
     e.preventDefault();
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduce = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 </script>

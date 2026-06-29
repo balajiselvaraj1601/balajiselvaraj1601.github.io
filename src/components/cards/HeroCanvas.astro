@@ -1,6 +1,9 @@
 ---
+
 ---
-<canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+<canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"
+></canvas>
 
 <style>
   .particle-canvas {
@@ -16,19 +19,25 @@
 
 <script>
   (function () {
-    const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement | null;
+    const canvas =
+      document.querySelector<HTMLCanvasElement>('#particle-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let W = 0, H = 0;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    let W = 0,
+      H = 0;
     const N = 80;
     type Particle = { x: number; y: number; vx: number; vy: number; r: number };
     let particles: Particle[] = [];
 
-    function resize() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
+    function resize(c: HTMLCanvasElement) {
+      W = c.width = c.offsetWidth;
+      H = c.height = c.offsetHeight;
     }
 
     function makeParticle(): Particle {
@@ -46,18 +55,45 @@
       for (let i = 0; i < N; i++) particles.push(makeParticle());
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
+    function cssHex(varName: string, fallback: string) {
+      return (
+        getComputedStyle(document.documentElement)
+          .getPropertyValue(varName)
+          .trim() || fallback
+      );
+    }
+
+    function hexToRgba(hex: string, alpha: number) {
+      const normalized = hex.replace('#', '');
+      const full =
+        normalized.length === 3
+          ? normalized
+              .split('')
+              .map((c) => c + c)
+              .join('')
+          : normalized;
+      const int = Number.parseInt(full, 16);
+      const r = (int >> 16) & 255;
+      const g = (int >> 8) & 255;
+      const b = int & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function draw(context: CanvasRenderingContext2D, animate: boolean) {
+      const accentLight = cssHex('--accent-light', '#9b5ee8');
+      const accent = cssHex('--accent', '#6c2fbf');
+
+      context.clearRect(0, 0, W, H);
       for (let i = 0; i < N; i++) {
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(155, 94, 232, 0.7)';
-        ctx.fill();
+        context.beginPath();
+        context.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        context.fillStyle = hexToRgba(accentLight, 0.7);
+        context.fill();
         for (let j = i + 1; j < N; j++) {
           const q = particles[j];
           const dx = p.x - q.x;
@@ -65,26 +101,32 @@
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 130) {
             const alpha = (1 - dist / 130) * 0.35;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(108, 47, 191, ${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(p.x, p.y);
+            context.lineTo(q.x, q.y);
+            context.strokeStyle = hexToRgba(accent, alpha);
+            context.lineWidth = 1;
+            context.stroke();
           }
         }
       }
-      requestAnimationFrame(draw);
+      if (animate) requestAnimationFrame(() => draw(context, true));
     }
 
-    resize();
+    resize(canvas);
     init();
-    draw();
+    draw(ctx, !reduceMotion);
 
     let resizeTimer: ReturnType<typeof setTimeout>;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => { resize(); init(); }, 150);
+      resizeTimer = setTimeout(() => {
+        resize(canvas);
+        init();
+        // The animation loop already redraws every frame; only the static
+        // (reduced-motion) path needs an explicit repaint after a resize.
+        if (reduceMotion) draw(ctx, false);
+      }, 150);
     });
   })();
 </script>

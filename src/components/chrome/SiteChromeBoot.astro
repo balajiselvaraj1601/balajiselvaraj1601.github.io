@@ -1,0 +1,11 @@
+---
+
+---
+
+<script>
+  import { initSiteChrome } from '../../scripts/site-chrome';
+
+  const el = document.getElementById('nav-views-config');
+  const cfg = el?.textContent ? JSON.parse(el.textContent) : undefined;
+  initSiteChrome(cfg);
+</script>

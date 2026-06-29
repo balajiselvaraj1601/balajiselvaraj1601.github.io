@@ -1,14 +1,17 @@
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { z } from 'zod';
+import iconPaths from './icon-paths.json';
+import { iconNameSchema } from './icons';
+import { SECTION_COMPONENT_ID_SET } from './section-ids';
 import {
   siteSchema,
   profileSchema,
   impactSchema,
   visionBoardSchema,
-  textListSchema,
   experienceSchema,
   projectsSchema,
-  skillsSchema,
   educationSchema,
   awardsSchema,
   linkListSchema,
@@ -16,6 +19,7 @@ import {
   kaggleSchema,
   collaborationsSchema,
   entitiesSchema,
+  textListSchema,
 } from '@schemas';
 
 import siteRaw from '@content/site.json';
@@ -25,8 +29,6 @@ import strategicImpactRaw from '@content/work/strategic-impact.json';
 import visionBoardRaw from '@content/work/vision-board.json';
 import experienceRaw from '@content/work/experience.json';
 import projectsRaw from '@content/work/projects.json';
-import skillsRaw from '@content/work/skills.json';
-import mentorshipRaw from '@content/work/mentorship.json';
 import publicationsRaw from '@content/research/publications.json';
 import conferencesRaw from '@content/research/conferences.json';
 import speakersRaw from '@content/research/speakers.json';
@@ -34,6 +36,7 @@ import educationRaw from '@content/recognition/education.json';
 import awardsRaw from '@content/recognition/awards.json';
 import kaggleRaw from '@content/recognition/kaggle.json';
 import entitiesRaw from '@content/entities.json';
+import generativeAiRaw from '@content/drafts/research/generative-ai.json';
 
 function load<T extends z.ZodTypeAny>(
   name: string,
@@ -68,12 +71,6 @@ export const experience = load(
   experienceRaw
 );
 export const projects = load('work/projects.json', projectsSchema, projectsRaw);
-export const skills = load('work/skills.json', skillsSchema, skillsRaw);
-export const mentorship = load(
-  'work/mentorship.json',
-  textListSchema,
-  mentorshipRaw
-);
 export const education = load(
   'recognition/education.json',
   educationSchema,
@@ -102,6 +99,11 @@ export const collaborations = load(
   collaborationsRaw
 );
 export const entities = load('entities.json', entitiesSchema, entitiesRaw);
+export const generativeAi = load(
+  'drafts/research/generative-ai.json',
+  textListSchema,
+  generativeAiRaw
+);
 
 /** Resolve a canonical entity URL from a content slug (or logo slug). */
 export function getEntityUrl(slug?: string): string | undefined {
@@ -109,17 +111,17 @@ export function getEntityUrl(slug?: string): string | undefined {
   return entities[slug]?.url;
 }
 
-/** Resolve a canonical entity display name from a content slug. */
-export function getEntityName(slug?: string): string | undefined {
-  if (!slug) return undefined;
-  return entities[slug]?.name;
-}
-
 // Preference order: PNG first (logos are shipped as PNG), then other formats.
 // The filesystem is the single source of truth for which logo assets exist
 // (scanned once at build).
 const LOGO_EXTS = ['png', 'svg', 'webp', 'avif'] as const;
-const logoFiles = new Set(fs.readdirSync('public/assets/logos'));
+const repoRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../..'
+);
+const logoFiles = new Set(
+  fs.readdirSync(path.join(repoRoot, 'public/assets/logos'))
+);
 
 /** Resolve a logo URL from a slug, picking the best available extension. */
 export function logoSrc(slug?: string): string | undefined {
@@ -129,29 +131,6 @@ export function logoSrc(slug?: string): string | undefined {
   }
   return undefined;
 }
-export const sectionData = {
-  hero: profile,
-  thirukural: profile,
-  impact: strategicImpact,
-  'vision-board': visionBoard,
-  leadership: profile,
-  skills,
-  collaborations,
-  experience,
-  'experience-intro': experience,
-  projects,
-  'projects-intro': projects,
-  'featured-case-studies': projects,
-  mentorship,
-  education,
-  awards,
-  publications,
-  conferences,
-  speakers,
-  kaggle,
-  contact: profile,
-} as const;
-
 /** Content-driven pages only — excludes external nav entries (e.g. Resume PDF). */
 export const pages = site.pages.flatMap((p) => {
   if (p.external) return [];
@@ -167,15 +146,16 @@ export const pages = site.pages.flatMap((p) => {
 /** All nav entries including external links. */
 export const navItems = site.pages;
 
-type ContentPageEntry = Extract<(typeof site.pages)[number], { external?: false }>;
+type ContentPageEntry = Extract<
+  (typeof site.pages)[number],
+  { external?: false }
+>;
 
-function isContentPage(
-  p: (typeof site.pages)[number]
-): p is ContentPageEntry {
+function isContentPage(p: (typeof site.pages)[number]): p is ContentPageEntry {
   return !('external' in p && p.external);
 }
 
-const homePage = site.pages.find(
+export const homePage = site.pages.find(
   (p): p is ContentPageEntry => isContentPage(p) && p.id === 'home'
 );
 if (!homePage) throw new Error('site.json: missing home page');
@@ -231,6 +211,65 @@ for (const sectionId of homeSections) {
     );
   }
 }
+
+// Each home section must appear in exactly one view.
+const sectionViewOwners = new Map<string, string>();
+for (const view of navViews) {
+  for (const sectionId of view.viewSections) {
+    const owner = sectionViewOwners.get(sectionId);
+    if (owner) {
+      throw new Error(
+        `site.json: section "${sectionId}" is assigned to both "${owner}" and "${view.id}" viewSections`
+      );
+    }
+    sectionViewOwners.set(sectionId, view.id);
+  }
+}
+
+// Every rendered home section needs a SectionRenderer component.
+for (const sectionId of homeSections) {
+  if (!SECTION_COMPONENT_ID_SET.has(sectionId)) {
+    throw new Error(
+      `site.json: home section "${sectionId}" has no component in SectionRenderer`
+    );
+  }
+}
+
+const entityKeys = new Set(Object.keys(entities));
+function assertEntitySlug(slug: string | undefined, context: string) {
+  if (!slug) return;
+  if (!entityKeys.has(slug)) {
+    throw new Error(`${context}: unknown entity slug "${slug}"`);
+  }
+}
+
+for (const role of experience.roles) {
+  assertEntitySlug(role.entity, 'work/experience.json');
+}
+for (const project of projects.projects) {
+  assertEntitySlug(project.entity, 'work/projects.json');
+}
+for (const item of collaborations.items) {
+  assertEntitySlug(item.entity, 'person/collaborations.json');
+}
+for (const record of education.records) {
+  assertEntitySlug(record.entity, 'recognition/education.json');
+}
+for (const card of strategicImpact.leadershipCards ?? []) {
+  assertEntitySlug(card.entity, 'work/strategic-impact.json');
+}
+for (const collab of profile.vision?.collaborations ?? []) {
+  assertEntitySlug(collab.entity, 'person/profile.json vision.collaborations');
+}
+
+const iconPathKeys = new Set(Object.keys(iconPaths));
+for (const iconName of iconNameSchema.options) {
+  if (!iconPathKeys.has(iconName)) {
+    throw new Error(`icon-paths.json: missing geometry for icon "${iconName}"`);
+  }
+}
+
+export const defaultTheme = site.theme.default === 'light' ? 'light' : 'dark';
 
 /** Resolve a nav href for a content page (hash on home for views). */
 export function navHref(page: ContentPageEntry): string {

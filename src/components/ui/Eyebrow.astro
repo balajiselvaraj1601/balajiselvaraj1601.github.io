@@ -7,4 +7,6 @@ interface Props {
 const { text, variant = 'default', class: cls } = Astro.props;
 ---
 
-<p class:list={['eyebrow', { 'eyebrow--red': variant === 'red' }, cls]}>{text}</p>
+<p class:list={['eyebrow', { 'eyebrow--red': variant === 'red' }, cls]}>
+  {text}
+</p>

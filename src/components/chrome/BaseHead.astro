@@ -1,5 +1,5 @@
 ---
-import { site, profile } from '@lib/content';
+import { site, profile, experience } from '@lib/content';
 
 interface Props {
   /** Page title; defaults to the site SEO title. */
@@ -33,13 +33,16 @@ const jsonLd = {
   ...(email ? { email } : {}),
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Gothenburg',
-    addressCountry: 'SE',
+    addressLocality: site.location.split(',')[0]?.trim() ?? site.location,
+    addressCountry: site.location.includes('Sweden') ? 'SE' : undefined,
   },
   url: new URL('/', origin).href,
   sameAs: [linkedin, github, kaggle].filter(Boolean),
   knowsAbout: site.seo.keywords,
-  worksFor: { '@type': 'Organization', name: 'AstraZeneca' },
+  worksFor: {
+    '@type': 'Organization',
+    name: experience.roles[0]?.organization.split(',')[0]?.trim() ?? site.name,
+  },
 };
 ---
 
@@ -52,8 +55,16 @@ const jsonLd = {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Theme color per scheme -->
-<meta name="theme-color" content="#faf8ff" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#0d0b1e" media="(prefers-color-scheme: dark)" />
+<meta
+  name="theme-color"
+  content="#faf8ff"
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  name="theme-color"
+  content="#0d0b1e"
+  media="(prefers-color-scheme: dark)"
+/>
 
 <!-- Icons & manifest -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -75,9 +86,11 @@ const jsonLd = {
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={pageDesc} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={`${profile.name} — ${profile.title}`} />
 
-<!-- JSON-LD Person -->
+<!-- JSON-LD Person — pure data blob; is:inline keeps it verbatim and silences astro(4000). -->
 <script
+  is:inline
   type="application/ld+json"
   set:html={JSON.stringify(jsonLd)}
 />

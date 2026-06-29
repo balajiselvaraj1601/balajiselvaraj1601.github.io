@@ -13,7 +13,10 @@ async function fetchAsDataUrl(url: string): Promise<string | null> {
     const blob = await res.blob();
     return await new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
+      reader.onload = () => {
+        if (typeof reader.result === 'string') resolve(reader.result);
+        else reject(new Error('Unexpected FileReader result'));
+      };
       reader.onerror = reject;
       reader.readAsDataURL(blob);
     });
@@ -57,6 +60,8 @@ async function inlineUrlsInCss(css: string, baseUrl: string): Promise<string> {
 
 export async function savePage(): Promise<void> {
   const btn = document.getElementById('save-btn');
+  if (btn?.getAttribute('aria-busy') === 'true') return;
+
   if (btn) {
     btn.setAttribute('aria-busy', 'true');
     btn.setAttribute('disabled', '');
@@ -65,16 +70,17 @@ export async function savePage(): Promise<void> {
   try {
     const clone = document.documentElement.cloneNode(true) as HTMLElement;
 
-    // remove the save button from the saved output
     clone.querySelector('#save-btn')?.remove();
+    clone.querySelectorAll('script').forEach((script) => script.remove());
 
-    // inline all stylesheets
     const links = Array.from(
       clone.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"][href]')
     );
     await Promise.all(
       links.map(async (link) => {
-        const href = resolveUrl(link.getAttribute('href')!, location.href);
+        const rawHref = link.getAttribute('href');
+        if (!rawHref) return;
+        const href = resolveUrl(rawHref, location.href);
         try {
           const res = await fetch(href);
           if (!res.ok) return;
@@ -90,10 +96,14 @@ export async function savePage(): Promise<void> {
     );
 
     // inline img src attributes
-    const images = Array.from(clone.querySelectorAll<HTMLImageElement>('img[src]'));
+    const images = Array.from(
+      clone.querySelectorAll<HTMLImageElement>('img[src]')
+    );
     await Promise.all(
       images.map(async (img) => {
-        const src = resolveUrl(img.getAttribute('src')!, location.href);
+        const rawSrc = img.getAttribute('src');
+        if (!rawSrc) return;
+        const src = resolveUrl(rawSrc, location.href);
         if (src.startsWith('data:')) return;
         const dataUrl = await fetchAsDataUrl(src);
         if (dataUrl) img.setAttribute('src', dataUrl);
@@ -116,6 +126,7 @@ export async function savePage(): Promise<void> {
     setTimeout(() => URL.revokeObjectURL(objectUrl), 10_000);
   } catch (err) {
     console.error('[save-page] Failed to save page:', err);
+    if (btn) btn.setAttribute('aria-label', 'Save failed — try again');
   } finally {
     if (btn) {
       btn.removeAttribute('aria-busy');

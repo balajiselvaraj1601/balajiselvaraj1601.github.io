@@ -1,103 +1,191 @@
 ---
 import Section from '@components/ui/Section.astro';
+import Icon from '@components/ui/Icon.astro';
+import CompetitionCard from '@components/cards/CompetitionCard.astro';
 import { kaggle, site } from '@lib/content';
+
+// Presentation order = impact: best percentile first. Parse the number out of
+// strings like "Top 1.8%" and sort ascending. Fixed server-side, never hardcoded.
+const pct = (p: string) => parseFloat(p.replace(/[^\d.]/g, '')) || Infinity;
+const items = [...kaggle.items].sort(
+  (a, b) => pct(a.percentile) - pct(b.percentile)
+);
+
+// Counts are DERIVED from the items — single source of truth, never hardcoded.
+const total = items.length;
+const silver = items.filter((i) => i.medal === 'Silver').length;
+const bronze = items.filter((i) => i.medal === 'Bronze').length;
+
+// Medal filter set — drives the chips and mirrors the card data-medal values.
+const MEDALS = ['Silver', 'Bronze'] as const;
+const medalClass = (m: string) =>
+  m === 'Silver' ? 'blob--silver' : 'blob--bronze';
 ---
 
 <Section id="kaggle" title={site.sections.kaggle.title} variant="alt">
-  <div class="kaggle-hero card reveal">
-    <div>
-      <div class="kaggle-rank-big">
-        {kaggle.rank}{kaggle.rankDenominator && <span>/{kaggle.rankDenominator}</span>}
+  <!-- Summary stat tiles — competition + medal counts and global rank -->
+  <div class="recog-summary reveal">
+    <div class="recog-tile">
+      <div class="recog-tile__icon" aria-hidden="true">
+        <Icon name="kaggle" size={22} />
       </div>
-      {
-        kaggle.rankDetail && (
-          <div class="kaggle-rank-detail">{kaggle.rankDetail}</div>
-        )
-      }
+      <div class="recog-tile__count">{total}</div>
+      <div class="recog-tile__label">Competitions</div>
     </div>
-    <div class="kaggle-desc">
-      {kaggle.headline && <h3>{kaggle.headline}</h3>}
-      {kaggle.description && <p>{kaggle.description}</p>}
-      <a class="btn btn-secondary" href={kaggle.profile} target="_blank" rel="noopener noreferrer">
+    <div class="recog-tile blob--silver">
+      <div class="recog-tile__icon" aria-hidden="true">
+        <Icon name="trophy" size={22} />
+      </div>
+      <div class="recog-tile__count">{silver}</div>
+      <div class="recog-tile__label">Silver</div>
+    </div>
+    <div class="recog-tile blob--bronze">
+      <div class="recog-tile__icon" aria-hidden="true">
+        <Icon name="trophy" size={22} />
+      </div>
+      <div class="recog-tile__count">{bronze}</div>
+      <div class="recog-tile__label">Bronze</div>
+    </div>
+    <div class="recog-tile">
+      <div class="recog-tile__icon" aria-hidden="true">
+        <Icon name="target" size={22} />
+      </div>
+      <div class="recog-tile__count">{kaggle.rank}</div>
+      <div class="recog-tile__label">
+        Global Rank{
+          kaggle.rankDenominator && <span> · {kaggle.rankDenominator}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls: live count + search + profile link + medal filters -->
+  <div class="recog-controls reveal">
+    <h3 class="recog-controls__count">
+      Competitions (<span data-kaggle-count>{total}</span>)
+    </h3>
+    <div class="recog-tools">
+      <input
+        type="search"
+        class="recog-search"
+        data-kaggle-search
+        placeholder="Search competitions…"
+        aria-label="Search competitions by name, domain, or tag"
+      />
+      <a
+        class="btn btn-secondary"
+        href={kaggle.profile}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         View Kaggle profile
       </a>
     </div>
+    <div class="recog-filters" role="group" aria-label="Filter by medal">
+      <button
+        type="button"
+        class="recog-chip is-active"
+        data-filter="all"
+        aria-pressed="true"
+      >
+        All
+      </button>
+      {
+        MEDALS.map((m) => (
+          <button
+            type="button"
+            class:list={['recog-chip', medalClass(m)]}
+            data-filter={m}
+            aria-pressed="false"
+          >
+            {m}
+          </button>
+        ))
+      }
+    </div>
   </div>
 
-  <div class="comp-list reveal">
-    {kaggle.items.map((item) => (
-      <a class="comp-tag" href={item.url} target="_blank" rel="noopener noreferrer">
-        {item.label}
-      </a>
-    ))}
+  <!-- Competition card grid -->
+  <div class="recog-grid reveal" data-kaggle-grid>
+    {items.map((item) => <CompetitionCard {...item} />)}
   </div>
+
+  <p class="recog-empty" data-kaggle-empty hidden>
+    No competitions match your search.
+  </p>
 </Section>
 
 <style>
-  .kaggle-hero {
-    padding: var(--card-padding-lg);
-    display: flex;
-    gap: var(--stack-lg);
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: var(--stack-md);
+  /* Medal accents — map to the shared --medal-* tokens (theme tuning lives once
+     in global.css) so tiles and filter chips match the cards. */
+  .blob--silver {
+    --medal: var(--medal-silver);
   }
-  .kaggle-rank-big {
-    font-family: var(--font-mono);
-    font-size: 3rem;
-    font-weight: 600;
-    color: var(--heading);
-    line-height: 1;
+  .blob--bronze {
+    --medal: var(--medal-bronze);
   }
-  .kaggle-rank-big span {
-    color: var(--accent-light);
-    font-size: 1.5rem;
-  }
-  .kaggle-rank-detail {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--accent-light);
-    letter-spacing: 0.08em;
-    margin-top: 0.3rem;
-  }
-  .kaggle-desc {
-    flex: 1;
-    min-width: 200px;
-  }
-  .kaggle-desc h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-  .kaggle-desc p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: var(--stack-sm);
-    max-width: none;
-  }
-  .comp-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 0.75rem;
-  }
-  .comp-tag {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 0.6rem 0.9rem;
-    font-size: 0.8rem;
-    color: var(--text);
-    text-decoration: none;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    transition: border-color 0.2s;
-  }
-  .comp-tag::before {
-    content: '🏆';
-    font-size: 0.75rem;
-  }
-  .comp-tag:hover {
-    border-color: var(--accent);
-    color: var(--heading);
+  /* Feed the medal accent into the shared .recog-* layer for tiles and chips. */
+  .recog-tile.blob--silver,
+  .recog-tile.blob--bronze,
+  .recog-chip.blob--silver,
+  .recog-chip.blob--bronze {
+    --accent-card: var(--medal);
   }
 </style>
+
+<script>
+  const root = document.getElementById('kaggle');
+  const grid = root?.querySelector('[data-kaggle-grid]');
+  if (grid) {
+    const cards = Array.from(grid.querySelectorAll('.recog-card'));
+    const searchEl = root?.querySelector<HTMLInputElement>(
+      '[data-kaggle-search]'
+    );
+    const countEl = root?.querySelector('[data-kaggle-count]');
+    const emptyEl = root?.querySelector('[data-kaggle-empty]');
+    const chips = Array.from(root?.querySelectorAll('.recog-chip') ?? []);
+
+    let activeFilter = 'all';
+    let query = '';
+
+    function apply() {
+      let visible = 0;
+      for (const card of cards) {
+        const medal = card.getAttribute('data-medal') || '';
+        const haystack = [
+          card.getAttribute('data-name'),
+          card.getAttribute('data-domain'),
+          card.getAttribute('data-tags'),
+        ]
+          .join(' ')
+          .toLowerCase();
+        const show =
+          (activeFilter === 'all' || medal === activeFilter) &&
+          (query === '' || haystack.includes(query));
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      }
+      if (countEl) countEl.textContent = String(visible);
+      if (emptyEl) emptyEl.toggleAttribute('hidden', visible !== 0);
+    }
+
+    searchEl?.addEventListener('input', () => {
+      query = (searchEl.value || '').trim().toLowerCase();
+      apply();
+    });
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => {
+          c.classList.remove('is-active');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('is-active');
+        chip.setAttribute('aria-pressed', 'true');
+        activeFilter = chip.getAttribute('data-filter') || 'all';
+        apply();
+      });
+    });
+
+    apply();
+  }
+</script>

@@ -1,7 +1,7 @@
 ---
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import { resolveIcon } from '@lib/icons';
 import { profile } from '@lib/content';
 
 const { contactPage, contactQuote } = profile;
@@ -30,7 +30,14 @@ const titleParts = contactPage.titleHighlight
   : null;
 ---
 
-<Section id="contact" title="" hideTitle eyebrow={contactPage.eyebrow} variant="alt">
+<Section
+  id="contact"
+  title=""
+  hideTitle
+  ariaLabel={contactPage.title}
+  eyebrow={contactPage.eyebrow}
+  variant="alt"
+>
   <div class="contact-grid reveal">
     <!-- Left: pitch + actions -->
     <div class="contact-left">
@@ -108,7 +115,7 @@ const titleParts = contactPage.titleHighlight
                   : {})}
               >
                 <span class="connect-badge" aria-hidden="true">
-                  <Icon name={resolveIcon(c.icon, 'link') as IconName} size={22} />
+                  <Icon name={resolveIcon(c.icon, 'link')} size={22} />
                 </span>
                 <h3 class="connect-name">{c.label}</h3>
                 <p class="connect-val">{c.value}</p>
@@ -129,8 +136,7 @@ const titleParts = contactPage.titleHighlight
               <Icon name="handshake" size={26} />
             </span>
             <span class="connect-banner__text">
-              {contactPage.ctaText}{' '}
-              <strong>{contactPage.ctaLinkText}</strong>
+              {contactPage.ctaText} <strong>{contactPage.ctaLinkText}</strong>
             </span>
             <span class="connect-banner__arrow" aria-hidden="true">
               <Icon name="arrow-right" size={20} />

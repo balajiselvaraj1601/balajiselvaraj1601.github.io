@@ -2,7 +2,7 @@
 export function youtubeId(url?: string): string | null {
   if (!url) return null;
   const m = url.match(
-    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([\w-]{11})/
+    /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|v\/|shorts\/|watch\?(?:[^#]*&)?v=))([\w-]{11})/
   );
   return m ? m[1] : null;
 }

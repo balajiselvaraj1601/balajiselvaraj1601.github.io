@@ -22,13 +22,15 @@ function updateNavActive(viewAnchor: string) {
   const nav = document.getElementById('primary-nav');
   if (!nav) return;
 
-  nav.querySelectorAll<HTMLAnchorElement>('a[data-view-anchor]').forEach((link) => {
-    if (link.dataset.viewAnchor === viewAnchor) {
-      link.setAttribute('aria-current', 'page');
-    } else {
-      link.removeAttribute('aria-current');
-    }
-  });
+  nav
+    .querySelectorAll<HTMLAnchorElement>('a[data-view-anchor]')
+    .forEach((link) => {
+      if (link.dataset.viewAnchor === viewAnchor) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
 }
 
 function scrollToSection(sectionId: string | undefined) {
@@ -36,7 +38,10 @@ function scrollToSection(sectionId: string | undefined) {
   const target = document.getElementById(sectionId);
   if (!target) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  target.scrollIntoView({
+    behavior: reduce ? 'auto' : 'smooth',
+    block: 'start',
+  });
 }
 
 export function initSectionViews(options: SectionViewsOptions) {
@@ -44,6 +49,9 @@ export function initSectionViews(options: SectionViewsOptions) {
 
   const { views, defaultView } = options;
   if (!views.length) return;
+
+  let programmaticScrollUntil = 0;
+  let hashApplyFrame = 0;
 
   const firstSectionOf = (anchor: string): string | undefined =>
     views.find((v) => v.viewAnchor === anchor)?.viewSections[0];
@@ -54,16 +62,43 @@ export function initSectionViews(options: SectionViewsOptions) {
     for (const id of view.viewSections) sectionToView.set(id, view.viewAnchor);
   }
 
-  const goToView = (anchor: string) => {
+  const goToView = (anchor: string, scroll = true) => {
     updateNavActive(anchor);
-    scrollToSection(firstSectionOf(anchor));
+    if (scroll) {
+      programmaticScrollUntil = Date.now() + 1200;
+      scrollToSection(firstSectionOf(anchor));
+    }
+  };
+
+  /** View anchors that share an id with a later section in the same view (e.g. #experience). */
+  const hashCollidesWithSectionId = (anchor: string): boolean => {
+    const first = firstSectionOf(anchor);
+    return Boolean(
+      first && first !== anchor && document.getElementById(anchor)
+    );
+  };
+
+  const applyViewFromHash = (anchor: string) => {
+    const view = views.find((v) => v.viewAnchor === anchor);
+    if (!view) return false;
+    goToView(view.viewAnchor);
+    return true;
   };
 
   // Header nav buttons — scroll to the view's first section (no hiding).
   document.getElementById('primary-nav')?.addEventListener('click', (event) => {
-    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>(
-      'a[data-view-anchor]'
-    );
+    const mouseEvent = event as MouseEvent;
+    if (
+      mouseEvent.metaKey ||
+      mouseEvent.ctrlKey ||
+      mouseEvent.shiftKey ||
+      mouseEvent.button !== 0
+    ) {
+      return;
+    }
+
+    const targetEl = event.target instanceof Element ? event.target : null;
+    const link = targetEl?.closest<HTMLAnchorElement>('a[data-view-anchor]');
     if (!link) return;
 
     event.preventDefault();
@@ -74,51 +109,89 @@ export function initSectionViews(options: SectionViewsOptions) {
     goToView(anchor);
   });
 
-  // "Get in Touch" CTA(s).
-  document.querySelectorAll<HTMLAnchorElement>('a[data-view-anchor].nav-cta').forEach((cta) => {
-    cta.addEventListener('click', (event) => {
-      event.preventDefault();
-      history.pushState(null, '', '#contact');
-      goToView('contact');
+  // Desktop header CTA lives outside #primary-nav.
+  document
+    .querySelectorAll<HTMLAnchorElement>('.site-header__actions a.nav-cta')
+    .forEach((cta) => {
+      cta.addEventListener('click', (event) => {
+        event.preventDefault();
+        history.pushState(null, '', '#contact');
+        goToView('contact');
+      });
     });
-  });
 
-  // Deep links + browser back/forward — scroll to the hash's section.
   const applyFromHash = () => {
     const anchor = window.location.hash.replace(/^#/, '');
-    const view = anchor ? views.find((v) => v.viewAnchor === anchor) : undefined;
-    if (view) {
-      goToView(view.viewAnchor);
-    } else {
-      goToView(defaultView);
+    if (anchor && applyViewFromHash(anchor)) return;
+
+    if (anchor && document.getElementById(anchor)) {
+      programmaticScrollUntil = Date.now() + 1200;
+      scrollToSection(anchor);
+      const viewAnchor = sectionToView.get(anchor);
+      if (viewAnchor) updateNavActive(viewAnchor);
+      return;
     }
+
+    if (anchor) {
+      goToView(defaultView);
+      return;
+    }
+
+    updateNavActive(defaultView);
+  };
+
+  const scheduleApplyFromHash = () => {
+    cancelAnimationFrame(hashApplyFrame);
+    hashApplyFrame = requestAnimationFrame(applyFromHash);
   };
 
   if (window.location.hash) {
-    // Defer so layout has settled before the initial scroll.
-    requestAnimationFrame(applyFromHash);
+    const anchor = window.location.hash.replace(/^#/, '');
+    if (
+      anchor &&
+      hashCollidesWithSectionId(anchor) &&
+      applyViewFromHash(anchor)
+    ) {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      const settle = () => {
+        goToView(anchor);
+        if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
+      };
+      if (document.readyState === 'complete') {
+        requestAnimationFrame(settle);
+      } else {
+        window.addEventListener('load', () => requestAnimationFrame(settle), {
+          once: true,
+        });
+      }
+    } else {
+      scheduleApplyFromHash();
+    }
   } else {
     updateNavActive(defaultView);
   }
 
-  window.addEventListener('hashchange', applyFromHash);
-  window.addEventListener('popstate', applyFromHash);
+  window.addEventListener('hashchange', scheduleApplyFromHash);
+  window.addEventListener('popstate', scheduleApplyFromHash);
 
   // Scroll-spy — highlight the nav button for whichever section is centered.
   const roots = Array.from(
-    document.querySelectorAll<HTMLElement>('.section-view-root[data-section-id]')
+    document.querySelectorAll<HTMLElement>(
+      '.section-view-root[data-section-id]'
+    )
   );
   if ('IntersectionObserver' in window && roots.length) {
     const spy = new IntersectionObserver(
       (entries) => {
+        if (Date.now() < programmaticScrollUntil) return;
+
         const top = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.target as
-          | HTMLElement
-          | undefined;
-        const anchor = top?.dataset.sectionId
-          ? sectionToView.get(top.dataset.sectionId)
-          : undefined;
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]?.target;
+        const sectionId =
+          top instanceof HTMLElement ? top.dataset.sectionId : undefined;
+        const anchor = sectionId ? sectionToView.get(sectionId) : undefined;
         if (anchor) updateNavActive(anchor);
       },
       { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.5, 1] }

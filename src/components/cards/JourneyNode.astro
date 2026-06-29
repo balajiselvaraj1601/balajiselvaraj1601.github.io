@@ -1,20 +1,15 @@
 ---
 import Icon from '@components/ui/Icon.astro';
-import { resolveIcon, type IconName } from '@lib/icons';
+import type { Impact } from '@schemas';
 
-interface Props {
-  icon: string;
-  label: string;
-  description: string;
-  variant?: 'purple' | 'red';
-}
+type Props = NonNullable<Impact['journey']>[number];
+
 const { icon, label, description, variant = 'purple' } = Astro.props;
-const iconName = resolveIcon(icon, 'rocket') as IconName;
 ---
 
 <div class="journey-node">
   <div class:list={['journey-icon', variant]} aria-hidden="true">
-    <Icon name={iconName} size={28} />
+    <Icon name={icon} size={28} />
   </div>
   <div>
     <div class="journey-label">{label}</div>

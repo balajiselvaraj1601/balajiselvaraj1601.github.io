@@ -16,6 +16,7 @@ const highlightIndex =
   id="impact"
   title=""
   hideTitle
+  ariaLabel={title}
   eyebrow="AI Leadership & Strategic Impact"
   subtitle={strategicImpact.subtitle}
   variant="impact"
@@ -76,8 +77,8 @@ const highlightIndex =
   {
     strategicImpact.highlights.length > 0 && (
       <ul class="impact-highlights reveal">
-        {strategicImpact.highlights.map((highlight) => (
-          <li>{highlight.text}</li>
+        {strategicImpact.highlights.map((item) => (
+          <li>{item.text}</li>
         ))}
       </ul>
     )
@@ -119,7 +120,9 @@ const highlightIndex =
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--bg-elev);
-    transition: gap 0.2s ease, border-color 0.2s ease;
+    transition:
+      gap 0.2s ease,
+      border-color 0.2s ease;
   }
   .impact-cta__link:hover {
     gap: var(--space-3);

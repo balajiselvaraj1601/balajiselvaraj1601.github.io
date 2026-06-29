@@ -1,0 +1,36 @@
+---
+
+---
+
+<div class="about-landing">
+  <slot />
+</div>
+
+<style>
+  .about-landing {
+    --landing-gap: var(--space-8);
+
+    min-height: calc(100svh - var(--header-h));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--landing-gap);
+    padding-block: var(--space-6);
+    overflow: visible;
+    background: var(--hero-gradient);
+  }
+
+  .about-landing :global(#hero) {
+    background: transparent;
+  }
+
+  @media (max-width: 1023px) {
+    .about-landing {
+      height: auto;
+      min-height: calc(100svh - var(--header-h));
+      justify-content: flex-start;
+      gap: var(--landing-gap);
+      overflow: visible;
+    }
+  }
+</style>

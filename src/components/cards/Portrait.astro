@@ -1,28 +1,29 @@
 ---
-interface Props {
-  src: string;
-  alt: string;
-  webp?: string;
-  width?: number;
-  height?: number;
+import type { Profile } from '@schemas';
+
+interface Props extends NonNullable<Profile['portrait']> {
   class?: string;
 }
 
-const {
-  src,
-  alt,
-  webp,
-  width = 480,
-  height = 480,
-  class: cls,
-} = Astro.props;
+const { src, alt, webp, width = 480, height = 480, class: cls } = Astro.props;
 ---
 
 <figure class:list={['portrait', cls]}>
   <div class="portrait__frame">
-    {webp ? (
-      <picture>
-        <source srcset={webp} type="image/webp" />
+    {
+      webp ? (
+        <picture>
+          <source srcset={webp} type="image/webp" />
+          <img
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
+      ) : (
         <img
           src={src}
           alt={alt}
@@ -31,17 +32,8 @@ const {
           loading="eager"
           decoding="async"
         />
-      </picture>
-    ) : (
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        loading="eager"
-        decoding="async"
-      />
-    )}
+      )
+    }
   </div>
 </figure>
 
@@ -83,12 +75,6 @@ const {
     position: relative;
     isolation: isolate;
   }
-  .portrait__frame::before {
-    content: none;
-  }
-  .portrait__frame::after {
-    content: none;
-  }
   .portrait img {
     width: 100%;
     height: 100%;
@@ -98,7 +84,8 @@ const {
   }
   @media (prefers-reduced-motion: no-preference) {
     .portrait__frame {
-      transition: transform var(--dur) var(--ease),
+      transition:
+        transform var(--dur) var(--ease),
         box-shadow var(--dur) var(--ease);
     }
     .portrait:hover .portrait__frame {

@@ -31,3 +31,6 @@ __pycache__/
 
 # Logo-pipeline source workspace (processed output goes to public/assets/logos/)
 /assets/source/logos/
+
+# Task-runner runtime state (local only)
+.cursor/task-runner.state.json

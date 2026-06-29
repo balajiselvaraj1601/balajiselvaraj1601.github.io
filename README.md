@@ -19,7 +19,7 @@ portfolio_site/
 ├── tsconfig.json          TS strict + JSON module resolution
 ├── src/
 │   ├── pages/             index.astro, 404.astro
-│   │                       experience, projects, research, recognition, contact routes
+│   │                       experience, projects, research, recognition, vision, contact routes
 │   ├── layouts/           Layout.astro
 │   ├── components/        Header, Footer, BaseHead, shared primitives + sections/
 │   ├── lib/content.ts     Loads content/**/*.json and validates against schemas.ts
@@ -29,8 +29,8 @@ portfolio_site/
 │   ├── README.md            Provenance + curation rules
 │   ├── site.json            Site meta, pages/routes, section visibility, SEO defaults, theme
 │   ├── person/              Profile and affiliations
-│   ├── work/                Impact, experience, projects, skills, mentorship
-│   ├── research/            Generative AI, publications, conferences
+│   ├── work/                Strategic impact, experience, projects, vision-board
+│   ├── research/            Publications, conferences, speakers
 │   └── recognition/         Education, awards, Kaggle
 ├── public/                Static assets served as-is
 │   ├── assets/            favicons, icons/, og/og-image.png, resume/balaji-selvaraj-resume.pdf
@@ -83,20 +83,21 @@ URL and must be updated alongside `SITE_URL` if it ever changes.
 
 Full index: **[docs/README.md](./docs/README.md)**
 
-| Doc | Topic |
-|-----|-------|
-| [getting-started.md](./docs/getting-started.md) | Install, dev, build, preview |
-| [go-live-checklist.md](./docs/go-live-checklist.md) | Publish to GitHub Pages |
-| [content-editing.md](./docs/content-editing.md) | Change site copy via JSON |
-| [architecture.md](./docs/architecture.md) | Data flow, stack, key files |
-| [requirements.md](./docs/requirements.md) | MoSCoW features |
-| [specification.md](./docs/specification.md) | IA, routes, section contracts |
-| [content-map.md](./docs/content-map.md) | Résumé → portfolio traceability |
-| [design-direction.md](./docs/design-direction.md) | Visual tokens and motion |
-| [seo.md](./docs/seo.md) | Meta, OG, JSON-LD, sitemap |
-| [accessibility.md](./docs/accessibility.md) | WCAG 2.1 AA checklist |
-| [deployment.md](./docs/deployment.md) | CI/CD and artifact checklist |
-| [assets.md](./docs/assets.md) | Résumé PDF, OG image, favicons |
-| [troubleshooting.md](./docs/troubleshooting.md) | Common errors and fixes |
+| Doc                                                                       | Topic                                   |
+| ------------------------------------------------------------------------- | --------------------------------------- |
+| [getting-started.md](./docs/getting-started.md)                           | Install, dev, build, preview            |
+| [go-live-checklist.md](./docs/go-live-checklist.md)                       | Publish to GitHub Pages                 |
+| [content-editing.md](./docs/content-editing.md)                           | Change site copy via JSON               |
+| [architecture.md](./docs/architecture.md)                                 | Data flow, stack, key files             |
+| [environment-languages-skills.md](./docs/environment-languages-skills.md) | Languages, tooling, programmatic skills |
+| [requirements.md](./docs/requirements.md)                                 | MoSCoW features                         |
+| [specification.md](./docs/specification.md)                               | IA, routes, section contracts           |
+| [content-map.md](./docs/content-map.md)                                   | Résumé → portfolio traceability         |
+| [design-direction.md](./docs/design-direction.md)                         | Visual tokens and motion                |
+| [seo.md](./docs/seo.md)                                                   | Meta, OG, JSON-LD, sitemap              |
+| [accessibility.md](./docs/accessibility.md)                               | WCAG 2.1 AA checklist                   |
+| [deployment.md](./docs/deployment.md)                                     | CI/CD and artifact checklist            |
+| [assets.md](./docs/assets.md)                                             | Résumé PDF, OG image, favicons          |
+| [troubleshooting.md](./docs/troubleshooting.md)                           | Common errors and fixes                 |
 
 `content/` and `docs/` are self-contained — no need to re-read the source résumé.

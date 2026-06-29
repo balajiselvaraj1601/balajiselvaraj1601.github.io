@@ -11,13 +11,21 @@
  * Usage:  node scripts/export-icon-svgs.mjs
  * Then:   python3 scripts/process_logos.py --logos-dir scripts/.icon-stage --apply --min-trim-pct 100 --svg-scale 8
  */
-import { mkdirSync, readFileSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import {
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+  existsSync,
+} from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
-const paths = JSON.parse(readFileSync(resolve(root, 'src/lib/icon-paths.json'), 'utf8'));
+const paths = JSON.parse(
+  readFileSync(resolve(root, 'src/lib/icon-paths.json'), 'utf8')
+);
 const outDir = resolve(here, '.icon-stage');
 
 if (existsSync(outDir)) rmSync(outDir, { recursive: true, force: true });

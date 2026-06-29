@@ -28,14 +28,14 @@ GitHub Pages  (via .github/workflows/deploy.yml)
 
 ## Stack
 
-| Layer | Choice | Notes |
-|-------|--------|-------|
-| Framework | Astro 4.16 | Static output only; minimal client JS |
-| Validation | Zod 3 | Build-time content validation |
-| Styling | Hand-rolled CSS | Design tokens in `global.css`; no CSS framework |
-| Sitemap | `@astrojs/sitemap` 3.6.0 | **Pinned** — do not upgrade on Astro 4 |
-| Hosting | GitHub Pages | User site at domain root |
-| CI | GitHub Actions | Build on push; deploy gated to user-site repo |
+| Layer      | Choice                   | Notes                                           |
+| ---------- | ------------------------ | ----------------------------------------------- |
+| Framework  | Astro 4.16               | Static output only; minimal client JS           |
+| Validation | Zod 3                    | Build-time content validation                   |
+| Styling    | Hand-rolled CSS          | Design tokens in `global.css`; no CSS framework |
+| Sitemap    | `@astrojs/sitemap` 3.6.0 | **Pinned** — do not upgrade on Astro 4          |
+| Hosting    | GitHub Pages             | User site at domain root                        |
+| CI         | GitHub Actions           | Build on push; deploy gated to user-site repo   |
 
 ## Repo layout
 
@@ -55,7 +55,7 @@ portfolio_site/
     │   ├── SectionRenderer.astro
     │   ├── chrome/          Header, Footer, BaseHead, …
     │   ├── ui/              Chip, Icon, Section, …
-    │   ├── cards/           ImpactCard, HubCircle, …
+    │   ├── cards/           CompetitionCard, HubCircle, …
     │   └── sections/        Page section components
     ├── layouts/  lib/  pages/  scripts/  styles/
     └── schemas.ts
@@ -63,18 +63,19 @@ portfolio_site/
 
 ## Key files
 
-| File | Role |
-|------|------|
-| `astro.config.mjs` | `SITE_URL`, `base: '/'`, sitemap integration |
-| `src/schemas.ts` | Content shape contracts (SSOT for types) |
-| `src/lib/content.ts` | Imports JSON, validates, exports typed data |
-| `content/site.json` | Page/route definitions (`pages`), section visibility, SEO, résumé path |
-| `src/pages/*.astro` | One route per page; each looks up its `pages` entry and renders via `SectionRenderer` |
-| `src/components/SectionRenderer.astro` | Section id → component map (SSOT); renders an ordered list of section ids |
-| `src/components/chrome/BaseHead.astro` | Meta, OG, Twitter, JSON-LD |
-| `src/components/chrome/ThemeScript.astro` | Inline theme bootstrap (no flash) |
-| `src/components/chrome/Header.astro` | Route nav (server-side active state), mobile menu, theme toggle, résumé CTA |
-| `public/.nojekyll` | Prevents Jekyll from stripping `_astro/` on Pages |
+| File                                      | Role                                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------------------- |
+| `astro.config.mjs`                        | `SITE_URL`, `base: '/'`, sitemap integration                                  |
+| `src/schemas.ts`                          | Content shape contracts (SSOT for types)                                      |
+| `src/lib/content.ts`                      | Imports JSON, validates, exports typed data                                   |
+| `content/site.json`                       | Page/route definitions (`pages`), section visibility, SEO, résumé path        |
+| `src/pages/index.astro`                   | Home route — renders all sections via `SectionRenderer` with scroll-spy views |
+| `src/pages/{view}.astro` (stubs)          | Legacy paths redirect to `/#anchor` via `ViewRedirect` (no section rendering) |
+| `src/components/SectionRenderer.astro`    | Section id → component map (SSOT); renders an ordered list of section ids     |
+| `src/components/chrome/BaseHead.astro`    | Meta, OG, Twitter, JSON-LD                                                    |
+| `src/components/chrome/ThemeScript.astro` | Inline theme bootstrap (no flash)                                             |
+| `src/components/chrome/Header.astro`      | Route nav (server-side active state), mobile menu, theme toggle, résumé CTA   |
+| `public/.nojekyll`                        | Prevents Jekyll from stripping `_astro/` on Pages                             |
 
 ## Content layer
 
@@ -176,16 +177,17 @@ Details: [Deployment](./deployment.md).
 
 ## Extension points
 
-| Feature | How to add |
-|---------|------------|
-| New section | JSON + schema + component + site.json nav entry |
+| Feature              | How to add                                                           |
+| -------------------- | -------------------------------------------------------------------- |
+| New section          | JSON + schema + component + site.json nav entry                      |
 | Project detail pages | New route `src/pages/projects/[id].astro` + link from Projects cards |
-| Custom domain | `public/CNAME` + DNS + update `SITE_URL` |
-| Contact form | Third-party endpoint (Formspree/Web3Forms) — see requirements C1 |
-| Analytics | Plausible/GoatCounter script in Layout — see requirements C3 |
+| Custom domain        | `public/CNAME` + DNS + update `SITE_URL`                             |
+| Contact form         | Third-party endpoint (Formspree/Web3Forms) — see requirements C1     |
+| Analytics            | Plausible/GoatCounter script in Layout — see requirements C3         |
 
 ## Related docs
 
 - [Specification](./specification.md) — section contracts and IA
 - [Content editing](./content-editing.md) — how to change JSON safely
+- [Environment languages & skills](./environment-languages-skills.md) — languages, automation, skill tiers
 - [Requirements](./requirements.md) — feature scope

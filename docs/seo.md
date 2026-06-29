@@ -1,23 +1,23 @@
 # SEO Plan
 
 SEO contract for the portfolio site. Defaults live in `content/site.json → seo`; the renderer
-injects them via `src/components/BaseHead.astro`.
+injects them via `src/components/chrome/BaseHead.astro`.
 
 **Live site URL:** https://balajiselvaraj1601.github.io (configured in `astro.config.mjs` → `SITE_URL`).
 
 ## Implementation
 
-| Item | Status | Where |
-|------|--------|-------|
-| `<title>` + description | ✅ | `content/site.json` → `BaseHead.astro` |
-| Canonical URL | ✅ | Derived from `Astro.site` + page path |
-| OpenGraph tags | ✅ | `BaseHead.astro` |
-| Twitter card | ✅ | `summary_large_image` |
-| JSON-LD `Person` | ✅ | Built from `content/person/profile.json` + `site.seo.keywords` |
-| Sitemap | ✅ | `@astrojs/sitemap` → `dist/sitemap-index.xml` |
-| robots.txt | ✅ | `public/robots.txt` |
-| OG image | ✅ | `/assets/og/og-image.png` (1200×630) |
-| `lang="en"` | ✅ | `Layout.astro` |
+| Item                    | Status | Where                                                          |
+| ----------------------- | ------ | -------------------------------------------------------------- |
+| `<title>` + description | ✅     | `content/site.json` → `BaseHead.astro`                         |
+| Canonical URL           | ✅     | Derived from `Astro.site` + page path                          |
+| OpenGraph tags          | ✅     | `BaseHead.astro`                                               |
+| Twitter card            | ✅     | `summary_large_image`                                          |
+| JSON-LD `Person`        | ✅     | Built from `content/person/profile.json` + `site.seo.keywords` |
+| Sitemap                 | ✅     | `@astrojs/sitemap` → `dist/sitemap-index.xml`                  |
+| robots.txt              | ✅     | `public/robots.txt`                                            |
+| OG image                | ✅     | `/assets/og/og-image.png` (1200×630)                           |
+| `lang="en"`             | ✅     | `Layout.astro`                                                 |
 
 ## Meta (per page)
 
@@ -34,16 +34,22 @@ injects them via `src/components/BaseHead.astro`.
 Rendered in `BaseHead.astro`:
 
 ```html
-<meta property="og:type" content="website">
-<meta property="og:title" content="Balaji Selvaraj — Technical AI Leader">
-<meta property="og:description" content="{{seo.description}}">
-<meta property="og:url" content="https://balajiselvaraj1601.github.io/">
-<meta property="og:image" content="https://balajiselvaraj1601.github.io/assets/og/og-image.png">
-<meta property="og:image:alt" content="Balaji Selvaraj — Technical AI Leader">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Balaji Selvaraj — Technical AI Leader">
-<meta name="twitter:description" content="{{seo.description}}">
-<meta name="twitter:image" content="https://balajiselvaraj1601.github.io/assets/og/og-image.png">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Balaji Selvaraj — Technical AI Leader" />
+<meta property="og:description" content="{{seo.description}}" />
+<meta property="og:url" content="https://balajiselvaraj1601.github.io/" />
+<meta
+  property="og:image"
+  content="https://balajiselvaraj1601.github.io/assets/og/og-image.png"
+/>
+<meta property="og:image:alt" content="Balaji Selvaraj — Technical AI Leader" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Balaji Selvaraj — Technical AI Leader" />
+<meta name="twitter:description" content="{{seo.description}}" />
+<meta
+  name="twitter:image"
+  content="https://balajiselvaraj1601.github.io/assets/og/og-image.png"
+/>
 ```
 
 To change copy: edit `content/site.json` → `seo`. To change the image: replace
@@ -59,7 +65,7 @@ Populated at build time from `content/person/profile.json` and `site.seo.keyword
   "@type": "Person",
   "name": "Balaji Selvaraj",
   "jobTitle": "Technical AI Leader",
-  "email": "mailto:balaji.selvaraj.ai@outlook.com",
+  "email": "balaji.selvaraj.ai@outlook.com",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Gothenburg",

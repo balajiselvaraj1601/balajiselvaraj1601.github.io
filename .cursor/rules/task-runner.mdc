@@ -1,0 +1,13 @@
+---
+description: Task-runner behavior when TASKS.md exists
+globs: TASKS.md
+alwaysApply: false
+---
+
+# Task queue
+
+When `TASKS.md` is in context for a batch run:
+
+- Treat unchecked `- [ ]` lines under **Queue** as the work queue.
+- Process one item at a time; mark `- [x]` in the file after verification.
+- Do not mark items done in chat only — persist progress in `TASKS.md`.

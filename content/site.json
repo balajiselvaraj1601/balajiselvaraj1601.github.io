@@ -1,7 +1,7 @@
 {
   "name": "Balaji Selvaraj",
   "title": "Technical AI Leader",
-  "tagline": "",
+  "tagline": "Hands-on Technical AI Lead — turning data into business impact through AI.",
   "location": "Gothenburg, Sweden",
   "pages": [
     {
@@ -16,10 +16,8 @@
         "hero",
         "thirukural",
         "leadership",
-        "skills",
         "experience-intro",
         "experience",
-        "mentorship",
         "projects-intro",
         "featured-case-studies",
         "projects",
@@ -34,12 +32,7 @@
         "impact",
         "contact"
       ],
-      "viewSections": [
-        "hero",
-        "thirukural",
-        "leadership",
-        "skills"
-      ],
+      "viewSections": ["hero", "thirukural", "leadership"],
       "viewAnchor": "about"
     },
     {
@@ -48,10 +41,10 @@
       "path": "/experience",
       "seo": {
         "title": "Experience — Balaji Selvaraj",
-        "description": "12+ years building and leading production AI across drug safety, oncology, and clinical imaging — role-by-role impact and mentorship."
+        "description": "12+ years building and leading production AI across drug safety, oncology, and clinical imaging — role-by-role impact."
       },
-      "sections": ["experience-intro", "experience", "mentorship"],
-      "viewSections": ["experience-intro", "experience", "mentorship"]
+      "sections": ["experience-intro", "experience"],
+      "viewSections": ["experience-intro", "experience"]
     },
     {
       "id": "projects",
@@ -81,7 +74,7 @@
       "path": "/recognition",
       "seo": {
         "title": "Recognition — Balaji Selvaraj",
-        "description": "Education, awards, and Kaggle competition results."
+        "description": "Awards, Kaggle competition results, and education."
       },
       "sections": ["awards", "kaggle", "education"],
       "viewSections": ["awards", "kaggle", "education"]
@@ -117,34 +110,113 @@
   ],
   "sections": {
     "hero": { "title": "", "source": "person/profile.json", "visible": true },
-    "thirukural": { "title": "", "source": "person/profile.json", "visible": true },
-    "impact": { "title": "Strategic Impact", "source": "work/strategic-impact.json", "visible": true },
-    "technical-vision": { "title": "Technical Vision", "source": "person/profile.json", "visible": true },
-    "vision-board": { "title": "How I Build AI Organizations", "source": "work/vision-board.json", "visible": true },
-    "leadership": { "title": "Who I am & how I lead", "source": "person/profile.json", "visible": true },
-    "skills": { "title": "Technology Expertise", "source": "work/skills.json", "visible": true },
-    "experience": { "title": "Experience", "source": "work/experience.json", "visible": true },
-    "experience-intro": { "title": "Experience", "source": "work/experience.json", "visible": true },
-    "projects-intro": { "title": "Selected Projects", "source": "work/projects.json", "visible": true },
-    "featured-case-studies": { "title": "Flagship Case Studies", "source": "work/projects.json", "visible": true },
-    "projects": { "title": "Other Work", "source": "work/projects.json", "visible": true },
-    "generative-ai": { "title": "Generative AI", "source": "content/drafts/research/generative-ai.json", "visible": false },
-    "mentorship": { "title": "Mentorship", "source": "work/mentorship.json", "visible": true },
-    "education": { "title": "Education", "source": "recognition/education.json", "visible": true },
-    "awards": { "title": "Awards & Recognition", "source": "recognition/awards.json", "visible": true },
-    "publications": { "title": "Publications", "source": "research/publications.json", "visible": true },
-    "conferences": { "title": "Conferences", "source": "research/conferences.json", "visible": true },
-    "speakers": { "title": "Speaking Engagements", "source": "research/speakers.json", "visible": true },
-    "kaggle": { "title": "Kaggle Competitions", "source": "recognition/kaggle.json", "visible": true },
-    "contact": { "title": "Contact", "source": "person/profile.json, recognition/education.json", "visible": true }
+    "thirukural": {
+      "title": "",
+      "source": "person/profile.json",
+      "visible": true
+    },
+    "impact": {
+      "title": "Strategic Impact",
+      "source": "work/strategic-impact.json",
+      "visible": true
+    },
+    "technical-vision": {
+      "title": "Technical Vision",
+      "source": "person/profile.json",
+      "visible": true
+    },
+    "vision-board": {
+      "title": "How I Build AI Organizations",
+      "source": "work/vision-board.json",
+      "visible": true
+    },
+    "leadership": {
+      "title": "About",
+      "source": "person/profile.json",
+      "visible": true
+    },
+    "experience": {
+      "title": "Experience",
+      "source": "work/experience.json",
+      "visible": true
+    },
+    "experience-intro": {
+      "title": "Experience",
+      "source": "work/experience.json",
+      "visible": true
+    },
+    "projects-intro": {
+      "title": "Selected Projects",
+      "source": "work/projects.json",
+      "visible": true
+    },
+    "featured-case-studies": {
+      "title": "Flagship Case Studies",
+      "source": "work/projects.json",
+      "visible": true
+    },
+    "projects": {
+      "title": "Other Work",
+      "source": "work/projects.json",
+      "visible": true
+    },
+    "generative-ai": {
+      "title": "Generative AI",
+      "source": "drafts/research/generative-ai.json",
+      "visible": false
+    },
+    "education": {
+      "title": "Education",
+      "source": "recognition/education.json",
+      "visible": true
+    },
+    "awards": {
+      "title": "Awards & Recognition",
+      "source": "recognition/awards.json",
+      "visible": true
+    },
+    "publications": {
+      "title": "Publications",
+      "source": "research/publications.json",
+      "visible": true
+    },
+    "conferences": {
+      "title": "Conferences",
+      "source": "research/conferences.json",
+      "visible": true
+    },
+    "speakers": {
+      "title": "Speaking Engagements",
+      "source": "research/speakers.json",
+      "visible": true
+    },
+    "kaggle": {
+      "title": "Kaggle Competitions",
+      "source": "recognition/kaggle.json",
+      "visible": true
+    },
+    "contact": {
+      "title": "Contact",
+      "source": "person/profile.json",
+      "visible": true
+    }
   },
   "seo": {
     "title": "Balaji Selvaraj — Technical AI Leader",
     "description": "Technical AI Leader delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. 12+ years across product, services, and startups. Kaggle top 0.3%.",
     "keywords": [
-      "Technical AI Leader", "Applied AI", "Machine Learning", "Deep Learning",
-      "Medical Imaging AI", "Drug Safety AI", "Foundation Models", "Oncology AI",
-      "AstraZeneca", "Kaggle", "MLOps", "AI Engineering Lead"
+      "Technical AI Leader",
+      "Applied AI",
+      "Machine Learning",
+      "Deep Learning",
+      "Medical Imaging AI",
+      "Drug Safety AI",
+      "Foundation Models",
+      "Oncology AI",
+      "AstraZeneca",
+      "Kaggle",
+      "MLOps",
+      "AI Engineering Lead"
     ],
     "ogImage": "/assets/og/og-image.png",
     "twitterCard": "summary_large_image"

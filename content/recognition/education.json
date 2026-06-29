@@ -1,13 +1,18 @@
 {
   "title": "Education",
+  "intro": "Academic foundation in biomedical engineering — first rank, gold medal.",
   "records": [
     {
+      "id": "be-biomedical",
       "degree": "B.E. Biomedical Engineering",
+      "field": "Biomedical Engineering",
       "institution": "Sri Ramakrishna Engineering College",
       "entity": "srec",
       "period": "2010–2014",
       "gpa": "CGPA 9.03",
-      "achievement": "Gold Medal"
+      "achievement": "Gold Medal",
+      "achievementDetail": "First Rank in University Exams",
+      "summary": "Graduated with the highest university rank in Biomedical Engineering — the academic grounding for later work in medical imaging, clinical AI, and pharmaceutical R&D."
     }
   ]
 }

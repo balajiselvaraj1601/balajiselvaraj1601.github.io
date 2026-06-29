@@ -13,13 +13,13 @@ Deployment target and go-live checklist for the **Astro 4** portfolio. CI/CD is 
 
 ## Stack decisions (resolved)
 
-| Decision | Choice | Where configured |
-|----------|--------|------------------|
-| Framework | Astro 4.16 | `package.json` |
-| Base path | `/` (user site root) | `astro.config.mjs` → `base: '/'` |
-| Site URL (SSOT) | `https://balajiselvaraj1601.github.io` | `astro.config.mjs` → `SITE_URL` |
-| Deploy method | GitHub Actions | `.github/workflows/deploy.yml` |
-| Custom domain | Not yet (C4) | Add `public/CNAME` + DNS when ready |
+| Decision        | Choice                                 | Where configured                    |
+| --------------- | -------------------------------------- | ----------------------------------- |
+| Framework       | Astro 4.16                             | `package.json`                      |
+| Base path       | `/` (user site root)                   | `astro.config.mjs` → `base: '/'`    |
+| Site URL (SSOT) | `https://balajiselvaraj1601.github.io` | `astro.config.mjs` → `SITE_URL`     |
+| Deploy method   | GitHub Actions                         | `.github/workflows/deploy.yml`      |
+| Custom domain   | Not yet (C4)                           | Add `public/CNAME` + DNS when ready |
 
 ## CI/CD workflow
 
@@ -41,17 +41,17 @@ validates the site, but deploy is skipped (Pages is not enabled there).
 
 ## Required static artifacts
 
-| Artifact | Status | Location |
-|----------|--------|----------|
-| `index.html` | ✅ Built | `dist/index.html` |
-| `404.html` | ✅ Built | `dist/404.html` |
-| `robots.txt` | ✅ Present | `public/robots.txt` |
-| `sitemap-index.xml` | ✅ Generated | `@astrojs/sitemap` (pinned 3.6.0) |
-| `.nojekyll` | ✅ Present | `public/.nojekyll` (required for `_astro/`) |
-| Résumé PDF | ✅ Present | `public/assets/resume/balaji-selvaraj-resume.pdf` |
-| OG image | ✅ Present | `public/assets/og/og-image.png` |
-| Favicon set | ✅ Present | `public/favicon.svg`, `favicon.ico`, `assets/icons/*` |
-| Web manifest | ✅ Present | `public/site.webmanifest` |
+| Artifact            | Status       | Location                                              |
+| ------------------- | ------------ | ----------------------------------------------------- |
+| `index.html`        | ✅ Built     | `dist/index.html`                                     |
+| `404.html`          | ✅ Built     | `dist/404.html`                                       |
+| `robots.txt`        | ✅ Present   | `public/robots.txt`                                   |
+| `sitemap-index.xml` | ✅ Generated | `@astrojs/sitemap` (pinned 3.6.0)                     |
+| `.nojekyll`         | ✅ Present   | `public/.nojekyll` (required for `_astro/`)           |
+| Résumé PDF          | ✅ Present   | `public/assets/resume/balaji-selvaraj-resume.pdf`     |
+| OG image            | ✅ Present   | `public/assets/og/og-image.png`                       |
+| Favicon set         | ✅ Present   | `public/favicon.svg`, `favicon.ico`, `assets/icons/*` |
+| Web manifest        | ✅ Present   | `public/site.webmanifest`                             |
 
 ## Pre-deploy checklist
 

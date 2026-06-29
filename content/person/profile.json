@@ -19,10 +19,41 @@
   "metrics": [
     { "value": "12+", "label": "Years in AI & ML" },
     { "value": "Top 0.3%", "label": "Kaggle, among 200K+" },
-    { "value": "$20–50M", "label": "Projected annual savings — flagship program" },
-    { "value": "5 Countries", "label": "Globally distributed team — India, UK, Sweden, Mexico, China" }
+    {
+      "value": "$0.5M+",
+      "label": "Internal Funding",
+      "detail": "Secured 2× · Influenced 1×"
+    },
+    {
+      "value": "$20–50M",
+      "label": "Projected Annual Savings",
+      "detail": "Flagship Project Delivered"
+    },
+    {
+      "value": "5 Countries",
+      "label": "Globally distributed team",
+      "detail": "India, UK, Sweden, Mexico, China"
+    },
+    {
+      "value": "2",
+      "label": "Secured & delivered",
+      "detail": "Executive projects · Chief Scientist & SVP"
+    }
   ],
-  "ctas": [],
+  "ctas": [
+    {
+      "label": "Get in Touch",
+      "href": "/#contact",
+      "variant": "primary",
+      "icon": "email"
+    },
+    {
+      "label": "Download Resume",
+      "href": "/assets/resume/balaji-selvaraj-resume.pdf",
+      "variant": "secondary",
+      "icon": "download"
+    }
+  ],
   "portrait": {
     "src": "/assets/images/balaji.png",
     "alt": "Portrait of Balaji Selvaraj",
@@ -61,15 +92,34 @@
     },
     {
       "title": "Recognition",
-      "items": [
-        "Conference speaker",
-        "Awards across competitions and research"
-      ]
+      "items": ["Conference speaker", "Awards across competitions and research"]
     }
   ],
   "leadershipPhilosophy": {
     "statement": "I build AI organizations that deliver measurable business outcomes — not research prototypes left on the shelf.",
     "intro": "Delivering on that conviction is less about any single model and more about the people, alignment, and decisions around it. A few principles guide how I build teams and the work they ship.",
+    "differentiators": [
+      {
+        "title": "Clinical + AI",
+        "description": "A biomedical engineer who has supported 400+ surgeries across 5 specialties — and now architects production AI.",
+        "icon": "pulse"
+      },
+      {
+        "title": "End-to-end ownership",
+        "description": "From problem identification to production deployment — not prototypes left behind.",
+        "icon": "layers"
+      },
+      {
+        "title": "Cross-cultural leadership",
+        "description": "Built and led an AI team across five countries.",
+        "icon": "globe"
+      },
+      {
+        "title": "Business-impact first",
+        "description": "Outcomes that ship measurable value — not research left on the shelf.",
+        "icon": "chart"
+      }
+    ],
     "themes": [
       {
         "title": "Hiring & Scaling",

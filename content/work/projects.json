@@ -5,8 +5,18 @@
   "snapshot": [
     { "value": "8", "label": "Selected projects" },
     { "value": "6", "label": "Domains across biopharma & enterprise" },
-    { "value": "$20M+", "label": "Projected annual business impact" },
+    { "value": "$20–50M", "label": "Projected annual business impact" },
     { "value": "12+", "label": "Years across AI & medical imaging" }
+  ],
+  "groups": [
+    {
+      "id": "oncology-pathology",
+      "heading": "Oncology & Pathology"
+    },
+    {
+      "id": "vision-imaging",
+      "heading": "Vision & Imaging Foundations"
+    }
   ],
   "projects": [
     {
@@ -29,7 +39,13 @@
         "Productionized ML pipelines with online learning, confidence estimation, and joint embedding.",
         "Broad Institute collaboration on Cell Painting and omics pipelines."
       ],
-      "tags": ["Multimodal AI", "Drug Safety", "Omics", "MLOps", "Foundation Models"],
+      "tags": [
+        "Multimodal AI",
+        "Drug Safety",
+        "Omics",
+        "MLOps",
+        "Foundation Models"
+      ],
       "domain": "Biopharma R&D"
     },
     {
@@ -52,7 +68,12 @@
         "Integrated Med-PaLM LLM embeddings and AZ Biological Insights Knowledge Graph representations.",
         "Reduced pipeline compute time 30% via Optuna-driven hyperparameter search."
       ],
-      "tags": ["Single-Cell Genomics", "LLM Embeddings", "Knowledge Graph", "Oncology"],
+      "tags": [
+        "Single-Cell Genomics",
+        "LLM Embeddings",
+        "Knowledge Graph",
+        "Oncology"
+      ],
       "domain": "Translational Oncology"
     },
     {
@@ -75,7 +96,11 @@
         "Accelerated onboarding of new imaging use cases for rapid experimentation and deployment.",
         "Endoscopy model deployed in a clinical study ranking gastrointestinal tissue damage severity."
       ],
-      "tags": ["Vision Foundation Models", "Medical Imaging", "Reusable Framework"],
+      "tags": [
+        "Vision Foundation Models",
+        "Medical Imaging",
+        "Reusable Framework"
+      ],
       "domain": "Clinical Imaging"
     },
     {
@@ -97,7 +122,9 @@
         "Reduced training time 20% and GPU memory 15-20% via model and data parallelism."
       ],
       "tags": ["Segmentation", "CT Imaging", "NSCLC", "Distributed Training"],
-      "domain": "Oncology Imaging"
+      "domain": "Oncology Imaging",
+      "group": "oncology-pathology",
+      "icon": "scan"
     },
     {
       "id": "digital-pathology-foundation-models",
@@ -117,8 +144,15 @@
         "Contrastive foundation models matched state-of-the-art at reduced GPU compute cost.",
         "GxP-compliant Label Studio annotation tooling for pathologists; led a four-member team."
       ],
-      "tags": ["Self-Supervised Learning", "Contrastive Learning", "Digital Pathology", "AWS"],
-      "domain": "Digital Pathology"
+      "tags": [
+        "Self-Supervised Learning",
+        "Contrastive Learning",
+        "Digital Pathology",
+        "AWS"
+      ],
+      "domain": "Digital Pathology",
+      "group": "oncology-pathology",
+      "icon": "microscope"
     },
     {
       "id": "gnn-clinical-imaging",
@@ -137,8 +171,14 @@
         "Graph-embedding pipelines across NSCLC and HNSCC solid-tumor cohorts.",
         "Modular preprocessing extracting graphs from multispectral gigapixel histopathology images."
       ],
-      "tags": ["Graph Neural Networks", "Histopathology", "Tumor Microenvironment"],
-      "domain": "Computational Pathology"
+      "tags": [
+        "Graph Neural Networks",
+        "Histopathology",
+        "Tumor Microenvironment"
+      ],
+      "domain": "Computational Pathology",
+      "group": "oncology-pathology",
+      "icon": "graph"
     },
     {
       "id": "enterprise-vision-analytics",
@@ -159,7 +199,9 @@
         "Edge-optimized model compression and Docker-based modular deployment."
       ],
       "tags": ["Computer Vision", "Edge AI", "ReID", "Pose Estimation"],
-      "domain": "Enterprise Vision"
+      "domain": "Enterprise Vision",
+      "group": "vision-imaging",
+      "icon": "vision"
     },
     {
       "id": "clinical-imaging-systems-iitm",
@@ -179,8 +221,15 @@
         "Real-time endoscopy system with 10+ modules on NVIDIA Jetson TX1.",
         "Neuron-connectivity toolbox delivered to Cold Spring Harbor Laboratory and RIKEN."
       ],
-      "tags": ["Real-Time Imaging", "Embedded GPU", "Medical Devices", "3D Reconstruction"],
-      "domain": "Academic Research"
+      "tags": [
+        "Real-Time Imaging",
+        "Embedded GPU",
+        "Medical Devices",
+        "3D Reconstruction"
+      ],
+      "domain": "Academic Research",
+      "group": "vision-imaging",
+      "icon": "image"
     }
   ]
 }

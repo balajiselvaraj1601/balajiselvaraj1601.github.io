@@ -52,14 +52,14 @@ behavior exactly as they will appear on GitHub Pages.
 
 ## What to edit
 
-| Goal | Edit | Do not edit |
-|------|------|-------------|
-| Change site copy | JSON under `content/` | Section components (for copy) |
-| Change route sections / visibility | `content/site.json` | `src/pages/*.astro` order |
-| Change styling | `src/styles/global.css`, component `<style>` blocks | — |
-| Change SEO defaults | `content/site.json` → `seo` | Hardcode meta in components |
-| Replace résumé / OG image | `public/assets/**` | — |
-| Change live URL | `astro.config.mjs` + `public/robots.txt` | — |
+| Goal                               | Edit                                                | Do not edit                   |
+| ---------------------------------- | --------------------------------------------------- | ----------------------------- |
+| Change site copy                   | JSON under `content/`                               | Section components (for copy) |
+| Change route sections / visibility | `content/site.json`                                 | `src/pages/*.astro` order     |
+| Change styling                     | `src/styles/global.css`, component `<style>` blocks | —                             |
+| Change SEO defaults                | `content/site.json` → `seo`                         | Hardcode meta in components   |
+| Replace résumé / OG image          | `public/assets/**`                                  | —                             |
+| Change live URL                    | `astro.config.mjs` + `public/robots.txt`            | —                             |
 
 See [Content editing](./content-editing.md) and [Assets](./assets.md) for details.
 
@@ -73,7 +73,7 @@ portfolio_site/
 │   ├── components/    Reusable UI + sections/
 │   ├── layouts/       Layout.astro
 │   ├── lib/content.ts Loader + validation
-│   ├── pages/         index, experience, projects, research, recognition, contact, 404
+│   ├── pages/         index, experience, projects, research, recognition, vision, contact, 404 (+ redirect stubs → /#anchor)
 │   ├── schemas.ts     Zod schemas for content/
 │   └── styles/        global.css
 ├── astro.config.mjs   SITE_URL, base path, integrations
@@ -96,8 +96,14 @@ Spot-check:
 - Mobile menu opens, traps focus, closes on Esc
 - No phone number anywhere on the page
 
+## Long-running batches
+
+For multi-step agent work through a persisted checklist, see [Task runner](./task-runner.md).
+Start with `./.cursor/scripts/task-runner-start.sh` after filling `TASKS.md`.
+
 ## Next steps
 
 - **Change content:** [Content editing](./content-editing.md)
+- **Languages & skills:** [Environment languages & skills](./environment-languages-skills.md)
 - **Publish the site:** [Go-live checklist](./go-live-checklist.md)
 - **Something broke:** [Troubleshooting](./troubleshooting.md)

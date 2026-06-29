@@ -4,13 +4,13 @@ Step-by-step guide to publishing the portfolio at https://balajiselvaraj1601.git
 
 ## Overview
 
-| Item | Value |
-|------|-------|
-| Production repo | `balajiselvaraj1601/balajiselvaraj1601.github.io` |
-| Staging mirror (optional) | `balajiselvaraj1601/portfolio_site` |
-| Live URL | https://balajiselvaraj1601.github.io |
-| Deploy trigger | Push to `main` |
-| Pages source | GitHub Actions |
+| Item                      | Value                                             |
+| ------------------------- | ------------------------------------------------- |
+| Production repo           | `balajiselvaraj1601/balajiselvaraj1601.github.io` |
+| Staging mirror (optional) | `balajiselvaraj1601/portfolio_site`               |
+| Live URL                  | https://balajiselvaraj1601.github.io              |
+| Deploy trigger            | Push to `main`                                    |
+| Pages source              | GitHub Actions                                    |
 
 ---
 
@@ -140,12 +140,12 @@ Deploy is skipped on staging; build job still validates every push.
 
 ## Ongoing maintenance
 
-| Task | When | How |
-|------|------|-----|
-| Update copy | Résumé changes | Re-derive JSON under `content/` -> push |
-| Update résumé PDF | New export | Replace `public/assets/resume/*.pdf` → push |
-| Content-only change | Anytime | Edit JSON → `npm run build` → push |
-| Dependency update | Cautiously | Never bump `@astrojs/sitemap` without Astro 5 migration |
+| Task                | When           | How                                                     |
+| ------------------- | -------------- | ------------------------------------------------------- |
+| Update copy         | Résumé changes | Re-derive JSON under `content/` -> push                 |
+| Update résumé PDF   | New export     | Replace `public/assets/resume/*.pdf` → push             |
+| Content-only change | Anytime        | Edit JSON → `npm run build` → push                      |
+| Dependency update   | Cautiously     | Never bump `@astrojs/sitemap` without Astro 5 migration |
 
 Every push to `main` on the user-site repo auto-deploys within ~2 minutes.
 

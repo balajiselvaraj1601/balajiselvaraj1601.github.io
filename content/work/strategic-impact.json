@@ -5,7 +5,7 @@
   "subtitle": "Independently sourced, pitched, and secured two major AI initiatives — one SVP-sponsored saving $20–50M annually, one Chief Scientist-sponsored within a €14M EU consortium.",
   "metrics": [
     { "value": "$20–50M", "label": "Projected annual savings" },
-    { "value": "$500K", "label": "Funding secured" },
+    { "value": "$0.5M+", "label": "Funding secured" },
     { "value": "14", "label": "European research partners" },
     { "value": "12", "label": "Engineers built" },
     { "value": "3", "label": "Strategic R&D priorities" },
@@ -32,15 +32,43 @@
     }
   ],
   "leadershipCards": [
-    { "icon": "trophy", "title": "EVP Level Award", "subtitle": "For Drug Safety Platform" },
-    { "icon": "chart", "title": "Gartner Submission", "entity": "gartner", "subtitle": "GITC Chennai Multimodal Vision" },
-    { "icon": "funding", "title": "$0.5M+ Secured", "subtitle": "Multiple times for team" },
-    { "icon": "target", "title": "3 Scorecard", "subtitle": "Aligned projects" },
-    { "icon": "link", "title": "Strategic Positioning", "subtitle": "7 internal groups · 3 startups" },
+    {
+      "icon": "trophy",
+      "title": "EVP Level Award",
+      "subtitle": "For Drug Safety Platform"
+    },
+    {
+      "icon": "chart",
+      "title": "Gartner Submission",
+      "entity": "gartner",
+      "subtitle": "GITC Chennai Multimodal Vision"
+    },
+    {
+      "icon": "funding",
+      "title": "$0.5M+ Secured",
+      "subtitle": "Multiple times for team"
+    },
+    {
+      "icon": "target",
+      "title": "3 Scorecard",
+      "subtitle": "Aligned projects"
+    },
+    {
+      "icon": "link",
+      "title": "EU Consortium",
+      "entity": "persist-seq",
+      "subtitle": "€14M · 14 research partners"
+    },
     { "icon": "team", "title": "Scaled Team", "subtitle": "1 → 12 members" },
-    { "icon": "globe", "title": "Global Management", "subtitle": "UK · Sweden · India · Mexico · China" }
+    {
+      "icon": "globe",
+      "title": "Global Management",
+      "subtitle": "UK · Sweden · India · Mexico · China"
+    }
   ],
   "highlights": [
-    { "text": "Translated bottom-up AI vision into executive-sponsored strategic initiatives — an SVP-sponsored program and a Chief Scientist-sponsored program." }
+    {
+      "text": "Translated bottom-up AI vision into executive-sponsored strategic initiatives — an SVP-sponsored program and a Chief Scientist-sponsored program."
+    }
   ]
 }

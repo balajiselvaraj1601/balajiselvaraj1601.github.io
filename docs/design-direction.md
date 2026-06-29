@@ -16,17 +16,17 @@ implement them. The site should read as **credible, senior, and technical** — 
 
 Purple biopharma palette. Dark theme is the primary design target; light theme uses derived tints.
 
-| Token | Dark | Light | Use |
-|-------|------|-------|-----|
-| `--bg` | `#0D0B1E` | `#FAF8FF` | Page background |
-| `--bg-alt` / `--bg-elev` | `#13102B` / `#1A1530` | `#F0EBFA` / `#FFFFFF` | Alt sections / cards |
-| `--text` | `#E8E0F5` | `#1A1530` | Primary text |
-| `--text-muted` | `#9085B8` | `#5C5470` | Secondary text |
-| `--border` | `rgba(108,47,191,0.25)` | `rgba(108,47,191,0.18)` | Dividers, card borders |
-| `--accent` | `#6C2FBF` | `#6C2FBF` | Links, active nav, primary CTA |
-| `--accent-light` | `#9B5EE8` | `#9B5EE8` | Hover, emphasis |
-| `--accent-red` | `#C0182A` | `#C0182A` | Secondary accent (awards, tags) |
-| `--focus-ring` | `#9B5EE8` | `#6C2FBF` | Keyboard focus outline |
+| Token                    | Dark                    | Light                   | Use                             |
+| ------------------------ | ----------------------- | ----------------------- | ------------------------------- |
+| `--bg`                   | `#0D0B1E`               | `#FAF8FF`               | Page background                 |
+| `--bg-alt` / `--bg-elev` | `#13102B` / `#1A1530`   | `#F0EBFA` / `#FFFFFF`   | Alt sections / cards            |
+| `--text`                 | `#E8E0F5`               | `#1A1530`               | Primary text                    |
+| `--text-muted`           | `#9085B8`               | `#5C5470`               | Secondary text                  |
+| `--border`               | `rgba(108,47,191,0.25)` | `rgba(108,47,191,0.18)` | Dividers, card borders          |
+| `--accent`               | `#6C2FBF`               | `#6C2FBF`               | Links, active nav, primary CTA  |
+| `--accent-light`         | `#9B5EE8`               | `#9B5EE8`               | Hover, emphasis                 |
+| `--accent-red`           | `#C0182A`               | `#C0182A`               | Secondary accent (awards, tags) |
+| `--focus-ring`           | `#9B5EE8`               | `#6C2FBF`               | Keyboard focus outline          |
 
 > These are sensible defaults, not mandates. Whatever values are chosen must pass **WCAG AA
 > contrast** in both themes (see `accessibility.md`). Verify text/background and accent/background pairs.
@@ -36,32 +36,32 @@ Purple biopharma palette. Dark theme is the primary design target; light theme u
 Three font roles — map by **semantic role**, not per-component preference. Tokens live in
 `src/styles/global.css` (`--font-display`, `--font-sans`, `--font-mono`).
 
-| Role | Font | Use |
-|------|------|-----|
-| Display | DM Serif Display | h1/h2, brand wordmark, editorial pull-quotes |
-| Body / UI | Inter Variable | Body copy, h3/h4 card titles, nav, buttons, content chips |
-| Labels / meta | JetBrains Mono | Eyebrows, dates, venues, stat numbers, micro-badges, footer strip |
+| Role          | Font             | Use                                                               |
+| ------------- | ---------------- | ----------------------------------------------------------------- |
+| Display       | DM Serif Display | h1/h2, brand wordmark, editorial pull-quotes                      |
+| Body / UI     | Inter Variable   | Body copy, h3/h4 card titles, nav, buttons, content chips         |
+| Labels / meta | JetBrains Mono   | Eyebrows, dates, venues, stat numbers, micro-badges, footer strip |
 
 **Canonical mapping**
 
-| Element type | Font | Weight / style |
-|--------------|------|----------------|
-| Primary display heading (h1, h2) | DM Serif Display | 400, tight line-height |
-| Brand wordmark | DM Serif Display | 400 |
-| Editorial pull-quote | DM Serif Display | 400 |
-| Card title (h3) | Inter | 600–700 |
-| Category label (h4) | Inter | 600, uppercase, tracked |
-| Body / long-form | Inter | 400 |
-| Nav links, buttons | Inter | 500–600 |
-| Skill / content chips | Inter | 500 |
-| Eyebrow / kicker | JetBrains Mono | 400, uppercase, wide tracking |
-| Metadata (date, venue, domain) | JetBrains Mono | 400 |
-| Stat / metric number | JetBrains Mono | 600 |
-| Stat / metric label | JetBrains Mono | 400 (utility: `.metric-label`) |
-| Micro-badge / status | JetBrains Mono | 600, uppercase |
-| Footer identity strip | JetBrains Mono | 400, uppercase |
-| Quote attribution | JetBrains Mono | 400, normal (not italic) |
-| Non-Latin script (e.g. Tamil) | Inter | 400 — never DM Serif |
+| Element type                     | Font             | Weight / style                 |
+| -------------------------------- | ---------------- | ------------------------------ |
+| Primary display heading (h1, h2) | DM Serif Display | 400, tight line-height         |
+| Brand wordmark                   | DM Serif Display | 400                            |
+| Editorial pull-quote             | DM Serif Display | 400                            |
+| Card title (h3)                  | Inter            | 600–700                        |
+| Category label (h4)              | Inter            | 600, uppercase, tracked        |
+| Body / long-form                 | Inter            | 400                            |
+| Nav links, buttons               | Inter            | 500–600                        |
+| Skill / content chips            | Inter            | 500                            |
+| Eyebrow / kicker                 | JetBrains Mono   | 400, uppercase, wide tracking  |
+| Metadata (date, venue, domain)   | JetBrains Mono   | 400                            |
+| Stat / metric number             | JetBrains Mono   | 600                            |
+| Stat / metric label              | JetBrains Mono   | 400 (utility: `.metric-label`) |
+| Micro-badge / status             | JetBrains Mono   | 600, uppercase                 |
+| Footer identity strip            | JetBrains Mono   | 400, uppercase                 |
+| Quote attribution                | JetBrains Mono   | 400, normal (not italic)       |
+| Non-Latin script (e.g. Tamil)    | Inter            | 400 — never DM Serif           |
 
 **Scale (rem):** h1 `clamp(2.8rem, 6vw, 5.5rem)`, h2 `clamp(2rem, 4vw, 3rem)`, body `0.95–1.0625`, eyebrow `0.72`
 
@@ -70,7 +70,7 @@ Three font roles — map by **semantic role**, not per-component preference. Tok
 ## Spacing & layout
 
 - Base spacing unit `4px`; use a consistent scale (4, 8, 12, 16, 24, 32, 48, 64).
-- Content max-width ~`1100–1200px`; text blocks narrower (~`70ch`).
+- Content max-width ~~`1100–1200px`; text blocks narrower (~~`70ch`).
 - Section vertical rhythm: large, consistent padding between sections (e.g. 64–96px desktop).
 
 ## Components — visual notes

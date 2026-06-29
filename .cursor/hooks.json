@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": ".cursor/hooks/task-runner-session.sh"
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/task-runner-stop.sh",
+        "loop_limit": 50
+      }
+    ]
+  }
+}

@@ -26,24 +26,60 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const jsonPath = resolve(root, 'src/lib/icon-paths.json');
 
-const LUCIDE = 'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons';
-const SIMPLE = 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons';
+const LUCIDE =
+  'https://raw.githubusercontent.com/lucide-icons/lucide/main/icons';
+const SIMPLE =
+  'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons';
 
 // key -> canonical Lucide icon name (semantic, stroke family)
 const LUCIDE_MAP = {
-  email: 'mail', linkedin: null, kaggle: null, github: null,
-  clock: 'clock', calendar: 'calendar', 'arrow-right': 'arrow-right',
-  location: 'map-pin', external: 'external-link', download: 'download',
-  sun: 'sun', moon: 'moon', menu: 'menu', close: 'x', 'arrow-up': 'arrow-up',
-  chevron: 'chevron-down', 'chevron-right': 'chevron-right', trophy: 'trophy',
-  brain: 'brain', rocket: 'rocket', pill: 'pill', institution: 'landmark',
-  microscope: 'microscope', presentation: 'presentation', chart: 'chart-column',
-  funding: 'circle-dollar-sign', target: 'target', link: 'link', team: 'users',
-  globe: 'globe', blocks: 'layout-grid', document: 'file-text',
-  graduation: 'graduation-cap', diamond: 'diamond', folder: 'folder',
-  layers: 'layers', scan: 'scan', graph: 'waypoints', dna: 'dna', vision: 'eye',
-  lightbulb: 'lightbulb', book: 'book-open', handshake: 'handshake',
-  table: 'table', pulse: 'activity', image: 'image', save: 'save',
+  email: 'mail',
+  linkedin: null,
+  kaggle: null,
+  github: null,
+  clock: 'clock',
+  calendar: 'calendar',
+  'arrow-right': 'arrow-right',
+  location: 'map-pin',
+  external: 'external-link',
+  download: 'download',
+  sun: 'sun',
+  moon: 'moon',
+  menu: 'menu',
+  close: 'x',
+  'arrow-up': 'arrow-up',
+  chevron: 'chevron-down',
+  'chevron-right': 'chevron-right',
+  trophy: 'trophy',
+  brain: 'brain',
+  rocket: 'rocket',
+  pill: 'pill',
+  institution: 'landmark',
+  microscope: 'microscope',
+  presentation: 'presentation',
+  chart: 'chart-column',
+  funding: 'circle-dollar-sign',
+  target: 'target',
+  link: 'link',
+  team: 'users',
+  globe: 'globe',
+  blocks: 'layout-grid',
+  document: 'file-text',
+  graduation: 'graduation-cap',
+  diamond: 'diamond',
+  folder: 'folder',
+  layers: 'layers',
+  scan: 'scan',
+  graph: 'waypoints',
+  dna: 'dna',
+  vision: 'eye',
+  lightbulb: 'lightbulb',
+  book: 'book-open',
+  handshake: 'handshake',
+  table: 'table',
+  pulse: 'activity',
+  image: 'image',
+  save: 'save',
 };
 
 // key -> Simple Icons slug (filled brand glyphs)
@@ -88,11 +124,15 @@ for (const key of Object.keys(existing)) {
       try {
         const svg = await fetchSvg(`${SIMPLE}/${BRAND_MAP[key]}.svg`);
         out[key] = asFilledPath(innerBody(svg));
-        console.log(`brand   ${key.padEnd(14)} <- simpleicons:${BRAND_MAP[key]}`);
+        console.log(
+          `brand   ${key.padEnd(14)} <- simpleicons:${BRAND_MAP[key]}`
+        );
       } catch (e) {
         if (!INLINE_BRAND[key]) throw e;
         out[key] = `<path fill="#000" stroke="none" d="${INLINE_BRAND[key]}"/>`;
-        console.log(`brand   ${key.padEnd(14)} <- inline (simpleicons:${BRAND_MAP[key]} ${e.message})`);
+        console.log(
+          `brand   ${key.padEnd(14)} <- inline (simpleicons:${BRAND_MAP[key]} ${e.message})`
+        );
       }
     } else if (LUCIDE_MAP[key]) {
       const svg = await fetchSvg(`${LUCIDE}/${LUCIDE_MAP[key]}.svg`);

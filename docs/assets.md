@@ -26,14 +26,14 @@ public/
 
 ## Required assets
 
-| Asset | Path | Referenced by |
-|-------|------|---------------|
-| Résumé PDF | `public/assets/resume/balaji-selvaraj-resume.pdf` | `content/site.json` -> `resume.path` |
-| OG image | `public/assets/og/og-image.png` | `content/site.json` -> `seo.ogImage` |
-| Favicon SVG | `public/favicon.svg` | `BaseHead.astro`, manifest |
-| Favicon ICO | `public/favicon.ico` | `BaseHead.astro` |
-| PNG icons | `public/assets/icons/*.png` | `site.webmanifest`, `BaseHead.astro` |
-| `.nojekyll` | `public/.nojekyll` | GitHub Pages (empty file is fine) |
+| Asset       | Path                                              | Referenced by                        |
+| ----------- | ------------------------------------------------- | ------------------------------------ |
+| Résumé PDF  | `public/assets/resume/balaji-selvaraj-resume.pdf` | `content/site.json` -> `resume.path` |
+| OG image    | `public/assets/og/og-image.png`                   | `content/site.json` -> `seo.ogImage` |
+| Favicon SVG | `public/favicon.svg`                              | `BaseHead.astro`, manifest           |
+| Favicon ICO | `public/favicon.ico`                              | `BaseHead.astro`                     |
+| PNG icons   | `public/assets/icons/*.png`                       | `site.webmanifest`, `BaseHead.astro` |
+| `.nojekyll` | `public/.nojekyll`                                | GitHub Pages (empty file is fine)    |
 
 After replacing any asset, run `npm run build && npm run preview` and verify the URL loads
 (e.g. http://localhost:4321/assets/resume/balaji-selvaraj-resume.pdf).
@@ -63,12 +63,12 @@ The header résumé button and contact section both use `site.resume.path`.
 
 **Current path:** `/assets/og/og-image.png`
 
-| Spec | Target |
-|------|--------|
-| Dimensions | 1200 × 630 px (Twitter/LinkedIn large card) |
-| Format | PNG or JPG |
-| Max size | < 1 MB |
-| Content | Name, title, accent background — text-led, minimal |
+| Spec       | Target                                             |
+| ---------- | -------------------------------------------------- |
+| Dimensions | 1200 × 630 px (Twitter/LinkedIn large card)        |
+| Format     | PNG or JPG                                         |
+| Max size   | < 1 MB                                             |
+| Content    | Name, title, accent background — text-led, minimal |
 
 Referenced as absolute URL in OG/Twitter tags via `Astro.site` + `site.seo.ogImage`.
 
@@ -93,8 +93,16 @@ Manifest icons:
 {
   "icons": [
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
-    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
 ```
@@ -118,9 +126,9 @@ Keep published files optimized — prefer WebP, reasonable dimensions, lazy-load
 The home-page hero (`src/components/sections/Hero.astro`) renders a square portrait via
 `<Portrait>`. The current production asset is a single optimized PNG:
 
-| File | Format | Size | Used as |
-|------|--------|------|---------|
-| `public/assets/images/balaji.png` | PNG, 480×480 | Portrait image |
+| File                              | Format | Size    | Used as        |
+| --------------------------------- | ------ | ------- | -------------- |
+| `public/assets/images/balaji.png` | PNG    | 480×480 | Portrait image |
 
 References from content: `content/person/profile.json` -> `portrait.src`, `portrait.alt`,
 `portrait.width`, and `portrait.height`.

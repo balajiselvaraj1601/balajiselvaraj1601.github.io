@@ -120,13 +120,13 @@ if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
 
 **Checklist:**
 
-| Check | Expected |
-|-------|----------|
-| Pages source | **GitHub Actions** (not "Deploy from branch") |
-| Repo name (user site) | `balajiselvaraj1601.github.io` |
-| `base` in astro.config | `'/'` for user site |
-| `.nojekyll` in dist | Present at root |
-| Workflow deploy job | Completed successfully |
+| Check                  | Expected                                      |
+| ---------------------- | --------------------------------------------- |
+| Pages source           | **GitHub Actions** (not "Deploy from branch") |
+| Repo name (user site)  | `balajiselvaraj1601.github.io`                |
+| `base` in astro.config | `'/'` for user site                           |
+| `.nojekyll` in dist    | Present at root                               |
+| Workflow deploy job    | Completed successfully                        |
 
 ### Assets 404 on live site (`/_astro/`, `/assets/`)
 

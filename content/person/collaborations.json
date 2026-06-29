@@ -19,7 +19,11 @@
       "entity": "iit-madras",
       "detail": "Research collaboration co-developing AI models and computational pipelines"
     },
-    { "name": "Uppsala University", "logo": "uppsala-university", "entity": "uppsala-university" },
+    {
+      "name": "Uppsala University",
+      "logo": "uppsala-university",
+      "entity": "uppsala-university"
+    },
     {
       "name": "AI Sweden",
       "logo": "ai-sweden",

@@ -5,11 +5,11 @@
 
 ## Items
 
-| Item (section id) | Source | Question | Weight |
-|---|---|---|---|
-| `technical-vision` | `content/person/profile.json` (vision) | Why should I care? | heavy |
-| `vision-board` | `content/work/vision-board.json` | How does it work? | heavy |
-| `impact` | `content/work/strategic-impact.json` | Why should I care? | heavy |
+| Item (section id)  | Source                                 | Question           | Weight |
+| ------------------ | -------------------------------------- | ------------------ | ------ |
+| `technical-vision` | `content/person/profile.json` (vision) | Why should I care? | heavy  |
+| `vision-board`     | `content/work/vision-board.json`       | How does it work?  | heavy  |
+| `impact`           | `content/work/strategic-impact.json`   | Why should I care? | heavy  |
 
 ## Structure
 

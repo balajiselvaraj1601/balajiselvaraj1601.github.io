@@ -19,24 +19,22 @@ If the change affects page structure, section order, or the overall narrative, u
 
 ## File reference
 
-| File | Sections affected | Typical edits |
-|------|-------------------|---------------|
-| `site.json` | Global meta, nav, pages, SEO, résumé link | Title, tagline, nav labels, page sections, hide a section |
-| `person/profile.json` | Hero, merged About/Leadership, Technical Vision, Contact | Headline, metrics, CTAs, about cards, leadership philosophy, vision, contact interests, `contactPage` copy |
-| `person/affiliations.json` | Affiliations strip | Organization names; optional `logo` slug → `public/assets/logos/{slug}.svg`; optional `entity` slug → URL in `entities.json` |
-| `entities.json` | Entity links (global registry) | Slug → `{ name, url }` for organizations referenced across sections |
-| `work/strategic-impact.json` | Strategic Impact | `metrics[]`, `highlights[]`; optional `journey[]`, `programs[]`, `leadershipCards[]` for rich layout |
-| `work/vision-board.json` | Vision view (`/#vision`) | Infographic hubs, program cards, org impact cards |
-| `work/experience.json` | Experience intro, tabbed role detail | Roles, optional `mission`, `snapshot[]`, bullets, tier |
-| `work/projects.json` | Project cards, Featured projects, Projects intro | Summaries, case-study fields, `featured`, `snapshot[]`, tags |
-| `work/skills.json` | Skills (About view) | Categories and skill chips |
-| `work/mentorship.json` | Mentorship | Bullet items |
-| `research/publications.json` | Publications, Featured publications | Title + URL links |
-| `research/conferences.json` | Conferences | Title + URL links |
-| `research/speakers.json` | Speaking engagements | Title + URL links |
-| `recognition/education.json` | Education | Degree records |
-| `recognition/awards.json` | Awards | Label + detail rows |
-| `recognition/kaggle.json` | Kaggle (Recognition view) | Rank line + competition links |
+| File                         | Sections affected                                        | Typical edits                                                                                                                |
+| ---------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `site.json`                  | Global meta, nav, pages, SEO, résumé link                | Title, tagline, nav labels, page sections, hide a section                                                                    |
+| `person/profile.json`        | Hero, merged About/Leadership, Technical Vision, Contact | Headline, metrics, CTAs, about cards, leadership philosophy, vision, contact interests, `contactPage` copy                   |
+| `person/collaborations.json` | Collaborations strip on About                            | Organization names; optional `logo` slug → `public/assets/logos/{slug}.png`; optional `entity` slug → URL in `entities.json` |
+| `entities.json`              | Entity links (global registry)                           | Slug → `{ name, url }` for organizations referenced across sections                                                          |
+| `work/strategic-impact.json` | Strategic Impact                                         | `metrics[]`, `highlights[]`; optional `journey[]`, `leadershipCards[]` for rich layout                                       |
+| `work/vision-board.json`     | Vision view (`/#vision`)                                 | Infographic hubs, program cards, org impact cards                                                                            |
+| `work/experience.json`       | Experience intro, tabbed role detail                     | Roles, optional `mission`, `snapshot[]`, bullets, tier                                                                       |
+| `work/projects.json`         | Project cards, Featured projects, Projects intro         | Summaries, case-study fields, `featured`, `snapshot[]`, tags                                                                 |
+| `research/publications.json` | Publications                                             | Title + URL links                                                                                                            |
+| `research/conferences.json`  | Conferences                                              | Title + URL links                                                                                                            |
+| `research/speakers.json`     | Speaking engagements                                     | Title + URL links                                                                                                            |
+| `recognition/education.json` | Education                                                | Degree records (`intro`, `records[]` with `id`, `field`, `achievementDetail`, `summary`)                                     |
+| `recognition/awards.json`    | Awards                                                   | Label + detail rows                                                                                                          |
+| `recognition/kaggle.json`    | Kaggle (Recognition view)                                | Global rank + 9 competition case-study cards (rank-ordered)                                                                  |
 
 Provenance and résumé mapping: [Content map](./content-map.md) · [content/README.md](../content/README.md).
 
@@ -44,17 +42,16 @@ Provenance and résumé mapping: [Content map](./content-map.md) · [content/REA
 
 Content under `content/drafts/` is **not wired to the live site**. Currently shelved:
 
-| File | Section | Notes |
-|------|---------|-------|
-| `drafts/research/generative-ai.json` | Generative AI (Research view) | Bullet items; registry entry in `site.json` with `visible: false` |
+| File                                 | Section                       | Notes                                                                                                                                                                                                                             |
+| ------------------------------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `drafts/research/generative-ai.json` | Generative AI (Research view) | Bullet items; registry entry in `site.json` with `visible: false`. Validated and exported as `generativeAi` from `src/lib/content.ts`, but its section is not in `home.sections` and `visible` is `false`, so it is not rendered. |
 
 **Re-enable Generative AI:**
 
 1. Move `content/drafts/research/generative-ai.json` → `content/research/generative-ai.json`
-2. Restore import/export in `src/lib/content.ts` (`generativeAi` + `sectionData['generative-ai']`)
-3. Change `GenerativeAI.astro` to import `generativeAi` from `@lib/content` (not the draft path)
+2. Update the import path in `src/lib/content.ts` (`generativeAiRaw` from `@content/research/generative-ai.json`)
+3. Update `sections["generative-ai"].source` to `research/generative-ai.json` and set `visible` to `true` in `site.json`
 4. Re-add `generative-ai` to `home.sections` and research `sections` / `viewSections` in `site.json`
-5. Set `sections["generative-ai"].visible` to `true` and update `source` to `research/generative-ai.json`
 
 ## Common tasks
 
@@ -164,7 +161,7 @@ Edit `content/person/profile.json` → `contact` array. Allowed public types: `e
 }
 ```
 
-2. Reference the slug from content JSON via optional `entity` (affiliations may omit it when `logo` matches the registry slug):
+2. Reference the slug from content JSON via optional `entity` (collaborations may omit it when `logo` matches the registry slug):
 
 ```json
 { "organization": "HCL Technology, India", "entity": "hcl" }
@@ -176,17 +173,17 @@ Edit `content/person/profile.json` → `contact` array. Allowed public types: `e
 
 Schemas live in `src/schemas.ts`. Key constraints:
 
-| Schema | Notable rules |
-|--------|---------------|
-| `siteSchema` | internal `pages[]` entries require `seo` and `sections`; external entries require `external: true`; `resume.path` is a site-root path |
-| `profileSchema` | hero/about/contact fields drive the public profile; optional `vision`, `contactPage`, `techStack`; `contact[].href` nullable for location |
-| `impactSchema` | `metrics[]` + `highlights[]` required; optional `journey[]`, `programs[]`, `leadershipCards[]` |
-| `affiliationsSchema` | `items[].name` required; optional `items[].logo` and `items[].entity` slugs |
-| `entitiesSchema` | Record of slug → `{ name, url }`; all `url` values must be valid |
-| `experienceSchema` | `tier` must be `"primary"` or `"secondary"`; `period.end` nullable; optional `roles[].entity` |
-| `projectsSchema` | `id` must be unique slug; optional `projects[].entity` |
-| `linkListSchema` | Publications/conferences: `url` must be valid URL |
-| `kaggleSchema` | `profile` URL required; `items[].url` must be valid |
+| Schema                 | Notable rules                                                                                                                             |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `siteSchema`           | internal `pages[]` entries require `seo` and `sections`; external entries require `external: true`; `resume.path` is a site-root path     |
+| `profileSchema`        | hero/about/contact fields drive the public profile; optional `vision`, `contactPage`, `techStack`; `contact[].href` nullable for location |
+| `impactSchema`         | `metrics[]` + `highlights[]` required; optional `journey[]`, `leadershipCards[]`                                                          |
+| `collaborationsSchema` | `items[].name` required; optional `items[].logo` and `items[].entity` slugs                                                               |
+| `entitiesSchema`       | Record of slug → `{ name, url }`; all `url` values must be valid                                                                          |
+| `experienceSchema`     | `tier` must be `"primary"` or `"secondary"`; `period.end` nullable; optional `roles[].entity`                                             |
+| `projectsSchema`       | `id` must be unique slug; optional `projects[].entity`                                                                                    |
+| `linkListSchema`       | Publications/conferences: `url` must be valid URL                                                                                         |
+| `kaggleSchema`         | `profile` URL required; `items[]` validated via `kaggleCompetitionSchema`                                                                 |
 
 Adding a new field:
 

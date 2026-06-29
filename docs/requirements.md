@@ -16,35 +16,42 @@
 ## Must have
 
 ### Platform & performance
+
 - **M1** Static site, fully pre-rendered, deployable to **GitHub Pages** (no server runtime).
 - **M2** Fast first load on a mid-range mobile device (target LCP < 2.5s on 4G).
 - **M3** Works without JavaScript for core content (progressive enhancement); JS adds polish, not access.
 
 ### Responsiveness & theming
+
 - **M4** Fully responsive across mobile / tablet / desktop with no horizontal scroll.
 - **M5** **Dark/light mode** — respects `prefers-color-scheme` and offers a manual toggle that persists (e.g. `localStorage`); no flash of incorrect theme on load.
 
 ### Content sections (curated public set)
+
 - **M6** Render these sections, driven by `content/`:
-  Hero, About (profile summary), Strategic Impact, Experience (timeline), Projects (showcase
-  + detail), Generative AI, Skills/Tech, Mentorship, Education, Awards, Publications,
-  Conferences, Kaggle, Contact.
+  Hero, Thirukural quote, About / Leadership philosophy, Strategic Impact, Experience (timeline),
+  Projects (showcase + detail), Education, Awards, Kaggle, Publications, Conferences,
+  Speaking Engagements, Vision, Contact.
+  (Generative AI is content-complete but shelved — `visible:false`, kept out of `home.sections`.)
 - **M7** **Projects** support a card/grid overview plus an expanded detail view per project
   (`content/work/projects.json`), with tags and highlights.
 - **M8** **Experience** renders as a chronological timeline of roles → projects → bullets,
   preserving bullet `tier` (primary/secondary) for emphasis.
 
 ### Navigation
+
 - **M9** Sticky/persistent header nav with links to each section.
 - **M10** **Navigation state** with active route in the header and section dot navigation where configured.
 - **M11** Accessible mobile menu (hamburger) with keyboard + screen-reader support.
 - **M12** Smooth in-page anchor scrolling that respects `prefers-reduced-motion`.
 
 ### Contact
+
 - **M13** Contact section showing **professional email + LinkedIn + Kaggle** (no phone).
   `mailto:` link for email; external links open with `rel="noopener noreferrer"`.
 
 ### SEO & metadata
+
 - **M14** Per-page `<title>` and meta description.
 - **M15** **OpenGraph + Twitter card** tags with a social preview image.
 - **M16** `sitemap.xml` and `robots.txt`.
@@ -52,16 +59,19 @@
 - **M18** Canonical URL and `lang` attribute set.
 
 ### Accessibility
+
 - **M19** **WCAG 2.1 AA**: semantic landmarks, logical heading order, full keyboard
   operability, visible focus states, ARIA only where needed, AA color contrast in both themes.
   (Full checklist in `accessibility.md`.)
 
 ### Architecture & content
+
 - **M20** **Content-driven**: all copy comes from JSON under `content/`; no content hardcoded in
   components. Changing a JSON file changes the rendered site (SSOT).
 - **M21** Reusable, composable section/component structure (no copy-pasted section markup).
 
 ### Resources & errors
+
 - **M22** Résumé **PDF download** link (`/assets/resume/…`), shown in header and/or contact.
 - **M23** Custom **404** page consistent with site styling.
 - **M24** Favicon and a basic web app manifest (name, icons, theme color).
@@ -102,15 +112,15 @@
 
 ## Implementation status (2026-06-27)
 
-| Area | Status |
-|------|--------|
-| Stack | ✅ Astro 4.16, Zod, hand-rolled CSS |
-| All Must-have (M1–M24) | ✅ Implemented |
-| CI/CD | ✅ `.github/workflows/deploy.yml` |
-| Static assets | ✅ Résumé PDF, OG image, favicons, `.nojekyll` |
-| GitHub Pages live | ⏳ Pending — repo push + Pages enable (see `go-live-checklist.md`) |
-| Lighthouse 95+ (S1) | ⏳ Run manually post-deploy |
-| Link validation (S8) | ⏳ Manual pass recommended |
+| Area                   | Status                                                             |
+| ---------------------- | ------------------------------------------------------------------ |
+| Stack                  | ✅ Astro 4.16, Zod, hand-rolled CSS                                |
+| All Must-have (M1–M24) | ✅ Implemented                                                     |
+| CI/CD                  | ✅ `.github/workflows/deploy.yml`                                  |
+| Static assets          | ✅ Résumé PDF, OG image, favicons, `.nojekyll`                     |
+| GitHub Pages live      | ⏳ Pending — repo push + Pages enable (see `go-live-checklist.md`) |
+| Lighthouse 95+ (S1)    | ⏳ Run manually post-deploy                                        |
+| Link validation (S8)   | ⏳ Manual pass recommended                                         |
 
 ## Acceptance criteria (stage-exit)
 

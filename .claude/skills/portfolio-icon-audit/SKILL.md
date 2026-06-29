@@ -24,13 +24,13 @@ Orchestrate a full audit of visual assets across the portfolio site. **Claude in
 
 ## Two asset systems — never conflate
 
-| Asset class | Source of truth | Output location |
-|---|---|---|
-| **Semantic UI icon** | `src/lib/icons.ts` + `Icon.astro` | Inline SVG via `<Icon name="…" />` |
-| **Org / program logo** | `VisionMark` `{ kind: "logo", asset: slug }` | `public/assets/logos/{slug}.svg` |
-| **Tech brand mark** | `profile.techStack[].label` | `public/assets/logos/tech/{slug}.svg` (convention) |
-| **Site brand** | `docs/assets.md` | `public/favicon.*`, `public/assets/icons/`, `public/assets/og/` |
-| **Content image** | `portrait`, competitions frontmatter | `public/assets/images/` |
+| Asset class            | Source of truth                              | Output location                                                 |
+| ---------------------- | -------------------------------------------- | --------------------------------------------------------------- |
+| **Semantic UI icon**   | `src/lib/icons.ts` + `Icon.astro`            | Inline SVG via `<Icon name="…" />`                              |
+| **Org / program logo** | `VisionMark` `{ kind: "logo", asset: slug }` | `public/assets/logos/{slug}.svg`                                |
+| **Tech brand mark**    | `profile.techStack[].label`                  | `public/assets/logos/tech/{slug}.svg` (convention)              |
+| **Site brand**         | `docs/assets.md`                             | `public/favicon.*`, `public/assets/icons/`, `public/assets/og/` |
+| **Content image**      | `portrait`, competitions frontmatter         | `public/assets/images/`                                         |
 
 Logo rendering pattern (already wired):
 
@@ -107,11 +107,11 @@ Apply [resolution-rules.md](resolution-rules.md):
 
 Mark status:
 
-| Status | Meaning |
-|---|---|
-| `resolved` | Asset exists and matches |
-| `fallback` | Renders but uses generic key (`folder`, `diamond`) |
-| `missing` | No asset — queue for Cursor |
+| Status         | Meaning                                            |
+| -------------- | -------------------------------------------------- |
+| `resolved`     | Asset exists and matches                           |
+| `fallback`     | Renders but uses generic key (`folder`, `diamond`) |
+| `missing`      | No asset — queue for Cursor                        |
 | `needs_schema` | Content has no field yet (e.g. affiliations logos) |
 
 ### Phase C.5 — Evaluate (site_brand / org_logo)
@@ -160,11 +160,11 @@ For semantic icons, follow `workspace/.claude/skills/ui-icon-acquisition/SKILL.m
 
 **Portfolio brand tokens** (from `docs/design-direction.md`):
 
-| Token | Value |
-|---|---|
-| `--accent` | `#6C2FBF` |
-| `--bg` | `#0D0B1E` |
-| `--text` | `#E8E0F5` |
+| Token            | Value     |
+| ---------------- | --------- |
+| `--accent`       | `#6C2FBF` |
+| `--bg`           | `#0D0B1E` |
+| `--text`         | `#E8E0F5` |
 | `--accent-light` | `#9B5EE8` |
 
 Batch delegations by asset class when possible (e.g. all tech logos in one package).
@@ -199,14 +199,14 @@ Re-run Phases A–C. All rows should be `resolved` or explicitly deferred.
 
 ## Integration with other skills
 
-| Skill | Role |
-|---|---|
-| `ui-icon-acquisition` | Lucide → Iconify workflow for semantic icons |
+| Skill                   | Role                                               |
+| ----------------------- | -------------------------------------------------- |
+| `ui-icon-acquisition`   | Lucide → Iconify workflow for semantic icons       |
 | `brand-logo-evaluation` | Score site_brand / org_logo candidates (Phase C.5) |
-| `logo-emblem-author` | Cursor authors logo SVGs in image_gen |
-| `delegation` | Package format for every Cursor handoff |
-| `image_gen` | Router + `render.py` for raster derivatives |
-| `refine-image` | Optional polish pass on generated marks |
+| `logo-emblem-author`    | Cursor authors logo SVGs in image_gen              |
+| `delegation`            | Package format for every Cursor handoff            |
+| `image_gen`             | Router + `render.py` for raster derivatives        |
+| `refine-image`          | Optional polish pass on generated marks            |
 
 **Never** use Claude's built-in image generation for production assets — always delegate to Cursor running the `image_gen` pipeline.
 

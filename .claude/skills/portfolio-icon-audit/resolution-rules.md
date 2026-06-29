@@ -8,22 +8,22 @@ Matching logic for the portfolio icon audit. Apply in Phase C after classifying 
 
 Convert entity names to filesystem slugs:
 
-| Rule | Example |
-|---|---|
-| Lowercase | `AstraZeneca` → `astrazeneca` |
-| Spaces → hyphens | `Broad Institute` → `broad-institute` |
-| Strip punctuation | `EU Research Consortium` → `eu-research-consortium` |
-| Keep disambiguating words | `IIT Madras` → `iit-madras` (not `iit`) |
-| Tech labels | `Foundation Models` → `foundation-models` |
-| Competition files | `comp-08-google-asl-signs.md` → `comp-08-google-asl-signs` |
+| Rule                      | Example                                                    |
+| ------------------------- | ---------------------------------------------------------- |
+| Lowercase                 | `AstraZeneca` → `astrazeneca`                              |
+| Spaces → hyphens          | `Broad Institute` → `broad-institute`                      |
+| Strip punctuation         | `EU Research Consortium` → `eu-research-consortium`        |
+| Keep disambiguating words | `IIT Madras` → `iit-madras` (not `iit`)                    |
+| Tech labels               | `Foundation Models` → `foundation-models`                  |
+| Competition files         | `comp-08-google-asl-signs.md` → `comp-08-google-asl-signs` |
 
 **Paths by class:**
 
-| Class | Path pattern |
-|---|---|
-| org_logo | `public/assets/logos/{slug}.svg` |
-| tech_logo | `public/assets/logos/tech/{slug}.svg` |
-| content_image | `public/assets/images/{slug}.png` (or `.webp`) |
+| Class             | Path pattern                                   |
+| ----------------- | ---------------------------------------------- |
+| org_logo          | `public/assets/logos/{slug}.svg`               |
+| tech_logo         | `public/assets/logos/tech/{slug}.svg`          |
+| content_image     | `public/assets/images/{slug}.png` (or `.webp`) |
 | competition thumb | `public/assets/images/competitions/{slug}.png` |
 
 ---
@@ -48,62 +48,62 @@ Run `ui-icon-acquisition/references/reject-checklist.md` before adding registry 
 
 Use before inventing a new key:
 
-| Keywords (case-insensitive) | IconName |
-|---|---|
-| email, mail | `email` |
-| linkedin | `linkedin` |
-| kaggle, competition, trophy, award | `trophy` or `kaggle` |
-| location, map, geo | `location` |
-| oncology, tumor, pathology, microscope, cell | `microscope` |
-| drug, safety, pharma, pill, toxicology | `pill` |
-| imaging, segmentation, CT, scan, clinical | `scan` |
-| graph, GNN, network | `graph` |
-| foundation, framework, platform, blocks | `blocks` |
-| vision, enterprise, computer vision | `vision` |
-| leadership, team, people | `team` |
-| research, academic, university | `graduation` or `institution` |
-| presentation, conference, talk | `presentation` |
-| publication, paper, document | `document` |
-| chart, metrics, analytics | `chart` |
-| funding, grant, money | `funding` |
-| target, goal, objective | `target` |
-| global, international, countries | `globe` |
-| layers, industry, stack | `layers` |
-| DNA, genomics, omics | `dna` |
-| brain, AI, ML, generative | `brain` |
-| rocket, launch, execution | `rocket` |
-| link, url, external | `link` or `external` |
-| download, resume, PDF | `download` |
-| lightbulb, idea | `lightbulb` |
-| book, literature | `book` |
-| handshake, partnership, collaboration | `handshake` |
-| table, data | `table` |
-| pulse, signal, activity | `pulse` |
-| image, photo, picture | `image` |
+| Keywords (case-insensitive)                  | IconName                      |
+| -------------------------------------------- | ----------------------------- |
+| email, mail                                  | `email`                       |
+| linkedin                                     | `linkedin`                    |
+| kaggle, competition, trophy, award           | `trophy` or `kaggle`          |
+| location, map, geo                           | `location`                    |
+| oncology, tumor, pathology, microscope, cell | `microscope`                  |
+| drug, safety, pharma, pill, toxicology       | `pill`                        |
+| imaging, segmentation, CT, scan, clinical    | `scan`                        |
+| graph, GNN, network                          | `graph`                       |
+| foundation, framework, platform, blocks      | `blocks`                      |
+| vision, enterprise, computer vision          | `vision`                      |
+| leadership, team, people                     | `team`                        |
+| research, academic, university               | `graduation` or `institution` |
+| presentation, conference, talk               | `presentation`                |
+| publication, paper, document                 | `document`                    |
+| chart, metrics, analytics                    | `chart`                       |
+| funding, grant, money                        | `funding`                     |
+| target, goal, objective                      | `target`                      |
+| global, international, countries             | `globe`                       |
+| layers, industry, stack                      | `layers`                      |
+| DNA, genomics, omics                         | `dna`                         |
+| brain, AI, ML, generative                    | `brain`                       |
+| rocket, launch, execution                    | `rocket`                      |
+| link, url, external                          | `link` or `external`          |
+| download, resume, PDF                        | `download`                    |
+| lightbulb, idea                              | `lightbulb`                   |
+| book, literature                             | `book`                        |
+| handshake, partnership, collaboration        | `handshake`                   |
+| table, data                                  | `table`                       |
+| pulse, signal, activity                      | `pulse`                       |
+| image, photo, picture                        | `image`                       |
 
 ### Domain defaults (from icons.ts)
 
-| Domain string | IconName |
-|---|---|
-| Biopharma R&D | `pill` |
-| Translational Oncology | `microscope` |
-| Clinical Imaging / Oncology Imaging | `scan` |
-| Digital Pathology | `microscope` |
-| Computational Pathology | `graph` |
-| Enterprise Vision | `vision` |
-| Academic Research | `graduation` |
+| Domain string                       | IconName     |
+| ----------------------------------- | ------------ |
+| Biopharma R&D                       | `pill`       |
+| Translational Oncology              | `microscope` |
+| Clinical Imaging / Oncology Imaging | `scan`       |
+| Digital Pathology                   | `microscope` |
+| Computational Pathology             | `graph`      |
+| Enterprise Vision                   | `vision`     |
+| Academic Research                   | `graduation` |
 
 ### projectIcon id overrides
 
-| id substring | IconName |
-|---|---|
-| drug-safety, safety | `pill` |
-| tumor, oncology, recurrence | `microscope` |
-| foundation, framework | `blocks` |
-| pathology | `microscope` |
-| gnn, graph | `graph` |
-| vision, enterprise | `vision` |
-| imaging, segmentation, clinical | `scan` |
+| id substring                    | IconName     |
+| ------------------------------- | ------------ |
+| drug-safety, safety             | `pill`       |
+| tumor, oncology, recurrence     | `microscope` |
+| foundation, framework           | `blocks`     |
+| pathology                       | `microscope` |
+| gnn, graph                      | `graph`      |
+| vision, enterprise              | `vision`     |
+| imaging, segmentation, clinical | `scan`       |
 
 ---
 
@@ -111,13 +111,13 @@ Use before inventing a new key:
 
 Flag status `fallback` when:
 
-| Condition | Typical fallback |
-|---|---|
-| Experience project has no `icon` and `projectIcon()` returns `folder` | `folder` |
-| About card title not in `ABOUT_CARD_ICONS` | `diamond` |
-| `resolveIcon(undefined, 'folder')` used | `folder` |
-| `resolveIcon(undefined, 'diamond')` on leadership cards | `diamond` |
-| `resolveIcon(undefined, 'document')` on research cards | `document` |
+| Condition                                                             | Typical fallback |
+| --------------------------------------------------------------------- | ---------------- |
+| Experience project has no `icon` and `projectIcon()` returns `folder` | `folder`         |
+| About card title not in `ABOUT_CARD_ICONS`                            | `diamond`        |
+| `resolveIcon(undefined, 'folder')` used                               | `folder`         |
+| `resolveIcon(undefined, 'diamond')` on leadership cards               | `diamond`        |
+| `resolveIcon(undefined, 'document')` on research cards                | `document`       |
 
 **Recommendation priority for fallbacks:**
 
@@ -137,13 +137,13 @@ Flag status `fallback` when:
 
 ### Official asset sources (Cursor may use during generation)
 
-| Source | Use when |
-|---|---|
+| Source                                        | Use when                                      |
+| --------------------------------------------- | --------------------------------------------- |
 | Existing site logos in `public/assets/logos/` | Style reference (monochrome, simple geometry) |
-| [Simple Icons](https://simpleicons.org/) | Tech brands with MIT-licensed SVGs |
-| Lucide / Iconify (`lucide:` prefix) | Semantic UI icons via `ui-icon-acquisition` |
-| Official press / brand kits | Org logos when license permits local hosting |
-| Generated monogram | Official asset unavailable or license unclear |
+| [Simple Icons](https://simpleicons.org/)      | Tech brands with MIT-licensed SVGs            |
+| Lucide / Iconify (`lucide:` prefix)           | Semantic UI icons via `ui-icon-acquisition`   |
+| Official press / brand kits                   | Org logos when license permits local hosting  |
+| Generated monogram                            | Official asset unavailable or license unclear |
 
 For org/site brand marks, run `brand-logo-evaluation` scoring before authoring.
 Author via `image_gen/.claude/skills/logo-emblem-author/SKILL.md`.
@@ -175,15 +175,15 @@ For tech brands: Simple Icons slug often matches (`pytorch`, `amazonaws` for AWS
 Verify against `docs/assets.md`. For `fallback` or refresh candidates, run
 `brand-logo-evaluation` (Phase C.5 in portfolio-icon-audit):
 
-| Asset | Check |
-|---|---|
-| favicon.svg | File exists; accent `#6C2FBF` (not legacy `#2563eb`); 16 px legibility |
-| favicon.ico | File exists |
-| icon-192.png | 192×192 |
-| icon-512.png | 512×512 |
-| apple-touch-icon.png | 180×180 |
-| og-image.png | 1200×630, < 1 MB |
-| balaji.png | Portrait loads; reasonable file size (< 500 KB target) |
+| Asset                | Check                                                                  |
+| -------------------- | ---------------------------------------------------------------------- |
+| favicon.svg          | File exists; accent `#6C2FBF` (not legacy `#2563eb`); 16 px legibility |
+| favicon.ico          | File exists                                                            |
+| icon-192.png         | 192×192                                                                |
+| icon-512.png         | 512×512                                                                |
+| apple-touch-icon.png | 180×180                                                                |
+| og-image.png         | 1200×630, < 1 MB                                                       |
+| balaji.png           | Portrait loads; reasonable file size (< 500 KB target)                 |
 
 Theme checks: light (`#FAF8FF`) and dark (`#0D0B1E`) backgrounds; monochrome pass.
 

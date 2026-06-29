@@ -5,11 +5,11 @@
 
 ## Items
 
-| Item (section id) | Source | Question | Weight |
-|---|---|---|---|
-| `projects-intro` | `content/work/projects.json` | What is this? | medium |
-| `featured-case-studies` | `content/work/projects.json` | Why should I care? | heavy |
-| `projects` | `content/work/projects.json` | How does it work? | heavy |
+| Item (section id)       | Source                       | Question           | Weight |
+| ----------------------- | ---------------------------- | ------------------ | ------ |
+| `projects-intro`        | `content/work/projects.json` | What is this?      | medium |
+| `featured-case-studies` | `content/work/projects.json` | Why should I care? | heavy  |
+| `projects`              | `content/work/projects.json` | How does it work?  | heavy  |
 
 ## Structure
 

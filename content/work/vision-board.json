@@ -8,7 +8,14 @@
       "label": "IDEA",
       "variant": "purple",
       "center": { "kind": "logo", "asset": "kaggle", "alt": "Kaggle" },
-      "satellites": ["target", "lightbulb", "chart", "book", "handshake", "globe"]
+      "satellites": [
+        "target",
+        "lightbulb",
+        "chart",
+        "book",
+        "handshake",
+        "globe"
+      ]
     },
     {
       "id": "vision",

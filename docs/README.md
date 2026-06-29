@@ -5,39 +5,40 @@ deployed to GitHub Pages at https://balajiselvaraj1601.github.io.
 
 ## Start here
 
-| Doc | Audience | Purpose |
-|-----|----------|---------|
-| [Getting started](./getting-started.md) | Developers | Install, run, build, preview |
-| [Go-live checklist](./go-live-checklist.md) | Owner / DevOps | Publish to GitHub Pages step-by-step |
-| [Content editing](./content-editing.md) | Content owner | Change site copy via JSON under `content/` |
-| [Assets](./assets.md) | Content owner | Résumé PDF, OG image, favicons, images |
+| Doc                                         | Audience       | Purpose                                    |
+| ------------------------------------------- | -------------- | ------------------------------------------ |
+| [Getting started](./getting-started.md)     | Developers     | Install, run, build, preview               |
+| [Go-live checklist](./go-live-checklist.md) | Owner / DevOps | Publish to GitHub Pages step-by-step       |
+| [Content editing](./content-editing.md)     | Content owner  | Change site copy via JSON under `content/` |
+| [Assets](./assets.md)                       | Content owner  | Résumé PDF, OG image, favicons, images     |
 
 ## Architecture & specs
 
-| Doc | Purpose |
-|-----|---------|
-| [Architecture](./architecture.md) | Repo layout, data flow, build pipeline, key files |
-| [Requirements](./requirements.md) | MoSCoW feature list and acceptance criteria |
-| [Specification](./specification.md) | IA, routes, component hierarchy, section contracts |
-| [Content map](./content-map.md) | Résumé → portfolio traceability |
-| [Design direction](./design-direction.md) | Visual tokens, typography, motion principles |
+| Doc                                                                 | Purpose                                              |
+| ------------------------------------------------------------------- | ---------------------------------------------------- |
+| [Architecture](./architecture.md)                                   | Repo layout, data flow, build pipeline, key files    |
+| [Environment languages & skills](./environment-languages-skills.md) | Languages, tooling, and skills for programmatic work |
+| [Requirements](./requirements.md)                                   | MoSCoW feature list and acceptance criteria          |
+| [Specification](./specification.md)                                 | IA, routes, component hierarchy, section contracts   |
+| [Content map](./content-map.md)                                     | Résumé → portfolio traceability                      |
+| [Design direction](./design-direction.md)                           | Visual tokens, typography, motion principles         |
 
 ## Quality & platform
 
-| Doc | Purpose |
-|-----|---------|
-| [SEO](./seo.md) | Meta tags, OG/Twitter, JSON-LD, sitemap, robots |
-| [Accessibility](./accessibility.md) | WCAG 2.1 AA checklist |
-| [Deployment](./deployment.md) | GitHub Pages target, CI/CD, artifact checklist |
-| [Troubleshooting](./troubleshooting.md) | Common build, deploy, and content errors |
-| [Audits](./audits/file-migration.csv) | Repo file inventory and migration map |
+| Doc                                     | Purpose                                         |
+| --------------------------------------- | ----------------------------------------------- |
+| [SEO](./seo.md)                         | Meta tags, OG/Twitter, JSON-LD, sitemap, robots |
+| [Accessibility](./accessibility.md)     | WCAG 2.1 AA checklist                           |
+| [Deployment](./deployment.md)           | GitHub Pages target, CI/CD, artifact checklist  |
+| [Troubleshooting](./troubleshooting.md) | Common build, deploy, and content errors        |
+| [Audits](./audits/file-migration.csv)   | Repo file inventory and migration map           |
 
 ## Related files outside `docs/`
 
-| File | Purpose |
-|------|---------|
-| [../README.md](../README.md) | Project overview and quick commands |
-| [../AGENTS.md](../AGENTS.md) | Agent/AI coding guidelines |
+| File                                         | Purpose                                     |
+| -------------------------------------------- | ------------------------------------------- |
+| [../README.md](../README.md)                 | Project overview and quick commands         |
+| [../AGENTS.md](../AGENTS.md)                 | Agent/AI coding guidelines                  |
 | [../content/README.md](../content/README.md) | Content layer provenance and curation rules |
 
 ## Documentation map
@@ -45,6 +46,7 @@ deployed to GitHub Pages at https://balajiselvaraj1601.github.io.
 ```mermaid
 flowchart TD
   GS[getting-started.md] --> ARCH[architecture.md]
+  GS --> ELS[environment-languages-skills.md]
   GS --> CE[content-editing.md]
   CE --> CM[content-map.md]
   CE --> SPEC[specification.md]

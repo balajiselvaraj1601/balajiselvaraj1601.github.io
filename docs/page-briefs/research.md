@@ -5,11 +5,11 @@
 
 ## Items
 
-| Item (section id) | Source | Question | Weight |
-|---|---|---|---|
-| `publications` | `content/research/publications.json` | Why should I trust it? | medium |
-| `conferences` | `content/research/conferences.json` | Why should I trust it? | medium |
-| `speakers` | `content/research/speakers.json` | Why should I trust it? | medium |
+| Item (section id) | Source                               | Question               | Weight |
+| ----------------- | ------------------------------------ | ---------------------- | ------ |
+| `publications`    | `content/research/publications.json` | Why should I trust it? | medium |
+| `conferences`     | `content/research/conferences.json`  | Why should I trust it? | medium |
+| `speakers`        | `content/research/speakers.json`     | Why should I trust it? | medium |
 
 ## Structure
 

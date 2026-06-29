@@ -24,6 +24,7 @@ content/**/*.json
 - Keep route/section order in `content/site.json`; route files stay generic.
 - Run `npm run build` before handoff after any code or content change. The build
   fails fast on schema violations and broken section/view wiring.
+- Batch work: see `TASKS.md`; invoke the `task-runner` skill (`.cursor/skills/task-runner/SKILL.md`).
 
 ## Page structure
 
@@ -38,6 +39,7 @@ browser to `/#{anchor}` on `/`. The anchor is the page **id** (e.g.
 `src/pages/experience.astro` → `<ViewRedirect anchor="experience" />`).
 
 Routing and view wiring live in `content/site.json → pages`:
+
 - **`home.sections`** — full DOM order on `/` (each section id appears once).
 - **`pages[].viewSections`** — sections grouped under each nav item (scroll target + spy).
 - **`pages[].viewAnchor`** — URL hash for the view. Only `home` sets it (`about`);
@@ -46,6 +48,7 @@ Routing and view wiring live in `content/site.json → pages`:
   `src/lib/content.ts`).
 
 Client behavior is wired by three scripts in `src/scripts/`:
+
 - **`site-chrome.ts`** — entry point (`initSiteChrome()`): theme toggle, mobile nav,
   scrolled-header state, reveal animations; calls `initSectionViews()` on `/`.
 - **`section-views.ts`** — nav scroll + scroll-spy: scrolls to a view's first section on hash
@@ -58,7 +61,7 @@ Section contracts: `docs/specification.md` and `docs/page-briefs/`.
 
 ```text
 /              About (home)     → all sections; default view shows About subset
-/#experience   Experience view  → experience-intro, experience, mentorship
+/#experience   Experience view  → experience-intro, experience
 /#projects     Projects view    → projects-intro, featured-case-studies, projects
 /#research     Research view    → publications, conferences, speakers
 /#recognition  Recognition view → awards, kaggle, education
@@ -68,18 +71,18 @@ Section contracts: `docs/specification.md` and `docs/page-briefs/`.
 /assets/...    Resume (PDF)     → external nav link
 ```
 
-| View | Page id | Nav label | `viewSections` |
-|---|---|---|---|
-| `/` (default) | `home` | About | hero, thirukural, leadership, skills |
-| `/#experience` | `experience` | Experience | experience-intro, experience, mentorship |
-| `/#projects` | `projects` | Projects | projects-intro, featured-case-studies, projects |
-| `/#research` | `research` | Research | publications, conferences, speakers |
-| `/#recognition` | `recognition` | Recognition | awards, kaggle, education |
-| `/#vision` | `vision` | Vision | technical-vision, vision-board, impact |
-| `/#contact` | `contact` | Contact | contact |
+| View            | Page id       | Nav label   | `viewSections`                                  |
+| --------------- | ------------- | ----------- | ----------------------------------------------- |
+| `/` (default)   | `home`        | About       | hero, thirukural, leadership                    |
+| `/#experience`  | `experience`  | Experience  | experience-intro, experience                    |
+| `/#projects`    | `projects`    | Projects    | projects-intro, featured-case-studies, projects |
+| `/#research`    | `research`    | Research    | publications, conferences, speakers             |
+| `/#recognition` | `recognition` | Recognition | awards, kaggle, education                       |
+| `/#vision`      | `vision`      | Vision      | technical-vision, vision-board, impact          |
+| `/#contact`     | `contact`     | Contact     | contact                                         |
 
-**Full home DOM order** (19 sections): hero → thirukural → leadership → skills →
-experience-intro → experience → mentorship → projects-intro →
+**Full home DOM order** (18 sections): hero → thirukural → leadership →
+experience-intro → experience → projects-intro →
 featured-case-studies → projects → publications → conferences → speakers →
 awards → kaggle → education → technical-vision → vision-board →
 impact → contact.
@@ -104,30 +107,32 @@ When `navViews={true}`, sections are wrapped with `data-nav-views` for scroll-sp
 
 ## Commands
 
-| Task | Command |
-|---|---|
-| Install pinned dependencies | `npm ci` |
-| Dev server | `npm run dev` |
-| Production build | `npm run build` |
-| Preview build | `npm run preview` |
+| Task                        | Command           |
+| --------------------------- | ----------------- |
+| Install pinned dependencies | `npm ci`          |
+| Dev server                  | `npm run dev`     |
+| Production build            | `npm run build`   |
+| Preview build               | `npm run preview` |
 
 CI builds on Node 20 (`package.json` engines: `>=18`).
 
 ## Documentation
 
-| Area | Read |
-|---|---|
-| Icon / logo audit (Claude skill) | `.claude/skills/portfolio-icon-audit/SKILL.md` |
-| UI icon sourcing (Lucide / Iconify) | `../.claude/skills/ui-icon-acquisition/SKILL.md` |
-| Logo evaluation / favicon scoring | `../.claude/skills/brand-logo-evaluation/SKILL.md` |
-| Logo SVG authoring | `../image_gen/.claude/skills/logo-emblem-author/SKILL.md` |
-| Setup and commands | `docs/getting-started.md` |
-| Architecture and data flow | `docs/architecture.md` |
-| Content editing | `docs/content-editing.md`, `content/README.md` |
-| Section contracts | `docs/specification.md` |
-| Per-route section intent | `docs/page-briefs/` (incl. `vision.md`, `contact.md`) |
-| SEO and metadata | `docs/seo.md` |
-| Assets | `docs/assets.md` |
-| Accessibility | `docs/accessibility.md` |
-| Deployment | `docs/deployment.md`, `docs/go-live-checklist.md` |
-| Build issues | `docs/troubleshooting.md` |
+| Area                                    | Read                                                      |
+| --------------------------------------- | --------------------------------------------------------- |
+| Icon / logo audit (Claude skill)        | `.claude/skills/portfolio-icon-audit/SKILL.md`            |
+| UI icon sourcing (Lucide / Iconify)     | `../.claude/skills/ui-icon-acquisition/SKILL.md`          |
+| Logo evaluation / favicon scoring       | `../.claude/skills/brand-logo-evaluation/SKILL.md`        |
+| Logo SVG authoring                      | `../image_gen/.claude/skills/logo-emblem-author/SKILL.md` |
+| Setup and commands                      | `docs/getting-started.md`                                 |
+| Long-running agent batches              | `docs/task-runner.md`                                     |
+| Architecture and data flow              | `docs/architecture.md`                                    |
+| Languages, tooling, programmatic skills | `docs/environment-languages-skills.md`                    |
+| Content editing                         | `docs/content-editing.md`, `content/README.md`            |
+| Section contracts                       | `docs/specification.md`                                   |
+| Per-route section intent                | `docs/page-briefs/` (incl. `vision.md`, `contact.md`)     |
+| SEO and metadata                        | `docs/seo.md`                                             |
+| Assets                                  | `docs/assets.md`                                          |
+| Accessibility                           | `docs/accessibility.md`                                   |
+| Deployment                              | `docs/deployment.md`, `docs/go-live-checklist.md`         |
+| Build issues                            | `docs/troubleshooting.md`                                 |

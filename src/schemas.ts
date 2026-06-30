@@ -137,7 +137,13 @@ export const profileSchema = z.object({
   ),
   aboutIntro: z.string(),
   aboutCards: z
-    .array(z.object({ title: z.string(), items: z.array(z.string()) }))
+    .array(
+      z.object({
+        title: z.string(),
+        icon: iconNameSchema.optional(),
+        items: z.array(z.string()),
+      })
+    )
     .optional(),
   leadershipPhilosophy: z.object({
     statement: z.string().optional(),

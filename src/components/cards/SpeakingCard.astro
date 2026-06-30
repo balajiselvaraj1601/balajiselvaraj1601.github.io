@@ -2,6 +2,8 @@
 import { logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
+import Icon from '@components/ui/Icon.astro';
+import { resolveIcon } from '@lib/icons';
 import type { Speakers } from '@schemas';
 
 type Item = Speakers['items'][number];
@@ -33,7 +35,11 @@ const ytThumb = ytId
             <img src={logoUrl} alt={`${item.event} logo`} loading="lazy" />
           </div>
         )
-      ) : null
+      ) : (
+        <div class="speaking-card__icon" aria-hidden="true">
+          <Icon name={resolveIcon(undefined, 'presentation')} size="lg" />
+        </div>
+      )
     }
     <div class="speaking-card__meta">
       <span class="speaking-card__role">{item.role}</span>
@@ -147,6 +153,19 @@ const ytThumb = ytId
     height: auto;
     max-width: 120px;
     object-fit: contain;
+  }
+
+  .speaking-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--accent-ll);
   }
 
   .speaking-card__meta {

@@ -1,0 +1,23 @@
+---
+// Shared recognition-card interior layout (Awards, Education, …).
+interface Props {
+  class?: string;
+}
+
+const { class: cls, ...rest } = Astro.props;
+---
+
+<article class:list={['recog-card', cls]} {...rest}>
+  <header class="recog-card-head">
+    <div class="recog-card-head-top">
+      <slot name="headTop" />
+    </div>
+    <slot name="title" />
+  </header>
+
+  <div class="recog-card-divider"></div>
+
+  <slot />
+
+  <slot name="footer" />
+</article>

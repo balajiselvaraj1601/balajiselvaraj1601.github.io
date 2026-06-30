@@ -1,6 +1,7 @@
 ---
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
 import { resolveIcon } from '@lib/icons';
 import { profile } from '@lib/content';
 
@@ -14,20 +15,6 @@ const emailHref =
 const isExternal = (href: string) => href.startsWith('http');
 const actionLabel = (type: string) =>
   type === 'email' ? 'Send email' : 'View profile';
-
-const titleParts = contactPage.titleHighlight
-  ? {
-      before: contactPage.title.slice(
-        0,
-        contactPage.title.indexOf(contactPage.titleHighlight)
-      ),
-      highlight: contactPage.titleHighlight,
-      after: contactPage.title.slice(
-        contactPage.title.indexOf(contactPage.titleHighlight) +
-          contactPage.titleHighlight.length
-      ),
-    }
-  : null;
 ---
 
 <Section
@@ -41,19 +28,11 @@ const titleParts = contactPage.titleHighlight
   <div class="contact-grid reveal">
     <!-- Left: pitch + actions -->
     <div class="contact-left">
-      <h2 class="contact__title">
-        {
-          titleParts ? (
-            <>
-              {titleParts.before}
-              <span class="accent">{titleParts.highlight}</span>
-              {titleParts.after}
-            </>
-          ) : (
-            contactPage.title
-          )
-        }
-      </h2>
+      <SectionHeading
+        title={contactPage.title}
+        highlight={contactPage.titleHighlight}
+        class="contact__title"
+      />
       <p class="contact-subtitle">{profile.contactIntro}</p>
 
       <div class="contact-actions">

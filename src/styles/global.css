@@ -34,6 +34,14 @@
   --card-padding: var(--space-6);
   --card-padding-lg: var(--space-8);
   --section-cta-gap: var(--space-8);
+  --card-lift: -2px;
+
+  /* Icon size scale — prefer tokens over raw px in Icon size prop */
+  --icon-xs: 14px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-xl: 32px;
 
   --maxw: 1200px;
   --maxw-text: 70ch;
@@ -74,6 +82,12 @@
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 60px;
 
+  /* Responsive breakpoints — prefer these over ad-hoc px in media queries */
+  --bp-sm: 560px;
+  --bp-md: 768px;
+  --bp-lg: 900px;
+  --bp-xl: 1024px;
+
   /* Theme-independent semantic colors — single source of truth.
      Logo marks ship on white; video chrome reads against dark thumbnails;
      availability status hues are intentionally fixed across themes. */
@@ -104,6 +118,9 @@
   --accent: #6c2fbf;
   --accent-soft: rgba(108, 47, 191, 0.1);
   --accent-strong: #7b3fd4;
+  /* Accent tiers — use by role, not interchangeably:
+       --accent-light : interactive (links, hovers, focus rings, .accent spans)
+       --accent-ll    : static labels (eyebrows, kickers, group headings, button text) */
   /* AA on --bg #faf8ff: 5.16:1 (was #9b5ee8 ≈3.9:1, failed AA for inline-link text) */
   --accent-light: #8348d6;
   --accent-ll: #7b3fd4;
@@ -327,6 +344,8 @@ button {
 
 .container {
   width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
   padding-inline: var(--gutter-inline);
 }
 
@@ -363,7 +382,7 @@ button {
   font-size: var(--fs-eyebrow);
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent-light);
+  color: var(--accent-ll);
   margin-bottom: var(--space-4);
 }
 .eyebrow--red {
@@ -373,6 +392,14 @@ button {
   font-family: var(--font-mono);
   color: var(--text-muted);
   line-height: 1.4;
+}
+
+/* Intro snapshot tiles (ExperienceIntro, ProjectsIntro) */
+.snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--stack-lg);
 }
 .accent {
   color: var(--accent-light);
@@ -450,35 +477,66 @@ button {
   position: relative;
   overflow: hidden;
 }
-.card--accent::before,
-.card--red::before {
+.card--accent::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-}
-.card--accent::before {
   background: linear-gradient(to right, var(--accent), var(--accent-light));
 }
-.card--red::before {
-  background: linear-gradient(
-    to right,
-    var(--accent-red),
-    var(--accent-red-light)
-  );
+/* Solid top accent stripe (matches recog-card weight) */
+.card--top-accent {
+  border-top: 2px solid var(--accent-card, var(--accent));
 }
 @media (prefers-reduced-motion: no-preference) {
   .card {
     transition:
       border-color var(--dur) var(--ease),
-      transform var(--dur) var(--ease);
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .card:hover {
     border-color: var(--border-strong);
-    transform: translateY(-2px);
+    transform: translateY(var(--card-lift));
+    box-shadow: var(--shadow-md);
   }
+}
+
+/* Logo badge — shared container for org marks on white surface */
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--logo-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+.logo-badge img {
+  display: block;
+  max-height: 28px;
+  width: auto;
+  height: auto;
+  max-width: 140px;
+  object-fit: contain;
+}
+.logo-badge--plain {
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+.logo-badge--wide {
+  width: 64px;
+  height: 44px;
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+}
+.logo-badge--wide img {
+  max-width: 100%;
 }
 
 /* ── Recognition cards (shared: Awards + Kaggle) ─────────────────── */
@@ -534,7 +592,7 @@ button {
   font-size: 2.4rem;
   font-weight: 600;
   line-height: 1;
-  color: var(--heading);
+  color: var(--accent);
 }
 .recog-tile__label {
   font-family: var(--font-mono);
@@ -643,12 +701,49 @@ button {
     border-color var(--dur) var(--ease);
 }
 .recog-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--card-lift));
   box-shadow: var(--shadow-md);
   border-color: var(--accent-card, var(--accent));
 }
 .recog-card.hidden {
   display: none;
+}
+
+/* Recognition card interior — shared by Awards + Education */
+.recog-card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+.recog-card-head-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.recog-card-divider {
+  height: 1px;
+  background: var(--border);
+}
+.recog-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+}
+.recog-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.recog-card-field dd {
+  margin: 0;
+}
+.recog-card-message {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 .recog-icon {

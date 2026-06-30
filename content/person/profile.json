@@ -66,6 +66,7 @@
   "aboutCards": [
     {
       "title": "Industries",
+      "icon": "globe",
       "items": [
         "Oncology",
         "Drug Safety",
@@ -76,6 +77,7 @@
     },
     {
       "title": "Stakeholder alignment",
+      "icon": "handshake",
       "items": [
         "Cross-functional stakeholder alignment",
         "SVP- and Chief Scientist-sponsored programs"
@@ -83,6 +85,7 @@
     },
     {
       "title": "Research",
+      "icon": "book",
       "items": [
         "Broad Institute collaboration",
         "IIT Madras research partnership",
@@ -92,6 +95,7 @@
     },
     {
       "title": "Recognition",
+      "icon": "trophy",
       "items": ["Conference speaker", "Awards across competitions and research"]
     }
   ],

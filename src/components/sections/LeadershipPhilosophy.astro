@@ -25,6 +25,11 @@ const { aboutCards } = profile;
       <ul class="leadership__themes reveal" role="list">
         {aboutCards.map((card) => (
           <li class="leadership__theme card">
+            {card.icon && (
+              <span class="leadership__theme-icon" aria-hidden="true">
+                <Icon name={card.icon} size="lg" />
+              </span>
+            )}
             <h3 class="leadership__theme-title">{card.title}</h3>
             <ul class="bullet-list">
               {card.items.map((item) => (

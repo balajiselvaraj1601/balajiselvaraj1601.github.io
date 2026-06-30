@@ -114,7 +114,7 @@ const lastName = rest.join(' ');
         aria-label="Save page as HTML"
         title="Save page as HTML"
       >
-        <Icon name="save" size={16} />
+        <Icon name="save" size="sm" />
         <span class="save-btn__spinner" aria-hidden="true"></span>
       </button>
       <button
@@ -123,8 +123,8 @@ const lastName = rest.join(' ');
         id="theme-toggle"
         aria-label="Toggle color theme"
       >
-        <span class="theme-toggle__sun" aria-hidden="true">☀</span>
-        <span class="theme-toggle__moon" aria-hidden="true">☾</span>
+        <Icon name="sun" size="sm" class="theme-toggle__sun" />
+        <Icon name="moon" size="sm" class="theme-toggle__moon" />
       </button>
 
       <button
@@ -135,8 +135,8 @@ const lastName = rest.join(' ');
         aria-expanded="false"
         aria-controls="primary-nav"
       >
-        <span class="nav-toggle__open" aria-hidden="true">☰</span>
-        <span class="nav-toggle__close" aria-hidden="true">✕</span>
+        <Icon name="menu" size="sm" class="nav-toggle__open" />
+        <Icon name="close" size="sm" class="nav-toggle__close" />
       </button>
     </div>
   </div>
@@ -358,7 +358,7 @@ const lastName = rest.join(' ');
     display: none;
   }
   .nav-toggle[aria-expanded='true'] .nav-toggle__close {
-    display: inline;
+    display: inline-block;
   }
 </style>
 

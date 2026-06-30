@@ -1,6 +1,7 @@
 ---
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
+import RecogCardShell from '@components/ui/RecogCardShell.astro';
 import { awards, site } from '@lib/content';
 import { awardLevelSchema } from '@schemas';
 
@@ -91,53 +92,50 @@ const total = items.length;
   <div class="recog-grid reveal" data-awards-grid>
     {
       items.map((a) => (
-        <article
-          class:list={['recog-card', `level-${slug(a.level)}`]}
+        <RecogCardShell
+          class:list={[`level-${slug(a.level)}`]}
           data-level={a.level}
           data-title={a.title}
           data-nominator={a.nominator}
           data-reason={a.reason}
         >
-          <header class="card-head">
-            <div class="card-head-top">
-              <div class="recog-icon" aria-hidden="true">
-                <Icon name="trophy" size={22} />
-              </div>
-              <span class="recog-badge">{a.level}</span>
+          <Fragment slot="headTop">
+            <div class="recog-icon" aria-hidden="true">
+              <Icon name="trophy" size={22} />
             </div>
-            <h4 class="recog-title">{a.title}</h4>
-          </header>
+            <span class="recog-badge">{a.level}</span>
+          </Fragment>
+          <h4 slot="title" class="recog-title">{a.title}</h4>
 
-          <div class="card-divider" />
-
-          <dl class="card-fields">
-            <div class="field">
+          <dl class="recog-card-fields">
+            <div class="recog-card-field">
               <dt class="recog-label">Nominator</dt>
               <dd class="recog-value">
                 {a.nominator} · {a.designation}
               </dd>
             </div>
-            <div class="field">
+            <div class="recog-card-field">
               <dt class="recog-label">Award Reason</dt>
               <dd class="recog-value">{a.reason}</dd>
             </div>
             {a.date && (
-              <div class="field">
+              <div class="recog-card-field">
                 <dt class="recog-label">Date</dt>
                 <dd class="recog-value">{a.date}</dd>
               </div>
             )}
           </dl>
 
-          <div class="card-divider" />
-
-          <div class="card-message">
-            <span class="field-label recog-label">Award Message</span>
-            <p class="recog-body recog-clamp" style="--clamp: 6">
-              {a.message}
-            </p>
-          </div>
-        </article>
+          <Fragment slot="footer">
+            <div class="recog-card-divider" />
+            <div class="recog-card-message">
+              <span class="field-label recog-label">Award Message</span>
+              <p class="recog-body recog-clamp" style="--clamp: 6">
+                {a.message}
+              </p>
+            </div>
+          </Fragment>
+        </RecogCardShell>
       ))
     }
   </div>
@@ -175,42 +173,6 @@ const total = items.length;
   .recog-tile,
   .recog-card {
     --accent-card: var(--lvl);
-  }
-
-  /* ── Award cards (component-internal structure) ────────────────── */
-  .card-head {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--space-3);
-  }
-  .card-head-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-  }
-  .card-divider {
-    height: 1px;
-    background: var(--border);
-  }
-  .card-fields {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .field dd {
-    margin: 0;
-  }
-  .card-message {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
   }
 </style>
 

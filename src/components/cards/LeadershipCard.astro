@@ -36,7 +36,8 @@ const iconName = resolveIcon(icon, 'diamond');
   }
   .lcard:hover {
     border-color: var(--accent);
-    transform: translateY(-3px);
+    transform: translateY(var(--card-lift));
+    box-shadow: var(--shadow-md);
   }
   .lcard-icon {
     width: 52px;

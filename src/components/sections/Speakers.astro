@@ -4,7 +4,7 @@ import Section from '@components/ui/Section.astro';
 import { speakers, site } from '@lib/content';
 ---
 
-<Section id="speakers" title={site.sections.speakers.title} variant="default">
+<Section id="speakers" title={site.sections.speakers.title} variant="alt">
   <div class="speaking-grid reveal">
     {speakers.items.map((item) => <SpeakingCard item={item} />)}
   </div>

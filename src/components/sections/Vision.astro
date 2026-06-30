@@ -1,24 +1,9 @@
 ---
 import Section from '@components/ui/Section.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
 import { profile } from '@lib/content';
 
 const vision = profile.vision;
-
-function splitHeading(heading: string, emphasis?: string) {
-  if (!emphasis || !heading.includes(emphasis)) {
-    return { before: heading, emphasis: null as string | null, after: '' };
-  }
-  const index = heading.indexOf(emphasis);
-  return {
-    before: heading.slice(0, index),
-    emphasis,
-    after: heading.slice(index + emphasis.length),
-  };
-}
-
-const headingParts = vision
-  ? splitHeading(vision.heading, vision.headingEmphasis)
-  : null;
 ---
 
 {
@@ -31,12 +16,13 @@ const headingParts = vision
       variant="alt"
     >
       <div class="vision-text reveal">
-        {headingParts && (
-          <h2 class="vision__title">
-            {headingParts.before}
-            {headingParts.emphasis ? <em>{headingParts.emphasis}</em> : null}
-            {headingParts.after}
-          </h2>
+        {vision && (
+          <SectionHeading
+            title={vision.heading}
+            highlight={vision.headingEmphasis}
+            class="vision__title"
+            emphasisAs="em"
+          />
         )}
 
         <div class="vision__body">

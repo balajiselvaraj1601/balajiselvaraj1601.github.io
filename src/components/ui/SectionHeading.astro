@@ -1,0 +1,54 @@
+---
+// Custom section h2 with optional accent highlight span (Experience, Impact, Contact, Vision).
+interface Props {
+  title: string;
+  highlight?: string;
+  class?: string;
+  align?: 'left' | 'center';
+  /** Wrap highlight in `<em>` (Vision) vs `.accent` span (default). */
+  emphasisAs?: 'accent' | 'em';
+  id?: string;
+}
+
+const {
+  title,
+  highlight,
+  class: cls,
+  align = 'left',
+  emphasisAs = 'accent',
+  id,
+} = Astro.props;
+const highlightIndex =
+  highlight && title.includes(highlight) ? title.indexOf(highlight) : -1;
+---
+
+<h2
+  id={id}
+  class:list={[
+    'section__title',
+    cls,
+    { 'section-heading--center': align === 'center' },
+  ]}
+>
+  {
+    highlightIndex >= 0 && highlight ? (
+      <>
+        {title.slice(0, highlightIndex)}
+        {emphasisAs === 'em' ? (
+          <em>{highlight}</em>
+        ) : (
+          <span class="accent">{highlight}</span>
+        )}
+        {title.slice(highlightIndex + highlight.length)}
+      </>
+    ) : (
+      title
+    )
+  }
+</h2>
+
+<style>
+  .section-heading--center {
+    text-align: center;
+  }
+</style>

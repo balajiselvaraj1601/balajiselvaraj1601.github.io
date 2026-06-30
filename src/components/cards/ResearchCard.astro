@@ -42,11 +42,11 @@ const logoUrl = logoSrc(logo);
   {
     logoUrl ? (
       showLogoBadge ? (
-        <div class="rcard-logo">
+        <div class="logo-badge rcard-logo">
           <img src={logoUrl} alt={venue} loading="lazy" />
         </div>
       ) : (
-        <div class="rcard-logo-plain">
+        <div class="logo-badge logo-badge--plain rcard-logo-plain">
           <img src={logoUrl} alt={venue} loading="lazy" />
         </div>
       )
@@ -130,37 +130,15 @@ const logoUrl = logoSrc(logo);
     color: var(--accent-ll);
   }
   .rcard-logo {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
-    padding: var(--space-2) var(--space-3);
     margin-bottom: 0.85rem;
-    background: var(--logo-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-  }
-  .rcard-logo img {
-    display: block;
-    max-height: 28px;
-    width: auto;
-    height: auto;
-    max-width: 180px;
-    object-fit: contain;
   }
   .rcard-logo-plain {
-    display: flex;
-    align-items: center;
     min-height: 40px;
     margin-bottom: 0.85rem;
   }
   .rcard-logo-plain img {
-    display: block;
     max-height: 36px;
-    width: auto;
-    height: auto;
     max-width: min(220px, 100%);
-    object-fit: contain;
   }
   .rcard--stacked .rcard-logo,
   .rcard--stacked .rcard-logo-plain,

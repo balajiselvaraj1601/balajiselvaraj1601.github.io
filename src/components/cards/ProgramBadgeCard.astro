@@ -76,7 +76,8 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
   }
   .pcard:hover {
     border-color: var(--pc);
-    transform: translateY(-3px);
+    transform: translateY(var(--card-lift));
+    box-shadow: var(--shadow-md);
   }
   .pcard__head {
     background: var(--pc);

@@ -23,10 +23,13 @@ Purple biopharma palette. Dark theme is the primary design target; light theme u
 | `--text`                 | `#E8E0F5`               | `#1A1530`               | Primary text                    |
 | `--text-muted`           | `#9085B8`               | `#5C5470`               | Secondary text                  |
 | `--border`               | `rgba(108,47,191,0.25)` | `rgba(108,47,191,0.18)` | Dividers, card borders          |
-| `--accent`               | `#6C2FBF`               | `#6C2FBF`               | Links, active nav, primary CTA  |
-| `--accent-light`         | `#9B5EE8`               | `#9B5EE8`               | Hover, emphasis                 |
+| `--accent`               | `#6C2FBF`               | `#6C2FBF`               | Links, active nav, primary CTA, metric numbers |
+| `--accent-light`         | `#9B5EE8`               | `#8348D6`               | Interactive emphasis (links, hovers, `.accent` spans) — light value is AA-adjusted |
+| `--accent-ll`            | `#C4A0F5`               | `#7B3FD4`               | Static labels (eyebrows, kickers, group headings) |
 | `--accent-red`           | `#C0182A`               | `#C0182A`               | Secondary accent (awards, tags) |
-| `--focus-ring`           | `#9B5EE8`               | `#6C2FBF`               | Keyboard focus outline          |
+| `--bg-chip`              | `#211D3A`               | `#E8E0F5`               | Skill/tag pills (`.chip`) |
+| `--logo-surface`         | `#FFFFFF`               | `#FFFFFF`               | Logo badge containers |
+| `--focus-ring`           | `#9B5EE8`               | `#6C2FBF`               | Keyboard focus outline |
 
 > These are sensible defaults, not mandates. Whatever values are chosen must pass **WCAG AA
 > contrast** in both themes (see `accessibility.md`). Verify text/background and accent/background pairs.
@@ -70,8 +73,15 @@ Three font roles — map by **semantic role**, not per-component preference. Tok
 ## Spacing & layout
 
 - Base spacing unit `4px`; use a consistent scale (4, 8, 12, 16, 24, 32, 48, 64).
-- Content max-width ~~`1100–1200px`; text blocks narrower (~~`70ch`).
+- Content max-width `1200px` (`--maxw` on `.container`); text blocks narrower (`--maxw-text`, ~`70ch`).
 - Section vertical rhythm: large, consistent padding between sections (e.g. 64–96px desktop).
+- Responsive breakpoints: `--bp-sm` (560px), `--bp-md` (768px), `--bp-lg` (900px), `--bp-xl` (1024px).
+
+## Section eyebrows
+
+- **View intros** use `Eyebrow.astro` on sections that open a nav view with snapshot metrics or a custom h2: Experience, Projects, Impact, Contact, and intro blocks (ExperienceIntro, ProjectsIntro, FeaturedCaseStudies).
+- **Content sections** inside a view (Publications, Awards, Leadership, etc.) omit eyebrows — the view label in header nav provides context.
+- Ad-hoc kickers (Vision Board lede, Leadership diff heading) should match `.eyebrow` typography (`--accent-ll`, mono, uppercase).
 
 ## Components — visual notes
 

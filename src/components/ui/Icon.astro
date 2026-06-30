@@ -1,43 +1,45 @@
 ---
 import type { IconName } from '@lib/icons';
+import { iconBody, iconPixelSize, isFilledIcon } from '@lib/icon-render';
+import type { IconSizeToken } from '@lib/icon-render';
 
-// Icons are PNGs (rasterized from src/lib/icon-paths.json via the logo pipeline).
+// Inline SVG from src/lib/icon-paths.json — inherits currentColor for tinting.
 // Decorative by default (aria-hidden); pass a `label` to expose an accessible name.
-// Baked black for the light base theme; dark mode inverts via CSS below.
 interface Props {
   name: IconName;
   label?: string;
-  size?: number;
+  size?: number | IconSizeToken;
   class?: string;
 }
-const { name, label, size = 18, class: cls } = Astro.props;
+
+const { name, label, size = 'md', class: cls } = Astro.props;
+const px = iconPixelSize(size);
+const filled = isFilledIcon(name);
+const body = iconBody(name);
 ---
 
-<img
-  src={`/assets/icons/ui/${name}.png`}
-  width={size}
-  height={size}
-  class:list={['icon-img', cls]}
-  loading="lazy"
-  decoding="async"
-  alt={label ?? ''}
-  role={label ? 'img' : undefined}
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={px}
+  height={px}
+  viewBox="0 0 24 24"
+  fill={filled ? 'currentColor' : 'none'}
+  stroke={filled ? 'none' : 'currentColor'}
+  stroke-width={filled ? undefined : '1.8'}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class:list={['icon', cls]}
   aria-hidden={label ? undefined : 'true'}
-/>
+  role={label ? 'img' : undefined}
+  aria-label={label}
+>
+  <g set:html={body} />
+</svg>
 
 <style is:global>
-  .icon-img {
+  .icon {
     display: inline-block;
-    object-fit: contain;
     vertical-align: middle;
-  }
-  /* Icons are baked black for the light base theme; flip for dark. */
-  :root[data-theme='dark'] .icon-img {
-    filter: invert(1);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .icon-img {
-      filter: invert(1);
-    }
+    flex-shrink: 0;
   }
 </style>

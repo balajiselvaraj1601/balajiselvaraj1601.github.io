@@ -3,6 +3,7 @@ import Section from '@components/ui/Section.astro';
 import ProjectAccordion from '@components/cards/ProjectAccordion.astro';
 import Chip from '@components/ui/Chip.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
 import { experience, getEntityUrl, logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 
@@ -15,20 +16,7 @@ function periodLabel(p: {
   return end ? `${p.start} – ${end}` : p.start;
 }
 
-function splitHeadline(headline: string, highlight?: string) {
-  if (!highlight || !headline.includes(highlight)) {
-    return { before: headline, highlight: '', after: '' };
-  }
-  const idx = headline.indexOf(highlight);
-  return {
-    before: headline.slice(0, idx),
-    highlight,
-    after: headline.slice(idx + highlight.length),
-  };
-}
-
 const headline = experience.headline ?? experience.title;
-const titleParts = splitHeadline(headline, experience.headlineHighlight);
 ---
 
 <Section
@@ -39,15 +27,12 @@ const titleParts = splitHeadline(headline, experience.headlineHighlight);
   eyebrow="Experience"
   variant="default"
 >
-  <h2 class="experience__title section__title" id="experience-heading">
-    {titleParts.before}
-    {
-      titleParts.highlight ? (
-        <span class="accent">{titleParts.highlight}</span>
-      ) : null
-    }
-    {titleParts.after}
-  </h2>
+  <SectionHeading
+    title={headline}
+    highlight={experience.headlineHighlight}
+    class="experience__title"
+    id="experience-heading"
+  />
   <div class="work-layout">
     <div class="work-timeline" role="tablist" aria-label="Career timeline">
       <div class="timeline-line" aria-hidden="true"></div>
@@ -91,8 +76,9 @@ const titleParts = splitHeadline(headline, experience.headlineHighlight);
               {logoSrc(role.entity) && (
                 <div
                   class:list={[
+                    'logo-badge',
                     'role-logo',
-                    { 'role-logo--plain': !logoUsesBadge(role.entity) },
+                    { 'logo-badge--plain': !logoUsesBadge(role.entity) },
                   ]}
                 >
                   <img
@@ -234,32 +220,18 @@ const titleParts = splitHeadline(headline, experience.headlineHighlight);
     margin-bottom: var(--stack-lg);
   }
   .role-logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     height: 44px;
     max-width: 160px;
-    padding: var(--space-2) var(--space-3);
     margin-bottom: 0.75rem;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
   }
-  .role-logo--plain {
-    background: transparent;
-    border: none;
-    padding: 0;
+  .role-logo.logo-badge--plain {
     max-width: 180px;
   }
   .role-logo img {
-    display: block;
     max-width: 140px;
     max-height: 30px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
   }
-  .role-logo--plain img {
+  .role-logo.logo-badge--plain img {
     max-width: 160px;
     max-height: 32px;
   }

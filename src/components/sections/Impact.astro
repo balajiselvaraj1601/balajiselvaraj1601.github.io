@@ -3,13 +3,13 @@ import Section from '@components/ui/Section.astro';
 import JourneyRow from '@components/cards/JourneyRow.astro';
 import LeadershipCard from '@components/cards/LeadershipCard.astro';
 import MetricCard from '@components/cards/MetricCard.astro';
+import Icon from '@components/ui/Icon.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
 import { strategicImpact, site } from '@lib/content';
 
 const meta = site.sections.impact;
 const title = strategicImpact.headline ?? meta.title;
 const highlight = strategicImpact.headlineHighlight;
-const highlightIndex =
-  highlight && title.includes(highlight) ? title.indexOf(highlight) : -1;
 ---
 
 <Section
@@ -22,19 +22,13 @@ const highlightIndex =
   variant="impact"
   class="impact-section"
 >
-  <h2 class="impact__title section__title">
-    {
-      highlightIndex >= 0 && highlight ? (
-        <>
-          {title.slice(0, highlightIndex)}
-          <span class="accent">{highlight}</span>
-          {title.slice(highlightIndex + highlight.length)}
-        </>
-      ) : (
-        title
-      )
-    }
-  </h2>
+  <SectionHeading
+    title={title}
+    highlight={highlight}
+    class="impact__title"
+    align="center"
+  />
+
   {
     strategicImpact.journey && strategicImpact.journey.length > 0 && (
       <JourneyRow journey={strategicImpact.journey} />
@@ -52,9 +46,9 @@ const highlightIndex =
   }
 
   <div class="impact-cta reveal">
-    <a class="impact-cta__link" href="/#projects">
+    <a class="btn btn-secondary impact-cta__link" href="/#projects">
       See flagship case studies
-      <span aria-hidden="true">&rarr;</span>
+      <Icon name="arrow-right" size="sm" />
     </a>
   </div>
 
@@ -110,23 +104,12 @@ const highlightIndex =
     margin-bottom: var(--space-12);
   }
   .impact-cta__link {
-    display: inline-flex;
-    align-items: center;
     gap: var(--space-2);
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    padding: var(--space-3) var(--space-5);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg-elev);
-    transition:
-      gap 0.2s ease,
-      border-color 0.2s ease;
   }
-  .impact-cta__link:hover {
-    gap: var(--space-3);
-    border-color: var(--accent);
+  @media (prefers-reduced-motion: no-preference) {
+    .impact-cta__link:hover {
+      gap: var(--space-3);
+    }
   }
   .leadership-block {
     margin-top: var(--stack-xl);

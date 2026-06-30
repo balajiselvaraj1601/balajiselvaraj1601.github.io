@@ -24,7 +24,7 @@ const {
   title={header}
   hideTitle
   variant="full"
-  class="vboard"
+  class="vboard section--alt"
 >
   <BoardHeader title={header} flank="in" />
 
@@ -41,7 +41,7 @@ const {
     principles && principles.length > 0 && (
       <div class="vboard__principles reveal">
         {principles.map((p) => (
-          <article class="card vboard__principle">
+          <article class="card card--accent vboard__principle">
             {p.icon && (
               <span class="vboard__principle-icon" aria-hidden="true">
                 <Icon name={p.icon} size={26} />
@@ -106,10 +106,6 @@ const {
 </Section>
 
 <style>
-  .vboard :global(.container) {
-    max-width: 1240px;
-  }
-
   /* ── lede ────────────────────────────────────────────────────────────── */
   .vboard__lede {
     text-align: center;
@@ -139,7 +135,6 @@ const {
   }
   .vboard__principle {
     padding: var(--space-8);
-    border-top: 3px solid var(--accent);
   }
   .vboard__principle-icon {
     display: inline-flex;

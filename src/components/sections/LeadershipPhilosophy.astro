@@ -10,76 +10,51 @@ import {
 } from '@lib/content';
 
 const title = site.sections.leadership.title;
-const { statement, intro, differentiators, themes } =
-  profile.leadershipPhilosophy;
-const { aboutCards } = profile;
+const {
+  intro,
+  strategicVision,
+  businessImpact,
+  platform,
+  peopleMentoring,
+  governance,
+} = profile.leadershipPhilosophy;
+
+// CTO-for-AI pillars, in render order. Each renders as an identical card row;
+// blocks with no cards are skipped.
+const cardBlocks = [
+  { heading: 'Strategy & Sponsorship', items: strategicVision },
+  { heading: 'Business & P&L Impact', items: businessImpact },
+  { heading: 'Platform & Infrastructure', items: platform },
+  { heading: 'Team & Org Building', items: peopleMentoring },
+  { heading: 'Governance & Responsible AI', items: governance },
+];
 ---
 
 <Section id="leadership" title={title} variant="default">
-  {statement && <p class="leadership__statement reveal">{statement}</p>}
-
-  <p class="leadership__bio reveal">{profile.aboutIntro}</p>
-
-  {
-    aboutCards && aboutCards.length > 0 && (
-      <ul class="leadership__themes reveal" role="list">
-        {aboutCards.map((card) => (
-          <li class="leadership__theme card">
-            {card.icon && (
-              <span class="leadership__theme-icon" aria-hidden="true">
-                <Icon name={card.icon} size="lg" />
-              </span>
-            )}
-            <h3 class="leadership__theme-title">{card.title}</h3>
-            <ul class="bullet-list">
-              {card.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
   {intro && <p class="leadership__intro reveal">{intro}</p>}
 
   {
-    differentiators && differentiators.length > 0 && (
-      <div class="leadership__diff reveal">
-        <h3 class="leadership__diff-heading">What sets me apart</h3>
-        <ul class="leadership__themes" role="list">
-          {differentiators.map((item) => (
-            <li class="leadership__theme card">
-              {item.icon && (
-                <span class="leadership__theme-icon" aria-hidden="true">
-                  <Icon name={item.icon} size={22} />
-                </span>
-              )}
-              <h4 class="leadership__theme-title">{item.title}</h4>
-              <p class="leadership__theme-desc">{item.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
-  {
-    themes && themes.length > 0 && (
-      <ul class="leadership__themes reveal" role="list">
-        {themes.map((theme) => (
-          <li class="leadership__theme card">
-            {theme.icon && (
-              <span class="leadership__theme-icon" aria-hidden="true">
-                <Icon name={theme.icon} size={22} />
-              </span>
-            )}
-            <h3 class="leadership__theme-title">{theme.title}</h3>
-            <p class="leadership__theme-desc">{theme.description}</p>
-          </li>
-        ))}
-      </ul>
+    cardBlocks.map(
+      ({ heading, items }) =>
+        items &&
+        items.length > 0 && (
+          <div class="leadership__card-row reveal">
+            <h3 class="leadership__diff-heading">{heading}</h3>
+            <ul class="leadership__themes" role="list">
+              {items.map((item) => (
+                <li class="leadership__theme card">
+                  {item.icon && (
+                    <span class="leadership__theme-icon" aria-hidden="true">
+                      <Icon name={item.icon} size={22} />
+                    </span>
+                  )}
+                  <h4 class="leadership__theme-title">{item.title}</h4>
+                  <p class="leadership__theme-desc">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
     )
   }
 
@@ -100,7 +75,12 @@ const { aboutCards } = profile;
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={src} alt="" loading="lazy" />
+                <img
+                  class="logo-mark logo-mark--lg"
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                />
               </a>
             </li>
           );
@@ -111,30 +91,11 @@ const { aboutCards } = profile;
 </Section>
 
 <style>
-  .leadership__statement {
-    font-family: var(--font-display);
-    font-size: var(--fs-h3);
-    line-height: var(--lh-tight);
-    color: var(--heading);
-    max-width: var(--maxw-text);
-    margin-bottom: var(--space-6);
-  }
-  .leadership__bio {
-    font-size: 1.05rem;
-    max-width: var(--maxw-text);
-    margin-bottom: var(--space-10);
-    color: var(--text-muted);
-    line-height: 1.85;
-  }
   .leadership__intro {
     font-size: var(--fs-body);
     max-width: var(--maxw-text);
-    margin-top: var(--space-10);
     color: var(--text-muted);
     line-height: var(--lh-body);
-  }
-  .leadership__diff {
-    margin-top: var(--space-10);
   }
   .leadership__diff-heading {
     font-size: 0.72rem;
@@ -145,8 +106,12 @@ const { aboutCards } = profile;
     color: var(--text-muted);
     margin-bottom: var(--space-4);
   }
-  .leadership__diff .leadership__themes {
+  .leadership__card-row {
+    margin-top: var(--space-10);
+  }
+  .leadership__card-row .leadership__themes {
     margin-top: 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .leadership__themes {
     display: grid;
@@ -237,18 +202,21 @@ const { aboutCards } = profile;
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
-  .leadership__collab-mark img {
-    display: block;
-    max-width: 100%;
-    max-height: clamp(36px, 5vw, 52px);
-    width: auto;
-    height: auto;
-    object-fit: contain;
+  .leadership__collab-mark .logo-mark {
+    max-width: min(var(--logo-w-max-lg), 100%);
   }
   @media (max-width: 768px) {
+    .leadership__card-row .leadership__themes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .leadership__collabs-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       width: 100%;
+    }
+  }
+  @media (max-width: 480px) {
+    .leadership__card-row .leadership__themes {
+      grid-template-columns: 1fr;
     }
   }
   @media (min-width: 769px) and (max-width: 1024px) {

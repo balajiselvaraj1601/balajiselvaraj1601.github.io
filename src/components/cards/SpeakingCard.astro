@@ -27,11 +27,11 @@ const ytThumb = ytId
     {
       logoUrl ? (
         showLogoBadge ? (
-          <div class="speaking-card__logo speaking-card__logo--badge">
+          <div class="logo-badge logo-badge--md speaking-card__mark">
             <img src={logoUrl} alt={`${item.event} logo`} loading="lazy" />
           </div>
         ) : (
-          <div class="speaking-card__logo">
+          <div class="logo-badge logo-badge--md logo-badge--plain speaking-card__mark">
             <img src={logoUrl} alt={`${item.event} logo`} loading="lazy" />
           </div>
         )
@@ -130,29 +130,8 @@ const ytThumb = ytId
     align-items: start;
   }
 
-  .speaking-card__logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .speaking-card__mark {
     flex-shrink: 0;
-  }
-
-  .speaking-card__logo--badge {
-    background: var(--logo-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    padding: var(--space-2) var(--space-3);
-    width: fit-content;
-  }
-
-  .speaking-card__logo img {
-    display: block;
-    max-height: 32px;
-    width: auto;
-    height: auto;
-    max-width: 120px;
-    object-fit: contain;
   }
 
   .speaking-card__icon {

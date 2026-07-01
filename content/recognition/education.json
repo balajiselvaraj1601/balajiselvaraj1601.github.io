@@ -1,6 +1,5 @@
 {
   "title": "Education",
-  "intro": "Academic foundation in biomedical engineering — first rank, gold medal.",
   "records": [
     {
       "id": "be-biomedical",
@@ -11,8 +10,7 @@
       "period": "2010–2014",
       "gpa": "CGPA 9.03",
       "achievement": "Gold Medal",
-      "achievementDetail": "First Rank in University Exams",
-      "summary": "Graduated with the highest university rank in Biomedical Engineering — the academic grounding for later work in medical imaging, clinical AI, and pharmaceutical R&D."
+      "achievementDetail": "First Rank in University Exams"
     }
   ]
 }

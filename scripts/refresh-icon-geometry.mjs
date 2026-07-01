@@ -80,6 +80,12 @@ const LUCIDE_MAP = {
   pulse: 'activity',
   image: 'image',
   save: 'save',
+  mic: 'mic',
+  fish: 'fish',
+  cloud: 'cloud',
+  hand: 'hand',
+  zap: 'zap',
+  'pen-line': 'pen-line',
 };
 
 // key -> Simple Icons slug (filled brand glyphs)

@@ -5,12 +5,10 @@ import SectionHeading from '@components/ui/SectionHeading.astro';
 import { resolveIcon } from '@lib/icons';
 import { profile } from '@lib/content';
 
-const { contactPage, contactQuote } = profile;
+const { contactPage } = profile;
 
 // Social/connect cards: every contact entry with a link (location has none).
 const connectCards = profile.contact.filter((c) => c.href);
-const emailHref =
-  profile.contact.find((c) => c.type === 'email')?.href ?? undefined;
 
 const isExternal = (href: string) => href.startsWith('http');
 const actionLabel = (type: string) =>
@@ -35,17 +33,9 @@ const actionLabel = (type: string) =>
       />
       <p class="contact-subtitle">{profile.contactIntro}</p>
 
-      <div class="contact-actions">
-        {
-          emailHref && (
-            <a class="btn btn-primary" href={emailHref}>
-              <Icon name="email" size={18} />
-              {contactPage.emailButtonLabel}
-            </a>
-          )
-        }
-        {
-          contactPage.bookingHref && (
+      {
+        contactPage.bookingHref && (
+          <div class="contact-actions">
             <a
               class="btn btn-secondary"
               href={contactPage.bookingHref}
@@ -55,26 +45,17 @@ const actionLabel = (type: string) =>
               <Icon name="calendar" size={18} />
               {contactPage.bookCallLabel}
             </a>
-          )
-        }
-      </div>
+          </div>
+        )
+      }
 
       <p class="response-time">
         <Icon name="clock" size={16} />
         {contactPage.responseTime}
       </p>
-
-      {
-        contactQuote && (
-          <blockquote class="contact-quote">
-            <p>{contactQuote.text}</p>
-            <cite>— {contactQuote.author}</cite>
-          </blockquote>
-        )
-      }
     </div>
 
-    <!-- Right: connect cards + CTA banner -->
+    <!-- Right: connect cards -->
     <div class="contact-right">
       <div class="connect-header">
         <span>{contactPage.connectHeading}</span>
@@ -107,22 +88,6 @@ const actionLabel = (type: string) =>
           })
         }
       </div>
-
-      {
-        emailHref && (
-          <a class="connect-banner card" href={emailHref}>
-            <span class="connect-banner__icon" aria-hidden="true">
-              <Icon name="handshake" size={26} />
-            </span>
-            <span class="connect-banner__text">
-              {contactPage.ctaText} <strong>{contactPage.ctaLinkText}</strong>
-            </span>
-            <span class="connect-banner__arrow" aria-hidden="true">
-              <Icon name="arrow-right" size={20} />
-            </span>
-          </a>
-        )
-      }
     </div>
   </div>
 </Section>
@@ -167,42 +132,6 @@ const actionLabel = (type: string) =>
   .response-time :global(svg) {
     color: var(--accent-light);
     flex-shrink: 0;
-  }
-  .contact-quote {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg-elev);
-    padding: var(--card-padding) var(--card-padding-lg);
-    margin: 0;
-    position: relative;
-  }
-  .contact-quote::before {
-    content: '\201C';
-    position: absolute;
-    top: 0.4rem;
-    left: 0.9rem;
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    line-height: 1;
-    color: var(--accent-light);
-    opacity: 0.5;
-  }
-  .contact-quote p {
-    font-size: 0.92rem;
-    color: var(--text);
-    line-height: 1.6;
-    margin: 0 0 0.75rem;
-    padding-left: 1.5rem;
-    max-width: none;
-  }
-  .contact-quote cite {
-    display: block;
-    padding-left: 1.5rem;
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    font-style: normal;
-    letter-spacing: 0.06em;
-    color: var(--accent-ll);
   }
 
   /* ── Right column ─────────────────────────────────────────── */
@@ -275,37 +204,6 @@ const actionLabel = (type: string) =>
   }
   .connect-card:hover .connect-action :global(svg) {
     transform: translateX(3px);
-  }
-
-  .connect-banner {
-    display: flex;
-    align-items: center;
-    gap: var(--stack-sm);
-    padding: 1.25rem 1.5rem;
-    text-decoration: none;
-  }
-  .connect-banner__icon {
-    flex-shrink: 0;
-    color: var(--accent-light);
-  }
-  .connect-banner__text {
-    flex: 1;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-  .connect-banner__text strong {
-    display: block;
-    font-weight: 600;
-    color: var(--accent-light);
-  }
-  .connect-banner__arrow {
-    flex-shrink: 0;
-    color: var(--accent-light);
-    transition: transform var(--dur) var(--ease);
-  }
-  .connect-banner:hover .connect-banner__arrow {
-    transform: translateX(4px);
   }
 
   /* ── Responsive ───────────────────────────────────────────── */

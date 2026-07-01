@@ -30,12 +30,12 @@ function isExternal(href: string) {
           {
             profile.heroTitle ? (
               <>
-                {profile.heroTitle.lead} <em>{profile.heroTitle.emphasis}</em>
+                <span class="hero__title-line">
+                  {profile.heroTitle.lead}{' '}
+                  <em>{profile.heroTitle.emphasis}</em>
+                </span>
                 {profile.heroTitle.tail && (
-                  <>
-                    <br />
-                    {profile.heroTitle.tail}
-                  </>
+                  <span class="hero__title-line">{profile.heroTitle.tail}</span>
                 )}
               </>
             ) : (
@@ -192,9 +192,15 @@ function isExternal(href: string) {
   .hero__title {
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 5vw, 4.25rem);
-    line-height: 0.95;
+    line-height: 1;
     color: var(--heading);
     font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+  .hero__title-line {
+    display: block;
   }
   .hero__title em {
     font-style: italic;

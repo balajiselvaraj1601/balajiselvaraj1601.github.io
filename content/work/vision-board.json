@@ -22,7 +22,7 @@
       "label": "VISION",
       "variant": "red",
       "center": { "kind": "logo", "asset": "brain", "alt": "Multimodal AI" },
-      "satellites": ["graph", "document", "table", "pulse", "image", "blocks"]
+      "satellites": ["graph", "document", "table", "dna", "scan", "blocks"]
     }
   ],
   "principles": [

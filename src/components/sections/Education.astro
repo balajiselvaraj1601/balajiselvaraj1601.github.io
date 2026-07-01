@@ -1,13 +1,56 @@
 ---
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
-import EducationCard from '@components/cards/EducationCard.astro';
-import { education, site } from '@lib/content';
+import EntityLink from '@components/ui/EntityLink.astro';
+import { education, getEntityUrl, logoSrc, site } from '@lib/content';
+import type { IconName } from '@lib/icons';
 
 const [record] = education.records;
-const gpaValue = record.gpa?.replace(/^CGPA\s*/i, '') ?? '—';
+const logo = logoSrc(record.entity);
+const entityUrl = getEntityUrl(record.entity);
 const degreeShort = record.degree.split(' ')[0];
 const fieldLabel = record.field ?? record.degree.replace(/^[^\s]+\s*/, '');
+
+function formatGpa(value?: string) {
+  if (!value) return undefined;
+  return value.toLowerCase().startsWith('cgpa') ? value : `CGPA ${value}`;
+}
+
+const achievementLines = [record.achievement, record.achievementDetail].filter(
+  (line): line is string => Boolean(line)
+);
+
+type StatCell = {
+  icon: IconName;
+  label: string;
+  value?: string;
+  lines?: string[];
+  href?: string;
+  linkLabel?: string;
+};
+
+const stats: StatCell[] = [
+  {
+    icon: 'institution',
+    label: 'Institution',
+    value: record.institution,
+    href: entityUrl,
+    linkLabel: record.institution,
+  },
+  { icon: 'calendar', label: 'Period', value: record.period },
+  ...(record.gpa
+    ? [{ icon: 'chart' as IconName, label: 'GPA', value: formatGpa(record.gpa)! }]
+    : []),
+  ...(achievementLines.length > 0
+    ? [
+        {
+          icon: 'trophy' as IconName,
+          label: 'Achievement',
+          lines: achievementLines,
+        },
+      ]
+    : []),
+];
 ---
 
 <Section
@@ -16,40 +59,74 @@ const fieldLabel = record.field ?? record.degree.replace(/^[^\s]+\s*/, '');
   subtitle={education.intro}
   variant="default"
 >
-  <div class="recog-summary reveal edu-accent">
-    <div class="recog-tile">
-      <div class="recog-tile__icon" aria-hidden="true">
-        <Icon name="chart" size={22} />
+  <article class="edu-panel reveal edu-accent">
+    <div class="edu-layout">
+      <div class="edu-hero">
+        {
+          logo ? (
+            <div class="logo-badge logo-badge--lg edu-hero__logo">
+              <img
+                src={logo}
+                alt={`${record.institution} logo`}
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div class="recog-tile__icon edu-hero__icon" aria-hidden="true">
+              <Icon name="graduation" size={24} />
+            </div>
+          )
+        }
+        <p class="edu-degree-short">{degreeShort}</p>
+        <h3 class="edu-field">{fieldLabel}</h3>
+        <div class="edu-rule" aria-hidden="true" />
       </div>
-      <div class="recog-tile__count">{gpaValue}</div>
-      <div class="recog-tile__label">CGPA</div>
-    </div>
-    <div class="recog-tile">
-      <div class="recog-tile__icon" aria-hidden="true">
-        <Icon name="trophy" size={22} />
-      </div>
-      <div class="recog-tile__count">{record.achievement ?? '—'}</div>
-      <div class="recog-tile__label">University Rank</div>
-    </div>
-    <div class="recog-tile">
-      <div class="recog-tile__icon" aria-hidden="true">
-        <Icon name="calendar" size={22} />
-      </div>
-      <div class="recog-tile__count">{record.period}</div>
-      <div class="recog-tile__label">Years</div>
-    </div>
-    <div class="recog-tile">
-      <div class="recog-tile__icon" aria-hidden="true">
-        <Icon name="graduation" size={22} />
-      </div>
-      <div class="recog-tile__count">{degreeShort}</div>
-      <div class="recog-tile__label">{fieldLabel}</div>
-    </div>
-  </div>
 
-  <div class="edu-card-wrap reveal">
-    <EducationCard {...record} />
-  </div>
+      <div class="edu-body">
+        <dl class="edu-stats">
+          {
+            stats.map((s) => (
+              <div class="edu-stat">
+                <span class="recog-tile__icon edu-stat__icon" aria-hidden="true">
+                  <Icon name={s.icon} size={18} />
+                </span>
+                <div class="edu-stat__copy">
+                  <dt class="recog-label">{s.label}</dt>
+                  <dd
+                    class:list={[
+                      'recog-value',
+                      s.lines && 'edu-stat__value--stacked',
+                    ]}
+                  >
+                    {s.lines ? (
+                      s.lines.map((line) => (
+                        <span class="edu-stat__line">{line}</span>
+                      ))
+                    ) : s.href && s.linkLabel ? (
+                      <EntityLink href={s.href} label={s.linkLabel} />
+                    ) : (
+                      s.value
+                    )}
+                  </dd>
+                </div>
+              </div>
+            ))
+          }
+        </dl>
+
+        {
+          record.summary && (
+            <div class="edu-highlight">
+              <span class="recog-tile__icon edu-highlight__icon" aria-hidden="true">
+                <Icon name="trophy" size={20} />
+              </span>
+              <p class="edu-highlight__text">{record.summary}</p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </article>
 </Section>
 
 <style>
@@ -57,7 +134,192 @@ const fieldLabel = record.field ?? record.degree.replace(/^[^\s]+\s*/, '');
     --accent-card: var(--accent-gold);
   }
 
-  .edu-card-wrap {
-    max-width: 720px;
+  .edu-panel {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent-card, var(--accent-gold));
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+  .edu-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle at 0.4rem 0.4rem,
+        color-mix(in srgb, var(--accent-card, var(--accent-gold)) 12%, transparent)
+          0.5px,
+        transparent 0.5px
+      ),
+      radial-gradient(
+        120% 80% at 0% 0%,
+        color-mix(in srgb, var(--accent-card, var(--accent-gold)) 10%, transparent),
+        transparent 55%
+      );
+    background-size:
+      18px 18px,
+      auto;
+    opacity: 0.55;
+  }
+
+  .edu-panel__badge {
+    position: absolute;
+    top: var(--space-5);
+    right: var(--space-5);
+    z-index: 1;
+  }
+
+  .edu-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 768px) {
+    .edu-layout {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+      align-items: start;
+      gap: clamp(var(--space-6), 4vw, var(--space-10));
+    }
+  }
+
+  .edu-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .edu-hero__logo {
+    margin-bottom: var(--space-1);
+  }
+  .edu-hero__icon {
+    margin-bottom: var(--space-1);
+  }
+
+  .edu-degree-short {
+    font-family: var(--font-mono);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--accent-card, var(--accent-gold));
+    margin: 0;
+  }
+
+  .edu-field {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.8vw, 2.25rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--heading);
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .edu-rule {
+    width: min(100%, 12rem);
+    height: 2px;
+    margin-top: var(--space-2);
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--accent-card, var(--accent-gold)),
+      transparent
+    );
+    opacity: 0.85;
+  }
+
+  .edu-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-top: var(--space-2);
+  }
+  @media (min-width: 768px) {
+    .edu-body {
+      padding-top: calc(var(--space-6) + var(--space-2));
+    }
+  }
+
+  .edu-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .edu-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: color-mix(in srgb, var(--bg) 55%, var(--bg-elev));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .edu-stat__icon {
+    flex-shrink: 0;
+  }
+  .edu-stat__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .edu-stat dd {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.35;
+  }
+  .edu-stat__value--stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .edu-stat__line {
+    display: block;
+  }
+
+  .edu-highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: 1px solid
+      color-mix(in srgb, var(--accent-card, var(--accent-gold)) 45%, var(--border));
+    border-radius: var(--radius-lg);
+    background: color-mix(
+      in srgb,
+      var(--accent-card, var(--accent-gold)) 6%,
+      var(--bg-elev)
+    );
+  }
+  .edu-highlight__icon {
+    flex-shrink: 0;
+  }
+  .edu-highlight__text {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--text);
+    max-width: none;
+  }
+
+  @media (max-width: 767px) {
+    .edu-panel__badge {
+      position: static;
+      align-self: flex-start;
+      margin-bottom: var(--space-2);
+    }
+    .edu-panel {
+      display: flex;
+      flex-direction: column;
+    }
+    .edu-stats {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

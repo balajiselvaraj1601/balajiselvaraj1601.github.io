@@ -3,20 +3,10 @@
   "note": "Derived view of headline projects from experience.json, shaped for a card/detail UI. experience.json remains the source of truth for bullets.",
   "intro": "Production AI systems across drug safety, oncology, clinical imaging, and enterprise vision — selected for measurable impact, technical depth, and scale of deployment.",
   "snapshot": [
-    { "value": "8", "label": "Selected projects" },
+    { "value": "3", "label": "Flagship case studies" },
     { "value": "6", "label": "Domains across biopharma & enterprise" },
     { "value": "$20–50M", "label": "Projected annual business impact" },
     { "value": "12+", "label": "Years across AI & medical imaging" }
-  ],
-  "groups": [
-    {
-      "id": "oncology-pathology",
-      "heading": "Oncology & Pathology"
-    },
-    {
-      "id": "vision-imaging",
-      "heading": "Vision & Imaging Foundations"
-    }
   ],
   "projects": [
     {
@@ -105,134 +95,6 @@
         "Reusable Framework"
       ],
       "domain": "Clinical Imaging"
-    },
-    {
-      "id": "ct-segmentation-oncology",
-      "name": "CT Tumor Segmentation",
-      "org": "AstraZeneca, India",
-      "entity": "astrazeneca",
-      "period": "2022–2023",
-      "role": "Engineer",
-      "summary": "Next-generation CT tumor segmentation pipeline delivered in 6 months, with Dice scores 46% above state-of-the-art, enabling $0.5M in follow-on funding.",
-      "problem": "NSCLC tumor segmentation benchmarks required significant improvement to unlock follow-on funding and clinical utility.",
-      "solution": "Radiologist-inspired dynamic window function and test-time augmentation in a distributed training pipeline.",
-      "architecture": "Model and data parallelism reducing training time 20% and GPU memory 15–20%.",
-      "businessImpact": "Enabled $0.5M in follow-on funding; exceeded stakeholder targets by 4–5x on NSCLC benchmarks.",
-      "outcome": "Dice scores 46% above state-of-the-art; validated across independent clinical trial datasets including POSEIDON.",
-      "highlights": [
-        "Radiologist-inspired dynamic window function and test-time augmentation improved Dice by 11% and 7%.",
-        "Exceeded stakeholder targets by 4–5x on NSCLC tumor segmentation benchmarks.",
-        "Reduced training time 20% and GPU memory 15-20% via model and data parallelism."
-      ],
-      "tags": ["Segmentation", "CT Imaging", "NSCLC", "Distributed Training"],
-      "domain": "Oncology Imaging",
-      "group": "oncology-pathology",
-      "icon": "scan"
-    },
-    {
-      "id": "digital-pathology-foundation-models",
-      "name": "Foundation Models for Digital Pathology",
-      "org": "AstraZeneca, India",
-      "entity": "astrazeneca",
-      "period": "2020–2022",
-      "role": "AI Lead",
-      "summary": "Scalable, reusable histopathology foundation model platform on AWS, delivering contrastive and inpainting model variants at 60% lower GPU compute cost.",
-      "problem": "Histopathology AI required expensive GPU compute and lacked reusable infrastructure for pathologist annotation workflows.",
-      "solution": "End-to-end AWS ML pipeline with contrastive and inpainting foundation model variants and GxP-compliant annotation tooling.",
-      "architecture": "Distributed training, model interpretability, and inference on AWS with Label Studio for pathologists.",
-      "businessImpact": "Delivered 2 model variants at 60% lower GPU compute cost; matched state-of-the-art benchmark performance.",
-      "outcome": "Led a 4-member team; platform adopted for internal AI-Bench environment.",
-      "highlights": [
-        "End-to-end AWS ML pipeline: ingestion, preprocessing, distributed training, interpretability, inference.",
-        "Contrastive foundation models matched state-of-the-art at reduced GPU compute cost.",
-        "GxP-compliant Label Studio annotation tooling for pathologists; led a four-member team."
-      ],
-      "tags": [
-        "Self-Supervised Learning",
-        "Contrastive Learning",
-        "Digital Pathology",
-        "AWS"
-      ],
-      "domain": "Digital Pathology",
-      "group": "oncology-pathology",
-      "icon": "microscope"
-    },
-    {
-      "id": "gnn-clinical-imaging",
-      "name": "Graph Neural Networks & Clinical Imaging",
-      "org": "AstraZeneca, India",
-      "entity": "astrazeneca",
-      "period": "2020–2022",
-      "role": "Engineer",
-      "summary": "GNN-based pipeline for survival and response prediction on multiplex immunofluorescence histopathology slides, mapping the tumor microenvironment.",
-      "problem": "Multiplex immunofluorescence images contain rich spatial biology that traditional CNNs fail to capture for response prediction.",
-      "solution": "Graph-embedding pipelines mapping the tumor microenvironment across NSCLC and HNSCC cohorts.",
-      "architecture": "Modular preprocessing extracting graphs from multispectral gigapixel histopathology images.",
-      "businessImpact": "Published in JITC 2021; advanced computational pathology capabilities for solid-tumor response prediction.",
-      "outcome": "Graph-embedding pipelines deployed across NSCLC and HNSCC solid-tumor cohorts.",
-      "highlights": [
-        "Graph-embedding pipelines across NSCLC and HNSCC solid-tumor cohorts.",
-        "Modular preprocessing extracting graphs from multispectral gigapixel histopathology images."
-      ],
-      "tags": [
-        "Graph Neural Networks",
-        "Histopathology",
-        "Tumor Microenvironment"
-      ],
-      "domain": "Computational Pathology",
-      "group": "oncology-pathology",
-      "icon": "graph"
-    },
-    {
-      "id": "enterprise-vision-analytics",
-      "name": "Enterprise Vision Analytics",
-      "org": "HCL Technology, India",
-      "entity": "hcl",
-      "period": "2017–2020",
-      "role": "Lead Engineer",
-      "summary": "Production face, video, and pose analytics platforms — real-time recognition, person re-identification, multi-object tracking, and behavior analysis across enterprise deployments.",
-      "problem": "Enterprise clients needed production-grade computer vision across face, video, and pose analytics in resource-constrained environments.",
-      "solution": "Modular Docker-based deployment with edge-optimized model compression and scalable pipelines.",
-      "architecture": "Real-time recognition, ReID, MOT, and pose estimation with TensorFlow-based spatiotemporal features.",
-      "businessImpact": "Deployed across 2 client environments with accelerated use-case onboarding.",
-      "outcome": "Production systems for face recognition, ReID/MOT, and multi-environment pose estimation.",
-      "highlights": [
-        "Real-time face recognition, verification, and identity clustering across two client deployments.",
-        "ReID and MOT pipelines robust to lighting, camera motion, and multi-scene conditions.",
-        "Edge-optimized model compression and Docker-based modular deployment."
-      ],
-      "tags": ["Computer Vision", "Edge AI", "ReID", "Pose Estimation"],
-      "domain": "Enterprise Vision",
-      "group": "vision-imaging",
-      "icon": "vision"
-    },
-    {
-      "id": "clinical-imaging-systems-iitm",
-      "name": "Clinical Imaging Systems",
-      "org": "HTIC & ICSR, IIT Madras",
-      "entity": "htic",
-      "period": "2016–2017",
-      "role": "Project Associate",
-      "summary": "Real-time clinical imaging systems — 4K neonatal retinal imaging, GPU endoscopy with digital NBI, mouse-brain 3D reconstruction, and ultrasound-guided robotic navigation.",
-      "problem": "Clinical imaging devices required real-time GPU processing and novel algorithm development across multiple modalities.",
-      "solution": "Digital NBI pipeline, real-time endoscopy on Jetson TX1, and 3D neuroanatomy reconstruction algorithms.",
-      "architecture": "10+ integrated modules on NVIDIA Jetson TX1; neuron-connectivity toolbox for CSHL and RIKEN.",
-      "businessImpact": "Digital NBI eliminated dedicated hardware, cutting ~$5K per device; toolbox delivered to Cold Spring Harbor Laboratory.",
-      "outcome": "First-of-its-kind 4K neonatal retinal imaging pipeline; real-time endoscopy system with polyp detection and enhancement modules.",
-      "highlights": [
-        "Digital NBI pipeline eliminated dedicated hardware, cutting ~$5K per device.",
-        "Real-time endoscopy system with 10+ modules on NVIDIA Jetson TX1.",
-        "Neuron-connectivity toolbox delivered to Cold Spring Harbor Laboratory and RIKEN."
-      ],
-      "tags": [
-        "Real-Time Imaging",
-        "Embedded GPU",
-        "Medical Devices",
-        "3D Reconstruction"
-      ],
-      "domain": "Academic Research",
-      "group": "vision-imaging",
-      "icon": "image"
     }
   ]
 }

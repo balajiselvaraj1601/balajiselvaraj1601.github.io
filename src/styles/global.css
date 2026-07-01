@@ -43,7 +43,7 @@
   --icon-lg: 24px;
   --icon-xl: 32px;
 
-  --maxw: 1200px;
+  --maxw: 1440px;
   --maxw-text: 70ch;
   /* Corner radii — single source of truth. Components reference these tokens
      instead of hardcoding px so the scale stays consistent site-wide. */
@@ -92,6 +92,16 @@
      Logo marks ship on white; video chrome reads against dark thumbnails;
      availability status hues are intentionally fixed across themes. */
   --logo-surface: #ffffff;
+  /* Logo mark scale — height-first for horizontal wordmarks; width caps ultra-wide marks */
+  --logo-h-sm: 28px;
+  --logo-w-max-sm: 140px;
+  --logo-h-md: 32px;
+  --logo-w-max-md: 180px;
+  --logo-h-lg: 40px;
+  --logo-w-max-lg: 220px;
+  /* Circular emblem slots (vision hub center, program badge) */
+  --logo-emblem: 64px;
+  --logo-emblem-img: 74%;
   --overlay-scrim: #000000;
   --overlay-scrim-soft: rgba(0, 0, 0, 0.75);
   --overlay-play: #ffffff;
@@ -515,28 +525,30 @@ button {
   padding: var(--space-2) var(--space-3);
   box-shadow: var(--shadow-sm);
 }
-.logo-badge img {
+.logo-badge img,
+.logo-mark {
   display: block;
-  max-height: 28px;
   width: auto;
   height: auto;
-  max-width: 140px;
+  max-height: var(--logo-h-sm);
+  max-width: var(--logo-w-max-sm);
   object-fit: contain;
+}
+.logo-badge--md img,
+.logo-mark--md {
+  max-height: var(--logo-h-md);
+  max-width: var(--logo-w-max-md);
+}
+.logo-badge--lg img,
+.logo-mark--lg {
+  max-height: var(--logo-h-lg);
+  max-width: var(--logo-w-max-lg);
 }
 .logo-badge--plain {
   background: transparent;
   border: none;
   padding: 0;
   box-shadow: none;
-}
-.logo-badge--wide {
-  width: 64px;
-  height: 44px;
-  padding: var(--space-2);
-  border-radius: var(--radius-lg);
-}
-.logo-badge--wide img {
-  max-width: 100%;
 }
 
 /* ── Recognition cards (shared: Awards + Kaggle) ─────────────────── */

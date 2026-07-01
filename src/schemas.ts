@@ -135,20 +135,10 @@ export const profileSchema = z.object({
       icon: iconNameSchema.optional(),
     })
   ),
-  aboutIntro: z.string(),
-  aboutCards: z
-    .array(
-      z.object({
-        title: z.string(),
-        icon: iconNameSchema.optional(),
-        items: z.array(z.string()),
-      })
-    )
-    .optional(),
   leadershipPhilosophy: z.object({
-    statement: z.string().optional(),
     intro: z.string().optional(),
-    differentiators: z
+    // Strategy & Sponsorship block (heading set in LeadershipPhilosophy.astro)
+    strategicVision: z
       .array(
         z.object({
           title: z.string(),
@@ -157,7 +147,35 @@ export const profileSchema = z.object({
         })
       )
       .optional(),
-    themes: z
+    businessImpact: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          icon: iconNameSchema.optional(),
+        })
+      )
+      .optional(),
+    platform: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          icon: iconNameSchema.optional(),
+        })
+      )
+      .optional(),
+    // Team & Org Building block (heading set in LeadershipPhilosophy.astro)
+    peopleMentoring: z
+      .array(
+        z.object({
+          title: z.string(),
+          description: z.string(),
+          icon: iconNameSchema.optional(),
+        })
+      )
+      .optional(),
+    governance: z
       .array(
         z.object({
           title: z.string(),
@@ -179,23 +197,14 @@ export const profileSchema = z.object({
     })
     .optional(),
   contactIntro: z.string().optional(),
-  contactQuote: z
-    .object({
-      text: z.string(),
-      author: z.string(),
-    })
-    .optional(),
   contactPage: z.object({
     title: z.string(),
     titleHighlight: z.string().optional(),
     eyebrow: z.string(),
     responseTime: z.string(),
     connectHeading: z.string(),
-    emailButtonLabel: z.string(),
     bookCallLabel: z.string(),
     bookingHref: z.string().nullable().optional(),
-    ctaText: z.string(),
-    ctaLinkText: z.string(),
     resumeEyebrow: z.string(),
     resumeDescription: z.string(),
     resumeLabel: z.string(),

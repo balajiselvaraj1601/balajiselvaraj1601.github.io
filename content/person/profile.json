@@ -40,20 +40,7 @@
       "detail": "Executive projects · Chief Scientist & SVP"
     }
   ],
-  "ctas": [
-    {
-      "label": "Get in Touch",
-      "href": "/#contact",
-      "variant": "primary",
-      "icon": "email"
-    },
-    {
-      "label": "Download Resume",
-      "href": "/assets/resume/balaji-selvaraj-resume.pdf",
-      "variant": "secondary",
-      "icon": "download"
-    }
-  ],
+  "ctas": [],
   "portrait": {
     "src": "/assets/images/balaji.png",
     "alt": "Portrait of Balaji Selvaraj",
@@ -62,88 +49,106 @@
   },
   "credentialHook": "Kaggle top 0.3% globally · 652 among 200K+ data scientists",
   "photo": "/assets/images/balaji.png",
-  "aboutIntro": "Over 12+ years across product, services, and startup environments, I have led AI programs spanning oncology, drug safety, and biopharma R&D in support of AstraZeneca's R&D priority areas — from early-stage research partnerships to executive-sponsored production systems.",
-  "aboutCards": [
-    {
-      "title": "Industries",
-      "icon": "globe",
-      "items": [
-        "Oncology",
-        "Drug Safety",
-        "Medical Imaging",
-        "Foundation Models",
-        "Computational Pathology"
-      ]
-    },
-    {
-      "title": "Stakeholder alignment",
-      "icon": "handshake",
-      "items": [
-        "Cross-functional stakeholder alignment",
-        "SVP- and Chief Scientist-sponsored programs"
-      ]
-    },
-    {
-      "title": "Research",
-      "icon": "book",
-      "items": [
-        "Broad Institute collaboration",
-        "IIT Madras research partnership",
-        "EU consortium (14 partners)",
-        "Publications in JITC and bioRxiv"
-      ]
-    },
-    {
-      "title": "Recognition",
-      "icon": "trophy",
-      "items": ["Conference speaker", "Awards across competitions and research"]
-    }
-  ],
   "leadershipPhilosophy": {
-    "statement": "I build AI organizations that deliver measurable business outcomes — not research prototypes left on the shelf.",
-    "intro": "Delivering on that conviction is less about any single model and more about the people, alignment, and decisions around it. A few principles guide how I build teams and the work they ship.",
-    "differentiators": [
+    "intro": "I lead AI the way a CTO does: secure the sponsorship and set the strategy before the first model exists, then build the platform, the team, and the guardrails that turn conviction into shipped, regulated value. My edge is a rare bridge — a biomedical engineer who supported 400+ surgeries across 5 specialties and now architects production AI — so the science, the business case, and the system stay one conversation.",
+    "strategicVision": [
       {
-        "title": "Clinical + AI",
-        "description": "A biomedical engineer who has supported 400+ surgeries across 5 specialties — and now architects production AI.",
-        "icon": "pulse"
-      },
-      {
-        "title": "End-to-end ownership",
-        "description": "From problem identification to production deployment — not prototypes left behind.",
-        "icon": "layers"
-      },
-      {
-        "title": "Cross-cultural leadership",
-        "description": "Built and led an AI team across five countries.",
-        "icon": "globe"
-      },
-      {
-        "title": "Business-impact first",
-        "description": "Outcomes that ship measurable value — not research left on the shelf.",
-        "icon": "chart"
-      }
-    ],
-    "themes": [
-      {
-        "title": "Hiring & Scaling",
-        "description": "Grew the team from a single engineer to 12, distributed across five countries — hiring for both technical depth and range.",
-        "icon": "team"
-      },
-      {
-        "title": "Mentoring",
-        "description": "Mentor AI/ML engineers and graduate trainees, helping them grow into full-time industry and research roles.",
-        "icon": "graduation"
-      },
-      {
-        "title": "Cross-functional & Executive Alignment",
-        "description": "Partner across functions and earn SVP- and Chief Scientist-level sponsorship to keep programs funded, focused, and connected to R&D priorities.",
+        "title": "Sell first, build next",
+        "description": "Secure executive sponsorship and align portfolios before data or infrastructure exist — turning an ambiguous 5-direction landscape into 2 funded, company-scale programs.",
         "icon": "handshake"
       },
       {
-        "title": "Outcome-Driven Decisions",
-        "description": "Prioritize the work that ships measurable impact over research that stays on the shelf.",
+        "title": "Executive influence, VP to EVP",
+        "description": "Influence spanning VP → SVP → Chief Scientist → EVP, translating independently sourced AI ideas into sponsored, company-scale mandates.",
+        "icon": "institution"
+      },
+      {
+        "title": "Positioned across the org",
+        "description": "Placed the AI team across 7 internal groups and 3 external startups with zero conflicting priorities, and aligned delivery to 3 corporate R&D scorecards (Oncology, BioPharma R&D, CPSS) over 3 cycles.",
+        "icon": "link"
+      },
+      {
+        "title": "Authored the 2030 roadmap",
+        "description": "Wrote the 2030 Gene & Cell Therapy multimodal-AI roadmap the company took to Gartner — a bottom-up vision that became an official strategic artifact.",
+        "icon": "vision"
+      }
+    ],
+    "businessImpact": [
+      {
+        "title": "$20–50M projected annual savings",
+        "description": "Business case for the flagship drug-safety AI platform — the number that anchored executive funding.",
+        "icon": "funding"
+      },
+      {
+        "title": "5 years → 3 years",
+        "description": "Compressed drug-safety study timelines by two years, converting model performance into regulated program speed.",
+        "icon": "clock"
+      },
+      {
+        "title": "$40K/yr + $3K/month recovered",
+        "description": "Restructured tooling to recover $40K/yr in licensing and $3K/month in idle GPU spend, with cost treated as a design constraint.",
+        "icon": "save"
+      },
+      {
+        "title": "~6 months capacity freed",
+        "description": "Deciding what NOT to build: retired low-probability work to free roughly six months of delivery capacity for funded, high-conviction programs.",
+        "icon": "hand"
+      }
+    ],
+    "platform": [
+      {
+        "title": "The internal AI platform the org ships on",
+        "description": "Built a reusable foundation-model framework standardizing training, inference, and evaluation across 3 modalities and 3 internal infrastructures.",
+        "icon": "blocks"
+      },
+      {
+        "title": "GxP-compliant production AI",
+        "description": "First on the team to deploy AWS SageMaker training and Lambda inference inside AstraZeneca's GxP-compliant AI-Bench — establishing the regulated path others build on.",
+        "icon": "cloud"
+      },
+      {
+        "title": "Distributed training at scale",
+        "description": "FSDP/DeepSpeed with spot-instance checkpointing, engineered so large-model training runs with cost as a first-class design constraint.",
+        "icon": "layers"
+      }
+    ],
+    "peopleMentoring": [
+      {
+        "title": "Scaled 1 → 12 across 5 countries",
+        "description": "Grew the team from a single engineer to 12 across India (6), UK (2), Sweden (2), Mexico (1), and China (1).",
+        "icon": "team"
+      },
+      {
+        "title": "Career mentoring",
+        "description": "Mentored AI/ML engineers (3) and graduate trainees (10) into full-time industry/research roles.",
+        "icon": "graduation"
+      },
+      {
+        "title": "Kaggle coaching",
+        "description": "Mentored a team of junior engineers (3) to secure a Kaggle Bronze (Top 6%, 76th/1,220).",
+        "icon": "trophy"
+      },
+      {
+        "title": "Hackathon mentoring",
+        "description": "Mentored a student team (4) to Top 4 nationally, Smart India Hackathon (2019).",
         "icon": "target"
+      }
+    ],
+    "governance": [
+      {
+        "title": "Human-in-the-loop guardrails",
+        "description": "Designed human-in-the-loop controls in sandboxed, isolated VPCs (NemoClaw) so generative AI runs with review and containment by default.",
+        "icon": "hand"
+      },
+      {
+        "title": "GxP-compliant AI delivery",
+        "description": "Shipped AI inside regulated GxP boundaries, making compliance a build-time property rather than a release-time audit.",
+        "icon": "document"
+      },
+      {
+        "title": "Risk as a design constraint",
+        "description": "Treat AI safety, compliance, and regulatory risk as first-class design constraints — engineered in from the first architecture decision.",
+        "icon": "pulse"
       }
     ]
   },
@@ -178,22 +183,15 @@
       }
     ]
   },
-  "contactIntro": "Open to discussing AI leadership opportunities, research collaborations, and advisory roles in biopharma and precision medicine.",
-  "contactQuote": {
-    "text": "Passionate about solving meaningful problems at the intersection of AI, biology, and healthcare.",
-    "author": "Balaji Selvaraj"
-  },
+  "contactIntro": "Open to discussing AI leadership opportunities, research collaborations, and advisory roles.",
   "contactPage": {
     "title": "Let's build something important",
     "titleHighlight": "important",
     "eyebrow": "Contact",
     "responseTime": "Typically respond within 24–48 hours.",
     "connectHeading": "Connect with me",
-    "emailButtonLabel": "Send an Email",
     "bookCallLabel": "Book a Call",
     "bookingHref": null,
-    "ctaText": "Interested in working together or have a question?",
-    "ctaLinkText": "I'd love to hear from you.",
     "resumeEyebrow": "Download CV",
     "resumeDescription": "Full resume with complete project details, publications, and career history.",
     "resumeLabel": "Download PDF Resume"

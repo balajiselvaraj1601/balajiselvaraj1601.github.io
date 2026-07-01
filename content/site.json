@@ -20,7 +20,6 @@
         "experience",
         "projects-intro",
         "featured-case-studies",
-        "projects",
         "publications",
         "conferences",
         "speakers",
@@ -28,7 +27,6 @@
         "kaggle",
         "education",
         "technical-vision",
-        "vision-board",
         "impact",
         "contact"
       ],
@@ -54,8 +52,8 @@
         "title": "Projects — Balaji Selvaraj",
         "description": "Selected enterprise AI systems across oncology, drug safety, and biopharma R&D."
       },
-      "sections": ["projects-intro", "featured-case-studies", "projects"],
-      "viewSections": ["projects-intro", "featured-case-studies", "projects"]
+      "sections": ["projects-intro", "featured-case-studies"],
+      "viewSections": ["projects-intro", "featured-case-studies"]
     },
     {
       "id": "research",
@@ -87,8 +85,8 @@
         "title": "Vision — Balaji Selvaraj",
         "description": "AI leadership & strategic impact — from a Kaggle idea to executive-sponsored programs across drug safety, oncology, and global research partnerships."
       },
-      "sections": ["technical-vision", "vision-board", "impact"],
-      "viewSections": ["technical-vision", "vision-board", "impact"]
+      "sections": ["technical-vision", "impact"],
+      "viewSections": ["technical-vision", "impact"]
     },
     {
       "id": "contact",
@@ -125,11 +123,6 @@
       "source": "person/profile.json",
       "visible": true
     },
-    "vision-board": {
-      "title": "How I Build AI Organizations",
-      "source": "work/vision-board.json",
-      "visible": true
-    },
     "leadership": {
       "title": "About",
       "source": "person/profile.json",
@@ -152,11 +145,6 @@
     },
     "featured-case-studies": {
       "title": "Flagship Case Studies",
-      "source": "work/projects.json",
-      "visible": true
-    },
-    "projects": {
-      "title": "Other Work",
       "source": "work/projects.json",
       "visible": true
     },

@@ -13,7 +13,7 @@
   ],
   "journey": [
     {
-      "icon": "trophy",
+      "icon": "kaggle",
       "label": "Idea",
       "description": "Top 0.3% Kaggle signals & patterns",
       "variant": "purple"
@@ -38,7 +38,7 @@
       "subtitle": "For Drug Safety Platform"
     },
     {
-      "icon": "chart",
+      "icon": "document",
       "title": "Gartner Submission",
       "entity": "gartner",
       "subtitle": "GITC Chennai Multimodal Vision"

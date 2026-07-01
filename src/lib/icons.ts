@@ -49,6 +49,12 @@ export const iconNameSchema = z.enum([
   'pulse',
   'image',
   'save',
+  'mic',
+  'fish',
+  'cloud',
+  'hand',
+  'zap',
+  'pen-line',
 ]);
 
 export type IconName = z.infer<typeof iconNameSchema>;
@@ -63,27 +69,27 @@ export function resolveIcon(
 }
 
 const COMPETITION_ICONS: Record<string, IconName> = {
-  'bengaliai-speech-recognition': 'pulse',
-  'happywhale-identification': 'image',
-  'google-contrails': 'globe',
+  'bengaliai-speech-recognition': 'mic',
+  'happywhale-identification': 'fish',
+  'google-contrails': 'cloud',
   'open-problems-multimodal-single-cell': 'dna',
   'uw-madison-gi-tract-segmentation': 'scan',
-  'google-asl-signs': 'lightbulb',
-  'enefit-energy-prosumers': 'sun',
-  'bengaliai-handwritten-grapheme': 'document',
-  'aptos-2019-blindness-detection': 'microscope',
+  'google-asl-signs': 'hand',
+  'enefit-energy-prosumers': 'zap',
+  'bengaliai-handwritten-grapheme': 'pen-line',
+  'aptos-2019-blindness-detection': 'vision',
 };
 
 const COMPETITION_DOMAIN_ICONS: Record<string, IconName> = {
-  'Speech Recognition & NLP': 'pulse',
-  'Re-Identification & Conservation AI': 'image',
-  'Satellite Segmentation & Climate AI': 'globe',
+  'Speech Recognition & NLP': 'mic',
+  'Re-Identification & Conservation AI': 'fish',
+  'Satellite Segmentation & Climate AI': 'cloud',
   'Computational Biology & Multi-Omics': 'dna',
   'Medical Imaging & Radiation Oncology': 'scan',
-  'Accessibility AI & Edge Deployment': 'lightbulb',
-  'Time Series & Sustainability': 'sun',
-  'Computer Vision & OCR': 'document',
-  'Medical Imaging & Ophthalmology': 'microscope',
+  'Accessibility AI & Edge Deployment': 'hand',
+  'Time Series & Sustainability': 'zap',
+  'Computer Vision & OCR': 'pen-line',
+  'Medical Imaging & Ophthalmology': 'vision',
 };
 
 /** Map Kaggle competition id (and domain) to a semantic icon. */

@@ -9,11 +9,14 @@ const quote = profile.heroQuote;
     <section id="thirukural" class="kural reveal" aria-label="Thirukural">
       <div class="container">
         <figure class="kural__band">
-          <blockquote class="kural__text">
-            {quote.tamil && <p class="kural__tamil">{quote.tamil}</p>}
-            <div class="kural__divider" aria-hidden="true" />
-            <p class="kural__translation">{quote.translation}</p>
-          </blockquote>
+          <div class="kural__copy">
+            <blockquote class="kural__text">
+              {quote.tamil && <p class="kural__tamil">{quote.tamil}</p>}
+              <div class="kural__divider" aria-hidden="true" />
+              <p class="kural__translation">{quote.translation}</p>
+            </blockquote>
+            <figcaption class="kural__author">— {quote.author}</figcaption>
+          </div>
 
           {quote.image && (
             <div class="kural__img-wrap">
@@ -26,7 +29,6 @@ const quote = profile.heroQuote;
               />
             </div>
           )}
-          <figcaption class="kural__author">— {quote.author}</figcaption>
         </figure>
       </div>
     </section>
@@ -55,6 +57,18 @@ const quote = profile.heroQuote;
       align-items: flex-start;
       gap: clamp(1rem, 2.5vw, 1.75rem);
     }
+    /* Match .kural__tamil top margin so the portrait aligns with the couplet. */
+    .kural__img-wrap {
+      margin-top: 2lh;
+    }
+  }
+
+  .kural__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: none;
+    text-align: center;
   }
 
   .kural__text {
@@ -95,7 +109,7 @@ const quote = profile.heroQuote;
     font-weight: 500;
     line-height: 1.35;
     color: var(--heading);
-    margin: 0 0 var(--space-2);
+    margin: 2lh 0 var(--space-2);
   }
   .kural__translation {
     font-family: var(--font-display);
@@ -103,7 +117,7 @@ const quote = profile.heroQuote;
     font-size: clamp(0.9rem, 1.6vw, 1.05rem);
     line-height: 1.4;
     color: var(--text);
-    margin: 0 0 var(--space-2);
+    margin: 0;
     max-width: none;
   }
   .kural__author {
@@ -111,6 +125,7 @@ const quote = profile.heroQuote;
     font-size: 0.72rem;
     letter-spacing: 0.04em;
     color: var(--accent-light);
+    margin: var(--space-2) 0 0;
   }
 
   .kural__img-wrap {

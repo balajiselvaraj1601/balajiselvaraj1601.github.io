@@ -135,8 +135,8 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
     position: absolute;
     top: var(--space-4);
     right: var(--space-5);
-    width: 64px;
-    height: 64px;
+    width: var(--logo-emblem);
+    height: var(--logo-emblem);
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -149,8 +149,8 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
     background: var(--bg-elev);
   }
   .pcard__badge img {
-    width: 74%;
-    height: 74%;
+    width: var(--logo-emblem-img);
+    height: var(--logo-emblem-img);
     object-fit: contain;
   }
   @media (max-width: 520px) {

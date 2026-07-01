@@ -25,6 +25,10 @@ export default defineConfig({
   site: SITE_URL,
   base: '/',
   trailingSlash: 'ignore',
+  // This repo uses port 4321 only. Pinning here (single source of truth) keeps
+  // `npm run dev` on 4321 instead of relying on the CLI default. If 4321 is
+  // occupied at launch, free it first rather than letting Astro auto-increment.
+  server: { port: 4321, host: '127.0.0.1' },
   integrations: [
     sitemap({
       filter: (page) =>

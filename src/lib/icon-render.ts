@@ -2,7 +2,12 @@ import type { IconName } from './icons';
 import iconPaths from './icon-paths.json';
 
 /** Brand marks use filled Simple Icons geometry; Lucide icons use stroke. */
-const FILLED_ICONS = new Set<IconName>(['linkedin', 'kaggle', 'github']);
+const FILLED_ICONS = new Set<IconName>([
+  'linkedin',
+  'kaggle',
+  'github',
+  'trophy-cup',
+]);
 
 export const ICON_SIZE_TOKENS = {
   xs: 14,

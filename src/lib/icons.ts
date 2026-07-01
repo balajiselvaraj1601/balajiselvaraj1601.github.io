@@ -20,6 +20,7 @@ export const iconNameSchema = z.enum([
   'chevron',
   'chevron-right',
   'trophy',
+  'trophy-cup',
   'brain',
   'rocket',
   'pill',

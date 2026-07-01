@@ -25,9 +25,11 @@ export default defineConfig({
   site: SITE_URL,
   base: '/',
   trailingSlash: 'ignore',
-  // Pin port 4321 with strictPort so Astro never silently moves to 4322 when busy.
+  // Pin port 4321 so Astro never silently moves to 4322 when busy.
   // host: true binds all interfaces (localhost + network) for dev/preview.
-  server: { port: 4321, host: true, strictPort: true },
+  // strictPort lives under `vite.server` — Astro's `server` type doesn't expose it.
+  server: { port: 4321, host: true },
+  vite: { server: { strictPort: true } },
   integrations: [
     sitemap({
       filter: (page) =>

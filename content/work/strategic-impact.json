@@ -8,7 +8,7 @@
     { "value": "$0.5M+", "label": "Funding secured" },
     { "value": "14", "label": "European research partners" },
     { "value": "12", "label": "Engineers built" },
-    { "value": "3", "label": "Strategic R&D priorities" },
+    { "value": "3", "label": "R&D priority areas" },
     { "value": "Top 0.3%", "label": "Global Kaggle rank" }
   ],
   "journey": [
@@ -41,7 +41,7 @@
       "icon": "document",
       "title": "Gartner Submission",
       "entity": "gartner",
-      "subtitle": "GITC Chennai Multimodal Vision"
+      "subtitle": "2030 Gene & Cell Therapy multimodal-AI vision"
     },
     {
       "icon": "funding",
@@ -55,15 +55,15 @@
     },
     {
       "icon": "link",
-      "title": "EU Consortium",
+      "title": "PERSIST-SEQ",
       "entity": "persist-seq",
-      "subtitle": "€14M · 14 research partners"
+      "subtitle": "Persister sequencing · €14M · 14 partners"
     },
     { "icon": "team", "title": "Scaled Team", "subtitle": "1 → 12 members" },
     {
       "icon": "globe",
       "title": "Global Management",
-      "subtitle": "UK · Sweden · India · Mexico · China"
+      "subtitle": "India · UK · Sweden · Mexico · China"
     }
   ],
   "highlights": [

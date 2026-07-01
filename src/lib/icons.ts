@@ -55,6 +55,9 @@ export const iconNameSchema = z.enum([
   'hand',
   'zap',
   'pen-line',
+  'refresh',
+  'dashboard',
+  'clipboard',
 ]);
 
 export type IconName = z.infer<typeof iconNameSchema>;

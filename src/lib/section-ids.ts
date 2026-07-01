@@ -4,6 +4,7 @@ export const SECTION_COMPONENT_IDS = [
   'thirukural',
   'impact',
   'technical-vision',
+  'vision-board',
   'leadership',
   'experience',
   'experience-intro',

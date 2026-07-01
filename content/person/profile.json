@@ -2,7 +2,7 @@
   "name": "Balaji Selvaraj",
   "title": "Technical AI Leader",
   "location": "Gothenburg, Sweden",
-  "headline": "Hands-on Technical AI Lead with experience spanning product, services, and startup environments.",
+  "headline": "Hands-on Technical AI Lead with 12+ years spanning product, services, and startup environments, leading a globally distributed AI team across 5 countries.",
   "heroQuote": {
     "tamil": "உள்ளுவதெல்லாம் உயர்வுள்ளல்",
     "translation": "Let all your thoughts be lofty.",
@@ -18,7 +18,10 @@
   },
   "metrics": [
     { "value": "12+", "label": "Years in AI & ML" },
-    { "value": "Top 0.3%", "label": "Kaggle, among 200K+" },
+    {
+      "value": "Top 0.3%",
+      "label": "Kaggle · 652 among 200K+ data scientists"
+    },
     {
       "value": "$0.5M+",
       "label": "Internal Funding",
@@ -47,14 +50,14 @@
     "width": 480,
     "height": 480
   },
-  "credentialHook": "Kaggle top 0.3% globally · 652 among 200K+ data scientists",
+  "credentialHook": "Ranked top 0.3% globally on Kaggle (652/200K+ data scientists)",
   "photo": "/assets/images/balaji.png",
   "leadershipPhilosophy": {
     "intro": "I lead AI the way a CTO does: secure the sponsorship and set the strategy before the first model exists, then build the platform, the team, and the guardrails that turn conviction into shipped, regulated value. My edge is a rare bridge — a biomedical engineer who supported 400+ surgeries across 5 specialties and now architects production AI — so the science, the business case, and the system stay one conversation.",
     "strategicVision": [
       {
         "title": "Sell first, build next",
-        "description": "Secure executive sponsorship and align portfolios before data or infrastructure exist — turning an ambiguous 5-direction landscape into 2 funded, company-scale programs.",
+        "description": "Secure executive sponsorship and align portfolios before data or infrastructure exist — turning five ambiguous, competing directions into 2 funded, company-scale programs.",
         "icon": "handshake"
       },
       {
@@ -64,19 +67,19 @@
       },
       {
         "title": "Positioned across the org",
-        "description": "Placed the AI team across 7 internal groups and 3 external startups with zero conflicting priorities, and aligned delivery to 3 corporate R&D scorecards (Oncology, BioPharma R&D, CPSS) over 3 cycles.",
+        "description": "Positioned a newly formed AI team across 7 internal groups and 3 startups by delivering differentiated and strategically valuable AI capabilities, aligned to AstraZeneca's 3 R&D priority areas — Oncology, Biopharma R&D, and CPSS — over three consecutive years.",
         "icon": "link"
       },
       {
         "title": "Authored the 2030 roadmap",
-        "description": "Wrote the 2030 Gene & Cell Therapy multimodal-AI roadmap the company took to Gartner — a bottom-up vision that became an official strategic artifact.",
+        "description": "Shaped an innovative multimodal AI vision aligned with AstraZeneca's 2030 Gene & Cell Therapy ambitions, later submitted to Gartner by GITC Chennai.",
         "icon": "vision"
       }
     ],
     "businessImpact": [
       {
         "title": "$20–50M projected annual savings",
-        "description": "Business case for the flagship drug-safety AI platform — the number that anchored executive funding.",
+        "description": "Business case for the flagship $3M+ SVP-sponsored drug-safety AI platform — building predictive toxicology models that reduce animal studies and compress safety timelines from 5 to 3 years.",
         "icon": "funding"
       },
       {
@@ -91,14 +94,14 @@
       },
       {
         "title": "~6 months capacity freed",
-        "description": "Deciding what NOT to build: retired low-probability work to free roughly six months of delivery capacity for funded, high-conviction programs.",
+        "description": "Refocused AI investments by retiring low-probability initiatives, recovering 6 months of delivery capacity and reducing infrastructure costs.",
         "icon": "hand"
       }
     ],
     "platform": [
       {
         "title": "The internal AI platform the org ships on",
-        "description": "Built a reusable foundation-model framework standardizing training, inference, and evaluation across 3 modalities and 3 internal infrastructures.",
+        "description": "Built a reusable, cross-platform foundation-model framework to standardize training, inference, and evaluation of vision foundation models across 3 clinical imaging modalities and 3 internal infrastructures.",
         "icon": "blocks"
       },
       {
@@ -115,12 +118,12 @@
     "peopleMentoring": [
       {
         "title": "Scaled 1 → 12 across 5 countries",
-        "description": "Grew the team from a single engineer to 12 across India (6), UK (2), Sweden (2), Mexico (1), and China (1).",
+        "description": "Scaled a multicultural AI engineering team from 1 to 12 members across India (6), UK (2), Sweden (2), Mexico (1), and China (1).",
         "icon": "team"
       },
       {
         "title": "Career mentoring",
-        "description": "Mentored AI/ML engineers (3) and graduate trainees (10) into full-time industry/research roles.",
+        "description": "Mentored 7 AI/ML graduate trainees across AstraZeneca and HCL — 4 progressed to full-time industry roles, with others advancing to postgraduate studies.",
         "icon": "graduation"
       },
       {
@@ -130,14 +133,14 @@
       },
       {
         "title": "Hackathon mentoring",
-        "description": "Mentored a student team (4) to Top 4 nationally, Smart India Hackathon (2019).",
+        "description": "Coached a 4-student team to a Top 4 national finish at Smart India Hackathon (2019).",
         "icon": "target"
       }
     ],
     "governance": [
       {
         "title": "Human-in-the-loop guardrails",
-        "description": "Designed human-in-the-loop controls in sandboxed, isolated VPCs (NemoClaw) so generative AI runs with review and containment by default.",
+        "description": "Deployed NemoClaw in an isolated VPC to run a sandboxed AI assistant with policy-managed egress, runtime isolation, and strict tool/network controls.",
         "icon": "hand"
       },
       {

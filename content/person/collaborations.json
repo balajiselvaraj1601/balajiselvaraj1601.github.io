@@ -2,10 +2,16 @@
   "title": "Collaborations",
   "items": [
     {
+      "name": "PERSIST-SEQ",
+      "logo": "persist-seq",
+      "entity": "persist-seq",
+      "detail": "€14M EU persister-sequencing consortium — Chief Scientist-sponsored oncology workstream"
+    },
+    {
       "name": "Broad Institute",
       "logo": "broad-institute",
       "entity": "broad-institute",
-      "detail": "Co-developing Cell Painting & omics computational pipelines with Dr. Shantanu Singh"
+      "detail": "Co-developing computational pipelines for Cell Painting and omics with Dr. Shantanu Singh (Senior Group Leader, Broad Institute)"
     },
     {
       "name": "Cold Spring Harbor Laboratory",
@@ -17,7 +23,7 @@
       "name": "IIT Madras",
       "logo": "iit-madras",
       "entity": "iit-madras",
-      "detail": "Research collaboration co-developing AI models and computational pipelines"
+      "detail": "Research collaboration co-developing cutting-edge AI models and computational pipelines"
     },
     {
       "name": "Uppsala University",

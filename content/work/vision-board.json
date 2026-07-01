@@ -1,7 +1,5 @@
 {
-  "header": "How I Build AI Organizations",
-  "eyebrow": "Leadership Philosophy",
-  "intro": "The principles behind how I build and scale AI organizations.",
+  "header": "AI Leadership & Strategic Impact",
   "hubs": [
     {
       "id": "idea",
@@ -9,42 +7,116 @@
       "variant": "purple",
       "center": { "kind": "logo", "asset": "kaggle", "alt": "Kaggle" },
       "satellites": [
-        "target",
         "lightbulb",
         "chart",
+        "brain",
         "book",
         "handshake",
-        "globe"
+        "globe",
+        "target"
       ]
     },
     {
       "id": "vision",
       "label": "VISION",
-      "variant": "red",
-      "center": { "kind": "logo", "asset": "brain", "alt": "Multimodal AI" },
-      "satellites": ["graph", "document", "table", "dna", "scan", "blocks"]
+      "variant": "purple",
+      "center": { "kind": "icon", "name": "brain" },
+      "satellites": ["document", "table", "image", "blocks", "pulse", "graph"]
     }
   ],
-  "principles": [
+  "programs": [
     {
-      "title": "Outcomes over prototypes",
-      "description": "I build AI organizations around measurable business outcomes — not research prototypes left on the shelf.",
-      "icon": "target"
+      "title": "Drug Safety",
+      "label": "SVP Backed",
+      "variant": "purple",
+      "badge": { "kind": "icon", "name": "clipboard" },
+      "lines": [
+        "$20M-$50M Annual Savings",
+        "Secured Project (for my group)",
+        "Lead Development"
+      ]
     },
     {
-      "title": "Research, engineering, and business as one system",
-      "description": "I connect research, engineering, and business so work moves from the lab into clinical and commercial impact.",
-      "icon": "blocks"
+      "title": "Broad Institute",
+      "label": "Senior Group Leader",
+      "variant": "purple",
+      "badge": {
+        "kind": "logo",
+        "asset": "broad-institute",
+        "alt": "Broad Institute"
+      },
+      "lines": [
+        "Initiated Collaboration",
+        "Dr. Shantanu Singh",
+        "Computational pipelines: Cell Painting & omics"
+      ],
+      "entity": "broad-institute"
     },
     {
-      "title": "Distributed teams that operate as one",
-      "description": "I grow globally distributed teams and align them around shared goals, so collaboration crosses time zones and disciplines.",
-      "icon": "team"
+      "title": "PERSIST-SEQ",
+      "label": "Chief Scientist Backed",
+      "variant": "red",
+      "badge": {
+        "kind": "logo",
+        "asset": "persist-seq",
+        "alt": "PERSIST-SEQ"
+      },
+      "lines": [
+        "Persister sequencing · €14M EU consortium",
+        "Secured Project (for my group)",
+        "Lead Development"
+      ],
+      "entity": "persist-seq"
     },
     {
-      "title": "Build for executive sponsorship",
-      "description": "I frame technical work in the language of strategy, so AI programs earn the executive sponsorship they need to scale.",
-      "icon": "handshake"
+      "title": "AACR Conference",
+      "label": "Conference Presentation",
+      "variant": "red",
+      "badge": { "kind": "logo", "asset": "aacr", "alt": "AACR" },
+      "lines": [
+        "Presented in 2025",
+        "3 month AI pipeline development",
+        "2 AI engineers"
+      ],
+      "entity": "aacr"
+    }
+  ],
+  "orgHeader": "Leadership & Organizational Impact",
+  "orgCards": [
+    {
+      "icon": "trophy",
+      "title": "EVP Level AWARD",
+      "lines": ["For Drug Safety Platform"]
+    },
+    {
+      "icon": "presentation",
+      "title": "Gartner Submission",
+      "lines": ["GITC Chennai", "Multimodal Vision"]
+    },
+    {
+      "icon": "funding",
+      "title": "Secured 0.5M$ Funds",
+      "lines": ["Multiple times for Team"]
+    },
+    {
+      "icon": "dashboard",
+      "title": "3 Scorecard",
+      "lines": ["Aligned Projects"]
+    },
+    {
+      "icon": "target",
+      "title": "Strategic Team Positioning",
+      "lines": ["Across 7 Internal Groups", "3 Startups"]
+    },
+    {
+      "icon": "team",
+      "title": "Scaled Team",
+      "lines": ["1 to 12 members"]
+    },
+    {
+      "icon": "globe",
+      "title": "Global Team Management",
+      "lines": ["UK, Sweden,", "India, Mexico, China"]
     }
   ]
 }

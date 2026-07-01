@@ -12,7 +12,7 @@
   ],
   "roles": [
     {
-      "position": "Senior Deep Learning Engineer",
+      "position": "Senior Deep Learning Engineer / AI Associate Principal",
       "organization": "AstraZeneca, Sweden",
       "mission": "Lead production AI across drug safety, oncology, and clinical imaging — translating executive-sponsored initiatives into measurable business outcomes.",
       "blurb": "Leads production AI across drug-safety, oncology, and clinical-imaging programs.",
@@ -34,7 +34,7 @@
           "name": "Drug Safety AI Platform",
           "bullets": [
             {
-              "text": "AI Lead within a $3M+ SVP-sponsored drug safety initiative — building predictive toxicology models projected to save $20M–$50M annually by reducing animal studies, compressing safety timelines from five to three years, and improving compound prioritization.",
+              "text": "AI Lead within a $3M+ SVP-sponsored drug safety initiative — building predictive toxicology models projected to save $20M-$50M annually by reducing animal studies, compressing safety timelines from 5 to 3 years, and improving compound prioritization.",
               "tier": "primary"
             },
             {
@@ -50,7 +50,7 @@
               "tier": "primary"
             },
             {
-              "text": "Oversaw three parallel drug safety delivery streams with a 12-member team, managing stakeholders, resources, risks, and technical direction.",
+              "text": "Oversaw 3 parallel drug safety delivery streams with a 12-member team, managing stakeholders, resources, risks, and technical direction.",
               "tier": "primary"
             },
             {
@@ -85,7 +85,7 @@
               "tier": "primary"
             },
             {
-              "text": "Led a two-member engineering team over six months, driving technical direction, experimentation strategy, roadmap ownership, and end-to-end delivery.",
+              "text": "Led a 2-member engineering team over 6 months, driving technical direction, experimentation strategy, roadmap ownership, and end-to-end delivery.",
               "tier": "primary"
             }
           ],
@@ -104,7 +104,7 @@
               "tier": "primary"
             },
             {
-              "text": "Scaled the foundation model framework across three clinical imaging modalities — CT, Endoscopy, and Echocardiography — and three internal AZ infrastructures.",
+              "text": "Scaled the foundation model framework across 3 clinical imaging modalities — CT, Endoscopy, and Echocardiography — and 3 internal AZ infrastructures.",
               "tier": "primary"
             },
             {
@@ -143,7 +143,7 @@
           "icon": "scan",
           "bullets": [
             {
-              "text": "Delivered a next-generation CT tumor segmentation pipeline in six months, with Dice scores 46% above SOTA, directly enabling $0.5M in follow-on funding.",
+              "text": "Delivered a next-generation CT tumor segmentation pipeline in 6 months, with Dice scores 46% above SOTA, directly enabling $0.5M in follow-on funding.",
               "tier": "primary"
             },
             {
@@ -151,7 +151,7 @@
               "tier": "primary"
             },
             {
-              "text": "Exceeded stakeholder performance targets by 4–5x, achieving a 46% Dice improvement over state-of-the-art on NSCLC tumor segmentation benchmarks.",
+              "text": "Exceeded stakeholder performance targets by 4-5x, achieving a 46% Dice improvement over state-of-the-art on NSCLC tumor segmentation benchmarks.",
               "tier": "primary"
             },
             {
@@ -211,7 +211,7 @@
               "tier": "primary"
             },
             {
-              "text": "Led a four-member engineering team to deliver two contrastive and inpainting histopathology foundation model variants at 60% lower GPU compute costs.",
+              "text": "Led a 4-member engineering team to deliver 2 contrastive and inpainting histopathology foundation model variants at 60% lower GPU compute costs.",
               "tier": "primary"
             }
           ]

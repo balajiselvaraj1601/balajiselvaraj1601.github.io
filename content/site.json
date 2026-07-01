@@ -10,7 +10,7 @@
       "path": "/",
       "seo": {
         "title": "Balaji Selvaraj — Technical AI Leader",
-        "description": "Technical AI Leader delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. Kaggle top 0.3%."
+        "description": "Hands-on Technical AI Lead with 12+ years spanning product, services, and startup environments, delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. Ranked top 0.3% globally on Kaggle (652/200K+ data scientists)."
       },
       "sections": [
         "hero",
@@ -26,8 +26,7 @@
         "awards",
         "kaggle",
         "education",
-        "technical-vision",
-        "impact",
+        "vision-board",
         "contact"
       ],
       "viewSections": ["hero", "thirukural", "leadership"],
@@ -39,7 +38,7 @@
       "path": "/experience",
       "seo": {
         "title": "Experience — Balaji Selvaraj",
-        "description": "12+ years building and leading production AI across drug safety, oncology, and clinical imaging — role-by-role impact."
+        "description": "Delivering AI programs across Oncology, Biopharma R&D, and CPSS — supporting AstraZeneca's 3 R&D priority areas over three consecutive years, with role-by-role impact across drug safety, oncology, and clinical imaging."
       },
       "sections": ["experience-intro", "experience"],
       "viewSections": ["experience-intro", "experience"]
@@ -72,7 +71,7 @@
       "path": "/recognition",
       "seo": {
         "title": "Recognition — Balaji Selvaraj",
-        "description": "Awards, Kaggle competition results, and education."
+        "description": "Awards & Recognition, Kaggle competition results (top 0.3% globally, 652/200K+ data scientists), and education."
       },
       "sections": ["awards", "kaggle", "education"],
       "viewSections": ["awards", "kaggle", "education"]
@@ -85,8 +84,8 @@
         "title": "Vision — Balaji Selvaraj",
         "description": "AI leadership & strategic impact — from a Kaggle idea to executive-sponsored programs across drug safety, oncology, and global research partnerships."
       },
-      "sections": ["technical-vision", "impact"],
-      "viewSections": ["technical-vision", "impact"]
+      "sections": ["vision-board"],
+      "viewSections": ["vision-board"]
     },
     {
       "id": "contact",
@@ -121,6 +120,11 @@
     "technical-vision": {
       "title": "Technical Vision",
       "source": "person/profile.json",
+      "visible": true
+    },
+    "vision-board": {
+      "title": "AI Leadership & Strategic Impact",
+      "source": "work/vision-board.json",
       "visible": true
     },
     "leadership": {
@@ -191,7 +195,7 @@
   },
   "seo": {
     "title": "Balaji Selvaraj — Technical AI Leader",
-    "description": "Technical AI Leader delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. 12+ years across product, services, and startups. Kaggle top 0.3%.",
+    "description": "Hands-on Technical AI Lead with 12+ years spanning product, services, and startup environments, delivering enterprise AI systems with multimillion-dollar business impact at AstraZeneca. Ranked top 0.3% globally on Kaggle (652/200K+ data scientists).",
     "keywords": [
       "Technical AI Leader",
       "Applied AI",

@@ -7,16 +7,7 @@ import OrgImpactCard from '@components/cards/OrgImpactCard.astro';
 import Icon from '@components/ui/Icon.astro';
 import { visionBoard } from '@lib/content';
 
-const {
-  header,
-  eyebrow,
-  intro,
-  hubs,
-  principles,
-  programs,
-  orgHeader,
-  orgCards,
-} = visionBoard;
+const { header, hubs, programs, orgHeader, orgCards } = visionBoard;
 ---
 
 <Section
@@ -28,68 +19,42 @@ const {
 >
   <BoardHeader title={header} flank="in" />
 
-  {
-    (eyebrow || intro) && (
-      <div class="vboard__lede reveal">
-        {eyebrow && <p class="vboard__eyebrow">{eyebrow}</p>}
-        {intro && <p class="vboard__intro">{intro}</p>}
-      </div>
-    )
-  }
-
-  {
-    principles && principles.length > 0 && (
-      <div class="vboard__principles reveal">
-        {principles.map((p) => (
-          <article class="card card--accent vboard__principle">
-            {p.icon && (
-              <span class="vboard__principle-icon" aria-hidden="true">
-                <Icon name={p.icon} size={26} />
-              </span>
-            )}
-            <h3 class="vboard__principle-title">{p.title}</h3>
-            <p class="vboard__principle-desc">{p.description}</p>
-          </article>
-        ))}
-      </div>
-    )
-  }
-
-  {
-    hubs && hubs.length > 0 && (
-      <div class="vboard__hubs reveal" aria-hidden="true">
-        {hubs.map((hub) => (
+  {/* Top flow: IDEA » VISION » 2×2 program cards, all in one row. */}
+  <div class="vboard__flow reveal">
+    {
+      hubs.map((hub) => (
+        <Fragment>
           <HubCircle
             center={hub.center}
             satellites={hub.satellites}
             label={hub.label}
             variant={hub.variant}
           />
-        ))}
-      </div>
-    )
-  }
+          <span class="vboard__arrow" aria-hidden="true">
+            <Icon name="chevron-right" size={30} />
+            <Icon name="chevron-right" size={30} />
+          </span>
+        </Fragment>
+      ))
+    }
 
-  {
-    /* Legacy achievement infographic — retained but guarded; data now lives in
-      Impact / Case Studies and is intentionally absent from this page. */
-  }
-  {
-    programs && programs.length > 0 && (
-      <div class="vboard__programs reveal">
-        {programs.map((p) => (
-          <ProgramBadgeCard
-            title={p.title}
-            label={p.label}
-            variant={p.variant}
-            badge={p.badge}
-            lines={p.lines}
-            entity={p.entity}
-          />
-        ))}
-      </div>
-    )
-  }
+    {
+      programs && programs.length > 0 && (
+        <div class="vboard__programs">
+          {programs.map((p) => (
+            <ProgramBadgeCard
+              title={p.title}
+              label={p.label}
+              variant={p.variant}
+              badge={p.badge}
+              lines={p.lines}
+              entity={p.entity}
+            />
+          ))}
+        </div>
+      )
+    }
+  </div>
 
   {
     orgCards && orgCards.length > 0 && (
@@ -106,97 +71,60 @@ const {
 </Section>
 
 <style>
-  /* ── lede ────────────────────────────────────────────────────────────── */
-  .vboard__lede {
-    text-align: center;
-    margin-top: var(--space-8);
-  }
-  .vboard__eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--accent-ll);
-    margin-bottom: var(--space-2);
-  }
-  .vboard__intro {
-    font-size: 1.05rem;
-    color: var(--text-muted);
-    max-width: var(--maxw-text);
-    margin-inline: auto;
-  }
-
-  /* ── principles grid ─────────────────────────────────────────────────── */
-  .vboard__principles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-6);
-    margin-top: var(--space-12);
-  }
-  .vboard__principle {
-    padding: var(--space-8);
-  }
-  .vboard__principle-icon {
-    display: inline-flex;
-    color: var(--accent);
-    margin-bottom: var(--space-3);
-  }
-  .vboard__principle-title {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--heading);
-    margin-bottom: var(--space-2);
-  }
-  .vboard__principle-desc {
-    color: var(--text-muted);
-    line-height: 1.7;
-    font-size: 0.92rem;
-    max-width: none;
-  }
-
-  /* ── hubs (abstract decoration) ──────────────────────────────────────── */
-  .vboard__hubs {
+  /* ── top flow row (hubs » programs) ──────────────────────────────────── */
+  .vboard__flow {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-8);
-    margin-top: var(--space-16);
+    gap: var(--space-6);
     flex-wrap: wrap;
+    margin-top: var(--space-10);
+  }
+  .vboard__arrow {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent);
+  }
+  .vboard__arrow :global(svg) {
+    margin-inline: -6px;
+  }
+  .vboard__programs {
+    flex: 1 1 460px;
+    min-width: min(460px, 100%);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
   }
 
-  /* ── legacy infographic ──────────────────────────────────────────────── */
-  .vboard__programs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-6);
-    margin-top: var(--space-12);
-  }
+  /* ── org section ─────────────────────────────────────────────────────── */
   .vboard__org {
     margin-top: var(--space-16);
   }
   .vboard__org-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: var(--space-4);
     margin-top: var(--space-10);
   }
 
   /* ── responsive ──────────────────────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .vboard__principles {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 1024px) {
     .vboard__org-grid {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    /* Hide the inline arrows once the flow stacks vertically. */
+    .vboard__arrow {
+      display: none;
+    }
+    .vboard__programs {
+      grid-template-columns: 1fr;
     }
   }
   @media (max-width: 600px) {
     .vboard__org-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .vboard__programs {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 </style>

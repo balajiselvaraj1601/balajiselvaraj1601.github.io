@@ -136,6 +136,40 @@ if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
 **Fix:** Push to `balajiselvaraj1601.github.io`, not just the staging mirror. See
 [Go-live checklist](./go-live-checklist.md).
 
+### Pages deploy stuck in `deployment_queued` or "in progress deployment"
+
+**Symptom:** `actions/deploy-pages` sits in `deployment_queued` for many minutes, then
+times out. Later runs fail with:
+
+```
+Deployment request failed … due to in progress deployment. Please cancel <sha> first
+```
+
+**Cause:** A prior Pages deployment was cancelled or wedged; GitHub still holds a lock on
+that commit until it is cleared.
+
+**Fix:**
+
+1. Confirm the user-site repo exists and Pages source is **GitHub Actions** (not a branch).
+2. Cancel the blocking deployment (use the SHA from the error message):
+
+   ```bash
+   gh api -X POST \
+     repos/balajiselvaraj1601/balajiselvaraj1601.github.io/pages/deployments/<SHA>/cancel
+   ```
+
+3. Delete stale environment deployments if needed:
+
+   ```bash
+   gh api repos/balajiselvaraj1601/balajiselvaraj1601.github.io/deployments \
+     --jq '.[].id' | xargs -I{} gh api -X DELETE \
+     repos/balajiselvaraj1601/balajiselvaraj1601.github.io/deployments/{}
+   ```
+
+4. Re-run **Deploy to GitHub Pages** on `balajiselvaraj1601.github.io` (workflow dispatch).
+
+The workflow uses `cancel-in-progress: true` so overlapping pushes do not stack locks.
+
 ### Pages shows 404 after deploy
 
 **Checklist:**

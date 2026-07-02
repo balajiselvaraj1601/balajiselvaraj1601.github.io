@@ -14,6 +14,9 @@ export type SectionViewsOptions = {
   defaultView: string;
 };
 
+/** Window (ms) after a programmatic scroll during which scroll-spy is suppressed. */
+const PROGRAMMATIC_SCROLL_SETTLE_MS = 1200;
+
 function normalizePath(pathname: string): string {
   return pathname.replace(/\/$/, '') || '/';
 }
@@ -65,7 +68,7 @@ export function initSectionViews(options: SectionViewsOptions) {
   const goToView = (anchor: string, scroll = true) => {
     updateNavActive(anchor);
     if (scroll) {
-      programmaticScrollUntil = Date.now() + 1200;
+      programmaticScrollUntil = Date.now() + PROGRAMMATIC_SCROLL_SETTLE_MS;
       scrollToSection(firstSectionOf(anchor));
     }
   };
@@ -114,7 +117,7 @@ export function initSectionViews(options: SectionViewsOptions) {
     if (anchor && applyViewFromHash(anchor)) return;
 
     if (anchor && document.getElementById(anchor)) {
-      programmaticScrollUntil = Date.now() + 1200;
+      programmaticScrollUntil = Date.now() + PROGRAMMATIC_SCROLL_SETTLE_MS;
       scrollToSection(anchor);
       const viewAnchor = sectionToView.get(anchor);
       if (viewAnchor) updateNavActive(viewAnchor);

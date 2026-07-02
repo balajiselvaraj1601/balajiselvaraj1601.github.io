@@ -5,19 +5,17 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Allow the workflow to publish to Pages.
+# peaceiris/actions-gh-pages pushes to gh-pages on the user-site repo only.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# One deploy at a time; cancel stale runs so Pages doesn't queue forever.
+# One deploy at a time; cancel stale runs so rapid pushes do not stack.
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,25 +42,11 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish to GitHub Pages
+        if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    # Only auto-deploy from the user-site repo. On the `portfolio_site` staging
-    # mirror this job is skipped (Pages isn't enabled there), so no failing Pages
-    # deploy — the `build` job above still runs and validates the build.
-    if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          # deploy-pages caps timeout at 600000 ms (10 min).
-          timeout: 600000
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true

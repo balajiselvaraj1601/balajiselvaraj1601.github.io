@@ -150,7 +150,8 @@ that commit until it is cleared.
 
 **Fix:**
 
-1. Confirm the user-site repo exists and Pages source is **GitHub Actions** (not a branch).
+1. Confirm the user-site repo exists and Pages source is **`gh-pages` branch / root** (not
+   the GitHub Actions artifact source unless you have migrated back intentionally).
 2. Cancel the blocking deployment (use the SHA from the error message):
 
    ```bash
@@ -176,7 +177,7 @@ The workflow uses `cancel-in-progress: true` so overlapping pushes do not stack 
 
 | Check                  | Expected                                      |
 | ---------------------- | --------------------------------------------- |
-| Pages source           | **GitHub Actions** (not "Deploy from branch") |
+| Pages source           | **Branch `gh-pages` / root** (see deployment.md) |
 | Repo name (user site)  | `balajiselvaraj1601.github.io`                |
 | `base` in astro.config | `'/'` for user site                           |
 | `.nojekyll` in dist    | Present at root                               |

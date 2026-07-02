@@ -27,17 +27,21 @@ Deployment target and go-live checklist for the **Astro 4** portfolio. CI/CD is 
 
 1. `npm ci`
 2. `npm run build` → `dist/`
-3. `actions/upload-pages-artifact` uploads `dist/`
-4. `actions/deploy-pages` publishes to GitHub Pages
+3. On **`balajiselvaraj1601.github.io` only:** `peaceiris/actions-gh-pages` pushes `dist/` to
+   the `gh-pages` branch (GitHub Pages serves that branch at the site root).
 
-The **deploy job is gated** to the user-site repo only:
+The **publish step is gated** to the user-site repo only:
 
 ```yaml
 if: github.repository == 'balajiselvaraj1601/balajiselvaraj1601.github.io'
 ```
 
 On the staging mirror (`balajiselvaraj1601/portfolio_site`), the build job still runs and
-validates the site, but deploy is skipped (Pages is not enabled there).
+validates the site, but publish is skipped (Pages is not enabled there).
+
+**Pages source (user-site repo):** Settings → Pages → **Deploy from a branch** → `gh-pages` /
+`/`. The workflow keeps that branch updated; do not use the GitHub Actions artifact source
+(`actions/deploy-pages`) — it wedged repeatedly on first-time provisioning for this site.
 
 ## Required static artifacts
 

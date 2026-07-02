@@ -62,7 +62,7 @@
           "icon": "pill"
         },
         {
-          "name": "Tumor Recurrence Prediction — Translational Oncology",
+          "name": "Tumor Recurrence Prediction",
           "bullets": [
             {
               "text": "AI Lead for a Chief Scientist-sponsored oncology initiative developing a novel tumor recurrence prediction pipeline using single-cell transcriptomics.",

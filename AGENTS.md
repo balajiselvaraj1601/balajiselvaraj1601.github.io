@@ -25,6 +25,7 @@ content/**/*.json
 - Run `npm run build` before handoff after any code or content change. The build
   fails fast on schema violations and broken section/view wiring.
 - Batch work: see `TASKS.md`; invoke the `task-runner` skill (`.cursor/skills/task-runner/SKILL.md`).
+- Multi-view design consistency: invoke the page-consistency-team skill (`.claude/skills/page-consistency-team/SKILL.md`) or `/page-team` in Claude Code; see `docs/page-team.md`.
 
 ## Page structure
 
@@ -123,22 +124,23 @@ CI builds on Node 20 (`package.json` engines: `>=18`).
 
 ## Documentation
 
-| Area                                    | Read                                                      |
-| --------------------------------------- | --------------------------------------------------------- |
-| Icon / logo audit (Claude skill)        | `.claude/skills/portfolio-icon-audit/SKILL.md`            |
-| Logo SVG border crop (visible ink)      | `.claude/skills/svg-logo-crop/SKILL.md`                   |
-| UI icon sourcing (Lucide / Iconify)     | `../.claude/skills/ui-icon-acquisition/SKILL.md`          |
-| Logo evaluation / favicon scoring       | `../.claude/skills/brand-logo-evaluation/SKILL.md`        |
-| Logo SVG authoring                      | `../image_gen/.claude/skills/logo-emblem-author/SKILL.md` |
-| Setup and commands                      | `docs/getting-started.md`                                 |
-| Long-running agent batches              | `docs/task-runner.md`                                     |
-| Architecture and data flow              | `docs/architecture.md`                                    |
-| Languages, tooling, programmatic skills | `docs/environment-languages-skills.md`                    |
-| Content editing                         | `docs/content-editing.md`, `content/README.md`            |
-| Section contracts                       | `docs/specification.md`                                   |
-| Per-route section intent                | `docs/page-briefs/` (incl. `vision.md`, `contact.md`)     |
-| SEO and metadata                        | `docs/seo.md`                                             |
-| Assets                                  | `docs/assets.md`                                          |
-| Accessibility                           | `docs/accessibility.md`                                   |
-| Deployment                              | `docs/deployment.md`, `docs/go-live-checklist.md`         |
-| Build issues                            | `docs/troubleshooting.md`                                 |
+| Area                                    | Read                                                                 |
+| --------------------------------------- | -------------------------------------------------------------------- |
+| Icon / logo audit (Claude skill)        | `.claude/skills/portfolio-icon-audit/SKILL.md`                       |
+| Logo SVG border crop (visible ink)      | `.claude/skills/svg-logo-crop/SKILL.md`                              |
+| UI icon sourcing (Lucide / Iconify)     | `../.claude/skills/ui-icon-acquisition/SKILL.md`                     |
+| Logo evaluation / favicon scoring       | `../.claude/skills/brand-logo-evaluation/SKILL.md`                   |
+| Logo SVG authoring                      | `../image_gen/.claude/skills/logo-emblem-author/SKILL.md`            |
+| Setup and commands                      | `docs/getting-started.md`                                            |
+| Long-running agent batches              | `docs/task-runner.md`                                                |
+| Multi-view design consistency           | `docs/page-team.md`, `.claude/skills/page-consistency-team/SKILL.md` |
+| Architecture and data flow              | `docs/architecture.md`                                               |
+| Languages, tooling, programmatic skills | `docs/environment-languages-skills.md`                               |
+| Content editing                         | `docs/content-editing.md`, `content/README.md`                       |
+| Section contracts                       | `docs/specification.md`                                              |
+| Per-route section intent                | `docs/page-briefs/` (incl. `vision.md`, `contact.md`)                |
+| SEO and metadata                        | `docs/seo.md`                                                        |
+| Assets                                  | `docs/assets.md`                                                     |
+| Accessibility                           | `docs/accessibility.md`                                              |
+| Deployment                              | `docs/deployment.md`, `docs/go-live-checklist.md`                    |
+| Build issues                            | `docs/troubleshooting.md`                                            |

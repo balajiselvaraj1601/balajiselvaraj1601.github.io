@@ -5,16 +5,16 @@
  * recognition system — the single source of truth (SSOT) for medal-tier logic
  * across all components.
  *
- * Medal tiers are defined by the kaggleMedalSchema in src/schemas.ts — this
- * module re-exports them in a form optimized for component usage.
+ * Medal tiers are re-exported from kaggleMedalSchema in src/schemas.ts — this
+ * module provides them alongside other medal-tier utilities.
  */
 
 /**
  * Medal tiers earned in Kaggle competitions.
  * Drives filter chip display, card styling, and medal-count statistics.
- * SSOT: defined by kaggleMedalSchema in schemas.ts
+ * Re-exported from: kaggleMedalSchema in schemas.ts
  */
-export const MEDALS = ['Silver', 'Bronze'] as const;
+export { MEDALS } from '@schemas';
 
 /**
  * Map medal tier to CSS class name.

@@ -11,8 +11,10 @@
  */
 
 import Icon from '@components/ui/Icon.astro';
+import MarkEmblem from '@components/ui/MarkEmblem.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
 import { getEntityUrl, logoSrc } from '@lib/content';
+import { logoHasOwnRing } from '@lib/logo-display';
 import type { VisionBoard } from '@schemas';
 
 // `programs` is optional on the schema, so unwrap with NonNullable before indexing.
@@ -32,46 +34,52 @@ const { title, label, variant, badge, lines, entity } = Astro.props;
 // `badge` is a VisionMark discriminated union; resolve the logo URL only on the
 // 'logo' branch so the template narrows cleanly by `kind`.
 const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
+const badgeGlyph =
+  badge.kind === 'logo' && logoHasOwnRing(badge.asset);
 ---
 
 <article class:list={['pcard', `pcard--${variant}`]}>
   <header class="pcard__head">
-    <h3 class="pcard__title">
-      <EntityLink
-        href={getEntityUrl(entity)}
-        label={title}
-        class="pcard__title-link"
-      />
-    </h3>
-    <p class="pcard__label">{label}</p>
+    <div class="pcard__head-main">
+      <h3 class="pcard__title">
+        <EntityLink
+          href={getEntityUrl(entity)}
+          label={title}
+          class="pcard__title-link"
+        />
+      </h3>
+      <p class="pcard__label">{label}</p>
+    </div>
+    <div
+      class:list={[
+        'pcard__badge',
+        { 'pcard__badge--glyph': badgeGlyph },
+        { 'pcard__badge--logo': badge.kind === 'logo' && !badgeGlyph },
+      ]}
+      aria-hidden="true"
+    >
+      {
+        badge.kind === 'icon' ? (
+          <Icon name={badge.name} size={44} />
+        ) : badgeGlyph ? (
+          <MarkEmblem mark={badge} iconSize={44} />
+        ) : badgeLogo ? (
+          <img src={badgeLogo} alt={badge.alt ?? ''} loading="lazy" />
+        ) : null
+      }
+    </div>
   </header>
 
   <ul class="pcard__lines">
     {lines.map((line) => <li>{line}</li>)}
   </ul>
-
-  <div
-    class:list={[
-      'pcard__badge',
-      { 'pcard__badge--logo': badge.kind === 'logo' },
-    ]}
-    aria-hidden="true"
-  >
-    {
-      badge.kind === 'icon' ? (
-        <Icon name={badge.name} size={44} />
-      ) : badgeLogo ? (
-        <img src={badgeLogo} alt={badge.alt ?? ''} loading="lazy" />
-      ) : null
-    }
-  </div>
 </article>
 
 <style>
   .pcard {
     --pc: var(--accent);
     --pc-soft: var(--accent-soft);
-    position: relative;
+    --pcard-badge-size: calc(var(--logo-emblem) + var(--space-10));
     background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -91,9 +99,16 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
     box-shadow: var(--shadow-md);
   }
   .pcard__head {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
     background: var(--pc);
     color: var(--accent-contrast);
-    padding: var(--space-4) 7.5rem var(--space-4) var(--space-5);
+    padding: var(--space-4) var(--space-5);
+  }
+  .pcard__head-main {
+    flex: 1;
+    min-width: 0;
   }
   .pcard__title {
     font-size: clamp(0.92rem, 1.6vw, 1.05rem);
@@ -111,35 +126,35 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
   }
   .pcard__label {
     font-family: var(--font-mono);
-    font-size: 0.66rem;
+    font-size: var(--fs-eyebrow);
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin: 0.35rem 0 0;
+    margin: var(--space-1) 0 0;
     opacity: 0.92;
+    max-width: none;
   }
   .pcard__lines {
     list-style: none;
     margin: var(--space-4) 0 0;
     padding: 0 var(--space-5);
     display: grid;
-    gap: 0.4rem;
+    gap: var(--space-1);
   }
   .pcard__lines li {
     color: var(--text);
     font-size: 0.9rem;
     line-height: 1.45;
+    overflow-wrap: break-word;
   }
   .pcard__badge {
-    position: absolute;
-    top: var(--space-3);
-    right: var(--space-4);
-    width: 104px;
-    height: 104px;
+    flex-shrink: 0;
+    width: var(--pcard-badge-size);
+    height: var(--pcard-badge-size);
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: var(--bg-elev);
+    background: var(--logo-surface);
     border: 4px solid var(--pc);
     color: var(--pc);
     box-shadow: 0 18px 32px -8px color-mix(in srgb, var(--pc) 50%, transparent);
@@ -149,19 +164,14 @@ const badgeLogo = badge.kind === 'logo' ? logoSrc(badge.asset) : undefined;
     height: var(--logo-emblem-img);
     object-fit: contain;
   }
+  .pcard__badge--glyph :global(.mark-emblem) {
+    width: var(--logo-emblem-img);
+    height: var(--logo-emblem-img);
+  }
   .pcard__badge--logo img {
     width: auto;
     height: auto;
-    max-width: 68%;
-    max-height: 68%;
-  }
-  @media (max-width: 520px) {
-    .pcard__head {
-      padding-right: var(--space-5);
-    }
-    .pcard__badge {
-      position: static;
-      margin: var(--space-4) var(--space-5) 0;
-    }
+    max-width: 76%;
+    max-height: 76%;
   }
 </style>

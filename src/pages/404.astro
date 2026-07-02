@@ -1,9 +1,12 @@
 ---
 import Layout from '@layouts/Layout.astro';
+import { profile } from '@lib/content';
+
+const title = `Page not found — ${profile.name}`;
 ---
 
 <Layout
-  title="Page not found — Balaji Selvaraj"
+  title={title}
   path="/404"
   description="The page you were looking for could not be found."
   singlePageViews={true}

@@ -34,8 +34,8 @@ const { status, label, class: cls } = Astro.props;
     line-height: 1;
   }
   .avail__dot {
-    width: 8px;
-    height: 8px;
+    width: var(--size-dot);
+    height: var(--size-dot);
     border-radius: 50%;
     flex-shrink: 0;
     background: var(--avail-dot, var(--status-available));

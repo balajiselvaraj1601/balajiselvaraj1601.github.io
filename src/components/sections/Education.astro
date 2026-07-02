@@ -81,7 +81,7 @@ const stats: StatCell[] = [
               />
             </div>
           ) : (
-            <div class="recog-tile__icon edu-hero__icon" aria-hidden="true">
+            <div class="edu-tile__icon edu-hero__icon" aria-hidden="true">
               <Icon name="graduation" size={24} />
             </div>
           )
@@ -96,10 +96,7 @@ const stats: StatCell[] = [
           {
             stats.map((s) => (
               <div class="edu-stat">
-                <span
-                  class="recog-tile__icon edu-stat__icon"
-                  aria-hidden="true"
-                >
+                <span class="edu-tile__icon edu-stat__icon" aria-hidden="true">
                   <Icon name={s.icon} size={18} />
                 </span>
                 <div class="edu-stat__copy">
@@ -130,7 +127,7 @@ const stats: StatCell[] = [
           record.summary && (
             <div class="edu-highlight">
               <span
-                class="recog-tile__icon edu-highlight__icon"
+                class="edu-tile__icon edu-highlight__icon"
                 aria-hidden="true"
               >
                 <Icon name="trophy" size={20} />
@@ -223,6 +220,23 @@ const stats: StatCell[] = [
     margin-bottom: var(--space-1);
   }
 
+  .edu-tile__icon {
+    width: var(--size-icon-tile);
+    height: var(--size-icon-tile);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-card, var(--accent));
+    background: color-mix(
+      in srgb,
+      var(--accent-card, var(--accent)) 14%,
+      transparent
+    );
+    border: 1px solid
+      color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
+  }
+
   .edu-degree-short {
     font-family: var(--font-mono);
     font-size: clamp(1.75rem, 3.5vw, 2.5rem);
@@ -239,7 +253,6 @@ const stats: StatCell[] = [
     line-height: 1.15;
     color: var(--heading);
     margin: 0;
-    white-space: nowrap;
   }
 
   .edu-rule {

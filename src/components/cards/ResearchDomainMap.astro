@@ -1,35 +1,12 @@
 ---
 import Icon from '@components/ui/Icon.astro';
-import type { IconName } from '@lib/icons';
+import type { DomainItem } from '@schemas';
 
-interface Domain {
-  label: string;
-  icon: IconName;
-  detail: string;
+interface Props {
+  domains: DomainItem[];
 }
 
-const domains: Domain[] = [
-  {
-    label: 'Medical Imaging',
-    icon: 'scan',
-    detail: 'CT, endoscopy, echocardiography foundation models',
-  },
-  {
-    label: 'Oncology',
-    icon: 'microscope',
-    detail: 'Single-cell transcriptomics & tumor recurrence',
-  },
-  {
-    label: 'Drug Safety',
-    icon: 'pill',
-    detail: 'Multimodal toxicology & omics integration',
-  },
-  {
-    label: 'Generative AI',
-    icon: 'brain',
-    detail: 'LLM embeddings, RAG, and knowledge graphs',
-  },
-];
+const { domains } = Astro.props;
 ---
 
 <div class="domain-map reveal" aria-label="Research domain map">

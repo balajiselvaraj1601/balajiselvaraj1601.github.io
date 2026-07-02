@@ -130,7 +130,7 @@ const lastName = rest.join(' ');
   .site-header.is-scrolled {
     background: color-mix(in srgb, var(--bg) 95%, transparent);
     border-bottom-color: var(--border-strong);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow-raised);
   }
   .site-header.is-scrolled .site-header__inner {
     min-height: 52px;
@@ -188,8 +188,8 @@ const lastName = rest.join(' ');
     padding: 0.4rem 0.85rem;
     border-radius: var(--radius-xs);
     transition:
-      color 0.2s,
-      background-color 0.2s;
+      color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease);
   }
   .nav__link:hover,
   .nav__link[aria-current='page'] {
@@ -244,7 +244,7 @@ const lastName = rest.join(' ');
     border: 2px solid var(--border-strong);
     border-top-color: var(--accent-light);
     border-radius: 50%;
-    animation: spin 0.7s linear infinite;
+    animation: spin var(--dur-spin) linear infinite;
   }
   .save-btn[aria-busy='true'] .save-btn__spinner {
     display: block;

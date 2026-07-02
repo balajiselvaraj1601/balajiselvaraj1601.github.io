@@ -1,0 +1,13 @@
+[Unit]
+Description=Cursor agent scheduled run (portfolio_site)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=@REPO_ROOT@
+ExecStart=@REPO_ROOT@/.cursor/scripts/agent-schedule-run.sh
+Environment=PATH=@PATH@
+
+[Install]
+WantedBy=default.target

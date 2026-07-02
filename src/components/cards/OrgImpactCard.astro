@@ -1,23 +1,16 @@
 ---
 import MarkEmblem from '@components/ui/MarkEmblem.astro';
-import { logoHasOwnRing } from '@lib/logo-display';
 import type { VisionBoard } from '@schemas';
 
 // SSOT: props derive from the vision-board `orgCards` schema item.
 type Props = NonNullable<VisionBoard['orgCards']>[number];
 
 const { mark, title, lines } = Astro.props;
-
-// Self-ringed logo_* emblems draw their own solid disc — drop the chrome disc.
-const plain = mark.kind === 'logo' && logoHasOwnRing(mark.asset);
 ---
 
 <article class="ocard">
-  <div
-    class:list={['ocard__icon', { 'ocard__icon--plain': plain }]}
-    aria-hidden="true"
-  >
-    <MarkEmblem mark={mark} iconSize={26} />
+  <div class="ocard__icon" aria-hidden="true">
+    <MarkEmblem mark={mark} iconSize={28} />
   </div>
   <h3 class="ocard__title">{title}</h3>
   <div class="ocard__rule" aria-hidden="true"></div>
@@ -37,9 +30,9 @@ const plain = mark.kind === 'logo' && logoHasOwnRing(mark.asset);
     background: var(--bg-elev);
     border-radius: var(--radius-xl);
     min-height: 210px;
-    padding: var(--space-6) var(--space-4) var(--space-5);
+    padding: var(--card-padding-lg) var(--card-padding) var(--card-padding);
     text-align: center;
-    box-shadow: 4px 7px 14px rgba(26, 21, 48, 0.14);
+    box-shadow: var(--shadow);
     transition:
       transform var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
@@ -70,8 +63,8 @@ const plain = mark.kind === 'logo' && logoHasOwnRing(mark.asset);
     box-shadow: var(--shadow-md);
   }
   .ocard__icon {
-    width: 60px;
-    height: 60px;
+    width: var(--vision-org-icon, 60px);
+    height: var(--vision-org-icon, 60px);
     border-radius: 50%;
     margin: var(--space-2) auto var(--space-4);
     display: grid;
@@ -83,11 +76,11 @@ const plain = mark.kind === 'logo' && logoHasOwnRing(mark.asset);
       var(--accent)
     );
   }
-  /* Self-ringed emblem draws its own solid disc — no chrome behind it. */
-  .ocard__icon--plain {
-    background: none;
-    border: none;
-    color: var(--accent-light);
+  /* Fixed glyph box keeps every emblem the same visible size, centred by the
+     wrapper's place-items; the mask stays aspect-preserving (matches HubCircle). */
+  .ocard__icon :global(.mark-emblem) {
+    width: var(--vision-org-glyph, 44px);
+    height: var(--vision-org-glyph, 44px);
   }
   .ocard__title {
     font-size: 0.9rem;
@@ -109,11 +102,14 @@ const plain = mark.kind === 'logo' && logoHasOwnRing(mark.asset);
   .ocard__body {
     display: grid;
     gap: var(--space-1);
+    min-height: 2.5lh;
+    align-content: start;
   }
   .ocard__body p {
     margin: 0;
     font-size: 0.85rem;
     line-height: 1.5;
     color: var(--text-muted);
+    text-wrap: balance;
   }
 </style>

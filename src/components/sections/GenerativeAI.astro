@@ -9,7 +9,7 @@ import { generativeAi, site } from '@lib/content';
   title={site.sections['generative-ai'].title}
   variant="alt"
 >
-  <ResearchDomainMap />
+  <ResearchDomainMap domains={generativeAi.domains || []} />
   <ul class="bullet-list reveal">
     {generativeAi.items.map((item) => <li>{item.text}</li>)}
   </ul>

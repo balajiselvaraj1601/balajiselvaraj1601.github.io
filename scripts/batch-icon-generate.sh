@@ -49,16 +49,15 @@ echo "🎨 Batch converting $ICONS_DIR/icon_*.png → tight SVG (512)"
 echo ""
 
 # Normalize source PNGs when this folder is a known Vision icon set.
-case "$ICONS_DIR" in
-  *icon_box|*icon_kaggle|*icon_multimodal)
-    set_name=$(basename "$ICONS_DIR")
-    if [[ -f "$NORMALIZER" ]]; then
-      echo "⚖️  Normalizing sources in $set_name"
-      python3 "$NORMALIZER" --dirs "$set_name"
-      echo ""
-    fi
-    ;;
-esac
+set_name=$(basename "$ICONS_DIR")
+known_sets=$(python3 -c "import json; print(' '.join(json.load(open('$PROJECT_ROOT/scripts/icon-sets.json'))['icon_sets'].keys()))")
+if [[ "$known_sets" =~ (^| )$set_name( |$) ]]; then
+  if [[ -f "$NORMALIZER" ]]; then
+    echo "⚖️  Normalizing sources in $set_name"
+    python3 "$NORMALIZER" --dirs "$set_name"
+    echo ""
+  fi
+fi
 
 count=0
 for png in "$ICONS_DIR"/icon_*.png; do
@@ -103,16 +102,15 @@ for png in "$ICONS_DIR"/icon_*.png; do
 done
 
 # Post-trace ink equalizer for Vision icon sets.
-case "$ICONS_DIR" in
-  *icon_box|*icon_kaggle|*icon_multimodal)
-    set_name=$(basename "$ICONS_DIR")
-    if [[ -f "$INK_EQUALIZER" && $count -gt 0 ]]; then
-      echo "⚖️  Equalizing SVG ink in $set_name"
-      python3 "$INK_EQUALIZER" --dirs "$set_name"
-      echo ""
-    fi
-    ;;
-esac
+set_name=$(basename "$ICONS_DIR")
+known_sets=$(python3 -c "import json; print(' '.join(json.load(open('$PROJECT_ROOT/scripts/icon-sets.json'))['icon_sets'].keys()))")
+if [[ "$known_sets" =~ (^| )$set_name( |$) ]]; then
+  if [[ -f "$INK_EQUALIZER" && $count -gt 0 ]]; then
+    echo "⚖️  Equalizing SVG ink in $set_name"
+    python3 "$INK_EQUALIZER" --dirs "$set_name"
+    echo ""
+  fi
+fi
 
 echo "✓ Done. Processed $count icons."
 echo "   Check: ls \"$ICONS_DIR\"/*-icon-512.svg | wc -l"

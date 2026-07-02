@@ -1,3 +1,4 @@
+// NOTE: listeners/observers here assume MPA full-page loads (no teardown). If Astro view transitions are ever enabled, add AbortController-based cleanup.
 import { initSectionViews, type SectionViewsOptions } from './section-views';
 
 export function initSiteChrome(navViewsConfig?: SectionViewsOptions) {

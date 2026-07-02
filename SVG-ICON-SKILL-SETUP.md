@@ -10,8 +10,7 @@ scripts/
 ├── verify-icon.py                 # Independent margin/flush/centering check on a finished SVG
 ├── batch-icon-generate.sh         # Convert every icon_box/icon_*.png in one pass (tight + cropped)
 ├── check-skill-sync.sh            # Assert the .skill bundle ships the canonical script (no drift)
-├── svg-icon-generation-guide.md   # Full methodology + troubleshooting
-├── SVG-ICON-GENERATOR.md          # Quick-start guide
+├── SVG-ICON-GENERATOR.md          # Complete guide (quick-start + full methodology + troubleshooting)
 ├── icon-generator-example.json    # Config template for advanced tuning
 └── generate-icon.sh               # Convenience shell wrapper
 ```
@@ -304,16 +303,15 @@ Then adjust in config:
 
 ## Files Reference
 
-| File                           | Purpose                                                                   |
-| ------------------------------ | ------------------------------------------------------------------------- |
-| `svg-icon-generator.py`        | Main pipeline — 7 phases, full Python implementation (canonical)          |
-| `verify-icon.py`               | Independent margin/flush/centering check on a finished SVG                |
-| `batch-icon-generate.sh`       | Batch-convert every `icon_box/icon_*.png` (tight + cropped) in one pass   |
-| `check-skill-sync.sh`          | Assert the `.skill` bundle's script hasn't drifted from the canonical one |
-| `svg-icon-generation-guide.md` | Deep methodology — every phase explained in detail                        |
-| `SVG-ICON-GENERATOR.md`        | Quick-start — common tasks, CLI flags, troubleshooting                    |
-| `icon-generator-example.json`  | Config template with all tunable parameters                               |
-| `generate-icon.sh`             | Bash wrapper — makes CLI invocation easier                                |
+| File                          | Purpose                                                                    |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| `svg-icon-generator.py`       | Main pipeline — 7 phases, full Python implementation (canonical)           |
+| `verify-icon.py`              | Independent margin/flush/centering check on a finished SVG                 |
+| `batch-icon-generate.sh`      | Batch-convert every `icon_box/icon_*.png` (tight + cropped) in one pass    |
+| `check-skill-sync.sh`         | Assert the `.skill` bundle's script hasn't drifted from the canonical one  |
+| `SVG-ICON-GENERATOR.md`       | Complete guide — quick-start, full methodology, CLI flags, troubleshooting |
+| `icon-generator-example.json` | Config template with all tunable parameters                                |
+| `generate-icon.sh`            | Bash wrapper — makes CLI invocation easier                                 |
 
 ## Architecture Notes
 

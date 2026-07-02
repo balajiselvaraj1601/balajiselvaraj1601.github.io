@@ -18,16 +18,15 @@ Requires:
     - Python: pillow, numpy, svgelements
     - Setup: apt install potrace; pip install pillow numpy svgelements; npm install -g svgo
 
-Reference: svg-icon-generation-guide.md (7-phase pipeline with verification)
+Reference: SVG-ICON-GENERATOR.md (7-phase pipeline with verification)
 """
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import sys
-import os
-import re
 from pathlib import Path
 
 import numpy as np
@@ -602,7 +601,11 @@ def main():
 
     config_overrides = {}
     if args.config:
-        config_overrides = json.loads(Path(args.config).read_text())
+        try:
+            config_overrides = json.loads(Path(args.config).read_text())
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"✗ Error loading config from {args.config}: {e}", file=sys.stderr)
+            return 1
     if args.light_threshold is not None:
         config_overrides["light_threshold"] = args.light_threshold
     if args.sizes:

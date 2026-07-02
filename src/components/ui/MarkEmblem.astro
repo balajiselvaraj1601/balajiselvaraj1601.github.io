@@ -7,10 +7,13 @@ interface Props {
   mark: VisionMark;
   /** Icon size in px — only used on the 'icon' branch. */
   iconSize?: number;
+  /** Mask sizing for logo branch; default scales glyph with SVG viewBox padding. */
+  maskSize?: string;
   class?: string;
 }
 
-const { mark, iconSize = 22, class: cls } = Astro.props;
+const { mark, iconSize = 22, maskSize, class: cls } = Astro.props;
+const fillMask = maskSize === '100% 100%';
 
 // Resolve the logo URL only on the 'logo' branch; the emblem is painted via a
 // CSS mask so it inherits the parent's currentColor in both themes.
@@ -22,7 +25,7 @@ const logo = mark.kind === 'logo' ? logoSrc(mark.asset) : undefined;
     <Icon name={mark.name} size={iconSize} class={cls} />
   ) : logo ? (
     <span
-      class:list={['mark-emblem', cls]}
+      class:list={['mark-emblem', fillMask && 'mark-emblem--fill', cls]}
       style={`--emblem:url("${logo}")`}
       aria-hidden="true"
     />
@@ -37,5 +40,9 @@ const logo = mark.kind === 'logo' ? logoSrc(mark.asset) : undefined;
     background: currentColor;
     -webkit-mask: var(--emblem) center / contain no-repeat;
     mask: var(--emblem) center / contain no-repeat;
+  }
+  .mark-emblem--fill {
+    -webkit-mask: var(--emblem) center / 100% 100% no-repeat;
+    mask: var(--emblem) center / 100% 100% no-repeat;
   }
 </style>

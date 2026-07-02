@@ -109,7 +109,10 @@
     "impact": {
       "title": "Strategic Impact",
       "source": "work/strategic-impact.json",
-      "visible": false
+      "visible": false,
+      "eyebrow": "AI Leadership & Strategic Impact",
+      "subEyebrow": "Leadership & Organizational Impact",
+      "ctaLabel": "See flagship case studies"
     },
     "technical-vision": {
       "title": "Technical Vision",

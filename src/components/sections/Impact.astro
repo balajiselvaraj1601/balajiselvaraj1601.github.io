@@ -17,7 +17,7 @@ const highlight = strategicImpact.headlineHighlight;
   title=""
   hideTitle
   labelledBy="impact-heading"
-  eyebrow="AI Leadership & Strategic Impact"
+  eyebrow={meta.eyebrow!}
   subtitle={strategicImpact.subtitle}
   variant="impact"
   class="impact-section"
@@ -48,7 +48,7 @@ const highlight = strategicImpact.headlineHighlight;
 
   <div class="impact-cta reveal">
     <a class="btn btn-secondary impact-cta__link" href="/#projects">
-      See flagship case studies
+      {meta.ctaLabel!}
       <Icon name="arrow-right" size="sm" />
     </a>
   </div>
@@ -58,7 +58,7 @@ const highlight = strategicImpact.headlineHighlight;
       strategicImpact.leadershipCards.length > 0 && (
         <div class="leadership-block reveal">
           <p class="eyebrow eyebrow--red leadership-block__eyebrow">
-            Leadership & Organizational Impact
+            {meta.subEyebrow!}
           </p>
           <div class="leadership-cards">
             {strategicImpact.leadershipCards.map((c) => (

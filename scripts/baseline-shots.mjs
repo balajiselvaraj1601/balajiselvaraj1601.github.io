@@ -17,7 +17,10 @@ const BASE = (process.env.PREVIEW_URL ?? 'http://127.0.0.1:4321').replace(
   '/'
 );
 
-/** @type {{ file: string; hash: string; selector: string }[]} */
+/** Match section-views.ts PROGRAMMATIC_SCROLL_SETTLE_MS + smooth scroll buffer. */
+const SCROLL_SETTLE_MS = 1400;
+
+/** @type {{ file: string; hash: string; selector: string; revealAll?: boolean }[]} */
 const SHOTS = [
   { file: 'thirukural.png', hash: '#about', selector: '#thirukural' },
   { file: 'thiruvalluvar.png', hash: '#about', selector: '.about-landing' },
@@ -26,8 +29,30 @@ const SHOTS = [
   { file: 'awards.png', hash: '#recognition', selector: '#awards' },
   { file: 'kaggle.png', hash: '#recognition', selector: '#kaggle' },
   { file: 'contact_page.png', hash: '#contact', selector: '#contact' },
-  { file: 'vision-board.png', hash: '#vision', selector: '#vision-board' },
-  { file: 'vision-hubs.png', hash: '#vision', selector: '.vboard__flow' },
+  {
+    file: 'vision-board.png',
+    hash: '#vision',
+    selector: '#vision-board',
+    revealAll: true,
+  },
+  {
+    file: 'vision-board-section.png',
+    hash: '#vision',
+    selector: '#vision-board',
+    revealAll: true,
+  },
+  {
+    file: 'vision-hubs.png',
+    hash: '#vision',
+    selector: '.vboard__flow',
+    revealAll: true,
+  },
+  {
+    file: 'vision-org.png',
+    hash: '#vision',
+    selector: '.vboard__org',
+    revealAll: true,
+  },
 ];
 
 async function waitForReveal(page, selector, timeout = 15000) {
@@ -44,10 +69,34 @@ async function waitForReveal(page, selector, timeout = 15000) {
   );
 }
 
+async function waitForScrollSettle(page) {
+  await page.waitForTimeout(SCROLL_SETTLE_MS);
+}
+
+async function forceReveals(page, rootSelector) {
+  await page.evaluate((sel) => {
+    const root = document.querySelector(sel);
+    if (!root) return;
+    root.querySelectorAll('.reveal').forEach((el) => {
+      el.classList.add('is-visible');
+    });
+  }, rootSelector);
+}
+
+async function prepareVisionSection(page) {
+  await page.locator('.vboard__org').scrollIntoViewIfNeeded();
+  await waitForScrollSettle(page);
+  await forceReveals(page, '#vision-board');
+  await page.waitForTimeout(200);
+}
+
 async function loadPage(page, url) {
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
   await page.waitForSelector('#hero', { timeout: 15000 });
   await waitForReveal(page, '#hero');
+  if (url.includes('#')) {
+    await waitForScrollSettle(page);
+  }
 }
 
 async function main() {
@@ -66,6 +115,9 @@ async function main() {
       await loadPage(page, url);
       await page.waitForSelector(shot.selector, { timeout: 15000 });
       await waitForReveal(page, shot.selector);
+      if (shot.revealAll) {
+        await prepareVisionSection(page);
+      }
       const outPath = resolve(OUT_DIR, shot.file);
       await page.locator(shot.selector).screenshot({ path: outPath });
       console.log(`wrote ${outPath}`);

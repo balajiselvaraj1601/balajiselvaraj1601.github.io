@@ -1,3 +1,4 @@
+// NOTE: listeners/observers here assume MPA full-page loads (no teardown). If Astro view transitions are ever enabled, add AbortController-based cleanup.
 /** Shared filter + search behaviour for Awards and Kaggle recognition grids. */
 export interface RecogGridOptions {
   root: HTMLElement;

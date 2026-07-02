@@ -4,6 +4,10 @@ import Icon from '@components/ui/Icon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import { resolveIcon } from '@lib/icons';
 import { profile } from '@lib/content';
+import type { z } from 'zod';
+import { contactTypeSchema } from '@schemas';
+
+type ContactType = z.infer<typeof contactTypeSchema>;
 
 const { contactPage } = profile;
 
@@ -11,8 +15,17 @@ const { contactPage } = profile;
 const linked = profile.contact.filter((c) => c.href);
 
 const isExternal = (href: string) => href.startsWith('http');
-const actionLabel = (type: string) =>
-  type === 'email' ? 'Send email' : 'View profile';
+
+// Type-safe map of contact types to action labels.
+const actionLabelMap: Record<ContactType, string> = {
+  email: 'Send email',
+  linkedin: 'View profile',
+  github: 'View profile',
+  kaggle: 'View profile',
+  location: 'View location',
+};
+
+const actionLabel = (type: ContactType): string => actionLabelMap[type];
 ---
 
 <Section

@@ -10,5 +10,27 @@
     {
       "text": "Architected and developed a multimodal Retrieval-Augmented Generation (RAG) pipeline that unified text, image, and tabular data into a shared embedding space. Integrated reranking and citation grounding to reduce hallucination and deliver traceable, context-aware information retrieval."
     }
+  ],
+  "domains": [
+    {
+      "label": "Medical Imaging",
+      "icon": "scan",
+      "detail": "CT, endoscopy, echocardiography foundation models"
+    },
+    {
+      "label": "Oncology",
+      "icon": "microscope",
+      "detail": "Single-cell transcriptomics & tumor recurrence"
+    },
+    {
+      "label": "Drug Safety",
+      "icon": "pill",
+      "detail": "Multimodal toxicology & omics integration"
+    },
+    {
+      "label": "Generative AI",
+      "icon": "brain",
+      "detail": "LLM embeddings, RAG, and knowledge graphs"
+    }
   ]
 }

@@ -38,5 +38,12 @@ scripts/.icon-stage/
 # Task-runner runtime state (local only)
 .cursor/task-runner.state.json
 
+# Page-team runtime state (local only)
+.cursor/page-team.state.json
+
+# Scheduled agent config and logs (local only)
+.cursor/agent-schedule.env
+.cursor/logs/
+
 # Shelved / unused content and components (not part of the live site)
 /_shelved/

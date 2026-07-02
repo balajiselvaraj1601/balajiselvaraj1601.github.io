@@ -195,7 +195,7 @@
       {
         "org": "Broad Institute",
         "entity": "broad-institute",
-        "detail": "Dr. Shantanu Singh (Senior Group Leader): co-developing Cell Painting & omics computational pipelines"
+        "detail": "Co-developing computational pipelines for Cell Painting and omics with Dr. Shantanu Singh (Senior Group Leader)"
       },
       {
         "org": "IIT Madras",
@@ -211,6 +211,16 @@
         "org": "RIKEN Brain Science Institute",
         "entity": "riken-bsi",
         "detail": "Neuroscience imaging and 3D reconstruction algorithms"
+      },
+      {
+        "org": "Uppsala University",
+        "entity": "uppsala-university",
+        "detail": "Research collaboration on AI models and computational pipelines"
+      },
+      {
+        "org": "AI Sweden",
+        "entity": "ai-sweden",
+        "detail": "Master's thesis pipeline and Digital Twins initiative for drug discovery"
       }
     ]
   },

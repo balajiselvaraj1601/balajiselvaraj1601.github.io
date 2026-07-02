@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -23,29 +24,23 @@ INK_TOL = 3.0
 LUM_TOL = 8.0
 ROI_FRAC = 0.70
 
-WORKSPACE = Path.home() / "workspace"
+WORKSPACE = Path(os.environ.get("ICON_WORKSPACE", str(Path.home() / "workspace")))
 
-SET_CONFIG: dict[str, dict] = {
-    "icon_box": {
-        "dir": WORKSPACE / "icon_box",
-        "mask_mode": "light",
-        "circle_archetype": True,
-        "scale_luminance": False,
-    },
-    "icon_kaggle": {
-        "dir": WORKSPACE / "icon_kaggle",
-        "mask_mode": "alpha",
-        "circle_archetype": False,
-        "scale_luminance": True,
-    },
-    "icon_multimodal": {
-        "dir": WORKSPACE / "icon_multimodal",
-        "mask_mode": "nonwhite",
-        "circle_archetype": False,
-        "scale_luminance": True,
-        "output_alpha": True,
-    },
-}
+# Load icon-sets configuration from JSON
+_icon_sets_path = Path(__file__).parent / "icon-sets.json"
+_icon_sets_data = json.loads(_icon_sets_path.read_text())
+
+# Build SET_CONFIG with full paths, preserving all configuration per set
+SET_CONFIG: dict[str, dict] = {}
+for set_name, config in _icon_sets_data["icon_sets"].items():
+    SET_CONFIG[set_name] = {
+        "dir": WORKSPACE / config["dir"],
+        "mask_mode": config["mask_mode"],
+        "circle_archetype": config["circle_archetype"],
+        "scale_luminance": config["scale_luminance"],
+    }
+    if config.get("output_alpha"):
+        SET_CONFIG[set_name]["output_alpha"] = config["output_alpha"]
 
 FILE_OVERRIDES: dict[str, dict] = {
     "icon_drug_safety.png": {

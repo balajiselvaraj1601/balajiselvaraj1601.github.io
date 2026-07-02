@@ -1,5 +1,6 @@
 ---
 import { site, profile, experience } from '@lib/content';
+import { THEME_BG } from '@lib/theme-colors';
 
 interface Props {
   /** Page title; defaults to the site SEO title. */
@@ -57,12 +58,12 @@ const jsonLd = {
 <!-- Theme color per scheme -->
 <meta
   name="theme-color"
-  content="#faf8ff"
+  content={THEME_BG.light}
   media="(prefers-color-scheme: light)"
 />
 <meta
   name="theme-color"
-  content="#0d0b1e"
+  content={THEME_BG.dark}
   media="(prefers-color-scheme: dark)"
 />
 

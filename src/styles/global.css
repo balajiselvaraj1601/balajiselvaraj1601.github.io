@@ -35,6 +35,8 @@
   --card-padding-lg: var(--space-8);
   --section-cta-gap: var(--space-8);
   --card-lift: -2px;
+  --btn-padding: 0.75rem 1.75rem;
+  --list-padding-left: 1.1em;
 
   /* Icon size scale — prefer tokens over raw px in Icon size prop */
   --icon-xs: 14px;
@@ -42,6 +44,12 @@
   --icon-md: 20px;
   --icon-lg: 24px;
   --icon-xl: 32px;
+  /* Icon/dot component-specific sizes */
+  --size-dot: 8px;
+  --size-icon-tile: 40px;
+  --size-icon-recog: 44px;
+  --size-recog-search-height: 38px;
+  --size-recog-search-width: 200px;
 
   --maxw: 1440px;
   --maxw-text: 70ch;
@@ -71,15 +79,19 @@
   --fs-h1: clamp(2.8rem, 6vw, 5.5rem);
   --fs-h2: clamp(2rem, 4vw, 3rem);
   --fs-h3: 1.15rem;
+  --fs-h4: 0.9rem;
   --fs-body: 0.95rem;
   --fs-small: 0.875rem;
   --fs-eyebrow: 0.72rem;
   --fs-metric: clamp(1.75rem, 1.2rem + 2vw, 2rem);
+  --fs-btn: 0.82rem;
+  --fs-subtitle: 0.95rem;
   --lh-body: 1.75;
   --lh-tight: 1.1;
 
   --dur: 200ms;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-spin: 0.7s;
   --header-h: 60px;
 
   /* Responsive breakpoints — prefer these over ad-hoc px in media queries */
@@ -111,11 +123,17 @@
   --status-closed: var(--accent-red);
 }
 
+/* Drop-shadow filter colors (theme-independent; cannot reuse box-shadow tokens — those are multi-part values invalid inside filter: drop-shadow()) */
+:root {
+  --shadow-drop-color: rgba(0, 0, 0, 0.35);
+  --shadow-drop-color-strong: rgba(0, 0, 0, 0.5);
+}
+
 /* Light theme — derived purple palette */
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #faf8ff;
+  --bg: #faf8ff; /* keep in sync with THEME_BG in src/lib/theme-colors.ts */
   --bg-alt: #f0ebfa;
   --bg-elev: #ffffff;
   --bg-chip: #e8e0f5;
@@ -142,6 +160,7 @@
   --shadow: 0 1px 2px rgba(26, 21, 48, 0.06), 0 4px 16px rgba(26, 21, 48, 0.06);
   --shadow-sm: 0 1px 2px rgba(26, 21, 48, 0.05);
   --shadow-md: 0 10px 30px rgba(26, 21, 48, 0.1);
+  --shadow-raised: 0 6px 20px rgba(0, 0, 0, 0.25);
   /* Award-level accents (SSOT: Awards summary tiles + cards). AA ≥3:1 on --bg-elev. */
   --accent-gold: #b8860b; /* shared by EVP award level + education */
   --lvl-evp: var(--accent-gold);
@@ -165,7 +184,7 @@
 /* Dark theme (primary design target) */
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0d0b1e;
+  --bg: #0d0b1e; /* keep in sync with THEME_BG in src/lib/theme-colors.ts */
   --bg-alt: #13102b;
   --bg-elev: #1a1530;
   --bg-chip: #211d3a;
@@ -274,7 +293,7 @@ h3 {
 h4 {
   /* h4 is a micro-label/kicker, not prose — use mono to match eyebrows & labels */
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: var(--fs-h4);
   font-weight: 600;
   color: var(--accent-ll);
   letter-spacing: 0.05em;
@@ -293,7 +312,7 @@ a:hover {
 }
 ul,
 ol {
-  padding-left: 1.1em;
+  padding-left: var(--list-padding-left);
 }
 button {
   font: inherit;
@@ -391,13 +410,13 @@ button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0.75rem 1.75rem;
+  padding: var(--btn-padding);
   border-radius: var(--radius-xs);
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--accent-ll);
   text-decoration: none;
-  font-size: 0.82rem;
+  font-size: var(--fs-btn);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -420,7 +439,6 @@ button {
   background: var(--accent-strong);
   border-color: var(--accent-strong);
   color: var(--accent-contrast);
-  filter: none;
 }
 @media (prefers-reduced-motion: no-preference) {
   .btn:hover,
@@ -557,8 +575,8 @@ button {
   );
 }
 .recog-tile__icon {
-  width: 40px;
-  height: 40px;
+  width: var(--size-icon-tile);
+  height: var(--size-icon-tile);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -609,11 +627,11 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 0.45rem 0.75rem;
-  min-height: 38px;
+  min-height: var(--size-recog-search-height);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  min-width: 200px;
+  min-width: var(--size-recog-search-width);
 }
 .recog-search:focus-visible {
   outline: 2px solid var(--focus-ring);
@@ -732,8 +750,8 @@ button {
 }
 
 .recog-icon {
-  width: 44px;
-  height: 44px;
+  width: var(--size-icon-recog);
+  height: var(--size-icon-recog);
   flex-shrink: 0;
   border-radius: var(--radius-lg);
   display: flex;
@@ -906,7 +924,7 @@ button {
   color: var(--heading);
 }
 .section__subtitle {
-  font-size: 0.95rem;
+  font-size: var(--fs-subtitle);
   color: var(--text-muted);
   margin-bottom: var(--space-8);
   max-width: var(--maxw-text);

@@ -1,0 +1,34 @@
+{
+  "install_order": ["icon_kaggle", "icon_multimodal", "icon_box"],
+  "install_overrides": {
+    "icon_box": {
+      "target-goal": "logo_target_goal_box"
+    }
+  },
+  "icon_sets": {
+    "icon_box": {
+      "dir": "icon_box",
+      "mask_mode": "light",
+      "circle_archetype": true,
+      "scale_luminance": false,
+      "output_alpha": false,
+      "generator_flags": []
+    },
+    "icon_kaggle": {
+      "dir": "icon_kaggle",
+      "mask_mode": "alpha",
+      "circle_archetype": false,
+      "scale_luminance": true,
+      "output_alpha": false,
+      "generator_flags": ["--alpha-glyph"]
+    },
+    "icon_multimodal": {
+      "dir": "icon_multimodal",
+      "mask_mode": "nonwhite",
+      "circle_archetype": false,
+      "scale_luminance": true,
+      "output_alpha": true,
+      "generator_flags": ["--colored-glyph"]
+    }
+  }
+}

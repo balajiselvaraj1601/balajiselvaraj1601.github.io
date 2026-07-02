@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-07-02T000000Z",
+  "mode": "full",
+  "goal": "Example run — replace via page-team-start.sh",
+  "phase": "init",
+  "enabled": false,
+  "active_views": [
+    "home",
+    "experience",
+    "projects",
+    "research",
+    "recognition",
+    "vision",
+    "contact"
+  ],
+  "findings": [],
+  "conflicts": [],
+  "decisions": [],
+  "acceptances": [],
+  "implementations": [],
+  "build": null
+}

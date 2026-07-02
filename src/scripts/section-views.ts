@@ -1,3 +1,4 @@
+// NOTE: listeners/observers here assume MPA full-page loads (no teardown). If Astro view transitions are ever enabled, add AbortController-based cleanup.
 /** Nav-driven single-page scroll for the home layout.
  *
  * All sections are always visible. The header nav buttons and deep links scroll
@@ -17,6 +18,9 @@ export type SectionViewsOptions = {
 /** Window (ms) after a programmatic scroll during which scroll-spy is suppressed. */
 const PROGRAMMATIC_SCROLL_SETTLE_MS = 1200;
 
+/** Selector for nav links with view anchors. */
+const VIEW_ANCHOR_SELECTOR = 'a[data-view-anchor]';
+
 function normalizePath(pathname: string): string {
   return pathname.replace(/\/$/, '') || '/';
 }
@@ -26,7 +30,7 @@ function updateNavActive(viewAnchor: string) {
   if (!nav) return;
 
   nav
-    .querySelectorAll<HTMLAnchorElement>('a[data-view-anchor]')
+    .querySelectorAll<HTMLAnchorElement>(VIEW_ANCHOR_SELECTOR)
     .forEach((link) => {
       if (link.dataset.viewAnchor === viewAnchor) {
         link.setAttribute('aria-current', 'page');
@@ -101,7 +105,7 @@ export function initSectionViews(options: SectionViewsOptions) {
     }
 
     const targetEl = event.target instanceof Element ? event.target : null;
-    const link = targetEl?.closest<HTMLAnchorElement>('a[data-view-anchor]');
+    const link = targetEl?.closest<HTMLAnchorElement>(VIEW_ANCHOR_SELECTOR);
     if (!link) return;
 
     event.preventDefault();

@@ -2,7 +2,7 @@
 import type { MetricItem } from '@schemas';
 
 // SSOT: shape derives from the shared MetricItem schema (value/label/detail?).
-// `detail` is intentionally not rendered — this is a compact stat tile.
+// `detail` is rendered when provided.
 interface Props extends MetricItem {
   class?: string;
 }

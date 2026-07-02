@@ -8,6 +8,7 @@ const socialLinks = profile.contact.filter(
   (c) => c.href && c.type !== 'location'
 );
 const tagline = site.tagline.trim();
+const SOCIAL_ICON_SIZE = 18;
 ---
 
 <footer class="site-footer">
@@ -41,7 +42,10 @@ const tagline = site.tagline.trim();
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
               >
-                <Icon name={resolveIcon(c.icon, 'email')} size={18} />
+                <Icon
+                  name={resolveIcon(c.icon, 'email')}
+                  size={SOCIAL_ICON_SIZE}
+                />
               </a>
             </li>
           );

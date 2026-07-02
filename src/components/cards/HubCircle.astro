@@ -84,6 +84,10 @@ const centerLogo = center.kind === 'logo' ? logoSrc(center.asset) : undefined;
 <style>
   .hub {
     --hub-accent: var(--accent);
+    /* Glyph box sizes as a share of the ring; discs are gone, so the glyph fills
+       these slots directly (centre is the focal mark, larger than satellites). */
+    --hub-center-size: 34%;
+    --hub-sat-size: 17%;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -120,57 +124,42 @@ const centerLogo = center.kind === 'logo' ? logoSrc(center.asset) : undefined;
     stroke-linecap: round;
     opacity: 0.55;
   }
+  /* Bare centre glyph — no disc/border/halo; the mark fills the whole slot. */
   .hub__center {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
-    height: 30%;
-    border-radius: 50%;
+    width: var(--hub-center-size);
+    height: var(--hub-center-size);
     display: grid;
     place-items: center;
-    background: var(--bg-elev);
-    border: 2px solid var(--hub-accent);
-    box-shadow: 0 0 0 5px var(--bg);
     color: var(--hub-accent);
     z-index: 2;
   }
-  .hub__center:has(img) {
-    background: var(--bg-elev);
-  }
-  .hub__center img {
-    width: var(--logo-emblem-img);
-    height: var(--logo-emblem-img);
+  .hub__center img,
+  .hub__center :global(.icon) {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
   }
+  /* Bare satellite glyph — no disc/border/halo; the mark fills the whole slot,
+     so every satellite renders at the same size. */
   .hub__sat {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 17%;
-    height: 17%;
-    border-radius: 50%;
+    width: var(--hub-sat-size);
+    height: var(--hub-sat-size);
     display: grid;
     place-items: center;
-    /* Icon-kind satellites: solid accent disc with a white glyph, matching the
-       filled look of the self-ringed emblems. */
-    background: var(--sat-accent, var(--hub-accent));
-    border: none;
-    color: #fff;
-    box-shadow: 0 0 0 4px var(--bg);
+    color: var(--accent-contrast);
   }
-  /* Non-plain logo emblems sit on the disc at glyph size. */
   .hub__sat :global(.mark-emblem) {
-    width: 22px;
-    height: 22px;
+    width: 100%;
+    height: 100%;
   }
-  /* Self-ringed logo_* emblems: the artwork already draws the circle —
-     drop the chrome disc and let the mask fill the whole slot, painted in
-     the satellite's accent color. */
+  /* logo_* satellites tint the bare glyph in the accent colour. */
   .hub__sat--plain {
-    background: none;
-    border: none;
-    box-shadow: none;
     color: var(--sat-accent, var(--hub-accent));
   }
   .hub__sat--plain :global(.mark-emblem) {
@@ -179,13 +168,13 @@ const centerLogo = center.kind === 'logo' ? logoSrc(center.asset) : undefined;
   }
   .hub__label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #fff;
+    color: var(--accent-contrast);
     background: var(--hub-accent);
-    padding: 0.4rem var(--space-5);
+    padding: var(--space-2) var(--space-5);
     border-radius: var(--radius-pill);
     margin: 0;
   }

@@ -28,6 +28,13 @@ const LabeledLink = z.object({
   logoBadge: z.boolean().optional(),
 });
 const VariantColor = z.enum(['purple', 'red']);
+export const contactTypeSchema = z.enum([
+  'email',
+  'linkedin',
+  'github',
+  'kaggle',
+  'location',
+]);
 const EntitySlug = z.string().optional();
 const EntityRecord = z.object({
   name: z.string(),
@@ -67,6 +74,8 @@ export const siteSchema = z
         source: z.string(),
         visible: z.boolean(),
         eyebrow: z.string().optional(),
+        subEyebrow: z.string().optional(),
+        ctaLabel: z.string().optional(),
       })
     ),
     seo: z.object({
@@ -125,7 +134,7 @@ export const profileSchema = z.object({
       translation: z.string(),
       author: z.string(),
       image: z.string().optional(),
-      imageAlt: z.string().optional(),
+      imageAlt: z.string(),
     })
     .optional(),
   metrics: z.array(MetricItem),
@@ -256,7 +265,7 @@ export const profileSchema = z.object({
     .optional(),
   contact: z.array(
     z.object({
-      type: z.string(),
+      type: contactTypeSchema,
       label: z.string(),
       value: z.string(),
       href: z.string().nullable(),
@@ -368,9 +377,15 @@ export const visionBoardSchema = z.object({
 });
 
 /* ── generative-ai (text-item list) ────────────────────────────────────── */
+export const domainItemSchema = z.object({
+  label: z.string(),
+  icon: iconNameSchema,
+  detail: z.string(),
+});
 export const textListSchema = z.object({
   title: z.string(),
   items: z.array(TextItem),
+  domains: z.array(domainItemSchema).optional(),
 });
 
 /* ── experience.json ───────────────────────────────────────────────────── */
@@ -531,7 +546,7 @@ export const speakersSchema = z.object({
 // SSOT for the medal tiers earned — drives the medal field and filter chips.
 export const kaggleMedalSchema = z.enum(['Silver', 'Bronze']);
 // Export the medal enum values as a tuple for use in filter chips and card logic.
-export const MEDALS = ['Silver', 'Bronze'] as const;
+export const MEDALS = kaggleMedalSchema.options;
 const KaggleCompetitionStats = z.object({
   prizePool: z.string(),
   entrants: z.string(),
@@ -606,6 +621,7 @@ export type EducationRecord = z.infer<typeof educationRecordSchema>;
 export type Awards = z.infer<typeof awardsSchema>;
 export type AwardLevel = z.infer<typeof awardLevelSchema>;
 export type LinkList = z.infer<typeof linkListSchema>;
+export type DomainItem = z.infer<typeof domainItemSchema>;
 export type Speakers = z.infer<typeof speakersSchema>;
 export type Kaggle = z.infer<typeof kaggleSchema>;
 export type KaggleCompetition = z.infer<typeof kaggleCompetitionSchema>;

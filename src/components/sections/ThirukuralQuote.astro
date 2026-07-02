@@ -23,7 +23,7 @@ const quote = profile.heroQuote;
               <img
                 class="kural__img"
                 src={quote.image}
-                alt={quote.imageAlt ?? ''}
+                alt={quote.imageAlt}
                 loading="lazy"
                 decoding="async"
               />
@@ -154,7 +154,7 @@ const quote = profile.heroQuote;
     height: auto;
     object-fit: contain;
     opacity: 0.92;
-    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 4px 16px var(--shadow-drop-color));
   }
   @media (max-width: 767px) {
     .kural__img-wrap {

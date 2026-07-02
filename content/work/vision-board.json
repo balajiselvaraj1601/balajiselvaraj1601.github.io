@@ -134,7 +134,7 @@
         "alt": "Achievement award"
       },
       "title": "EVP Level AWARD",
-      "lines": ["For Drug Safety Platform"]
+      "lines": ["Awarded for", "Drug Safety Platform"]
     },
     {
       "mark": {
@@ -152,7 +152,7 @@
         "alt": "Financial growth"
       },
       "title": "Secured $0.5M+ Funds",
-      "lines": ["Multiple times for Team"]
+      "lines": ["Secured multiple times", "for the team"]
     },
     {
       "mark": {
@@ -161,7 +161,7 @@
         "alt": "Analytics dashboard"
       },
       "title": "3 Scorecard",
-      "lines": ["Aligned Projects"]
+      "lines": ["Projects aligned", "to 3 scorecards"]
     },
     {
       "mark": {
@@ -179,7 +179,7 @@
         "alt": "Team growth"
       },
       "title": "Scaled Team",
-      "lines": ["1 to 12 members"]
+      "lines": ["From 1 to 12", "team members"]
     },
     {
       "mark": {
@@ -188,7 +188,7 @@
         "alt": "Global locations"
       },
       "title": "Global Team Management",
-      "lines": ["UK, Sweden,", "India, Mexico, China"]
+      "lines": ["UK, Sweden, India", "Mexico, China"]
     }
   ]
 }

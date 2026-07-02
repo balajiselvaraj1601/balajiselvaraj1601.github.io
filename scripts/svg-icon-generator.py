@@ -227,7 +227,7 @@ class IconPipeline:
                 raise ValueError(
                     "--alpha-glyph needs a transparent-background source, but this "
                     "image is fully opaque (alpha=255 everywhere). Use --colored-glyph "
-                    "(colored ink on white) or --dark-glyph/--light-glyph instead."
+                    "(colored ink on white), --dark-glyph, or the default light mode."
                 )
             is_fg = alpha > self.cfg["alpha_threshold"]
         else:

@@ -34,7 +34,7 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 # source and its committed <name>-icon-512.svg golden. Flags mirror how
 # batch-icon-generate.sh drives that archetype.
 MODE_FLAGS = {
-    "light": [],                              # icons_box: white glyph on a solid circle
+    "light": [],                              # icon_box: white glyph on a solid circle
     "nonwhite": ["--colored-glyph", "--no-circle"],   # icon_multimodal
     "alpha": ["--alpha-glyph", "--no-circle"],        # icon_kaggle
 }

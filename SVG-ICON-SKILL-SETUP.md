@@ -8,7 +8,7 @@ Professional-grade raster → vector icon pipeline for the portfolio site.
 scripts/
 ├── svg-icon-generator.py          # Main pipeline — CANONICAL source of truth
 ├── verify-icon.py                 # Independent margin/flush/centering check on a finished SVG
-├── batch-icon-generate.sh         # Convert every icons_box/icon_*.png in one pass (tight + cropped)
+├── batch-icon-generate.sh         # Convert every icon_box/icon_*.png in one pass (tight + cropped)
 ├── check-skill-sync.sh            # Assert the .skill bundle ships the canonical script (no drift)
 ├── svg-icon-generation-guide.md   # Full methodology + troubleshooting
 ├── SVG-ICON-GENERATOR.md          # Quick-start guide
@@ -132,7 +132,7 @@ masking — safe because the glyph is white *inside* the circle, so the non-whit
 bounding box equals the circle and no glyph pixels are lost. Pair `--tight` with
 `--save-cropped` to emit both a border-free PNG and a border-free SVG in one pass.
 `scripts/batch-icon-generate.sh [DIR] [flags…]` does this for every
-`icon_*.png` in a directory (default `icons_box`), passing any extra flags through
+`icon_*.png` in a directory (default `icon_box`), passing any extra flags through
 — e.g. `batch-icon-generate.sh …/icon_multimodal --colored-glyph --no-circle` for
 a colored-glyph-on-white set.
 
@@ -303,7 +303,7 @@ Then adjust in config:
 |---|---|
 | `svg-icon-generator.py` | Main pipeline — 7 phases, full Python implementation (canonical) |
 | `verify-icon.py` | Independent margin/flush/centering check on a finished SVG |
-| `batch-icon-generate.sh` | Batch-convert every `icons_box/icon_*.png` (tight + cropped) in one pass |
+| `batch-icon-generate.sh` | Batch-convert every `icon_box/icon_*.png` (tight + cropped) in one pass |
 | `check-skill-sync.sh` | Assert the `.skill` bundle's script hasn't drifted from the canonical one |
 | `svg-icon-generation-guide.md` | Deep methodology — every phase explained in detail |
 | `SVG-ICON-GENERATOR.md` | Quick-start — common tasks, CLI flags, troubleshooting |

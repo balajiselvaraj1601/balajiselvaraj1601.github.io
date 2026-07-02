@@ -6,7 +6,7 @@
 #   ./scripts/batch-icon-generate.sh [ICONS_DIR] [extra generator flags...]
 #
 # Examples:
-#   # icons_box — white glyph on a solid circle (the default archetype):
+#   # icon_box — white glyph on a solid circle (the default archetype):
 #   ./scripts/batch-icon-generate.sh
 #
 #   # icon_multimodal — colored/gradient glyph + ring outline on white:
@@ -19,7 +19,7 @@
 
 set -e
 
-DEFAULT_DIR="/home/engineer/workspace/icons_box"
+DEFAULT_DIR="/home/engineer/workspace/icon_box"
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 GENERATOR="$PROJECT_ROOT/scripts/svg-icon-generator.py"
 

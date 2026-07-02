@@ -21,7 +21,7 @@ Exit 0 = all green. It runs three layers:
 
 ```
 fixtures/
-├── light/     icon_*.png + <name>-icon-512.svg   # from icons_box (white glyph on solid circle)
+├── light/     icon_*.png + <name>-icon-512.svg   # from icon_box (white glyph on solid circle)
 ├── nonwhite/  icon_*.png + <name>-icon-512.svg   # from icon_multimodal (colored ink on white)
 ├── alpha/     icon_*.png + <name>-icon-512.svg   # from icon_kaggle (transparent-bg PNG)
 └── edge/      opaque_*.png                        # opaque source for the --alpha-glyph guard

@@ -1,0 +1,27 @@
+---
+// Shared recognition summary stat tile (Awards, Kaggle). Spreads ...rest onto
+// the root so the parent's scoped-style attribute (and any accent class passed
+// via `class`) keeps matching — same pattern as RecogCardShell.
+import Icon from '@components/ui/Icon.astro';
+import type { IconName } from '@lib/icons';
+
+interface Props {
+  icon: IconName;
+  count: string | number;
+  label: string;
+  class?: string;
+}
+
+const { icon, count, label, class: cls, ...rest } = Astro.props;
+---
+
+<div class:list={['recog-tile', cls]} {...rest}>
+  <div
+    class="icon-tile icon-tile--recog icon-tile--accented"
+    aria-hidden="true"
+  >
+    <Icon name={icon} size={22} />
+  </div>
+  <div class="recog-tile__count">{count}</div>
+  <div class="recog-tile__label">{label}<slot name="label-extra" /></div>
+</div>

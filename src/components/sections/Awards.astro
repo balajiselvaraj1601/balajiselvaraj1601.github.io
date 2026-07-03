@@ -3,6 +3,7 @@ import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
 import RecogCardShell from '@components/ui/RecogCardShell.astro';
 import RecogControls from '@components/ui/RecogControls.astro';
+import RecogTile from '@components/ui/RecogTile.astro';
 import { awards, site } from '@lib/content';
 import { awardLevelSchema } from '@schemas';
 
@@ -41,16 +42,12 @@ const total = items.length;
   <div class="recog-summary reveal">
     {
       LEVELS.map((level) => (
-        <div class:list={['recog-tile', `level-${slug(level)}`]}>
-          <div
-            class="icon-tile icon-tile--recog icon-tile--accented"
-            aria-hidden="true"
-          >
-            <Icon name="trophy" size={22} />
-          </div>
-          <div class="recog-tile__count">{counts[level] ?? 0}</div>
-          <div class="recog-tile__label">{level}</div>
-        </div>
+        <RecogTile
+          class={`level-${slug(level)}`}
+          icon="trophy"
+          count={counts[level] ?? 0}
+          label={level}
+        />
       ))
     }
   </div>

@@ -1,8 +1,8 @@
 ---
 import Section from '@components/ui/Section.astro';
-import Icon from '@components/ui/Icon.astro';
 import CompetitionCard from '@components/cards/CompetitionCard.astro';
 import RecogControls from '@components/ui/RecogControls.astro';
+import RecogTile from '@components/ui/RecogTile.astro';
 import { kaggle, site } from '@lib/content';
 import { MEDALS, medalClass } from '@lib/recognition';
 
@@ -27,50 +27,26 @@ const bronze = items.filter((i) => i.medal === 'Bronze').length;
 >
   <!-- Summary stat tiles — competition + medal counts and global rank -->
   <div class="recog-summary reveal">
-    <div class="recog-tile">
-      <div
-        class="icon-tile icon-tile--recog icon-tile--accented"
-        aria-hidden="true"
-      >
-        <Icon name="kaggle" size={22} />
-      </div>
-      <div class="recog-tile__count">{total}</div>
-      <div class="recog-tile__label">Competitions</div>
-    </div>
-    <div class="recog-tile blob--silver">
-      <div
-        class="icon-tile icon-tile--recog icon-tile--accented"
-        aria-hidden="true"
-      >
-        <Icon name="trophy" size={22} />
-      </div>
-      <div class="recog-tile__count">{silver}</div>
-      <div class="recog-tile__label">Silver</div>
-    </div>
-    <div class="recog-tile blob--bronze">
-      <div
-        class="icon-tile icon-tile--recog icon-tile--accented"
-        aria-hidden="true"
-      >
-        <Icon name="trophy" size={22} />
-      </div>
-      <div class="recog-tile__count">{bronze}</div>
-      <div class="recog-tile__label">Bronze</div>
-    </div>
-    <div class="recog-tile">
-      <div
-        class="icon-tile icon-tile--recog icon-tile--accented"
-        aria-hidden="true"
-      >
-        <Icon name="target" size={22} />
-      </div>
-      <div class="recog-tile__count">{kaggle.rank}</div>
-      <div class="recog-tile__label">
-        Global Rank{
-          kaggle.rankDenominator && <span> · {kaggle.rankDenominator}</span>
-        }
-      </div>
-    </div>
+    <RecogTile icon="kaggle" count={total} label="Competitions" />
+    <RecogTile
+      class="blob--silver"
+      icon="trophy"
+      count={silver}
+      label="Silver"
+    />
+    <RecogTile
+      class="blob--bronze"
+      icon="trophy"
+      count={bronze}
+      label="Bronze"
+    />
+    <RecogTile icon="target" count={kaggle.rank} label="Global Rank">
+      {
+        kaggle.rankDenominator && (
+          <span slot="label-extra"> · {kaggle.rankDenominator}</span>
+        )
+      }
+    </RecogTile>
   </div>
 
   <RecogControls

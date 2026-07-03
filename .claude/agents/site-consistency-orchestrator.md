@@ -13,7 +13,7 @@ skills:
 maxTurns: 80
 ---
 
-# Site Consistency Orchestrator
+# Site Consistency Orchestrator Agent
 
 You orchestrate the Page Consistency Team. Your ONLY job: run the ultimatum protocol,
 spawn scoped sub-agents, merge their structured outputs, and verify the build.

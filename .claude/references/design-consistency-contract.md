@@ -68,28 +68,83 @@ Per `docs/design-direction.md § Section eyebrows`:
 | Content sections inside a view                | **Omit** — nav provides context                              |
 | Ad-hoc kickers (Vision lede, Leadership diff) | Match `.eyebrow` typography (`--accent-ll`, mono, uppercase) |
 
-**View intros with eyebrows:** `experience-intro`, `featured-case-studies`, Contact (if eyebrow used).
+**View intros with eyebrows:** `experience-intro`, `featured-case-studies`, `vision-intro`, Contact (if eyebrow used).
 
-**Content sections without eyebrows:** `leadership`, `publications`, `conferences`, `speakers`, `awards`, `kaggle`, `education`, `experience` (uses SectionHeading instead).
+**Content sections without eyebrows:** `leadership`, `publications`, `conferences`, `speakers`, `awards`, `kaggle`, `education`, `experience` (uses SectionHeading instead), `vision-programs`, `vision-impact`.
 
 ---
 
 ## 5. Card shells
 
-| Pattern           | Component                                                          | Used by                              |
-| ----------------- | ------------------------------------------------------------------ | ------------------------------------ |
-| Metric snapshot   | `MetricCard.astro`                                                 | Hero, ExperienceIntro, ProjectsIntro |
-| Recognition stack | `RecogCardShell.astro` + `CompetitionCard.astro`                   | Awards, Kaggle                       |
-| Research links    | `ResearchCard.astro` / `ResearchLinkGrid.astro`                    | Publications, Conferences            |
-| Case study        | `ProjectCaseStudyCard.astro`                                       | FeaturedCaseStudies                  |
-| Education         | Education card pattern in `Education.astro`                        | Education                            |
-| Vision hub        | `HubCircle.astro`, `ProgramBadgeCard.astro`, `OrgImpactCard.astro` | VisionBoard                          |
+Four tiers govern box/card surfaces. All tiers share `--radius` (12px default), `--card-lift`
+hover, and `box-shadow: var(--shadow-md)` on interactive hover unless §11 documents an exception.
+
+| Tier                | Shell class                                | Padding token              | Used by                                                          |
+| ------------------- | ------------------------------------------ | -------------------------- | ---------------------------------------------------------------- |
+| **A — compact**     | `.card`                                    | `--card-padding` (24px)    | MetricCard, theme-card, connect-card, proj-card accordion        |
+| **B — content**     | `.content-card`                            | `--card-padding-lg` (32px) | ResearchCard, SpeakingCard                                       |
+| **C — recognition** | `.recog-card`, `.recog-tile`, `.edu-panel` | `--card-padding` (24px)    | Awards, Kaggle, Education (see §11 for accent/radius exceptions) |
+| **D — special**     | `.card--accent`, `.hub__ring`              | varies                     | ProjectCaseStudyCard gradient stripe; Vision hub circle          |
+
+Shared primitives:
+
+| Pattern                | Location                                                                                                                       | Notes                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Icon tile              | `.icon-tile` + modifiers in `global.css`                                                                                       | Fallback icons; `--round`, `--compact`, `--recog`, `--accented` |
+| Logo rect              | `.logo-badge` via `LogoBadge.astro`                                                                                            | Horizontal wordmarks                                            |
+| Logo round             | `.logo-badge--round`                                                                                                           | Square emblems in circular pill                                 |
+| Card tint              | `.card-tint`, `.card-tint--accent`                                                                                             | Nested highlight callouts inside cards                          |
+| Metric snapshot        | `MetricCard.astro`                                                                                                             | Tier A                                                          |
+| Recognition stack      | `RecogCardShell.astro` + `CompetitionCard.astro`                                                                               | Tier C                                                          |
+| Research links         | `ResearchCard.astro` / `ResearchLinkGrid.astro`                                                                                | Tier B — **cross-view reference** for hover lift                |
+| Case study             | `ProjectCaseStudyCard.astro`                                                                                                   | Tier D                                                          |
+| Education              | `Education.astro`                                                                                                              | Tier C                                                          |
+| Vision groups & impact | `ProgramBadgeCard.astro`, `OrgSnapshotCard.astro` (with `CardMark.astro` + `MarkEmblem.astro` for vision-programs group cards) | Tier A                                                          |
+| Card mark              | `CardMark.astro`                                                                                                               | All card logo/icon/emblem slots                                 |
 
 **Cross-view rule:** The Research link-list shell (`ResearchCard.astro`) is the reference
-implementation for cross-view card alignment. Recognition cards (Awards, Kaggle) must share
-the same shell spacing, border radius (`--radius`), and hover lift (`--card-lift`) as
-Research cards unless Guardian documents an intentional exception in §11. This section is
-the only canonical-card statement — agents must not claim reference status elsewhere.
+implementation for hover lift (`--card-lift` + `--shadow-md`). Tier C cards may diverge on
+radius, top accent, and gradient background only when documented in §11.
+
+### Logo / mark slots (inside card shells)
+
+**Sizing SSOT:** `:root { --mark-slot: 44px; --mark-glyph: 22px; }` in `src/styles/global.css`.
+Change these two tokens to resize standard circular marks site-wide. Contextual overrides reuse
+the same names: `.icon-tile--recog { --mark-slot: 40px; }`, `.icon-tile--compact {
+--mark-slot: 36px; --mark-glyph: 18px; }`, `#hub-circle .hub__center` for Tier D hub center.
+
+**Component SSOT:** `CardMark.astro` — all new card marks go through this component; it calls
+`resolveLogoSlot()` in `src/lib/logo-display.ts`. Do not hand-roll logo/badge branching in cards.
+
+| Shape                | CSS / component                                                    | When                                                                |
+| -------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| **rect**             | `CardMark` → `.logo-badge` (rounded rect, white surface)           | Horizontal wordmarks (most org logos)                               |
+| **round**            | `CardMark` → `.logo-badge--round` or `.icon-tile.icon-tile--round` | Square emblem logos in circular chrome                              |
+| **plain**            | `CardMark` → `.logo-badge--plain`                                  | Dark/light marks on card bg (`jitc`, `hcl`)                         |
+| **emblem-in-circle** | `CardMark` → `.theme-card__icon` + `MarkEmblem`                    | Vision org/program theme cards (pipeline `logo_*` in accent circle) |
+| **emblem bare**      | `MarkEmblem` without chrome                                        | Hub satellite plain nodes, self-ringed assets off-card              |
+| **icon**             | `CardMark` → `.icon-tile` (+ modifiers)                            | Lucide fallback when no logo asset                                  |
+
+**Reference implementations (do not redesign):** Contact connect cards (round Lucide via
+`CardMark`), Recognition summary tiles (`.icon-tile--recog.icon-tile--accented`).
+
+Icon tile modifiers: `--round` (circle), `--compact` (36px slot), `--recog` (40px slot summary),
+`--accented` (tints from contextual `--accent-card`), `--elev` (white node on tinted callout).
+
+### Card colour highlights
+
+Set `--accent-card` on a wrapper (`.card-accent` or level/medal class) to tint Tier C shells.
+Use shared callout primitives for nested emphasis — do not reimplement `color-mix` per component.
+
+| Pattern     | Class                                          | Use                                                                  |
+| ----------- | ---------------------------------------------- | -------------------------------------------------------------------- |
+| Soft tint   | `.card-tint`                                   | Nested callouts (`--accent-soft` wash): pipeline, impact strip       |
+| Accent tint | `.card-tint--accent`                           | Contextual `--accent-card` wash: edu highlight, level-coloured bands |
+| Top stripe  | `.card--accent::before` or Tier C `border-top` | Card-level category emphasis (see §11)                               |
+| Radial wash | `.recog-tile::after`, `.edu-panel::before`     | Tier C hero/stat tiles only                                          |
+
+**Contextual `--accent-card` sources:** Awards (`--lvl` per level), Kaggle (`--medal`), Education
+(`--accent-gold`), CompetitionCard (`--medal` per card).
 
 ---
 
@@ -99,12 +154,12 @@ SSOT for variant naming. `Section.astro` accepts a single `variant` prop
 (`'default' | 'alt' | 'full' | 'impact'`); additional variant classes may be layered via
 its `class` prop (e.g. VisionBoard: `variant="full"` + `class="section--alt section--impact"`).
 
-| `variant` prop | Emitted class      | When                                                                                              |
-| -------------- | ------------------ | ------------------------------------------------------------------------------------------------- |
-| `default`      | (none)             | Standard band                                                                                     |
-| `alt`          | `.section--alt`    | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies |
-| `full`         | `.section--full`   | Full-bleed layout; Vision board                                                                   |
-| `impact`       | `.section--impact` | High-emphasis band; Vision board (layered via `class` prop)                                       |
+| `variant` prop | Emitted class      | When                                                                                                               |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `default`      | (none)             | Standard band                                                                                                      |
+| `alt`          | `.section--alt`    | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies, vision-programs |
+| `full`         | `.section--full`   | Full-bleed layout (deprecated as of Vision rewrite)                                                                |
+| `impact`       | `.section--impact` | High-emphasis band (deprecated as of Vision rewrite)                                                               |
 
 Adjacent sections should alternate `default` / `alt` where possible for visual rhythm.
 Agents cite this table — never ad-hoc class strings.
@@ -163,9 +218,17 @@ Intentional divergences from this contract, recorded by the Design Guardian duri
 Implement (Hard Rule: document exceptions). This table — not agent memory — is the SSOT
 for approved divergences. Append rows; never delete history.
 
-| exception_id | views | rule waived | reason | date |
-| ------------ | ----- | ----------- | ------ | ---- |
-| —            | —     | —           | —      | —    |
+| exception_id | views                                          | rule waived                  | reason                                                                                                                                                                                                          | date       |
+| ------------ | ---------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| EX-001       | recognition                                    | §5 `--radius` default        | `.recog-card` / `.recog-tile` use `--radius-xl` (14px) to pair with top accent stripe                                                                                                                           | 2026-07-02 |
+| EX-002       | recognition                                    | §5 solid `--bg-elev` shell   | `.recog-card` gradient background elevates recognition band above standard cards                                                                                                                                | 2026-07-02 |
+| EX-003       | recognition                                    | §5 no top accent             | `.recog-card` / `.edu-panel` use 2px solid `border-top: var(--accent-card)` as categorical colour identifier                                                                                                    | 2026-07-02 |
+| EX-004       | recognition                                    | §5 standard shell bg         | `.edu-panel::before` dotted radial overlay — education hero treatment unique within Tier C                                                                                                                      | 2026-07-02 |
+| EX-005       | projects                                       | §5 recog-style top accent    | `.card--accent::before` 3px gradient stripe (decorative emphasis vs recog 2px solid)                                                                                                                            | 2026-07-02 |
+| EX-006       | vision                                         | §5 rectangular `.card` shell | `.hub__ring` circular surface — hover-only `--shadow-md` (not persistent at rest); emblem layout requirement. **Note (2026-07-03):** Superseded by Vision multi-section rewrite; hub-and-spoke diagram retired. | 2026-07-02 |
+| EX-007       | home                                           | §5 `--radius` on logo tiles  | `.leadership__collab-mark` uses `--radius-md` (8px) for compact logo grid cells                                                                                                                                 | 2026-07-02 |
+| EX-008       | home, research, projects, recognition, contact | §3 single card-title token   | Three-tier `--fs-card-title` scale (0.95rem / var(--fs-h3) / 1.5rem) preserves intentional research-compact / standard / flagship title hierarchy                                                               | 2026-07-03 |
+| EX-009       | research                                       | §2 single grid-col-min token | Two-tier `--grid-col-min` scale (320px compact vs 420px full) matches different content grid widths across research and speaking sections                                                                       | 2026-07-03 |
 
 ---
 

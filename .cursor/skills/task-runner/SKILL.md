@@ -5,7 +5,7 @@ description: >-
   Use when the user says "run tasks", "work through TASKS.md", or starts a task batch.
 ---
 
-# Task Runner
+# Task Runner Skill
 
 Process the repo-root `TASKS.md` checklist until every item is checked or a BLOCKED item stops the run.
 
@@ -35,6 +35,18 @@ Process the repo-root `TASKS.md` checklist until every item is checked or a BLOC
 - If blocked after two attempts on the same item, edit it to `- [ ] BLOCKED: <reason>` and stop.
 - Do not commit unless the user asked.
 - Update checkboxes in `TASKS.md` — not only in chat.
+
+## Efficiency: batch edits and parallel calls
+
+- **Batch edits:** implement each item with the fewest edits — combine changes to one file into a single edit.
+- **Read before edit:** read each file once, plan all changes, then apply them together.
+- **One item at a time:** never batch-mark checkboxes; verify before flipping `- [ ]` to `- [x]`.
+
+## Quick reference: where to go deeper
+
+| Topic          | Reference file                                     |
+| -------------- | -------------------------------------------------- |
+| Operator guide | [`docs/task-runner.md`](../../docs/task-runner.md) |
 
 ## Cancel
 

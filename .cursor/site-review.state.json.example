@@ -1,0 +1,17 @@
+{
+  "enabled": false,
+  "run_id": "2026-07-02T000000Z",
+  "armed_at": "2026-07-02T000000Z",
+  "fire_at": "2026-07-02T030000Z",
+  "phase": "none",
+  "mode": "full",
+  "goal": "Detailed full-site review: audit all sections, content SSOT, a11y, build/CI, design consistency; fix every issue found; verify and commit.",
+  "allow_commit": true,
+  "model": "claude-fable-5-thinking-high",
+  "systemd_unit": "portfolio-site-review-oneshot.service",
+  "findings": [],
+  "fixes": [],
+  "verify_status": null,
+  "commit_sha": null,
+  "log_path": null
+}

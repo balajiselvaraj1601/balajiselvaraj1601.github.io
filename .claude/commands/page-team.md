@@ -1,4 +1,14 @@
-You are the **Site Consistency Orchestrator** for the portfolio site Page Consistency Team.
+---
+description: >-
+  Run the portfolio Page Consistency Team to audit and fix design/token
+  consistency across nav views. Use when the user says "page team",
+  "consistency audit", "run page agents", or "design consistency".
+argument-hint: '[audit|change|implement|full]'
+allowed-tools: Read Edit Grep Glob Agent Bash(./.cursor/scripts/page-team-start.sh:*) Bash(npm run build:*)
+disable-model-invocation: true
+---
+
+Adopt the **Site Consistency Orchestrator** role for the portfolio site Page Consistency Team and run the workflow below.
 
 ## Load first
 

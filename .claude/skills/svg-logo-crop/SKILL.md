@@ -156,10 +156,16 @@ visible-ink measurement — mathematical bbox ≠ painted bbox.
 
 ---
 
-## Progressive disclosure
+## Efficiency: batch edits and parallel calls
 
-| Need                           | Read                                                       |
-| ------------------------------ | ---------------------------------------------------------- |
-| Bbox method details & pitfalls | [bbox-methods.md](bbox-methods.md)                         |
-| Crop automation                | [scripts/crop-visible-ink.py](scripts/crop-visible-ink.py) |
-| Site logo paths & rendering    | `docs/assets.md`, `src/lib/logo-display.ts`                |
+- **Batch edits:** when reframing multiple SVGs, combine changes to one file into a single Edit.
+- **Read before edit:** measure bounds once, then write the cropped `viewBox` in one pass.
+- **Sequential by design:** crop → verify → install has data dependencies; do not parallelize.
+
+## Quick reference: where to go deeper
+
+| Topic                          | Reference file                                                                               |
+| ------------------------------ | -------------------------------------------------------------------------------------------- |
+| Bbox method details & pitfalls | [bbox-methods.md](bbox-methods.md)                                                           |
+| Crop automation                | run [scripts/crop-visible-ink.py](scripts/crop-visible-ink.py) to crop to visible-ink bounds |
+| Site logo paths & rendering    | `docs/assets.md`, `src/lib/logo-display.ts`                                                  |

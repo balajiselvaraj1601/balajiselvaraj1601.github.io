@@ -1,4 +1,4 @@
-# Content Inventory — Icons, Logos & Images
+# Content inventory — icons, logos, and images
 
 Entity map for portfolio icon audits. Extend this table on each run when content changes.
 
@@ -50,7 +50,7 @@ Only projects with explicit `"icon"` in JSON; all others fall back to `folder` v
 | ---------------------------- | ------------------- | ------ | ------------------------------------------------ | ------------------------ |
 | vb-program.drug-safety.badge | `programs[].badge`  | icon   | `pill`                                           | `ProgramBadgeCard.astro` |
 | vb-program.persister.badge   | `programs[].badge`  | icon   | `microscope`                                     |                          |
-| vb-org.* (7 cards)           | `orgCards[].icon`   | icon   | various                                          | `OrgImpactCard.astro`    |
+| vb-org.* (7 cards)           | `orgCards[].icon`   | icon   | various                                          | `OrgSnapshotCard.astro`  |
 | vb-hub.idea.satellites       | `hubs[].satellites` | icon[] | target, lightbulb, chart, book, handshake, globe | `HubCircle.astro`        |
 | vb-hub.vision.satellites     | `hubs[].satellites` | icon[] | graph, document, table, pulse, image, blocks     |                          |
 

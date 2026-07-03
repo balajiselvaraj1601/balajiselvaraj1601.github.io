@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Task-runner stop hook: auto-continue while TASKS.md has unchecked queue items.
-set -euo pipefail
+# Cursor stop hook — task-runner | auto-continue while TASKS.md has unchecked queue items | Exits: 0=allow
+# Emits {"followup_message": ...} to continue the batch, else {} . Never blocks.
+set -uo pipefail  # not -e: stdin/lib pipelines may fail on the success path (empty input / grep no-match)
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 # shellcheck source=../scripts/task-runner-lib.sh

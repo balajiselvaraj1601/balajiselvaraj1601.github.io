@@ -65,9 +65,15 @@ Parallel: launch all page audits in one message
 Prompt: include agent file path (page_routing.csv agent_file column) + "return JSON only"
 ```
 
-## References
+## Efficiency: batch edits and parallel calls
 
-| Doc                                                               | Purpose           |
+- **Parallel agents:** spawn all page audits in a single message — one Agent/Task call each.
+- **Batch edits:** within an agent's scope, combine changes to one file into a single Edit.
+- **Read before edit:** read each file once, plan all changes, then apply the fewest edits.
+
+## Quick reference: where to go deeper
+
+| Topic                                                             | Reference file    |
 | ----------------------------------------------------------------- | ----------------- |
 | [interaction-protocol.md](references/interaction-protocol.md)     | Phase details     |
 | [finding-schema.md](references/finding-schema.md)                 | JSON shapes       |

@@ -218,7 +218,21 @@ These are follow-up implementation tasks after assets exist.
 
 ---
 
-## Quick reference — current baseline (re-verify on each run)
+## Efficiency: batch edits and parallel calls
+
+- **Parallel calls:** run the independent inventory `ls`/grep scans in one message.
+- **Batch edits:** when the user asks for edits, combine changes to one file into a single Edit.
+- **Read before edit:** read each source once, plan all changes, then apply the fewest edits.
+
+## Quick reference: where to go deeper
+
+| Topic                                   | Reference file                               |
+| --------------------------------------- | -------------------------------------------- |
+| Entity → field → component map          | [content-inventory.md](content-inventory.md) |
+| Matching logic, slugs, trademark policy | [resolution-rules.md](resolution-rules.md)   |
+| Cursor handoff templates                | [cursor-delegation.md](cursor-delegation.md) |
+
+## Current baseline (re-verify on each run)
 
 **Existing logos** (`public/assets/logos/`): `aacr`, `astrazeneca`, `biorxiv`, `brain`, `broad-institute`, `eu-research-consortium`, `gaia`, `iit-madras`, `jitc`, `kaggle`, `cshl`, `hcl`, `uppsala-university`, `ai-sweden`
 

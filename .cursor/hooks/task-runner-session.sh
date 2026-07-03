@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Task-runner sessionStart hook: remind agent when a batch is active.
-set -euo pipefail
+# Cursor sessionStart hook — task-runner | remind agent when a batch is active | Exits: 0=allow
+# Emits {"additional_context": ...} when a batch is active, else {} . Never blocks.
+set -uo pipefail  # not -e: sourced lib pipelines may fail on the success path (grep no-match / head SIGPIPE)
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 # shellcheck source=../scripts/task-runner-lib.sh

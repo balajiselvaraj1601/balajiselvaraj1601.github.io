@@ -7,9 +7,9 @@ description: >-
   Uses Task tool for parallel page subagents. State: .cursor/page-team.state.json.
 ---
 
-# Page Consistency Team (Cursor)
+# Page Consistency Team Skill
 
-**Canonical skill:** [`.claude/skills/page-consistency-team/SKILL.md`](../../.claude/skills/page-consistency-team/SKILL.md)
+Cursor variant of the Page Consistency Team. **Canonical skill:** [`.claude/skills/page-consistency-team/SKILL.md`](../../.claude/skills/page-consistency-team/SKILL.md)
 
 Read and follow that file completely. Cursor-specific notes:
 
@@ -47,3 +47,16 @@ Adopt `.claude/agents/site-consistency-orchestrator.md` behavior when this skill
 ## Operator guide
 
 See [`docs/page-team.md`](../../docs/page-team.md).
+
+## Efficiency: batch edits and parallel calls
+
+- **Parallel Tasks:** launch all page audits in a single message — one Task call each.
+- **Batch edits:** within a Task's scope, combine changes to one file into a single edit.
+
+## Quick reference: where to go deeper
+
+| Topic                        | Reference file                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Full workflow, modes, phases | [`.claude/skills/page-consistency-team/SKILL.md`](../../.claude/skills/page-consistency-team/SKILL.md)                               |
+| View → agent map             | [`.claude/skills/page-consistency-team/assets/page_routing.csv`](../../.claude/skills/page-consistency-team/assets/page_routing.csv) |
+| Operator guide               | [`docs/page-team.md`](../../docs/page-team.md)                                                                                       |

@@ -1,4 +1,4 @@
-# Cursor Delegation Templates
+# Cursor delegation templates
 
 When Phase C marks a row `missing`, Claude **must not generate assets**. Read `~/.claude/skills/delegation/SKILL.md`, then emit a package below.
 

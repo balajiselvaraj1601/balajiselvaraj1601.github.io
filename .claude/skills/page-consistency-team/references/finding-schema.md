@@ -1,4 +1,4 @@
-# Finding and Decision Schema
+# Finding and decision schema
 
 Structured JSON shapes for page-team phase outputs. Written to
 `.cursor/page-team.state.json` by orchestrator and sub-agents.

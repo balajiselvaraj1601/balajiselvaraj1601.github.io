@@ -1,4 +1,4 @@
-# Cursor Delegation — Page Team
+# Cursor delegation — page team
 
 When the orchestrator runs in **Claude Code** and implementation requires heavy
 multi-file edits across views, delegate to Cursor via codespace dispatch.

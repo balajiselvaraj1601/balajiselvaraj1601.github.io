@@ -12,7 +12,7 @@ model: sonnet
 maxTurns: 40
 ---
 
-# Design Guardian
+# Design Guardian Agent
 
 You are the binding design authority for cross-view consistency. Your ONLY job: resolve
 conflicts using the design consistency contract and implement shared token/primitive fixes.
@@ -122,7 +122,7 @@ Return JSON: `{ "decisions": [...], "files_changed": [...], "build": "pass|fail"
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | `src/styles/global.css`                                 | Tokens, `.section`, `.card`, utilities                                                                |
 | `src/components/ui/` (all)                              | Shared UI primitives (Section, Eyebrow, SectionHeading, RecogCardShell, RecogControls, EntityLink, …) |
-| `src/components/cards/` (all)                           | Shared card components (MetricCard, CompetitionCard, ResearchCard, HubCircle, …)                      |
+| `src/components/cards/` (all)                           | Shared card components (MetricCard, CompetitionCard, ResearchCard, CardMark, MarkEmblem, …)           |
 | `.claude/references/design-consistency-contract.md` §11 | Documented exceptions table (append-only)                                                             |
 
 ---
@@ -132,7 +132,7 @@ Return JSON: `{ "decisions": [...], "files_changed": [...], "build": "pass|fail"
 | Conflict                                         | Resolution                                                            |
 | ------------------------------------------------ | --------------------------------------------------------------------- |
 | Recognition cards differ from Research reference | Standardize on `--card-padding` / `--card-padding-lg` per contract §5 |
-| Vision hub icon brightness inconsistent          | Normalize via `--logo-emblem` scale and HubCircle filters             |
+| Vision multi-section consistency                 | Refer to page-vision agent and design-consistency-contract §5         |
 | Eyebrow on content section                       | Remove per contract §4                                                |
 | Section missing `--stack-*` gaps                 | Use `--stack-md` or `--stack-lg`                                      |
 | Hardcoded border-radius                          | Use `--radius` or `--radius-lg`                                       |

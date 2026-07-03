@@ -1,4 +1,4 @@
-# Interaction Protocol
+# Interaction protocol
 
 Phase-by-phase instructions for the Page Consistency Team orchestrator.
 

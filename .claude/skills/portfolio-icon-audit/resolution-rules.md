@@ -1,4 +1,4 @@
-# Resolution Rules
+# Resolution rules
 
 Matching logic for the portfolio icon audit. Apply in Phase C after classifying each row.
 

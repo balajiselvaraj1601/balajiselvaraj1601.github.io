@@ -1,6 +1,12 @@
 {
   "header": "AI Leadership & Strategic Impact",
   "intro": "Independently sourced, pitched, and secured two major AI initiatives — one SVP-sponsored saving $20–50M annually, one Chief Scientist-sponsored within a €14M EU consortium.",
+  "snapshot": [
+    { "value": "$20–50M", "label": "Annual savings — Drug Safety Platform" },
+    { "value": "€14M", "label": "EU consortium — PERSIST-SEQ" },
+    { "value": "1→12", "label": "Team members scaled" },
+    { "value": "$0.5M+", "label": "Funds secured for the team" }
+  ],
   "groups": [
     {
       "id": "idea",
@@ -127,7 +133,7 @@
         "asset": "logo_achievement_award",
         "alt": "Achievement award"
       },
-      "title": "EVP Level AWARD",
+      "title": "EVP-Level Award",
       "lines": ["Awarded for", "Drug Safety Platform"]
     },
     {
@@ -137,7 +143,7 @@
         "alt": "Business presentation"
       },
       "title": "Gartner Submission",
-      "lines": ["GITC Chennai", "Multimodal Vision"]
+      "lines": ["Multimodal Vision — GITC Chennai"]
     },
     {
       "mark": {
@@ -154,7 +160,7 @@
         "asset": "logo_analytics_dashboard",
         "alt": "Analytics dashboard"
       },
-      "title": "3 Scorecard",
+      "title": "3 Scorecards",
       "lines": ["Projects aligned", "to 3 scorecards"]
     },
     {

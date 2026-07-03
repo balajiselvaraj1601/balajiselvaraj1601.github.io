@@ -26,3 +26,33 @@ import { visionBoard, site } from '@lib/content';
     )
   }
 </Section>
+
+<style>
+  /* 7 cards in a 4-col grid leave a hole bottom-right — the last card
+     (Global Team Management, 5 countries) spans 2 tracks to fill the row. */
+  .vision-impact__grid li:last-child {
+    grid-column: span 2;
+  }
+
+  /* 1180px — matches --bp-2xl (CSS vars invalid in @media features).
+     Base .theme-grid keeps 4 cols down to 769px, which cramps the cards and
+     collides with the fixed dot rail in the 950–1180px band — drop to 2 cols
+     at the same breakpoint where the vision flow stacks. */
+  @media (max-width: 1180px) {
+    .vision-impact__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Single-column phones — restate the base .theme-grid collapse (this scoped
+     rule out-specifies it) and drop the span so no implicit track appears. */
+  @media (max-width: 480px) {
+    .vision-impact__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vision-impact__grid li:last-child {
+      grid-column: auto;
+    }
+  }
+</style>

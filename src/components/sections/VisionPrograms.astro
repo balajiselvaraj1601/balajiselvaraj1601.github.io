@@ -77,15 +77,16 @@ function resolveProgramLogoSlug(p: VisionProgram): string {
 <style>
   .vision-flow {
     display: grid;
-    /* Chevron tracks are `auto` (intrinsic width) and the whole row centres as a
-       cluster, so every track-to-track gap equals --vision-flow-gap exactly — no more
-       elastic 1fr sprawl, and both chevron sets get symmetric structural gaps. */
+    /* Chevron tracks are `auto` (intrinsic width) so every track-to-track gap equals
+       --vision-flow-gap exactly. Hubs are fixed-width; only the cards track is 1fr,
+       so leftover width goes to the program cards and the row spans the full
+       container — flush with the snapshot/impact grids above and below. */
     grid-template-columns:
       minmax(260px, var(--vision-hub-max))
       auto
       minmax(260px, var(--vision-hub-max))
       auto
-      minmax(300px, var(--vision-cards-max));
+      minmax(300px, 1fr);
     justify-content: center;
     align-items: start;
     column-gap: var(--vision-flow-gap, var(--space-4));
@@ -100,15 +101,13 @@ function resolveProgramLogoSlug(p: VisionProgram): string {
   }
 
   .vision-flow__cards {
-    width: 100%;
-    max-width: min(100%, var(--vision-cards-max));
     min-width: 0;
-    justify-self: start;
+    justify-self: stretch;
     /* The hub is a circle whose ring is inset ~4% from its track edge, while the cards
-       are flush to theirs. Nudge the cards right by that inset so chevron set 2 is
-       optically centred and the hub↔box visible gap matches the hub↔hub gap.
-       transform is post-layout — it doesn't disturb grid track sizing. */
-    transform: translateX(var(--vision-hub-ring-inset));
+       are flush to theirs. Inset the cards' left edge by that amount so chevron set 2
+       is optically centred and the hub↔box visible gap matches the hub↔hub gap.
+       margin (not transform) keeps the right edge flush with the container. */
+    margin-inline-start: var(--vision-hub-ring-inset);
   }
 
   .vision-flow__chevrons {
@@ -246,20 +245,24 @@ function resolveProgramLogoSlug(p: VisionProgram): string {
       grid-template-columns: 1fr 1fr 1fr;
       row-gap: var(--space-6);
       --vision-hub-max: var(--vision-hub-max-md);
-      --vision-hub-stage-mid: calc(var(--vision-hub-max) / 2);
+      /* SSOT for the stacked hub width — stage-mid derives from the SAME
+         expression, so the chevron stays vertically centred even below
+         ~673px where 38vw undercuts the 256px cap (was 28px low at 480px). */
+      --vision-hub-w: clamp(200px, 38vw, var(--vision-hub-max-md));
+      --vision-hub-stage-mid: calc(var(--vision-hub-w) / 2);
     }
 
     .vision-flow > :global(.vision-hub):first-of-type {
       grid-column: 1;
       grid-row: 1;
-      width: clamp(200px, 38vw, var(--vision-hub-max-md));
+      width: var(--vision-hub-w);
       max-width: var(--vision-hub-max-md);
     }
 
     .vision-flow > :global(.vision-hub):last-of-type {
       grid-column: 3;
       grid-row: 1;
-      width: clamp(200px, 38vw, var(--vision-hub-max-md));
+      width: var(--vision-hub-w);
       max-width: var(--vision-hub-max-md);
     }
 
@@ -275,11 +278,11 @@ function resolveProgramLogoSlug(p: VisionProgram): string {
     .vision-flow__cards {
       grid-column: 1 / -1;
       grid-row: 2;
+      width: 100%;
       max-width: min(100%, var(--vision-cards-max));
       justify-self: center;
+      /* Stacked layout: cards are centred, so drop the desktop ring-inset nudge. */
       margin-inline: auto;
-      /* Stacked layout: cards are centred full-width, so drop the desktop ring-inset nudge. */
-      transform: none;
     }
   }
 

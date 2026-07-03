@@ -15,6 +15,7 @@ const { showMoreHref, showMoreLabel = 'All research →' } = Astro.props;
   id="publications"
   title={site.sections.publications.title}
   variant="alt"
+  class="section--compact-bottom"
 >
   <ResearchLinkGrid items={publications.items} />
   {

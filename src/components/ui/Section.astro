@@ -36,6 +36,7 @@ const headingId = `${id}-heading`;
 // pass title="" (and render their own heading) would otherwise get an empty
 // accessible name via a dangling aria-labelledby pointing at an empty heading.
 const hasTitle = title.trim().length > 0;
+const hasHeader = Boolean(eyebrow || hasTitle || subtitle);
 ---
 
 <section
@@ -54,18 +55,22 @@ const hasTitle = title.trim().length > 0;
   aria-label={!hasTitle && !labelledBy ? ariaLabel : undefined}
 >
   <div class="container">
-    {eyebrow && <Eyebrow text={eyebrow} variant={eyebrowVariant} />}
     {
-      hasTitle && (
-        <h2
-          id={headingId}
-          class:list={['section__title', { 'visually-hidden': hideTitle }]}
-        >
-          {title}
-        </h2>
+      hasHeader && (
+        <div class="section-header">
+          {eyebrow && <Eyebrow text={eyebrow} variant={eyebrowVariant} />}
+          {hasTitle && (
+            <h2
+              id={headingId}
+              class:list={['section__title', { 'visually-hidden': hideTitle }]}
+            >
+              {title}
+            </h2>
+          )}
+          {subtitle && <p class="section__subtitle">{subtitle}</p>}
+        </div>
       )
     }
-    {subtitle && <p class="section__subtitle">{subtitle}</p>}
     <slot />
   </div>
 </section>

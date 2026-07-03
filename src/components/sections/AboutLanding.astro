@@ -8,14 +8,15 @@
 
 <style>
   .about-landing {
-    --landing-gap: var(--space-8);
+    /* Hero band: major blocks use --text-gap-section; hero intro steps use --text-gap-block */
+    --landing-gap: var(--text-gap-section);
 
     min-height: calc(100svh - var(--header-h));
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--landing-gap);
-    padding-block: var(--space-6);
+    padding-block: var(--stack-xl);
     overflow: visible;
     background: var(--hero-gradient);
   }

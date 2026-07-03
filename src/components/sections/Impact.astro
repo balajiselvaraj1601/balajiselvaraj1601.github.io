@@ -17,18 +17,20 @@ const highlight = strategicImpact.headlineHighlight;
   title=""
   hideTitle
   labelledBy="impact-heading"
-  eyebrow={meta.eyebrow!}
-  subtitle={strategicImpact.subtitle}
   variant="impact"
   class="impact-section"
 >
-  <SectionHeading
-    title={title}
-    highlight={highlight}
-    class="impact__title"
-    align="center"
-    id="impact-heading"
-  />
+  <div class="section-header section-header--center">
+    <p class="eyebrow">{meta.eyebrow!}</p>
+    <SectionHeading
+      title={title}
+      highlight={highlight}
+      class="section__title"
+      align="center"
+      id="impact-heading"
+    />
+    <p class="section__subtitle">{strategicImpact.subtitle}</p>
+  </div>
 
   {
     strategicImpact.journey && strategicImpact.journey.length > 0 && (
@@ -81,23 +83,11 @@ const highlight = strategicImpact.headlineHighlight;
 </Section>
 
 <style>
-  :global(.impact-section .eyebrow),
-  .impact__title {
-    text-align: center;
-  }
-  :global(.impact-section .section__subtitle) {
-    text-align: center;
-    margin-inline: auto;
-    max-width: 580px;
-  }
-  .impact__title {
-    margin-bottom: var(--space-4);
-  }
   .impact-metrics {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: var(--space-4);
-    margin: var(--space-8) 0 var(--space-12);
+    margin: var(--text-gap-section) 0 var(--space-12);
   }
   .impact-cta {
     display: flex;
@@ -116,8 +106,7 @@ const highlight = strategicImpact.headlineHighlight;
     margin-top: var(--stack-xl);
   }
   .leadership-block__eyebrow {
-    text-align: center;
-    margin-bottom: var(--stack-lg);
+    margin-bottom: var(--text-gap-section);
   }
   .leadership-cards {
     display: grid;

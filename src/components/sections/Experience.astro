@@ -26,13 +26,16 @@ const headline = experience.headline ?? experience.title;
   hideTitle
   labelledBy="experience-heading"
   variant="alt"
+  class="section--compact-top"
 >
-  <SectionHeading
-    title={headline}
-    highlight={experience.headlineHighlight}
-    class="experience__title"
-    id="experience-heading"
-  />
+  <div class="section-header">
+    <SectionHeading
+      title={headline}
+      highlight={experience.headlineHighlight}
+      class="section__title"
+      id="experience-heading"
+    />
+  </div>
   <ol class="xp-stack" aria-label="Career timeline">
     {
       experience.roles.map((role, i) => (
@@ -96,9 +99,6 @@ const headline = experience.headline ?? experience.title;
 </Section>
 
 <style>
-  .experience__title {
-    margin-bottom: var(--space-6);
-  }
   .xp-stack {
     list-style: none;
     padding: 0;
@@ -112,9 +112,9 @@ const headline = experience.headline ?? experience.title;
   .xp-stack::before {
     content: '';
     position: absolute;
-    left: 8px;
-    top: 6px;
-    bottom: 6px;
+    left: var(--space-2);
+    top: var(--space-2);
+    bottom: var(--space-2);
     width: 2px;
     background: linear-gradient(
       to bottom,
@@ -130,9 +130,9 @@ const headline = experience.headline ?? experience.title;
   .xp-marker {
     position: absolute;
     left: 0;
-    top: 4px;
-    width: 18px;
-    height: 18px;
+    top: var(--space-1);
+    width: var(--space-5);
+    height: var(--space-5);
     border-radius: 50%;
     background: var(--bg);
     border: 2px solid var(--accent);
@@ -143,7 +143,7 @@ const headline = experience.headline ?? experience.title;
   .xp-head {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--text-gap-inline);
     margin-bottom: var(--stack-sm);
   }
   .xp-meta {
@@ -180,7 +180,7 @@ const headline = experience.headline ?? experience.title;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin-top: var(--space-1);
+    margin-top: var(--text-gap-pair);
   }
   .xp-projects {
     display: flex;

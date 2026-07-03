@@ -32,6 +32,13 @@
   --stack-md: var(--space-6);
   --stack-lg: var(--space-8);
   --stack-xl: var(--space-12);
+  /* Vertical text-stack gaps — label/title/body rhythm (design-consistency-contract §2) */
+  --text-gap-pair: var(--space-0-5); /* T8→T6 label/value pairs */
+  --text-gap-inline: var(--space-2); /* T3→T6 title→body within a card */
+  --text-gap-block: var(--space-4); /* T5→T2, T2→T7 within a section header */
+  --text-gap-section: var(
+    --stack-lg
+  ); /* header block → first content element */
   --card-padding: var(--space-6);
   --card-padding-lg: var(--space-8);
   --section-cta-gap: var(--space-8);
@@ -62,6 +69,18 @@
   --chevron-h: var(--space-2); /* 8px */
   --chevron-w: var(--space-2); /* 8px — = height, aspect 1:1 (square) */
   --chevron-overlap: var(--space-0-5); /* 2px — ¼ × width, nesting overlap */
+  /* Vision programs flow markers — larger than section-heading chevrons */
+  --chevron-flow-h: var(--space-3); /* 12px */
+  --chevron-flow-w: var(--space-3);
+  --chevron-flow-overlap: var(--space-0-5); /* 2px */
+  --vision-flow-gap: var(--space-2); /* 8px gutter hub↔chevron↔cards */
+  --vision-hub-max: 360px;
+  --vision-hub-max-md: 320px;
+  --vision-cards-max: 520px;
+  --vision-hub-stage-mid: calc(var(--vision-hub-max) / 2);
+  --vision-hub-ring-inset: calc(
+    var(--vision-hub-max) * 0.04
+  ); /* hub ring `inset:4%` at desktop width */
   --size-recog-search-height: 38px;
   --size-recog-search-width: 200px;
 
@@ -168,6 +187,7 @@
   --bp-md: 768px;
   --bp-lg: 900px;
   --bp-xl: 1024px;
+  --bp-2xl: 1180px;
 
   /* Theme-independent semantic colors — single source of truth.
      Logo marks ship on white; video chrome reads against dark thumbnails;
@@ -180,6 +200,7 @@
   --logo-w-max-md: 180px;
   --logo-h-lg: 40px;
   --logo-w-max-lg: 220px;
+  --logo-box-h: var(--space-12);
   /* Symmetric white border inside logo pills/tiles — small + consistent site-wide */
   --logo-pad: var(--space-2);
   /* Circular emblem slots (vision hub center, program badge) */
@@ -262,8 +283,8 @@
     var(--accent-soft) 0%,
     transparent 70%
   );
-  --section-bg: var(--bg);
-  --section-bg-alt: var(--bg-alt);
+  --section-bg: transparent;
+  --section-bg-alt: color-mix(in srgb, var(--bg-alt) 82%, transparent);
 }
 
 /* Dark theme (primary design target) */
@@ -309,8 +330,8 @@
     rgba(108, 47, 191, 0.12) 0%,
     transparent 70%
   );
-  --section-bg: var(--bg);
-  --section-bg-alt: var(--bg-alt);
+  --section-bg: transparent;
+  --section-bg-alt: color-mix(in srgb, var(--bg-alt) 82%, transparent);
 }
 
 *,
@@ -455,7 +476,7 @@ button {
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--accent-ll);
-  margin-bottom: var(--space-4);
+  margin-bottom: 0;
 }
 .eyebrow--red {
   color: var(--accent-red-light);
@@ -471,7 +492,7 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--stack-lg);
-  margin-top: var(--stack-lg);
+  margin-top: 0;
 }
 
 /* Theme cards (LeadershipPhilosophy, Vision program + org snapshots) */
@@ -481,12 +502,12 @@ button {
   gap: var(--stack-sm);
   list-style: none;
   padding: 0;
-  margin: var(--space-10) auto 0;
+  margin: 0 auto;
 }
 .theme-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--text-gap-inline);
   padding: var(--card-padding);
 }
 .theme-card__icon {
@@ -496,7 +517,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--text-gap-inline);
   background: var(--accent-soft);
   border: 1px solid var(--border-strong);
   color: var(--accent-ll);
@@ -773,7 +794,7 @@ button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--space-4);
-  margin-bottom: var(--stack-lg);
+  margin-bottom: var(--text-gap-section);
 }
 
 .recog-tile {
@@ -786,7 +807,7 @@ button {
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--text-gap-inline);
   align-items: flex-start;
 }
 .recog-tile::after {
@@ -897,7 +918,7 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--text-gap-inline);
   background: linear-gradient(
     180deg,
     var(--bg-elev),
@@ -922,12 +943,12 @@ button {
   display: none;
 }
 
-/* Recognition card interior — shared by Awards + Education */
+/* Recognition card interior — Awards via RecogCardShell.astro */
 .recog-card-head {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: var(--space-3);
+  gap: var(--text-gap-inline);
 }
 .recog-card-head-top {
   display: flex;
@@ -942,13 +963,13 @@ button {
 .recog-card-fields {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--text-gap-inline);
   margin: 0;
 }
 .recog-card-field {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--text-gap-pair);
 }
 .recog-card-field dd {
   margin: 0;
@@ -956,7 +977,7 @@ button {
 .recog-card-message {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--text-gap-inline);
 }
 
 .recog-badge {
@@ -1092,17 +1113,34 @@ button {
   padding-block: var(--section-py-start) var(--section-py-end);
   background: var(--section-bg);
 }
+/* Same-view pairs: reduce stacked section-py at intro→content boundaries */
+.section--compact-top {
+  --section-py-start: var(--stack-xl);
+}
+.section--compact-bottom {
+  --section-py-end: var(--stack-xl);
+}
 @media (max-width: 768px) {
   :root {
     --section-py-start: var(--space-12);
     --section-py-end: var(--space-12);
+  }
+  .section--compact-top {
+    --section-py-start: var(--stack-lg);
+  }
+  .section--compact-bottom {
+    --section-py-end: var(--stack-lg);
   }
 }
 .section--alt {
   --section-bg: var(--section-bg-alt);
 }
 .section--impact {
-  --section-bg: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  --section-bg: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--bg-alt) 82%, transparent) 100%
+  );
   background: var(--section-bg);
   max-width: 100%;
 }
@@ -1112,16 +1150,32 @@ button {
 }
 .section__title {
   font-size: var(--fs-h2);
-  margin-bottom: var(--space-4);
+  margin-bottom: 0;
   font-weight: var(--fw-regular);
   color: var(--heading);
 }
 .section__subtitle {
   font-size: var(--fs-subtitle);
   color: var(--text-muted);
-  margin-bottom: var(--space-8);
+  margin-bottom: 0;
   max-width: var(--maxw-text);
   line-height: var(--lh-body);
+}
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--text-gap-block);
+  margin-bottom: var(--text-gap-section);
+}
+.section-header--inline {
+  margin-bottom: 0;
+}
+.section-header--center {
+  text-align: center;
+  align-items: center;
+}
+.section-header--center .section__subtitle {
+  margin-inline: auto;
 }
 
 /* Entrance animation */

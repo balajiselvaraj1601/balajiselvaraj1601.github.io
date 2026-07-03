@@ -157,7 +157,7 @@ export const profileSchema = z.object({
     })
   ),
   leadershipPhilosophy: z.object({
-    intro: z.string().optional(),
+    intro: z.union([z.string(), z.array(z.string())]).optional(),
     blockHeadings: z.object({
       strategicVision: z.string(),
       businessImpact: z.string(),

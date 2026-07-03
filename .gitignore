@@ -17,6 +17,7 @@ Thumbs.db
 
 # Misplaced agent-memory artifacts
 .agentmemory/
+~/
 
 # Logs / env
 *.log

@@ -8,6 +8,7 @@ import { visionBoard, site } from '@lib/content';
   id="vision-impact"
   title={site.sections['vision-impact'].title}
   variant="default"
+  class="section--compact-top"
 >
   {
     visionBoard.orgCards && visionBoard.orgCards.length > 0 && (
@@ -25,9 +26,3 @@ import { visionBoard, site } from '@lib/content';
     )
   }
 </Section>
-
-<style>
-  .vision-impact__grid {
-    margin-top: 0;
-  }
-</style>

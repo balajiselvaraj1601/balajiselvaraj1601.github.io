@@ -86,7 +86,7 @@
       "variant": "purple",
       "badge": {
         "kind": "logo",
-        "asset": "broad-institute",
+        "asset": "logo_broad_institute",
         "alt": "Broad Institute"
       },
       "lines": [
@@ -105,22 +105,18 @@
         "alt": "PERSIST-SEQ"
       },
       "lines": [
-        "Persister-Seq · €14M EU consortium",
+        "€14M EU consortium",
         "Secured project (for my group)",
         "Lead development"
       ],
       "entity": "persist-seq"
     },
     {
-      "title": "AACR Conference",
+      "title": "AACR Conference 2025",
       "label": "Conference Presentation",
       "variant": "red",
-      "badge": { "kind": "logo", "asset": "aacr", "alt": "AACR" },
-      "lines": [
-        "Presented in 2025",
-        "3-month AI pipeline development",
-        "2 AI engineers"
-      ],
+      "badge": { "kind": "logo", "asset": "logo_aacr", "alt": "AACR" },
+      "lines": ["3-month AI pipeline development", "2 AI engineers"],
       "entity": "aacr"
     }
   ],

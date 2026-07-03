@@ -19,7 +19,12 @@ const silver = items.filter((i) => i.medal === 'Silver').length;
 const bronze = items.filter((i) => i.medal === 'Bronze').length;
 ---
 
-<Section id="kaggle" title={site.sections.kaggle.title} variant="alt">
+<Section
+  id="kaggle"
+  title={site.sections.kaggle.title}
+  variant="alt"
+  class="section--compact-top section--compact-bottom"
+>
   <!-- Summary stat tiles — competition + medal counts and global rank -->
   <div class="recog-summary reveal">
     <div class="recog-tile">

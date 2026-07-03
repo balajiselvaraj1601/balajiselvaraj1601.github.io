@@ -1,6 +1,7 @@
 ---
 import Section from '@components/ui/Section.astro';
 import CardMark from '@components/ui/CardMark.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
 import Icon from '@components/ui/Icon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import { profile } from '@lib/content';
@@ -33,19 +34,21 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   title=""
   hideTitle
   labelledBy="contact-heading"
-  eyebrow={contactPage.eyebrow}
   variant="alt"
 >
   <div class="contact-grid reveal">
     <!-- Left: pitch + actions -->
     <div class="contact-left">
-      <SectionHeading
-        title={contactPage.title}
-        highlight={contactPage.titleHighlight}
-        class="contact__title"
-        id="contact-heading"
-      />
-      <p class="contact-subtitle">{profile.contactIntro}</p>
+      <div class="section-header section-header--inline">
+        <Eyebrow text={contactPage.eyebrow} />
+        <SectionHeading
+          title={contactPage.title}
+          highlight={contactPage.titleHighlight}
+          class="section__title"
+          id="contact-heading"
+        />
+        <p class="section__subtitle contact-subtitle">{profile.contactIntro}</p>
+      </div>
 
       {
         contactPage.bookingHref && (
@@ -113,24 +116,14 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   }
 
   /* ── Left column ──────────────────────────────────────────── */
-  .contact__title {
-    font-family: var(--font-display);
-    font-size: var(--fs-h2);
-    font-weight: var(--fw-regular);
-    line-height: var(--lh-tight);
-    color: var(--heading);
-    margin-bottom: var(--stack-sm);
-  }
   .contact-subtitle {
-    color: var(--text-muted);
-    margin-bottom: var(--stack-lg);
-    font-size: var(--fs-subtitle);
     max-width: 38ch;
   }
   .contact-actions {
     display: flex;
     flex-wrap: wrap;
     gap: var(--section-cta-gap);
+    margin-top: var(--text-gap-section);
     margin-bottom: var(--stack-md);
   }
   .response-time {
@@ -139,7 +132,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
     gap: var(--space-2);
     font-size: var(--fs-md);
     color: var(--text-muted);
-    margin-bottom: var(--stack-lg);
+    margin-bottom: var(--stack-md);
   }
   .response-time :global(svg) {
     color: var(--accent-light);
@@ -150,8 +143,8 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   .connect-header {
     display: flex;
     align-items: center;
-    gap: var(--stack-sm);
-    margin-bottom: var(--space-5);
+    gap: var(--text-gap-block);
+    margin-bottom: var(--text-gap-block);
     font-family: var(--font-mono);
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--tracking-eyebrow);
@@ -173,7 +166,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   .connect-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--text-gap-inline);
     padding: var(--card-padding);
     text-decoration: none;
   }
@@ -214,7 +207,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   @media (max-width: 900px) {
     .contact-grid {
       grid-template-columns: 1fr;
-      gap: var(--space-10);
+      gap: var(--stack-xl);
     }
     .contact-subtitle {
       max-width: none;

@@ -31,7 +31,12 @@ const items = [...awards.items].sort(
 const total = items.length;
 ---
 
-<Section id="awards" title={site.sections.awards.title} variant="default">
+<Section
+  id="awards"
+  title={site.sections.awards.title}
+  variant="default"
+  class="section--compact-bottom"
+>
   <!-- Summary stat tiles — counts by nominator level -->
   <div class="recog-summary reveal">
     {

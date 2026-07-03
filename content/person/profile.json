@@ -53,7 +53,11 @@
   "credentialHook": "Ranked top 0.3% globally on Kaggle (652/200K+ data scientists)",
   "photo": "/assets/images/balaji.png",
   "leadershipPhilosophy": {
-    "intro": "I lead AI the way a CTO does: secure the sponsorship and set the strategy before the first model exists, then build the platform, the team, and the guardrails that turn conviction into shipped, regulated value. My edge is a rare bridge — a biomedical engineer who supported 400+ surgeries across 5 specialties and now architects production AI — so the science, the business case, and the system stay one conversation.",
+    "intro": [
+      "I lead AI the way a CTO does — securing the sponsorship and setting the strategy before the first model exists.",
+      "Then building the platform, team, and guardrails that turn conviction into shipped, regulated value.",
+      "My edge: a biomedical engineer across 400+ surgeries and 5 specialties, now architecting production AI — science, business case, and system in one conversation."
+    ],
     "blockHeadings": {
       "strategicVision": "Strategy & Sponsorship",
       "businessImpact": "Business & P&L Impact",

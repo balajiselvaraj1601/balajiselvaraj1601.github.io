@@ -28,46 +28,51 @@ wrapped by `AboutLanding.astro` (hero + thirukural band).
 
 Use CSS variables — never raw px for layout rhythm.
 
-| Token                      | Value                  | Use                           |
-| -------------------------- | ---------------------- | ----------------------------- |
-| `--space-0-5`              | 2px                    | Hairline stack gaps (line-height compensation) |
-| `--space-1` … `--space-24` | 4px scale              | All spacing                   |
+| Token                      | Value                  | Use                                             |
+| -------------------------- | ---------------------- | ----------------------------------------------- |
+| `--space-0-5`              | 2px                    | Hairline stack gaps (line-height compensation)  |
+| `--space-1` … `--space-24` | 4px scale              | All spacing                                     |
 | `--pill-padding-y` / `-x`  | 8px / 16px             | Pill / nav / tag chip padding (one shared pair) |
-| `--section-py-start`       | 96px (64px mobile)     | Section top padding           |
-| `--section-py-end`         | 64px (48px mobile)     | Section bottom padding        |
-| `--gutter-inline`          | clamp(24px, 4vw, 64px) | Container horizontal          |
-| `--stack-sm`               | 16px                   | Tight vertical stacks         |
-| `--stack-md`               | 24px                   | Default stacks                |
-| `--stack-lg`               | 32px                   | Card grids, section internals |
-| `--stack-xl`               | 48px                   | Major section sub-blocks      |
-| `--card-padding`           | 24px                   | Standard card inner           |
-| `--card-padding-lg`        | 32px                   | Large cards                   |
-| `--section-cta-gap`        | 32px                   | CTA button groups             |
+| `--section-py-start`       | 96px (64px mobile)     | Section top padding                             |
+| `--section-py-end`         | 64px (48px mobile)     | Section bottom padding                          |
+| `--gutter-inline`          | clamp(24px, 4vw, 64px) | Container horizontal                            |
+| `--stack-sm`               | 16px                   | Tight vertical stacks                           |
+| `--stack-md`               | 24px                   | Default stacks                                  |
+| `--stack-lg`               | 32px                   | Card grids, section internals                   |
+| `--stack-xl`               | 48px                   | Major section sub-blocks                        |
+| `--card-padding`           | 24px                   | Standard card inner                             |
+| `--card-padding-lg`        | 32px                   | Large cards                                     |
+| `--section-cta-gap`        | 32px                   | CTA button groups                               |
+| `--text-gap-pair`          | 2px                    | T8→T6 label/value pairs (dt/dd, meta pairs)     |
+| `--text-gap-inline`        | 8px                    | T3→T6 title→body within a card                  |
+| `--text-gap-block`         | 16px                   | T5→T2, T2→T7 within section header              |
+| `--text-gap-section`       | 32px                   | Section header block → first content            |
 
 **Violation:** Hardcoded `padding: 20px`, `gap: 18px`, or `margin: 30px` where a token exists.
+**Violation:** Text-stack vertical gaps using raw `--space-*` or hardcoded px where a `--text-gap-*` token applies.
 
 ### 2a. Tracking & line-height tokens (mandatory)
 
 Character tracking and line-height are tokenized — **never hardcode an `em` or unit-less
 line-height where a token exists.** Tracking stays in `em` so it scales with font-size.
 
-| Tracking token      | Value    | Use                                             |
-| ------------------- | -------- | ----------------------------------------------- |
-| `--tracking-tight`  | -0.02em  | Display headings (h1/h2), monogram mark         |
-| `--tracking-flat`   | 0.02em   | Brand wordmark, board header                    |
-| `--tracking-snug`   | 0.05em   | h4 kickers, stat labels, Tamil couplet          |
-| `--tracking-caps`   | 0.08em   | Uppercase UI: buttons, nav, badges, meta labels |
-| `--tracking-wide`   | 0.10em   | Pipeline/footer/hero labels, standard micro-labels |
-| `--tracking-wider`  | 0.14em   | Emphasized theme / case-study micro-labels      |
-| `--tracking-eyebrow`| 0.18em   | Section eyebrows (max tracking)                 |
+| Tracking token       | Value   | Use                                                |
+| -------------------- | ------- | -------------------------------------------------- |
+| `--tracking-tight`   | -0.02em | Display headings (h1/h2), monogram mark            |
+| `--tracking-flat`    | 0.02em  | Brand wordmark, board header                       |
+| `--tracking-snug`    | 0.05em  | h4 kickers, stat labels, Tamil couplet             |
+| `--tracking-caps`    | 0.08em  | Uppercase UI: buttons, nav, badges, meta labels    |
+| `--tracking-wide`    | 0.10em  | Pipeline/footer/hero labels, standard micro-labels |
+| `--tracking-wider`   | 0.14em  | Emphasized theme / case-study micro-labels         |
+| `--tracking-eyebrow` | 0.18em  | Section eyebrows (max tracking)                    |
 
-| Line-height token | Value | Use                                   |
-| ----------------- | ----- | ------------------------------------- |
-| `--lh-tight`      | 1.1   | Headings h1–h4                        |
-| `--lh-snug`       | 1.25  | Recognition / card titles             |
-| `--lh-normal`     | 1.4   | Metrics, metadata, dense caps labels  |
-| `--lh-relaxed`    | 1.6   | Card descriptions, recog body         |
-| `--lh-body`       | 1.75  | Loose body prose, section subtitle    |
+| Line-height token | Value | Use                                  |
+| ----------------- | ----- | ------------------------------------ |
+| `--lh-tight`      | 1.1   | Headings h1–h4                       |
+| `--lh-snug`       | 1.25  | Recognition / card titles            |
+| `--lh-normal`     | 1.4   | Metrics, metadata, dense caps labels |
+| `--lh-relaxed`    | 1.6   | Card descriptions, recog body        |
+| `--lh-body`       | 1.75  | Loose body prose, section subtitle   |
 
 **Violation:** Hardcoded `letter-spacing: 0.12em` or `line-height: 1.5` where a token exists.
 
@@ -91,18 +96,18 @@ order, then apply the tokens. Page agents map each section's text to these codes
 **Appendix C** (they cite the code, never re-list token values). This is what keeps type
 consistent across views: two elements at the same level look identical everywhere.
 
-| Code | Level                     | Font (§3)        | Weight              | Size token            | Tracking            | Line-height     |
-| ---- | ------------------------- | ---------------- | ------------------- | --------------------- | ------------------- | --------------- |
-| T1   | Display (h1)              | `--font-display` | `--fw-regular`      | `--fs-h1`             | `--tracking-tight`  | `--lh-tight`    |
-| T2   | Section title (h2)        | `--font-display` | `--fw-regular`      | `--fs-h2`             | `--tracking-tight`  | `--lh-tight`    |
-| T3   | Card title (h3)           | `--font-sans`    | `--fw-semibold` (recog `--fw-bold`) | `--fs-card-title*` (§EX-008) | `normal`     | `--lh-snug`     |
-| T4   | Kicker / sub-head (h4)    | `--font-mono`    | `--fw-semibold`     | `--fs-h4`             | `--tracking-snug`   | `--lh-tight`    |
-| T5   | Eyebrow                   | `--font-mono`    | `--fw-regular`      | `--fs-eyebrow`        | `--tracking-eyebrow`| `--lh-tight`    |
-| T6   | Body prose                | `--font-sans`    | `--fw-regular`      | `--fs-body`           | `normal`            | `--lh-body` / `--lh-relaxed` |
-| T7   | Subtitle / lede           | `--font-sans`    | `--fw-regular`      | `--fs-subtitle`       | `normal`            | `--lh-body`     |
-| T8   | Caps label (nav/tag/badge/meta) | `--font-mono` | `--fw-semibold` labels · `--fw-regular` tags | `--fs-2xs` / `--fs-eyebrow` | `--tracking-caps` | `--lh-normal` |
-| T9   | Emphasis micro-label      | `--font-mono`    | `--fw-semibold`     | `--fs-2xs`            | `--tracking-wide` / `--tracking-wider` | `--lh-normal` |
-| T10  | Metric number             | `--font-mono`    | `--fw-semibold`     | `--fs-metric`         | `--tracking-snug`   | `--lh-tight`    |
+| Code | Level                           | Font (§3)        | Weight                                       | Size token                   | Tracking                               | Line-height                  |
+| ---- | ------------------------------- | ---------------- | -------------------------------------------- | ---------------------------- | -------------------------------------- | ---------------------------- |
+| T1   | Display (h1)                    | `--font-display` | `--fw-regular`                               | `--fs-h1`                    | `--tracking-tight`                     | `--lh-tight`                 |
+| T2   | Section title (h2)              | `--font-display` | `--fw-regular`                               | `--fs-h2`                    | `--tracking-tight`                     | `--lh-tight`                 |
+| T3   | Card title (h3)                 | `--font-sans`    | `--fw-semibold` (recog `--fw-bold`)          | `--fs-card-title*` (§EX-008) | `normal`                               | `--lh-snug`                  |
+| T4   | Kicker / sub-head (h4)          | `--font-mono`    | `--fw-semibold`                              | `--fs-h4`                    | `--tracking-snug`                      | `--lh-tight`                 |
+| T5   | Eyebrow                         | `--font-mono`    | `--fw-regular`                               | `--fs-eyebrow`               | `--tracking-eyebrow`                   | `--lh-tight`                 |
+| T6   | Body prose                      | `--font-sans`    | `--fw-regular`                               | `--fs-body`                  | `normal`                               | `--lh-body` / `--lh-relaxed` |
+| T7   | Subtitle / lede                 | `--font-sans`    | `--fw-regular`                               | `--fs-subtitle`              | `normal`                               | `--lh-body`                  |
+| T8   | Caps label (nav/tag/badge/meta) | `--font-mono`    | `--fw-semibold` labels · `--fw-regular` tags | `--fs-2xs` / `--fs-eyebrow`  | `--tracking-caps`                      | `--lh-normal`                |
+| T9   | Emphasis micro-label            | `--font-mono`    | `--fw-semibold`                              | `--fs-2xs`                   | `--tracking-wide` / `--tracking-wider` | `--lh-normal`                |
+| T10  | Metric number                   | `--font-mono`    | `--fw-semibold`                              | `--fs-metric`                | `--tracking-snug`                      | `--lh-tight`                 |
 
 **Rule (T-consistency):** an element's level must be the same across every view. If a label
 reads as T8 in one section it must not be styled as T9 in another. New elements pick a level;
@@ -274,6 +279,10 @@ its `class` prop (e.g. VisionBoard: `variant="full"` + `class="section--alt sect
 Adjacent sections should alternate `default` / `alt` where possible for visual rhythm.
 Agents cite this table — never ad-hoc class strings.
 
+**Same-view pairs:** When consecutive sections belong to one nav view (e.g. intro → content),
+apply `.section--compact-bottom` on the first and `.section--compact-top` on the second to
+halve stacked `--section-py-*` at the boundary (`--stack-xl` each side). See EX-014.
+
 ---
 
 ## 7. Breakpoints
@@ -339,9 +348,11 @@ for approved divergences. Append rows; never delete history.
 | EX-007       | home                                           | §5 `--radius` on logo tiles  | `.leadership__collab-mark` uses `--radius-md` (8px) for compact logo grid cells                                                                                                                                 | 2026-07-02 |
 | EX-008       | home, research, projects, recognition, contact | §3 single card-title token   | Three-tier `--fs-card-title` scale (0.95rem / var(--fs-h3) / 1.5rem) preserves intentional research-compact / standard / flagship title hierarchy                                                               | 2026-07-03 |
 | EX-009       | research                                       | §2 single grid-col-min token | Two-tier `--grid-col-min` scale (320px compact vs 420px full) matches different content grid widths across research and speaking sections                                                                       | 2026-07-03 |
-| EX-010       | recognition                                    | §2 tokenized gap             | `CompetitionCard` stats grid uses a `1px` hairline `gap` as a visual cell divider (grid background shows through) — not a rhythm value; intentionally off the `--space-*` scale                                  | 2026-07-03 |
+| EX-010       | recognition                                    | §2 tokenized gap             | `CompetitionCard` stats grid uses a `1px` hairline `gap` as a visual cell divider (grid background shows through) — not a rhythm value; intentionally off the `--space-*` scale                                 | 2026-07-03 |
 | EX-011       | home                                           | §2 tokenized gap             | `ThirukuralQuote` band uses a responsive `clamp(1rem, 2.5vw, 1.75rem)` gap for the fluid couplet layout; endpoints intentionally straddle `--space-4`/`--space-6` and stay a clamp, not a fixed token           | 2026-07-03 |
-| EX-012       | all (BoardHeader)                              | §2 tokenized margin          | `.bhead__chev :global(svg)` uses `margin-inline: -5px` as an optical overlap nudge to tuck chevrons toward the title — negative icon kerning, not layout rhythm; off the positive `--space-*` grid by design      | 2026-07-03 |
+| EX-012       | all (BoardHeader)                              | §2 tokenized margin          | `.bhead__chev :global(svg)` uses `margin-inline: -5px` as an optical overlap nudge to tuck chevrons toward the title — negative icon kerning, not layout rhythm; off the positive `--space-*` grid by design    | 2026-07-03 |
+| EX-013       | home                                           | §1 S5 section py             | `AboutLanding.astro` uses `padding-block: var(--stack-xl)` (48px) instead of full `--section-py-*` — landing band is wrapped outside `Section.astro` and vertically centers hero + thirukural in the viewport   | 2026-07-03 |
+| EX-014       | all multi-section views                        | §1 S5 section py             | `.section--compact-top` / `.section--compact-bottom` halve stacked section padding at same-view boundaries (intro→content, content→content within a nav view)                                                   | 2026-07-03 |
 
 ---
 

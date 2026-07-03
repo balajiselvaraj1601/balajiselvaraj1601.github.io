@@ -15,6 +15,8 @@
  *   label    — mono kicker above the lines list (program cards only)
  *   entity   — entity slug for EntityLink wrapping the title (program cards only)
  *   accent   — when true adds card--accent top stripe
+ *   logoSlug — optional override for logo file lookup (entity slug fallback)
+ *   markDisplay — 'rect' forces uniform white logo-badge box (vision program cards)
  */
 import CardMark from '@components/ui/CardMark.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
@@ -31,15 +33,46 @@ interface Props {
   label?: string;
   entity?: string;
   accent?: boolean;
+  logoSlug?: string;
+  markDisplay?: 'auto' | 'rect';
 }
 
-const { title, lines, mark, slug, altText, label, entity, accent } =
-  Astro.props;
+const {
+  title,
+  lines,
+  mark,
+  slug,
+  altText,
+  label,
+  entity,
+  accent,
+  logoSlug,
+  markDisplay = 'auto',
+} = Astro.props;
 
 // Logo resolution: prefer rect logo when a file asset exists and has no self-ring.
 // Self-ringed pipeline logo_* assets are handled via emblem mode (mark prop).
-const entityLogoUrl = slug ? logoSrc(slug) : undefined;
-const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
+// Vision program cards pass markDisplay='rect' to always use the white logo-badge box.
+const lookupSlug = logoSlug ?? slug;
+let resolvedLogoUrl = lookupSlug ? logoSrc(lookupSlug) : undefined;
+if (!resolvedLogoUrl && mark?.kind === 'logo') {
+  resolvedLogoUrl = logoSrc(mark.asset);
+}
+if (!resolvedLogoUrl && slug) {
+  resolvedLogoUrl = logoSrc(slug);
+}
+
+const usesRectLogo =
+  markDisplay === 'rect'
+    ? Boolean(resolvedLogoUrl)
+    : Boolean(
+        resolvedLogoUrl &&
+        !logoHasOwnRing(
+          lookupSlug ?? slug ?? (mark?.kind === 'logo' ? mark.asset : undefined)
+        )
+      );
+const rectLogoSlug =
+  lookupSlug ?? (mark?.kind === 'logo' ? mark.asset : undefined) ?? slug;
 ---
 
 <article class:list={['theme-card', 'card', { 'card--accent': accent }]}>
@@ -47,8 +80,8 @@ const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
     usesRectLogo ? (
       <div class="program-card__mark" aria-hidden="true">
         <CardMark
-          slug={slug}
-          logoUrl={entityLogoUrl}
+          slug={rectLogoSlug}
+          logoUrl={resolvedLogoUrl}
           altText={altText ?? title}
           class="program-card__logo"
         />
@@ -79,7 +112,7 @@ const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
 <style>
   /* Rect logo wrapper (program cards with entity logo files) */
   .program-card__mark {
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--text-gap-inline);
   }
   .program-card__logo {
     width: fit-content;
@@ -94,17 +127,17 @@ const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
     letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
     color: var(--accent-ll);
-    margin: var(--space-1) 0 0;
+    margin: var(--text-gap-pair) 0 0;
     max-width: none;
   }
 
   /* Program bullet list */
   .program-card__lines {
     list-style: none;
-    margin: var(--space-2) 0 0;
+    margin: var(--text-gap-inline) 0 0;
     padding: 0;
     display: grid;
-    gap: var(--space-1);
+    gap: var(--text-gap-pair);
   }
   .program-card__lines li {
     font-size: var(--fs-base);

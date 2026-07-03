@@ -91,7 +91,7 @@ const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
     font-family: var(--font-mono);
     font-size: var(--fs-eyebrow);
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: var(--tracking-wider);
     text-transform: uppercase;
     color: var(--accent-ll);
     margin: var(--space-1) 0 0;
@@ -107,9 +107,9 @@ const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
     gap: var(--space-1);
   }
   .program-card__lines li {
-    font-size: 0.9rem;
+    font-size: var(--fs-base);
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: var(--lh-relaxed);
     overflow-wrap: break-word;
   }
 </style>

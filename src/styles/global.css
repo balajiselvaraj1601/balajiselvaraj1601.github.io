@@ -69,17 +69,31 @@
   --chevron-h: var(--space-2); /* 8px */
   --chevron-w: var(--space-2); /* 8px — = height, aspect 1:1 (square) */
   --chevron-overlap: var(--space-0-5); /* 2px — ¼ × width, nesting overlap */
-  /* Vision programs flow markers — larger than section-heading chevrons */
-  --chevron-flow-h: var(--space-3); /* 12px */
-  --chevron-flow-w: var(--space-3);
+  /* Vision programs flow markers — larger than section-heading chevrons.
+     Fluid: track the viewport, snapping to the token value at full site width. */
+  --chevron-flow-h: clamp(
+    10px,
+    0.85vw,
+    var(--space-3)
+  ); /* 12px at ≥1412px viewports */
+  --chevron-flow-w: var(--chevron-flow-h); /* = height, aspect 1:1 */
   --chevron-flow-overlap: var(--space-0-5); /* 2px */
-  --vision-flow-gap: var(--space-2); /* 8px gutter hub↔chevron↔cards */
+  --vision-flow-gap: clamp(
+    var(--space-1),
+    0.55vw,
+    var(--space-2)
+  ); /* gutter hub↔chevron↔cards, 8px at ≥1455px viewports */
   --vision-hub-max: 288px; /* 360 × 12/15 — smaller hub, ~12 spoke dots (was 360) */
   --vision-hub-max-md: 256px; /* same 0.8 ratio as --vision-hub-max (was 320) */
-  --vision-hub-stage-mid: calc(var(--vision-hub-max) / 2);
+  /* Fluid hub width SSOT — 20vw tracks the site width, capped at --vision-hub-max
+     (which is also the site --maxw cap point). The stacked ≤1180px breakpoint
+     overrides this expression; the derived token below follows either way. */
+  --vision-hub-w: clamp(200px, 20vw, var(--vision-hub-max));
   --vision-hub-ring-inset: calc(
-    var(--vision-hub-max) * 0.04
-  ); /* hub ring `inset:4%` at desktop width */
+    var(--vision-hub-w) * 0.04
+  ); /* hub ring `inset:4%` of the live hub width */
+  /* Space VisionHub reserves under its stage for the out-of-flow rule + label. */
+  --vision-hub-footer-h: calc(var(--space-4) + var(--space-2) + 1.5em);
   --size-recog-search-height: 38px;
   --size-recog-search-width: 200px;
 
@@ -517,9 +531,14 @@ button {
   align-items: center;
   justify-content: center;
   margin-bottom: var(--text-gap-inline);
-  background: var(--accent-soft);
-  border: 1px solid var(--border-strong);
-  color: var(--accent-ll);
+  color: var(--accent-card, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 14%,
+    transparent
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
 }
 .theme-card__title {
   font-family: var(--font-sans);
@@ -615,54 +634,39 @@ button {
   border-color: var(--border-strong);
 }
 
-/* Cards */
-.card {
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+/* Cards — default shell matches recognition band (accent top, radius-xl, gradient) */
+.card,
+.recog-card,
+.recog-tile,
+.content-card {
   position: relative;
   overflow: hidden;
-}
-.card--accent::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--accent), var(--accent-light));
-}
-@media (prefers-reduced-motion: no-preference) {
-  .card {
-    transition:
-      border-color var(--dur) var(--ease),
-      transform var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
-  }
-  .card:hover {
-    border-color: var(--border-strong);
-    transform: translateY(var(--card-lift));
-    box-shadow: var(--shadow-md);
-  }
-}
-
-/* Shared hover lift for research/speaking cards and similar content tiles */
-.content-card {
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--card-padding-lg);
-  height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--bg-elev),
+    color-mix(in srgb, var(--bg-elev) 70%, var(--bg))
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--accent-card, var(--accent)) 40%, var(--border));
+  border-top: 2px solid var(--accent-card, var(--accent));
+  border-radius: var(--radius-xl);
   transition:
     border-color var(--dur) var(--ease),
     transform var(--dur) var(--ease),
     box-shadow var(--dur) var(--ease);
 }
+.content-card {
+  padding: var(--card-padding-lg);
+  height: 100%;
+}
 @media (prefers-reduced-motion: no-preference) {
+  .card:hover,
+  .recog-card:hover,
+  .recog-tile:hover,
   .content-card:hover {
-    border-color: var(--border-strong);
     transform: translateY(var(--card-lift));
     box-shadow: var(--shadow-md);
+    border-color: var(--accent-card, var(--accent));
   }
 }
 
@@ -735,7 +739,7 @@ button {
   border-radius: var(--radius-lg);
 }
 
-/* Tier C accent hook — set --accent-card on wrapper; recog/edu layers inherit */
+/* Accent hook — set --accent-card on wrapper; card shells and marks inherit */
 .card-accent {
   --accent-card: var(--accent);
 }
@@ -794,12 +798,6 @@ button {
 }
 
 .recog-tile {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--accent-card, var(--accent));
-  border-radius: var(--radius-xl);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -915,25 +913,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--text-gap-inline);
-  background: linear-gradient(
-    180deg,
-    var(--bg-elev),
-    color-mix(in srgb, var(--bg-elev) 70%, var(--bg))
-  );
-  border: 1px solid
-    color-mix(in srgb, var(--accent-card, var(--accent)) 40%, var(--border));
-  border-top: 2px solid var(--accent-card, var(--accent));
-  border-radius: var(--radius-xl);
   padding: var(--card-padding);
-  transition:
-    transform var(--dur) var(--ease),
-    box-shadow var(--dur) var(--ease),
-    border-color var(--dur) var(--ease);
-}
-.recog-card:hover {
-  transform: translateY(var(--card-lift));
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent-card, var(--accent));
 }
 .recog-card.hidden {
   display: none;

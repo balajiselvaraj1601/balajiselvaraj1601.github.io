@@ -17,30 +17,35 @@
     "tail": "through AI"
   },
   "metrics": [
-    { "value": "12+", "label": "Years in AI & ML" },
+    { "value": "12+", "label": "Years in AI & ML", "icon": "chart" },
     {
       "value": "Top 0.3%",
-      "label": "Kaggle · 652 among 200K+ data scientists"
+      "label": "Kaggle · 652 among 200K+ data scientists",
+      "icon": "trophy"
     },
     {
       "value": "$0.5M+",
       "label": "Internal Funding",
-      "detail": "Secured 2× · Influenced 1×"
+      "detail": "Secured 2× · Influenced 1×",
+      "icon": "funding"
     },
     {
       "value": "$20–50M",
       "label": "Projected Annual Savings",
-      "detail": "Flagship Project Delivered"
+      "detail": "Flagship Project Delivered",
+      "icon": "funding"
     },
     {
       "value": "5 Countries",
       "label": "Globally distributed team",
-      "detail": "India, UK, Sweden, Mexico, China"
+      "detail": "India, UK, Sweden, Mexico, China",
+      "icon": "globe"
     },
     {
       "value": "2",
       "label": "Secured & delivered",
-      "detail": "Executive projects · Chief Scientist & SVP"
+      "detail": "Executive projects · Chief Scientist & SVP",
+      "icon": "target"
     }
   ],
   "ctas": [],

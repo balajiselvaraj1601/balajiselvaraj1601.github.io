@@ -85,13 +85,17 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
             const external = c.href ? isExternal(c.href) : false;
             return (
               <a
-                class="connect-card card"
+                class="connect-card card card-accent"
                 href={c.href!}
                 {...(external
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
               >
-                <CardMark icon={c.icon} iconFallback="link" />
+                <CardMark
+                  icon={c.icon}
+                  iconFallback="link"
+                  variant="accented"
+                />
                 <h3 class="connect-name">{c.label}</h3>
                 <p class="connect-val">{c.value}</p>
                 <span class="connect-action">
@@ -169,6 +173,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
     gap: var(--text-gap-inline);
     padding: var(--card-padding);
     text-decoration: none;
+    height: 100%;
   }
   .connect-card :global(.icon-tile) {
     margin-bottom: var(--space-3);

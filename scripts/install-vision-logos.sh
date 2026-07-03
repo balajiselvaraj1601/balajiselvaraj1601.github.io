@@ -10,7 +10,7 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-DEST="$PROJECT_ROOT/public/assets/logos"
+DEST="$PROJECT_ROOT/public/assets/logos/marks"
 WORKSPACE="${ICON_WORKSPACE:-$HOME/workspace}"
 CONFIG="$PROJECT_ROOT/scripts/icon-sets.json"
 

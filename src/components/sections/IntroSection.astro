@@ -1,13 +1,16 @@
 ---
 import Section from '@components/ui/Section.astro';
-import MetricCard from '@components/cards/MetricCard.astro';
+import RecogTile from '@components/ui/RecogTile.astro';
 import { experience, projects, visionBoard, site } from '@lib/content';
+import type { IconName } from '@lib/icons';
 
 interface Props {
   sectionId: 'experience-intro' | 'projects-intro' | 'vision-intro';
 }
 
 const { sectionId } = Astro.props;
+
+const DEFAULT_SNAPSHOT_ICON: IconName = 'chart';
 
 // Per-section content sources; titles come from the content file except
 // projects-intro, whose title lives in the section registry.
@@ -43,9 +46,14 @@ const eyebrow = site.sections[sectionId].eyebrow;
 >
   {
     snapshot && snapshot.length > 0 && (
-      <div class="snapshot-grid reveal">
+      <div class="recog-summary reveal">
         {snapshot.map((m) => (
-          <MetricCard value={m.value} label={m.label} />
+          <RecogTile
+            icon={m.icon ?? DEFAULT_SNAPSHOT_ICON}
+            count={m.value}
+            label={m.label}
+            class="card-accent"
+          />
         ))}
       </div>
     )

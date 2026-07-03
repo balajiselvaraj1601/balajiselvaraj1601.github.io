@@ -3,10 +3,10 @@
   "note": "Derived view of headline projects from experience.json, shaped for a card/detail UI. experience.json remains the source of truth for bullets.",
   "intro": "Production AI systems across drug safety, oncology, clinical imaging, and enterprise vision — selected for measurable impact, technical depth, and scale of deployment.",
   "snapshot": [
-    { "value": "3", "label": "Flagship case studies" },
-    { "value": "6", "label": "Domains across biopharma & enterprise" },
-    { "value": "$20–50M", "label": "Projected annual business impact" },
-    { "value": "12+", "label": "Years across AI & medical imaging" }
+    { "value": "3", "label": "Flagship case studies", "icon": "target" },
+    { "value": "6", "label": "Domains across biopharma & enterprise", "icon": "layers" },
+    { "value": "$20–50M", "label": "Projected annual business impact", "icon": "funding" },
+    { "value": "12+", "label": "Years across AI & medical imaging", "icon": "chart" }
   ],
   "projects": [
     {

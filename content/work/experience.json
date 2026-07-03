@@ -4,11 +4,11 @@
   "headline": "Building AI at the frontier of medicine",
   "headlineHighlight": "frontier",
   "snapshot": [
-    { "value": "12+", "label": "Years across AI & medical imaging" },
-    { "value": "6", "label": "Roles · 4 organizations" },
-    { "value": "$20–50M", "label": "Projected annual impact" },
-    { "value": "12", "label": "Engineers led at peak" },
-    { "value": "Top 0.3%", "label": "Kaggle global rank" }
+    { "value": "12+", "label": "Years across AI & medical imaging", "icon": "chart" },
+    { "value": "6", "label": "Roles · 4 organizations", "icon": "team" },
+    { "value": "$20–50M", "label": "Projected annual impact", "icon": "funding" },
+    { "value": "12", "label": "Engineers led at peak", "icon": "team" },
+    { "value": "Top 0.3%", "label": "Kaggle global rank", "icon": "trophy" }
   ],
   "roles": [
     {

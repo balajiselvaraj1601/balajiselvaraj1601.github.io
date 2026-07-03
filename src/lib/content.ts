@@ -105,15 +105,32 @@ const repoRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '../..'
 );
-const logoFiles = new Set(
-  fs.readdirSync(path.join(repoRoot, 'public/assets/logos'))
-);
+
+// Scan org/, marks/, and the root fallback in priority order.
+// Maps "filename.ext" → the URL path ("/assets/logos/sub/file") for that asset.
+const LOGO_SUBDIRS = ['org', 'marks', ''] as const;
+const logoBase = path.join(repoRoot, 'public/assets/logos');
+const logoFiles = new Map<string, string>();
+for (const sub of LOGO_SUBDIRS) {
+  const dir = sub ? path.join(logoBase, sub) : logoBase;
+  if (!fs.existsSync(dir)) continue;
+  for (const file of fs.readdirSync(dir)) {
+    if (file.startsWith('_') || file.startsWith('.')) continue;
+    if (!logoFiles.has(file)) {
+      logoFiles.set(
+        file,
+        sub ? `/assets/logos/${sub}/${file}` : `/assets/logos/${file}`
+      );
+    }
+  }
+}
 
 /** Resolve a logo URL from a slug, picking the best available extension. */
 export function logoSrc(slug?: string): string | undefined {
   if (!slug) return undefined;
   for (const ext of LOGO_EXTS) {
-    if (logoFiles.has(`${slug}.${ext}`)) return `/assets/logos/${slug}.${ext}`;
+    const found = logoFiles.get(`${slug}.${ext}`);
+    if (found) return found;
   }
   return undefined;
 }

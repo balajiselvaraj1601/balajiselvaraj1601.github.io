@@ -14,7 +14,7 @@
  *   altText  — alt text for logo image (falls back to title)
  *   label    — mono kicker above the lines list (program cards only)
  *   entity   — entity slug for EntityLink wrapping the title (program cards only)
- *   accent   — when true adds card--accent top stripe
+ *   accent   — deprecated; cards use the global accent-top shell
  *   logoSlug — optional override for logo file lookup (entity slug fallback)
  *   markDisplay — 'rect' forces uniform white logo-badge box (vision program cards)
  */
@@ -45,7 +45,6 @@ const {
   altText,
   label,
   entity,
-  accent,
   logoSlug,
   markDisplay = 'auto',
 } = Astro.props;
@@ -75,7 +74,7 @@ const rectLogoSlug =
   lookupSlug ?? (mark?.kind === 'logo' ? mark.asset : undefined) ?? slug;
 ---
 
-<article class:list={['theme-card', 'card', { 'card--accent': accent }]}>
+<article class="theme-card card">
   {
     usesRectLogo ? (
       <div class="program-card__mark" aria-hidden="true">

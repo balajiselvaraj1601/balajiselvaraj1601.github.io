@@ -1,4 +1,6 @@
 ---
+import RecogTile from '@components/ui/RecogTile.astro';
+import type { IconName } from '@lib/icons';
 import { profile } from '@lib/content';
 import Icon from '@components/ui/Icon.astro';
 import AvailabilityBadge from '@components/ui/AvailabilityBadge.astro';
@@ -7,6 +9,8 @@ import Portrait from '@components/cards/Portrait.astro';
 function isExternal(href: string) {
   return href.startsWith('http') || href.startsWith('/assets/');
 }
+
+const DEFAULT_METRIC_ICON: IconName = 'chart';
 ---
 
 <section id="hero" class="hero reveal" aria-labelledby="hero-heading">
@@ -44,16 +48,16 @@ function isExternal(href: string) {
         </h1>
       </div>
 
-      <div class="hero-stats" role="list" aria-label="Career highlights">
+      <div class="recog-summary hero-stats" role="list" aria-label="Career highlights">
         {
           profile.metrics.map((m) => (
-            <div class="hero-stat" role="listitem">
-              <div class="hero-stat__num">{m.value}</div>
-              <div class="hero-stat__label metric-label">{m.label}</div>
-              {m.detail && (
-                <div class="hero-stat__detail metric-label">{m.detail}</div>
-              )}
-            </div>
+            <RecogTile
+              icon={m.icon ?? DEFAULT_METRIC_ICON}
+              count={m.value}
+              label={m.detail ? `${m.label} · ${m.detail}` : m.label}
+              class="card-accent"
+              role="listitem"
+            />
           ))
         }
       </div>
@@ -204,41 +208,8 @@ function isExternal(href: string) {
     color: var(--accent-ll);
   }
   .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-    row-gap: var(--text-gap-section);
-    column-gap: var(--space-8);
-  }
-  .hero-stat {
-    border-left: 2px solid var(--accent);
-    padding-left: var(--space-4);
-  }
-  .hero-stat__num {
-    font-family: var(--font-mono);
-    font-size: var(--fs-hero-metric);
-    font-weight: var(--fw-semibold);
-    color: var(--accent);
-    line-height: var(--lh-none);
-  }
-  .hero-stat__label {
-    font-size: var(--fs-sm);
-    letter-spacing: var(--tracking-snug);
-    margin-top: var(--text-gap-inline);
-    line-height: var(--lh-normal);
-    max-width: none;
-  }
-  .hero-stat__detail {
-    font-size: var(--fs-sm);
-    letter-spacing: var(--tracking-snug);
-    margin-top: var(--text-gap-pair);
-    line-height: var(--lh-normal);
-    max-width: none;
-  }
-  @media (min-width: 640px) {
-    .hero-stat__detail {
-      white-space: nowrap;
-    }
+    margin-top: 0;
+    margin-bottom: 0;
   }
   .hero-stats + .hero__cta {
     margin-top: var(--text-gap-section);

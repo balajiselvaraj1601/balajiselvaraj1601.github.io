@@ -191,14 +191,16 @@ Per `docs/design-direction.md § Section eyebrows`:
 
 ## 5. Card shells
 
-Four tiers govern box/card surfaces. All tiers share `--radius` (12px default), `--card-lift`
-hover, and `box-shadow: var(--shadow-md)` on interactive hover unless §11 documents an exception.
+Four tiers govern box/card surfaces. **Default shell (2026-07-03):** `.card`, `.content-card`,
+`.recog-card`, and `.recog-tile` share the recognition-style treatment — accent top border
+(`--accent-card`), `--radius-xl`, gradient background, hover lift. Set `--accent-card` on a
+wrapper (`.card-accent`, level/medal/category class) for contextual colour.
 
 | Tier                | Shell class                                | Padding token              | Used by                                                          |
 | ------------------- | ------------------------------------------ | -------------------------- | ---------------------------------------------------------------- |
 | **A — compact**     | `.card`                                    | `--card-padding` (24px)    | MetricCard, theme-card, connect-card, proj-card accordion        |
 | **B — content**     | `.content-card`                            | `--card-padding-lg` (32px) | ResearchCard, SpeakingCard                                       |
-| **C — recognition** | `.recog-card`, `.recog-tile`, `.edu-panel` | `--card-padding` (24px)    | Awards, Kaggle, Education (see §11 for accent/radius exceptions) |
+| **C — recognition** | `.recog-card`, `.recog-tile`, `.edu-panel` | `--card-padding` (24px)    | Awards, Kaggle, Education — **aliases of the default `.card` shell** |
 | **D — special**     | `.card--accent`, `.hub__ring`              | varies                     | ProjectCaseStudyCard gradient stripe; Vision hub circle          |
 
 Shared primitives:

@@ -15,6 +15,7 @@ export const MetricItem = z.object({
   value: z.string(),
   label: z.string(),
   detail: z.string().optional(),
+  icon: iconNameSchema.optional(),
 });
 /** Fields shared by external labeled links and speaking engagements. */
 const MediaLinkFields = {

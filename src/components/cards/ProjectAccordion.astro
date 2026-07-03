@@ -17,7 +17,7 @@ const { name, subtitle, icon, bullets, open = false } = Astro.props;
 const iconName = resolveIcon(icon, 'folder');
 ---
 
-<details class="proj-card" open={open}>
+<details class="proj-card card card-accent" open={open}>
   <summary class="proj-header">
     <div class="proj-title-row">
       <div
@@ -50,23 +50,7 @@ const iconName = resolveIcon(icon, 'folder');
 
 <style>
   .proj-card {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
     overflow: hidden;
-    transition:
-      border-color var(--dur) var(--ease),
-      transform var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
-  }
-  .proj-card:hover {
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .proj-card:hover {
-      transform: translateY(var(--card-lift));
-    }
   }
   .proj-header {
     padding: var(--space-5) var(--card-padding);

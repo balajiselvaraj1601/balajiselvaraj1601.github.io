@@ -108,19 +108,6 @@
       "source": "person/profile.json",
       "visible": true
     },
-    "impact": {
-      "title": "Strategic Impact",
-      "source": "work/strategic-impact.json",
-      "visible": false,
-      "eyebrow": "AI Leadership & Strategic Impact",
-      "subEyebrow": "Leadership & Organizational Impact",
-      "ctaLabel": "See flagship case studies"
-    },
-    "technical-vision": {
-      "title": "Technical Vision",
-      "source": "person/profile.json",
-      "visible": false
-    },
     "vision-intro": {
       "title": "AI Leadership & Strategic Impact",
       "eyebrow": "Vision",
@@ -163,11 +150,6 @@
       "eyebrow": "Flagship Work",
       "source": "work/projects.json",
       "visible": true
-    },
-    "generative-ai": {
-      "title": "Generative AI",
-      "source": "drafts/research/generative-ai.json",
-      "visible": false
     },
     "education": {
       "title": "Education",

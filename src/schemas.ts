@@ -11,7 +11,6 @@ import { iconNameSchema } from './lib/icons';
  */
 
 /* ── shared primitives ─────────────────────────────────────────────────── */
-const TextItem = z.object({ text: z.string() });
 export const MetricItem = z.object({
   value: z.string(),
   label: z.string(),
@@ -84,8 +83,6 @@ export const siteSchema = z
         source: z.string(),
         visible: z.boolean(),
         eyebrow: z.string().optional(),
-        subEyebrow: z.string().optional(),
-        ctaLabel: z.string().optional(),
       })
     ),
     seo: z.object({
@@ -228,36 +225,6 @@ export const profileSchema = z.object({
   ),
 });
 
-/* ── strategic-impact.json ─────────────────────────────────────────────── */
-export const impactSchema = z.object({
-  title: z.string(),
-  headline: z.string().optional(),
-  headlineHighlight: z.string().optional(),
-  subtitle: z.string().optional(),
-  metrics: z.array(MetricItem),
-  highlights: z.array(TextItem),
-  journey: z
-    .array(
-      z.object({
-        icon: iconNameSchema,
-        label: z.string(),
-        description: z.string(),
-        variant: VariantColor,
-      })
-    )
-    .optional(),
-  leadershipCards: z
-    .array(
-      z.object({
-        icon: iconNameSchema,
-        title: z.string(),
-        subtitle: z.string(),
-        entity: EntitySlug,
-      })
-    )
-    .optional(),
-});
-
 /* ── vision-board.json ─────────────────────────────────────────────────── */
 const VisionMark = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('icon'), name: iconNameSchema }),
@@ -298,18 +265,6 @@ export const visionBoardSchema = z.object({
       lines: z.array(z.string()),
     })
   ),
-});
-
-/* ── generative-ai (text-item list) ────────────────────────────────────── */
-export const domainItemSchema = z.object({
-  label: z.string(),
-  icon: iconNameSchema,
-  detail: z.string(),
-});
-export const textListSchema = z.object({
-  title: z.string(),
-  items: z.array(TextItem),
-  domains: z.array(domainItemSchema).optional(),
 });
 
 /* ── experience.json ───────────────────────────────────────────────────── */
@@ -530,7 +485,6 @@ export const collaborationsSchema = z.object({
 export type MetricItem = z.infer<typeof MetricItem>;
 export type Site = z.infer<typeof siteSchema>;
 export type Profile = z.infer<typeof profileSchema>;
-export type Impact = z.infer<typeof impactSchema>;
 export type VisionBoard = z.infer<typeof visionBoardSchema>;
 export type Experience = z.infer<typeof experienceSchema>;
 export type Projects = z.infer<typeof projectsSchema>;
@@ -539,7 +493,6 @@ export type EducationRecord = z.infer<typeof educationRecordSchema>;
 export type Awards = z.infer<typeof awardsSchema>;
 export type AwardLevel = z.infer<typeof awardLevelSchema>;
 export type LinkList = z.infer<typeof linkListSchema>;
-export type DomainItem = z.infer<typeof domainItemSchema>;
 export type Speakers = z.infer<typeof speakersSchema>;
 export type Kaggle = z.infer<typeof kaggleSchema>;
 export type KaggleCompetition = z.infer<typeof kaggleCompetitionSchema>;

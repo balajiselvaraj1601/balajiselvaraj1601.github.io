@@ -42,7 +42,7 @@ Page brief: `docs/page-briefs/vision.md`
 
 Card components (`ProgramBadgeCard.astro`, `OrgSnapshotCard.astro`) may be edited when aligning to cross-view `theme-card` / icon-tile patterns.
 
-Shelved (never enable, never audit): `Impact.astro` (+ `content/work/strategic-impact.json`)
+Shelved (never enable, never audit): the strategic-impact feature, archived under `_shelved/` (`_shelved/src/components/sections/Impact.astro` + `_shelved/content/work/strategic-impact.json`; removed from `src/` and `content/`)
 
 ## Appendix B — Audit checklist (view-specific)
 

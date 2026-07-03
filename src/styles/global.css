@@ -74,8 +74,8 @@
   --chevron-flow-w: var(--space-3);
   --chevron-flow-overlap: var(--space-0-5); /* 2px */
   --vision-flow-gap: var(--space-2); /* 8px gutter hub↔chevron↔cards */
-  --vision-hub-max: 360px;
-  --vision-hub-max-md: 320px;
+  --vision-hub-max: 288px; /* 360 × 12/15 — smaller hub, ~12 spoke dots (was 360) */
+  --vision-hub-max-md: 256px; /* same 0.8 ratio as --vision-hub-max (was 320) */
   --vision-cards-max: 520px;
   --vision-hub-stage-mid: calc(var(--vision-hub-max) / 2);
   --vision-hub-ring-inset: calc(
@@ -752,8 +752,7 @@ button {
   padding: var(--logo-pad);
   box-shadow: var(--shadow-sm);
 }
-.logo-badge img,
-.logo-mark {
+.logo-badge img {
   display: block;
   width: auto;
   height: auto;
@@ -761,13 +760,11 @@ button {
   max-width: var(--logo-w-max-sm);
   object-fit: contain;
 }
-.logo-badge--md img,
-.logo-mark--md {
+.logo-badge--md img {
   max-height: var(--logo-h-md);
   max-width: var(--logo-w-max-md);
 }
-.logo-badge--lg img,
-.logo-mark--lg {
+.logo-badge--lg img {
   max-height: var(--logo-h-lg);
   max-width: var(--logo-w-max-lg);
 }
@@ -1134,15 +1131,6 @@ button {
 }
 .section--alt {
   --section-bg: var(--section-bg-alt);
-}
-.section--impact {
-  --section-bg: linear-gradient(
-    180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--bg-alt) 82%, transparent) 100%
-  );
-  background: var(--section-bg);
-  max-width: 100%;
 }
 .section--full {
   max-width: 100%;

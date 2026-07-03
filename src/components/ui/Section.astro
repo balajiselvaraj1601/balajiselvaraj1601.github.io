@@ -8,7 +8,7 @@ interface Props {
   eyebrow?: string;
   eyebrowVariant?: 'default' | 'red';
   subtitle?: string;
-  variant?: 'default' | 'alt' | 'full' | 'impact';
+  variant?: 'default' | 'alt' | 'full';
   /**
    * Explicit accessible name for the section, used only when `title` is empty
    * (e.g. sections that render their own heading). Ignored when a real `title`
@@ -47,7 +47,6 @@ const hasHeader = Boolean(eyebrow || hasTitle || subtitle);
     {
       'section--alt': variant === 'alt',
       'section--full': variant === 'full',
-      'section--impact': variant === 'impact',
     },
     cls,
   ]}

@@ -18,7 +18,7 @@ wrapped by `AboutLanding.astro` (hero + thirukural band).
 | S1    | Section has `id` matching section registry key                          | `content/site.json → sections`       |
 | S2    | Uses `.section` class via `Section.astro`                               | No ad-hoc `<section>` without tokens |
 | S3    | Inner layout uses `.container`                                          | Provided by `Section.astro`          |
-| S4    | Variant matches intent: `default`, `alt`, `full`, `impact`              | `variant` prop or equivalent class   |
+| S4    | Variant matches intent: `default`, `alt`, `full`                        | `variant` prop or equivalent class   |
 | S5    | Section vertical padding uses `--section-py-start` / `--section-py-end` | `.section` in global.css             |
 | S6    | Mobile section padding reduces per global.css media query               | ≤768px: 64px/48px                    |
 
@@ -266,15 +266,14 @@ Use shared callout primitives for nested emphasis — do not reimplement `color-
 ## 6. Section variants
 
 SSOT for variant naming. `Section.astro` accepts a single `variant` prop
-(`'default' | 'alt' | 'full' | 'impact'`); additional variant classes may be layered via
-its `class` prop (e.g. VisionBoard: `variant="full"` + `class="section--alt section--impact"`).
+(`'default' | 'alt' | 'full'`); additional variant classes may be layered via
+its `class` prop.
 
-| `variant` prop | Emitted class      | When                                                                                                                           |
-| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| `default`      | (none)             | Standard band                                                                                                                  |
-| `alt`          | `.section--alt`    | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies, vision-programs, experience |
-| `full`         | `.section--full`   | Full-bleed layout (deprecated as of Vision rewrite)                                                                            |
-| `impact`       | `.section--impact` | High-emphasis band (deprecated as of Vision rewrite)                                                                           |
+| `variant` prop | Emitted class    | When                                                                                                                           |
+| -------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `default`      | (none)           | Standard band                                                                                                                  |
+| `alt`          | `.section--alt`  | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies, vision-programs, experience |
+| `full`         | `.section--full` | Full-bleed layout (deprecated as of Vision rewrite)                                                                            |
 
 Adjacent sections should alternate `default` / `alt` where possible for visual rhythm.
 Agents cite this table — never ad-hoc class strings.

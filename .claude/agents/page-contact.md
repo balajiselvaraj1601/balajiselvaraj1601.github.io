@@ -69,3 +69,22 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
   - `.connect-val` (`c.value`, per card) → **T6** body
   - `.connect-action` (`actionLabel(c.type)` + arrow, per card) → **T8** action / meta label
 - **Notes:** `.response-time` and `.connect-action` carry the T8 meta/action role but render in sans (`--fs-md` / `--fs-sm`, `--accent-light`) rather than T8's mono-caps chrome — deliberate: they are inline icon-paired reassurance/CTA links kept in the reading font, not badge chrome. `.connect-header` matches T5 by value but hardcodes `letter-spacing: 0.18em` instead of `--tracking-eyebrow` (token bypass, not a ladder override — flag under §2a).
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2, T3, T5, T6, T7, T8 (§3a).
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+|---------|-------------|---------|--------------|
+| `.contact__title` (T2) | `--heading` | `--bg-alt` | — |
+| `.contact-subtitle` (T7) | `--text-muted` | `--bg-alt` | — |
+| `.btn.btn-secondary` (T8) | — | — | `--accent-light` |
+| `.response-time` (T8) | `--text-muted` | `--bg-alt` | `--accent-light` |
+| `.connect-header > span` (T5) | `--text-muted` | `--bg-alt` | — |
+| `.connect-rule` | — | `--border-strong` | — |
+| `.connect-card` (Tier A) | — | `--bg-elev` | — |
+| `.connect-name` (T3) | `--heading` | `--bg-elev` | — |
+| `.connect-val` (T6) | `--text-muted` | `--bg-elev` | — |
+| `.connect-action` (T8) | `--accent-light` | `--bg-elev` | — |

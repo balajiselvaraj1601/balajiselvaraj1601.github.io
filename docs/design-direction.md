@@ -68,6 +68,9 @@ Three font roles — map by **semantic role**, not per-component preference. Tok
 
 **Scale (rem):** h1 `clamp(2.8rem, 6vw, 5.5rem)`, h2 `clamp(2rem, 4vw, 3rem)`, body `0.95–1.0625`, eyebrow `0.72`
 
+**Weight tokens:** the numeric weights above map to `--fw-regular` 400 · `--fw-medium` 500 ·
+`--fw-semibold` 600 · `--fw-bold` 700 (SSOT — components reference the token, never a literal).
+
 **Do not change:** nav stays Inter (scannability); skill/chip tags stay Inter (readable content tokens).
 
 ## Spacing & layout

@@ -87,3 +87,31 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
   - `.theme-card__desc` → **T6** body prose
   - `.leadership__collabs-heading` (h3) → **T5** eyebrow
 - **Notes:** No section eyebrow (content section, §4). `.leadership__diff-heading` and `.leadership__collabs-heading` are ad-hoc kickers rendered with full eyebrow typography (T5, `--fs-eyebrow`) per §4, not T4 h4-kicker tokens; `.leadership__collabs-heading` is the muted variant (`--tracking-wide` ~0.12em, `--text-muted`) vs the diff heading's `--tracking-eyebrow` / `--accent-ll`. `.theme-card__title` uses `--fs-card-title` (three-tier scale, EX-008). `.leadership__collab-mark` cells use `--radius-md` (8px) per EX-007.
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T1, T2, T3, T5, T6, T8, T10 (contract §3a).
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+|---------|-------------|---------|--------------|
+| `.hero-tag` | `--accent-ll` | `--accent-soft` | — |
+| `.hero__greeting` | `--accent-ll` | — | — |
+| `.hero__title` | `--heading` | — | — |
+| `.hero__title em` | `--accent-ll` | — | — |
+| `.hero-stat` (left border) | — | — | `--accent` |
+| `.hero-stat__num` | `--accent` | — | — |
+| `.hero-stat__label` | `--text-muted` | — | — |
+| `.kural__tamil` | `--heading` | — | — |
+| `.kural__translation` | `--text` | — | — |
+| `.kural__author` | `--accent-light` | — | — |
+| `.kural__divider` | — | — | `--accent-light` |
+| Section title (h2) | `--heading` | — | — |
+| `.leadership__intro` | `--text-muted` | — | — |
+| `.leadership__diff-heading` | `--accent-ll` | — | — |
+| `.theme-card` | — | — | — |
+| `.theme-card__title` | `--heading` | — | — |
+| `.theme-card__desc` | `--text-muted` | — | — |
+| `.leadership__collabs-heading` | `--text-muted` | — | — |
+| `.leadership__collab-mark` | — | `--logo-surface` | `--accent-light` |

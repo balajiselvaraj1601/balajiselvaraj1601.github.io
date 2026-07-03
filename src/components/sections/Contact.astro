@@ -116,7 +116,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   .contact__title {
     font-family: var(--font-display);
     font-size: var(--fs-h2);
-    font-weight: 400;
+    font-weight: var(--fw-regular);
     line-height: var(--lh-tight);
     color: var(--heading);
     margin-bottom: var(--stack-sm);
@@ -182,7 +182,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
   }
   .connect-name {
     font-size: var(--fs-card-title);
-    font-weight: 600;
+    font-weight: var(--fw-semibold);
     color: var(--heading);
   }
   .connect-val {
@@ -200,7 +200,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
     padding-top: var(--space-3);
     border-top: 1px solid var(--border);
     font-size: var(--fs-sm);
-    font-weight: 600;
+    font-weight: var(--fw-semibold);
     color: var(--accent-light);
   }
   .connect-action :global(svg) {

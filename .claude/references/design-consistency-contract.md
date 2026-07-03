@@ -91,22 +91,23 @@ order, then apply the tokens. Page agents map each section's text to these codes
 **Appendix C** (they cite the code, never re-list token values). This is what keeps type
 consistent across views: two elements at the same level look identical everywhere.
 
-| Code | Level                     | Font (§3)        | Size token            | Tracking            | Line-height     |
-| ---- | ------------------------- | ---------------- | --------------------- | ------------------- | --------------- |
-| T1   | Display (h1)              | `--font-display` | `--fs-h1`             | `--tracking-tight`  | `--lh-tight`    |
-| T2   | Section title (h2)        | `--font-display` | `--fs-h2`             | `--tracking-tight`  | `--lh-tight`    |
-| T3   | Card title (h3)           | `--font-sans` 600–700 | `--fs-card-title*` (§EX-008) | `normal`     | `--lh-snug`     |
-| T4   | Kicker / sub-head (h4)    | `--font-mono`    | `--fs-h4`             | `--tracking-snug`   | `--lh-tight`    |
-| T5   | Eyebrow                   | `--font-mono`    | `--fs-eyebrow`        | `--tracking-eyebrow`| `--lh-tight`    |
-| T6   | Body prose                | `--font-sans`    | `--fs-body`           | `normal`            | `--lh-body` / `--lh-relaxed` |
-| T7   | Subtitle / lede           | `--font-sans`    | `--fs-subtitle`       | `normal`            | `--lh-body`     |
-| T8   | Caps label (nav/tag/badge/meta) | `--font-mono` | `--fs-2xs` / `--fs-eyebrow` | `--tracking-caps` | `--lh-normal` |
-| T9   | Emphasis micro-label      | `--font-mono`    | `--fs-2xs`            | `--tracking-wide` / `--tracking-wider` | `--lh-normal` |
-| T10  | Metric number             | `--font-mono`    | `--fs-metric`         | `--tracking-snug`   | `--lh-tight`    |
+| Code | Level                     | Font (§3)        | Weight              | Size token            | Tracking            | Line-height     |
+| ---- | ------------------------- | ---------------- | ------------------- | --------------------- | ------------------- | --------------- |
+| T1   | Display (h1)              | `--font-display` | `--fw-regular`      | `--fs-h1`             | `--tracking-tight`  | `--lh-tight`    |
+| T2   | Section title (h2)        | `--font-display` | `--fw-regular`      | `--fs-h2`             | `--tracking-tight`  | `--lh-tight`    |
+| T3   | Card title (h3)           | `--font-sans`    | `--fw-semibold` (recog `--fw-bold`) | `--fs-card-title*` (§EX-008) | `normal`     | `--lh-snug`     |
+| T4   | Kicker / sub-head (h4)    | `--font-mono`    | `--fw-semibold`     | `--fs-h4`             | `--tracking-snug`   | `--lh-tight`    |
+| T5   | Eyebrow                   | `--font-mono`    | `--fw-regular`      | `--fs-eyebrow`        | `--tracking-eyebrow`| `--lh-tight`    |
+| T6   | Body prose                | `--font-sans`    | `--fw-regular`      | `--fs-body`           | `normal`            | `--lh-body` / `--lh-relaxed` |
+| T7   | Subtitle / lede           | `--font-sans`    | `--fw-regular`      | `--fs-subtitle`       | `normal`            | `--lh-body`     |
+| T8   | Caps label (nav/tag/badge/meta) | `--font-mono` | `--fw-semibold` labels · `--fw-regular` tags | `--fs-2xs` / `--fs-eyebrow` | `--tracking-caps` | `--lh-normal` |
+| T9   | Emphasis micro-label      | `--font-mono`    | `--fw-semibold`     | `--fs-2xs`            | `--tracking-wide` / `--tracking-wider` | `--lh-normal` |
+| T10  | Metric number             | `--font-mono`    | `--fw-semibold`     | `--fs-metric`         | `--tracking-snug`   | `--lh-tight`    |
 
 **Rule (T-consistency):** an element's level must be the same across every view. If a label
 reads as T8 in one section it must not be styled as T9 in another. New elements pick a level;
-they never invent a font/size/tracking combination outside the ladder.
+they never invent a font/size/weight/tracking combination outside the ladder. Every axis —
+font, **weight**, size, tracking, line-height — resolves to a token; no numeric literal.
 
 ### 3b. Object hierarchy (surface levels)
 
@@ -132,6 +133,38 @@ ONE ladder — never hardcode a `rem`/`clamp` font-size where a token exists.
 `--fs-small`, `--fs-eyebrow`, `--fs-subtitle`, `--fs-btn`.
 
 **Violation:** hardcoded `font-size: 1.2rem` or `font-size: clamp(...)` where a token exists.
+
+### 3d. Weight & line-height ladders (mandatory)
+
+ONE ladder each — never hardcode a numeric `font-weight` or unitless `line-height`.
+
+**Weight:** `--fw-regular` 400 (body, display headings, form inputs) · `--fw-medium` 500
+(nav & footer links, quote emphasis) · `--fw-semibold` 600 (card titles, labels, metric
+numbers, buttons) · `--fw-bold` 700 (monogram, recognition titles, statement emphasis).
+
+**Line-height:** `--lh-none` 1 (solid leading — display numbers, monogram, badge glyphs) ·
+`--lh-tight` 1.1 (headings) · `--lh-snug` 1.25 (card titles) · `--lh-normal` 1.4 (metrics,
+dense labels) · `--lh-relaxed` 1.6 (body blocks) · `--lh-body` 1.75 (loose prose).
+
+**Violation:** `font-weight: 600` or `line-height: 1` where the token (`--fw-semibold` /
+`--lh-none`) exists.
+
+### 3e. Element theming (colour by role)
+
+Colour is not part of the T-ladder — it is set per element from the semantic colour tokens so
+theming stays consistent across light/dark. Page **Appendix C** records the colour token each
+element resolves to. Standard mappings:
+
+- **Text:** `--heading` (h1–h4, card/section titles) · `--text` (body) · `--text-muted`
+  (subtitles, metadata values, captions, blurbs).
+- **Accent labels:** `--accent-ll` (eyebrows, kickers, mono caps labels, dt labels, venues,
+  metric numbers) · `--accent-light` (inline links, CTAs) · `--accent-red-light` (red eyebrow variant).
+- **Categorical accents:** `--lvl-*` (award/role levels), `--medal-*` (competition medals),
+  `--status-*` (availability) — applied via `--accent-card` on the owning card shell (§5).
+- **Surfaces:** `--bg` / `--bg-alt` (section bands, §6) · `--bg-elev` (card shells) ·
+  `--bg-chip` (chips/pills).
+
+**Violation:** a hardcoded hex/rgb on a text or surface element where a semantic colour token exists.
 
 ---
 

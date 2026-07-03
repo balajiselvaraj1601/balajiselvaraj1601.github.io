@@ -55,9 +55,15 @@ not agent memory.
    plus "Guardian-owned shared components used here (audit-only, never edit): …"
    plus "Shelved (never enable, never audit): …"
 6. ## Appendix B — Audit checklist — view-specific checks only
+7. ## Appendix C — Text & object hierarchy — maps every element (reading order) to
+   its contract §3a T-code and §3b/§5 object tier. Ends with a
+   "### Typography & theming summary (this view)": the **T-levels present** (comma
+   list, cite §3a — never re-list font/weight/size values) plus an **element theming**
+   table (`| Element | Text colour | Surface | Accent/hover |`) mapping each element to
+   its semantic colour token per §3e. Cite tokens; never hardcode hex/rem.
 ```
 
-Target length: ~40–60 lines. If a rule applies to two or more views, it belongs in the
+Target length: ~55–80 lines. If a rule applies to two or more views, it belongs in the
 playbook or the contract, not in agent files.
 
 ---

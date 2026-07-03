@@ -81,3 +81,29 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
       - `.proj-sub` (`project.subtitle`) → **T6** body (micro caption)
       - `.bullet-list li` (`project.bullets[]`; `.is-secondary` → `--text-muted`) → **T6** body prose
 - **Notes:** Three T8 elements render off the mono-caps default deliberately — `.xp-meta` is mono caps (uses raw `letter-spacing: 0.08em`, i.e. the `--tracking-caps` value; token-swap candidate), while `.xp-org` and `.chip` render quiet on `--font-sans`/`--fs-small` (inline org link + pill tag, not caps chrome). `.proj-name` (T4) renders on `--font-sans` 600 / `--fs-base`, not the mono T4 default — nested accordion title. `.xp-title` (T3) uses a raw `1.35rem` size rather than a `--fs-card-title*` token (§EX-008) — hardcoded, audit-flag.
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2, T3, T4, T5, T6, T7, T8, T10 (per §3a, token values bind in contract SSOT).
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+| --- | --- | --- | --- |
+| Eyebrow (experience-intro) | `--accent-ll` | — | — |
+| Section title (h2, SectionHeading) | `--heading` | — | — |
+| Section subtitle (experience-intro) | `--text` | — | — |
+| Metric card (Tier A) | — | `--bg-elev` | — |
+| Metric value (T10) | `--accent` | — | — |
+| Metric label (T8) | `--accent-ll` | — | — |
+| Role title (h3, `.xp-title`) | `--heading` | — | — |
+| Role meta/date (`.xp-meta`, T8) | `--accent-light` | — | — |
+| Role organization (`.xp-org`, T8) | `--text-muted` | — | — |
+| Role blurb (T6) | `--text-muted` | — | — |
+| Tech chip (`.chip`, T8) | `--text-muted` | `--bg-chip` | — |
+| Timeline rail (`.xp-stack::before`) | — | — | `--accent` → `--accent-red` |
+| Timeline marker (`.xp-marker`) | — | `--bg` (empty) / `--accent` (filled) | `--accent` (border) |
+| Project accordion card (Tier A) | — | `--bg-elev` | — |
+| Project name (`.proj-name`, T4) | `--heading` | — | — |
+| Project subtitle (`.proj-sub`, T6) | `--text-muted` | — | — |
+| Project bullets (`.is-secondary`, T6) | `--text-muted` | — | — |

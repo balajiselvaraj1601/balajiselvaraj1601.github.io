@@ -87,3 +87,18 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
   - `.speaking-card__title` (h3) → **T3** card title (standard `--fs-card-title`, EX-008)
   - `.speaking-card__desc` (p) → **T6** body prose
 - **Notes:** `.speaking-card__event` is rendered `--fs-lg` / 600 / `--heading` colour to lift the event name above the talk title — a deliberate prominence override of the T7 default (normal-weight `--fs-subtitle`). `.speaking-card__role` uses `--tracking-wide` (0.1em) rather than `--tracking-caps`; `.speaking-card__location` / `__date` are mono meta rendered non-caps and readable (`--fs-sm` / `--fs-xs`) — all remain the mono meta (T8) family per §3, deviating only on case/tracking so full strings read cleanly.
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2, T3, T6, T7, T8. Token values per contract §3a.
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+|---------|-------------|---------|--------------|
+| `.content-card` (Tier B card shell) | — | `--bg-elev` | — |
+| `.rcard h3 a` / `.speaking-card__title a` (card titles) | `--heading` | — | `--accent-light` |
+| `.venue--stacked` / `.speaking-card__role` (meta caps labels) | `--accent-ll` | — | — |
+| `.speaking-card__event` (event name) | `--heading` | — | — |
+| `.rcard p` / `.speaking-card__desc` (body prose) | `--text-muted` | — | — |
+| `.speaking-card__location` / `__date` (metadata) | `--text-muted` | — | — |

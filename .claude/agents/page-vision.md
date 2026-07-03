@@ -89,3 +89,24 @@ single `ThemeCard.astro` SSOT (see its header, DG-006); `PipelineStrip` is not r
   - `h3.theme-card__title` → **T3** card title
   - `p.theme-card__desc` (`lines` joined) → **T6** body prose
 - **Notes:** —
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2, T3, T5, T6, T7, T8, T9, T10. Cite §3a for token values.
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+| --- | --- | --- | --- |
+| Eyebrow | `--accent-ll` | — | — |
+| Section h2 title | `--heading` | — | — |
+| Section subtitle | `--text-muted` | — | — |
+| Card shell (Tier A) | — | `--bg-elev` | — |
+| Card h3 title | `--heading` | — | — |
+| Metric value | `--accent` | — | — |
+| Stat label | `--text-muted` | — | — |
+| Program/group label | `--accent-ll` | — | — |
+| Body prose | `--text-muted` | — | — |
+| Mark icon circle (.theme-card__icon, .icon-tile) | `--accent-ll` | `--accent-soft` | — |
+| Vision hub ring | — | `--accent-soft`, `--accent` | — |
+| Vision hub center/nodes | `--accent-ll` | — | — |

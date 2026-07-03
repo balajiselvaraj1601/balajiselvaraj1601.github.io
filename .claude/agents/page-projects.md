@@ -84,3 +84,26 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
     - `.cs-blocks dd` → **T6** body prose
   - `.case-study-more .btn.btn-secondary` (`"View all projects →"`) → **T8** caps button label
 - **Notes:** `.cs-name` (T3) uses `--fs-card-title-lg` — the flagship tier of the three-tier card-title scale (EX-008), deliberately the largest card title on the site. The T9 elements (`.cs-meta`, `.cs-impact__label`, `.cs-blocks dt`) are the emphasized case-study micro-labels the contract intends at `--tracking-wider` (§2a / §3a T9). `.cs-role` maps to T8 by role (byline / meta) but renders `--fs-small` sans — not the mono/caps T8 default; kept as an inline byline rather than a caps label (see return note).
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2, T3, T5, T6, T7, T8, T9, T10.
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+|---------|-------------|---------|--------------|
+| Intro band (`default` variant) | — | `--bg` | — |
+| Section title (h2) | `--heading` | — | — |
+| Section subtitle | `--text-muted` | — | — |
+| Metric value (T10) | `--accent-ll` | — | — |
+| Metric label (T8) | `--accent-ll` | — | — |
+| Featured band (`alt` variant) | — | `--bg-alt` | — |
+| Eyebrow (T5) | `--accent-ll` | — | — |
+| Case study card (Tier D) | — | `--bg-elev` | — |
+| Card title (h3) | `--heading` | — | — |
+| Card byline (T8) | `--accent-ll` | — | — |
+| Card body / impact prose (T6) | `--text` | — | — |
+| Card labels (T9: domain, period, impact, dt) | `--accent-ll` | — | — |
+| Chip / tag (T8) | `--accent-ll` | `--bg-chip` | — |
+| CTA button (T8, `btn-secondary`) | `--accent-light` | — | `--accent-light` |

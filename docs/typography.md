@@ -45,6 +45,10 @@ token — don't decide per element.
 | Inline links (`a`, EntityLink, ContactLink)                                       | sans (inherited) | inherit | inherit               | —                                                                          |
 | Button (`.btn`)                                                                   | sans             | 600     | `--fs-btn`            | uppercase 0.08em — a distinct interactive role, intentionally **not** mono |
 
+**Weight tokens (SSOT — never hardcode a numeric `font-weight`):** the numeric weights above
+resolve to the `--fw-*` ladder — `--fw-regular` 400 · `--fw-medium` 500 · `--fw-semibold` 600 ·
+`--fw-bold` 700. Likewise `line-height: 1` → `--lh-none`. See design-consistency-contract.md §3a/§3d.
+
 ### Deliberate exceptions
 
 - **Thirukural Tamil quote** (`.kural__tamil`, in `ThirukuralQuote.astro`) uses **sans**, not

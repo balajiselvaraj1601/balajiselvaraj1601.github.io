@@ -104,3 +104,28 @@ Cite level codes — token values live in the contract (SSOT). Use when auditing
     - `dd.recog-value` (incl. `EntityLink` label + `.edu-stat__line`) → **T6** body prose
   - `p.edu-highlight__text` (summary callout) → **T6** body prose
 - **Notes:** §4 — content section, eyebrow omitted. Shell carries EX-003 (`border-top` accent) + EX-004 (`.edu-panel::before` dotted radial). **Deliberate text overrides:** `.edu-degree-short` and `.edu-field` set bespoke `clamp()` font-sizes (`clamp(1.75rem,3.5vw,2.5rem)` and `clamp(1.35rem,2.8vw,2.25rem)`) rather than ladder size tokens — hero-scale display treatment unique to the education panel (relates to the flagship tier of EX-008 `--fs-card-title`). They keep the ladder's font role (mono→T10, sans-600→T3) but not its size token; flag if any other view reuses these classes at a different scale.
+
+### Typography & theming summary (this view)
+
+**T-levels present:** T2 (section title), T3 (card title), T6 (body prose), T7 (subtitle/lede), T8 (caps label), T9 (emphasis micro-label), T10 (metric number). Cite contract §3a for token values; weights follow: T2/T3 `--fw-regular`/`--fw-bold`, T6/T7 `--fw-regular`, T8 `--fw-semibold`, T9 `--fw-semibold`, T10 `--fw-semibold`.
+
+**Element theming (colour tokens, per §3e):**
+
+| Element | Text colour | Surface | Accent/hover |
+|---------|-------------|---------|--------------|
+| `h2.section__title` | `--heading` | — | — |
+| `p.section__subtitle` (education) | `--text-muted` | — | — |
+| `.recog-tile` summary | — | `--bg-elev` | `--accent-card` |
+| `.recog-tile__count` | `--accent` | — | — |
+| `.recog-tile__label` | `--text-muted` | — | — |
+| `.icon-tile--accented` (tiles/cards) | `--accent-card` | color-mix w/ `--accent-card` | — |
+| `.recog-card` (awards/kaggle) | — | `--bg-elev` (gradient) | `--accent-card` |
+| `.recog-title` | `--heading` | — | — |
+| `.recog-badge` | `--heading` | color-mix w/ `--accent-card` | — |
+| `dt.recog-label` | `--text-muted` | — | — |
+| `dd.recog-value` | `--text` | — | — |
+| `p.recog-body` | `--text` | — | — |
+| `.edu-panel` (education) | — | `--bg-elev` | `--accent-gold` |
+| `.edu-degree-short` | `--accent-card` | — | — |
+| `.edu-field` | `--heading` | — | — |
+| `.edu-highlight__text` (callout) | `--text` | — | — |

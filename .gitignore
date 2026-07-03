@@ -45,5 +45,10 @@ scripts/.icon-stage/
 .cursor/agent-schedule.env
 .cursor/logs/
 
+# Site review scheduled run (local only)
+.cursor/site-review.env
+.cursor/site-review.state.json
+.cursor/logs/site-review/
+
 # Shelved / unused content and components (not part of the live site)
 /_shelved/

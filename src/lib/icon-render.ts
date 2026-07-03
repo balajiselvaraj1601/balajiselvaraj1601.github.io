@@ -9,6 +9,10 @@ const FILLED_ICONS = new Set<IconName>([
   'trophy-cup',
 ]);
 
+/**
+ * Icon pixel sizes. MUST stay in sync with the `--icon-*` tokens in
+ * src/styles/global.css (CSS custom properties can't be imported into TS).
+ */
 export const ICON_SIZE_TOKENS = {
   xs: 14,
   sm: 16,

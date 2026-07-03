@@ -1,0 +1,115 @@
+---
+/**
+ * ThemeCard — unified theme-card shell merging OrgSnapshotCard + ProgramBadgeCard.
+ *
+ * Resolves DG-006: both originals shared ~85% of markup/CSS. This component is the
+ * SSOT for all `.theme-card.card` surfaces in the Vision board sections.
+ *
+ * Prop guide:
+ *   title    — card heading (always rendered as h3)
+ *   lines[]  — body content; if label is set these render as a list, else joined as prose
+ *   mark     — VisionMark (pipeline logo_* or icon) passed to CardMark emblem mode
+ *   slug     — entity slug; triggers logo-file lookup (logoSrc). When a file exists and
+ *               !logoHasOwnRing, renders a rect logo badge instead of the emblem circle.
+ *   altText  — alt text for logo image (falls back to title)
+ *   label    — mono kicker above the lines list (program cards only)
+ *   entity   — entity slug for EntityLink wrapping the title (program cards only)
+ *   accent   — when true adds card--accent top stripe
+ */
+import CardMark from '@components/ui/CardMark.astro';
+import EntityLink from '@components/ui/EntityLink.astro';
+import { getEntityUrl, logoSrc } from '@lib/content';
+import { logoHasOwnRing } from '@lib/logo-display';
+import type { VisionMark } from '@schemas';
+
+interface Props {
+  title: string;
+  lines: string[];
+  mark?: VisionMark;
+  slug?: string;
+  altText?: string;
+  label?: string;
+  entity?: string;
+  accent?: boolean;
+}
+
+const { title, lines, mark, slug, altText, label, entity, accent } =
+  Astro.props;
+
+// Logo resolution: prefer rect logo when a file asset exists and has no self-ring.
+// Self-ringed pipeline logo_* assets are handled via emblem mode (mark prop).
+const entityLogoUrl = slug ? logoSrc(slug) : undefined;
+const usesRectLogo = Boolean(entityLogoUrl && !logoHasOwnRing(slug));
+---
+
+<article class:list={['theme-card', 'card', { 'card--accent': accent }]}>
+  {
+    usesRectLogo ? (
+      <div class="program-card__mark" aria-hidden="true">
+        <CardMark
+          slug={slug}
+          logoUrl={entityLogoUrl}
+          altText={altText ?? title}
+          class="program-card__logo"
+        />
+      </div>
+    ) : (
+      mark && <CardMark mark={mark} context="theme-card" emblemInCircle />
+    )
+  }
+  <h3 class="theme-card__title">
+    {entity ? <EntityLink href={getEntityUrl(entity)} label={title} /> : title}
+  </h3>
+  {
+    label ? (
+      <>
+        <p class="program-card__label">{label}</p>
+        <ul class="program-card__lines">
+          {lines.map((line) => (
+            <li>{line}</li>
+          ))}
+        </ul>
+      </>
+    ) : (
+      <p class="theme-card__desc">{lines.join(' ')}</p>
+    )
+  }
+</article>
+
+<style>
+  /* Rect logo wrapper (program cards with entity logo files) */
+  .program-card__mark {
+    margin-bottom: var(--space-2);
+  }
+  .program-card__logo {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  /* Program label kicker (mono, uppercase) */
+  .program-card__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ll);
+    margin: var(--space-1) 0 0;
+    max-width: none;
+  }
+
+  /* Program bullet list */
+  .program-card__lines {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  .program-card__lines li {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    overflow-wrap: break-word;
+  }
+</style>

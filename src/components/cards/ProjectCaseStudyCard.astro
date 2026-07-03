@@ -73,7 +73,7 @@ const hasDetail = blocks.length > 0;
     <p class="cs-summary">{summary}</p>
     {
       businessImpact && (
-        <p class="cs-impact">
+        <p class="cs-impact card-tint">
           <span class="cs-impact__label">Impact</span>
           <span class="cs-impact__body">{businessImpact}</span>
         </p>
@@ -162,7 +162,8 @@ const hasDetail = blocks.length > 0;
   }
 
   .cs-name {
-    font-size: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: var(--fs-card-title-lg);
     font-weight: 600;
     color: var(--heading);
     line-height: var(--lh-tight);
@@ -188,10 +189,6 @@ const hasDetail = blocks.length > 0;
     align-items: baseline;
     gap: var(--space-2);
     margin: var(--space-1) 0 0;
-    padding: var(--space-3) var(--space-4);
-    background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
     max-width: none;
   }
   .cs-impact__label {
@@ -233,7 +230,7 @@ const hasDetail = blocks.length > 0;
     cursor: pointer;
     list-style: none;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
@@ -282,7 +279,7 @@ const hasDetail = blocks.length > 0;
   }
   .cs-block dt {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--accent-ll);

@@ -1,10 +1,8 @@
 ---
+import CardMark from '@components/ui/CardMark.astro';
 import { logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
-import Icon from '@components/ui/Icon.astro';
-import LogoBadge from '@components/ui/LogoBadge.astro';
-import { resolveIcon } from '@lib/icons';
 import type { Speakers } from '@schemas';
 
 type Item = Speakers['items'][number];
@@ -27,17 +25,15 @@ const ytThumb = ytId
   <header class="speaking-card__head">
     {
       logoUrl ? (
-        <LogoBadge
+        <CardMark
+          slug={item.logo}
           logoUrl={logoUrl}
           altText={`${item.event} logo`}
           useBadge={showLogoBadge}
-          size="md"
           class="speaking-card__mark"
         />
       ) : (
-        <div class="speaking-card__icon" aria-hidden="true">
-          <Icon name={resolveIcon(undefined, 'presentation')} size="lg" />
-        </div>
+        <CardMark iconFallback="presentation" class="speaking-card__mark" />
       )
     }
     <div class="speaking-card__meta">
@@ -112,25 +108,12 @@ const ytThumb = ytId
   .speaking-card__head {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 0.85rem 1rem;
+    gap: var(--space-3) var(--stack-sm);
     align-items: start;
   }
 
   .speaking-card__mark {
     flex-shrink: 0;
-  }
-
-  .speaking-card__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background: var(--accent-soft);
-    border: 1px solid var(--border-strong);
-    color: var(--accent-ll);
   }
 
   .speaking-card__meta {
@@ -181,7 +164,7 @@ const ytThumb = ytId
 
   .speaking-card__title {
     font-family: var(--font-sans);
-    font-size: 1.15rem;
+    font-size: var(--fs-card-title);
     font-weight: 600;
     line-height: 1.35;
     margin: 0;

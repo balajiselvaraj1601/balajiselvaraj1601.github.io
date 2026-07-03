@@ -1,7 +1,5 @@
 ---
-import Icon from '@components/ui/Icon.astro';
-import LogoBadge from '@components/ui/LogoBadge.astro';
-import { resolveIcon } from '@lib/icons';
+import CardMark from '@components/ui/CardMark.astro';
 import { logoSrc } from '@lib/content';
 import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
@@ -30,7 +28,6 @@ const {
   variant = 'default',
   logoBadge: logoBadgeOverride,
 } = Astro.props;
-const iconName = resolveIcon(icon, 'document');
 const isStacked = variant === 'stacked';
 const showLogoBadge = logoUsesBadge(logo, logoBadgeOverride);
 
@@ -44,20 +41,18 @@ const logoUrl = logoSrc(logo);
 >
   {
     logoUrl ? (
-      <LogoBadge
+      <CardMark
+        slug={logo}
         logoUrl={logoUrl}
         altText={venue}
         useBadge={showLogoBadge}
-        size="md"
         class="rcard-logo"
       />
     ) : (
-      <div class="rcard-icon" aria-hidden="true">
-        <Icon name={iconName} size={22} />
-      </div>
+      <CardMark icon={icon} iconFallback="document" class="rcard-logo" />
     )
   }
-  {isStacked && <hr class="rcard-divider" />}
+  {isStacked && <hr class="rcard-divider" aria-hidden="true" />}
   {!isStacked && <div class="venue">{venue}</div>}
   {
     href ? (
@@ -75,7 +70,7 @@ const logoUrl = logoSrc(logo);
     isStacked && (
       <>
         <div class="venue venue--stacked">{venue}</div>
-        {description && <hr class="rcard-divider" />}
+        {description && <hr class="rcard-divider" aria-hidden="true" />}
       </>
     )
   }
@@ -104,23 +99,16 @@ const logoUrl = logoSrc(logo);
 </article>
 
 <style>
-  .rcard-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: var(--stack-sm);
-    background: var(--accent-soft);
-    border: 1px solid var(--border-strong);
-    color: var(--accent-ll);
-  }
   .rcard-logo {
     margin-bottom: var(--stack-sm);
   }
+  .rcard :global(.icon-tile),
+  .rcard :global(.theme-card__icon) {
+    margin-bottom: var(--stack-sm);
+  }
   .rcard--stacked .rcard-logo,
-  .rcard--stacked .rcard-icon {
+  .rcard--stacked :global(.icon-tile),
+  .rcard--stacked :global(.theme-card__icon) {
     align-self: flex-start;
     width: fit-content;
     margin-bottom: 0;
@@ -152,8 +140,9 @@ const logoUrl = logoSrc(logo);
     margin-top: 0;
   }
   .rcard h3 {
-    font-size: 0.95rem;
+    font-size: var(--fs-card-title-sm);
     font-weight: 600;
+    font-family: var(--font-sans);
     margin-bottom: var(--space-2);
   }
   .rcard--stacked h3 {

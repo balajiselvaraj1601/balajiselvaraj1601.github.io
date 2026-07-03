@@ -1,0 +1,73 @@
+---
+import Section from '@components/ui/Section.astro';
+import CardMark from '@components/ui/CardMark.astro';
+import MarkEmblem from '@components/ui/MarkEmblem.astro';
+import ThemeCard from '@components/cards/ThemeCard.astro';
+import { visionBoard, site } from '@lib/content';
+---
+
+<Section
+  id="vision-programs"
+  title={site.sections['vision-programs'].title}
+  variant="alt"
+>
+  <ul class="theme-grid vgroups reveal" style="--theme-cols: 2" role="list">
+    {
+      visionBoard.groups.map((group) => (
+        <li>
+          <article class="theme-card card">
+            <CardMark mark={group.lead} context="theme-card" emblemInCircle />
+            <h3 class="theme-card__title">{group.label}</h3>
+            <div class="vgroup__marks">
+              {group.marks.map((m) => (
+                <span class="icon-tile icon-tile--round icon-tile--compact">
+                  <MarkEmblem mark={m} />
+                </span>
+              ))}
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    visionBoard.programs && visionBoard.programs.length > 0 && (
+      <ul
+        class="theme-grid vision-programs__grid reveal"
+        style="--theme-cols: 2"
+        role="list"
+      >
+        {visionBoard.programs.map((p) => (
+          <li>
+            <ThemeCard
+              title={p.title}
+              lines={p.lines}
+              mark={p.badge}
+              slug={p.entity}
+              altText={p.title}
+              label={p.label}
+              entity={p.entity}
+              accent={p.variant === 'red'}
+            />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Section>
+
+<style>
+  .vgroups {
+    margin-top: 0;
+  }
+  .vgroup__marks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .vision-programs__grid {
+    margin-top: var(--stack-xl);
+  }
+</style>

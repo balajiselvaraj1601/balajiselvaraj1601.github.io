@@ -34,11 +34,16 @@
   --card-padding: var(--space-6);
   --card-padding-lg: var(--space-8);
   --section-cta-gap: var(--space-8);
+  /* Grid column minimum widths — two-tier: compact (research) vs full (speakers).
+     Documented exception EX-009: intentional width difference. */
+  --grid-col-min: min(100%, 320px);
+  --grid-col-min-lg: min(100%, 420px);
   --card-lift: -2px;
   --btn-padding: 0.75rem 1.75rem;
   --list-padding-left: 1.1em;
 
-  /* Icon size scale — prefer tokens over raw px in Icon size prop */
+  /* Icon size scale — prefer tokens over raw px in Icon size prop.
+     Values mirror ICON_SIZE_TOKENS in src/lib/icon-render.ts — keep in sync. */
   --icon-xs: 14px;
   --icon-sm: 16px;
   --icon-md: 20px;
@@ -46,8 +51,9 @@
   --icon-xl: 32px;
   /* Icon/dot component-specific sizes */
   --size-dot: 8px;
-  --size-icon-tile: 40px;
-  --size-icon-recog: 44px;
+  /* Mark slots — change these two values to resize circular icons site-wide */
+  --mark-slot: 44px;
+  --mark-glyph: 22px;
   --size-recog-search-height: 38px;
   --size-recog-search-width: 200px;
 
@@ -79,6 +85,11 @@
   --fs-h1: clamp(2.8rem, 6vw, 5.5rem);
   --fs-h2: clamp(2rem, 4vw, 3rem);
   --fs-h3: 1.15rem;
+  /* Card title scale — three tiers: sm (compact research links), default (standard cards), lg (flagship case studies).
+     Documented exception EX-008: intentional hierarchy, not a contract violation. */
+  --fs-card-title-sm: 0.95rem;
+  --fs-card-title: var(--fs-h3);
+  --fs-card-title-lg: 1.5rem;
   --fs-h4: 0.9rem;
   --fs-body: 0.95rem;
   --fs-small: 0.875rem;
@@ -382,9 +393,64 @@ button {
 .snapshot-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--space-4);
+  gap: var(--stack-lg);
   margin-top: var(--stack-lg);
 }
+
+/* Theme cards (LeadershipPhilosophy, Vision program + org snapshots) */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--theme-cols, 4), minmax(0, 1fr));
+  gap: var(--stack-sm);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-10) auto 0;
+}
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--card-padding);
+}
+.theme-card__icon {
+  width: var(--mark-slot);
+  height: var(--mark-slot);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-2);
+  background: var(--accent-soft);
+  border: 1px solid var(--border-strong);
+  color: var(--accent-ll);
+}
+.theme-card__title {
+  font-family: var(--font-sans);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--fs-card-title);
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+.theme-card__desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+  max-width: none;
+}
+@media (max-width: 768px) {
+  .theme-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .accent {
   color: var(--accent-light);
 }
@@ -469,10 +535,6 @@ button {
   height: 3px;
   background: linear-gradient(to right, var(--accent), var(--accent-light));
 }
-/* Solid top accent stripe (matches recog-card weight) */
-.card--top-accent {
-  border-top: 2px solid var(--accent-card, var(--accent));
-}
 @media (prefers-reduced-motion: no-preference) {
   .card {
     transition:
@@ -496,13 +558,89 @@ button {
   height: 100%;
   transition:
     border-color var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
 }
 @media (prefers-reduced-motion: no-preference) {
   .content-card:hover {
     border-color: var(--border-strong);
     transform: translateY(var(--card-lift));
+    box-shadow: var(--shadow-md);
   }
+}
+
+/* Shared icon tile — accent-soft slot for Lucide / fallback icons inside cards */
+.icon-tile {
+  width: var(--mark-slot);
+  height: var(--mark-slot);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--accent-soft);
+  border: 1px solid var(--border-strong);
+  color: var(--accent-ll);
+}
+.icon-tile--round {
+  border-radius: 50%;
+}
+.icon-tile--compact {
+  --mark-slot: 36px;
+  --mark-glyph: 18px;
+}
+.icon-tile--recog {
+  --mark-slot: 40px;
+}
+/* Inner glyph sizing — driven by --mark-glyph on :root or contextual overrides */
+.icon-tile :is(svg, .mark-emblem),
+.theme-card__icon :is(svg, .mark-emblem) {
+  width: var(--mark-glyph);
+  height: var(--mark-glyph);
+  flex-shrink: 0;
+}
+.icon-tile--elev {
+  background: var(--bg-elev);
+}
+/* Icon tile tinted by contextual --accent-card (awards level, medal, gold band) */
+.icon-tile--accented {
+  color: var(--accent-card, var(--accent));
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 14%,
+    transparent
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 35%,
+    transparent
+  );
+}
+
+/* Nested callout / highlight surfaces inside card shells */
+.card-tint {
+  padding: var(--space-3) var(--space-4);
+  background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.card-tint--accent {
+  background: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 6%,
+    var(--bg-elev)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--accent-card, var(--accent)) 45%,
+    var(--border)
+  );
+  border-radius: var(--radius-lg);
+}
+
+/* Tier C accent hook — set --accent-card on wrapper; recog/edu layers inherit */
+.card-accent {
+  --accent-card: var(--accent);
 }
 
 /* Logo badge — shared container for org marks on white surface */
@@ -541,6 +679,17 @@ button {
   padding: 0;
   box-shadow: none;
 }
+/* Circular chrome for square emblem logos (not horizontal wordmarks) */
+.logo-badge--round {
+  width: var(--mark-slot);
+  height: var(--mark-slot);
+  border-radius: 50%;
+  padding: var(--space-2);
+}
+.logo-badge--round img {
+  max-height: 100%;
+  max-width: 100%;
+}
 
 /* ── Recognition cards (shared: Awards + Kaggle) ─────────────────── */
 .recog-summary {
@@ -573,22 +722,6 @@ button {
     color-mix(in srgb, var(--accent-card, var(--accent)) 14%, transparent),
     transparent 60%
   );
-}
-.recog-tile__icon {
-  width: var(--size-icon-tile);
-  height: var(--size-icon-tile);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-card, var(--accent));
-  background: color-mix(
-    in srgb,
-    var(--accent-card, var(--accent)) 14%,
-    transparent
-  );
-  border: 1px solid
-    color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
 }
 .recog-tile__count {
   font-family: var(--font-mono);
@@ -645,7 +778,7 @@ button {
 }
 .recog-chip {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--fs-eyebrow);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: var(--bg-elev);
@@ -697,7 +830,7 @@ button {
     color-mix(in srgb, var(--accent-card, var(--accent)) 40%, var(--border));
   border-top: 2px solid var(--accent-card, var(--accent));
   border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  padding: var(--card-padding);
   transition:
     transform var(--dur) var(--ease),
     box-shadow var(--dur) var(--ease),
@@ -747,24 +880,6 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-}
-
-.recog-icon {
-  width: var(--size-icon-recog);
-  height: var(--size-icon-recog);
-  flex-shrink: 0;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-card, var(--accent));
-  background: color-mix(
-    in srgb,
-    var(--accent-card, var(--accent)) 14%,
-    transparent
-  );
-  border: 1px solid
-    color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
 }
 
 .recog-badge {

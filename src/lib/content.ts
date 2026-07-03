@@ -288,9 +288,9 @@ for (const item of collaborations.items) {
   if (item.logo) referencedLogoSlugs.add(item.logo);
 }
 
-for (const hub of visionBoard.hubs) {
-  collectVisionMarks([hub.center], referencedLogoSlugs);
-  collectVisionMarks(hub.satellites, referencedLogoSlugs);
+for (const group of visionBoard.groups) {
+  collectVisionMarks([group.lead], referencedLogoSlugs);
+  collectVisionMarks(group.marks, referencedLogoSlugs);
 }
 for (const program of visionBoard.programs ?? []) {
   collectVisionMarks([program.badge], referencedLogoSlugs);

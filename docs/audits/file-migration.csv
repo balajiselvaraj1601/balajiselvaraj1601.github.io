@@ -206,7 +206,7 @@ src/components/cards/JourneyNode.astro,src/components/cards/JourneyNode.astro,ke
 src/components/cards/JourneyRow.astro,src/components/cards/JourneyRow.astro,keep,Section building block
 src/components/cards/LeadershipCard.astro,src/components/cards/LeadershipCard.astro,keep,Section building block
 src/components/cards/MetricCard.astro,src/components/cards/MetricCard.astro,keep,Section building block
-src/components/cards/OrgImpactCard.astro,src/components/cards/OrgImpactCard.astro,keep,Section building block
+src/components/cards/OrgSnapshotCard.astro,src/components/cards/OrgSnapshotCard.astro,keep,Section building block
 src/components/cards/PipelineStrip.astro,src/components/cards/PipelineStrip.astro,keep,Section building block
 src/components/cards/Portrait.astro,src/components/cards/Portrait.astro,keep,Section building block
 src/components/cards/ProgramBadgeCard.astro,src/components/cards/ProgramBadgeCard.astro,keep,Section building block

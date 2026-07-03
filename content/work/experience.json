@@ -14,7 +14,6 @@
     {
       "position": "Senior Deep Learning Engineer / AI Associate Principal",
       "organization": "AstraZeneca, Sweden",
-      "mission": "Lead production AI across drug safety, oncology, and clinical imaging — translating executive-sponsored initiatives into measurable business outcomes.",
       "blurb": "Leads production AI across drug-safety, oncology, and clinical-imaging programs.",
       "tech": [
         "Multimodal AI",
@@ -123,7 +122,6 @@
     {
       "position": "Senior Consultant Level 2",
       "organization": "AstraZeneca, India",
-      "mission": "Deliver high-impact oncology imaging AI with benchmark-beating performance that secured follow-on funding.",
       "blurb": "Delivered a CT tumor-segmentation pipeline that beat state-of-the-art and secured follow-on funding.",
       "tech": [
         "CT Segmentation",
@@ -171,7 +169,6 @@
     {
       "position": "Senior Consultant Level 1",
       "organization": "AstraZeneca, India",
-      "mission": "Build scalable foundation model platforms for digital pathology and computational imaging on AWS.",
       "blurb": "Built AWS foundation-model and graph-neural-network platforms for digital pathology and clinical imaging.",
       "tech": [
         "Contrastive Learning",
@@ -241,7 +238,6 @@
     {
       "position": "Lead Engineer",
       "organization": "HCLTech, India",
-      "mission": "Ship production computer vision systems — face, video, and pose analytics — across enterprise deployments.",
       "blurb": "Shipped production computer-vision systems for face, video, and pose analytics across enterprise deployments.",
       "tech": [
         "Computer Vision",
@@ -315,7 +311,6 @@
     {
       "position": "Project Associate",
       "organization": "HTIC & ICSR, IIT Madras, India",
-      "mission": "Develop real-time clinical imaging systems — endoscopy, retinal imaging, and 3D neuroanatomy — for academic and clinical partners.",
       "blurb": "Developed real-time clinical imaging systems spanning endoscopy, retinal imaging, and 3D neuroanatomy.",
       "tech": [
         "Real-time Imaging",
@@ -402,7 +397,6 @@
     {
       "position": "Clinical Application Engineer",
       "organization": "Healthware Pvt Ltd, India",
-      "mission": "Bridge clinical, engineering, and commercial teams across 50+ hospital sites — driving adoption of medical imaging systems.",
       "blurb": "Bridged clinical, engineering, and commercial teams across 50+ hospital sites to drive medical-imaging adoption.",
       "tech": [
         "Clinical Imaging Systems",
@@ -417,7 +411,9 @@
       },
       "projects": [
         {
-          "name": null,
+          "name": "Clinical Adoption & Commercial Enablement",
+          "subtitle": "50+ hospital sites · Pre-sales · Training",
+          "icon": "handshake",
           "bullets": [
             {
               "text": "Directed alignment as primary liaison across clinicians, biomedical engineers, sales teams, service teams, and hospital leadership spanning 50+ sites.",

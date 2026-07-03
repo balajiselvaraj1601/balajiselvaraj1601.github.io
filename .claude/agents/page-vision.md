@@ -22,13 +22,13 @@ them exactly — they are part of your instructions:
 
 ## View-specific rules (deltas beyond playbook P1–P14)
 
-| #   | Rule                                                                                                                                                                                                                     |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| V1  | Content source: `content/work/vision-board.json` only.                                                                                                                                                                   |
-| V2  | Three sections: `vision-intro` variant=default with required eyebrow "Strategic Vision" (contract §4); `vision-programs` variant=alt; `vision-impact` variant=default. No `section--full` or `section--impact` layering. |
-| V3  | Group-card marks in `vision-programs` use `CardMark.astro` + `MarkEmblem.astro` with `.icon-tile--round.icon-tile--compact` mark rows (contract §5). No one-off logo filters.                                            |
-| V4  | Ad-hoc kickers match `.eyebrow` typography (contract §4).                                                                                                                                                                |
-| V5  | All three section titles via `Section.astro` props. Grids use `.theme-grid` with `--theme-cols` CSS variable (2 for programs, 4 for impact).                                                                             |
+| #   | Rule                                                                                                                                                                                                           |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| V1  | Content source: `content/work/vision-board.json` only.                                                                                                                                                         |
+| V2  | Three sections: `vision-intro` variant=default with required eyebrow "Vision" (contract §4); `vision-programs` variant=alt; `vision-impact` variant=default. No `section--full` or `section--impact` layering. |
+| V3  | Group-card marks in `vision-programs` use `CardMark.astro` + `MarkEmblem.astro` with `.icon-tile--round.icon-tile--compact` mark rows (contract §5). No one-off logo filters.                                  |
+| V4  | Ad-hoc kickers match `.eyebrow` typography (contract §4).                                                                                                                                                      |
+| V5  | All three section titles via `Section.astro` props. Grids use `.theme-grid` with `--theme-cols` CSS variable (2 for programs, 4 for impact).                                                                   |
 
 Page brief: `docs/page-briefs/vision.md`
 
@@ -47,7 +47,7 @@ Shelved (never enable, never audit): `Impact.astro` (+ `content/work/strategic-i
 ## Appendix B — Audit checklist (view-specific)
 
 1. All three sections use `Section.astro` with correct variants (V2).
-2. `vision-intro` has eyebrow prop set to "Strategic Vision" (contract §4).
+2. `vision-intro` has eyebrow prop set to "Vision" (contract §4).
 3. `vision-programs` grid uses `.theme-grid` with `--theme-cols: 2` (V5).
 4. `vision-impact` grid uses `.theme-grid` with `--theme-cols: 4` (V5).
 5. Program badge and impact cards use `CardMark.astro` with proper icon-tile modifiers (V3).

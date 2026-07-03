@@ -17,8 +17,8 @@ export const MetricItem = z.object({
   label: z.string(),
   detail: z.string().optional(),
 });
-const LabeledLink = z.object({
-  label: z.string(),
+/** Fields shared by external labeled links and speaking engagements. */
+const MediaLinkFields = {
   title: z.string(),
   url: z.string().url(),
   description: z.string().optional(),
@@ -26,8 +26,18 @@ const LabeledLink = z.object({
   image: z.string().optional(),
   logo: z.string().optional(),
   logoBadge: z.boolean().optional(),
+};
+const LabeledLink = z.object({
+  label: z.string(),
+  ...MediaLinkFields,
 });
 const VariantColor = z.enum(['purple', 'red']);
+/** Titled content block with an optional Lucide icon (leadership & vision lists). */
+const TitledIconItem = z.object({
+  title: z.string(),
+  description: z.string(),
+  icon: iconNameSchema.optional(),
+});
 export const contactTypeSchema = z.enum([
   'email',
   'linkedin',
@@ -157,70 +167,14 @@ export const profileSchema = z.object({
       governancePrivacy: z.string(),
       governanceGxP: z.string(),
     }),
-    strategicVision: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
-    businessImpact: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
-    platform: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
+    strategicVision: z.array(TitledIconItem).optional(),
+    businessImpact: z.array(TitledIconItem).optional(),
+    platform: z.array(TitledIconItem).optional(),
     // Team & Org Building block (heading set in LeadershipPhilosophy.astro)
-    peopleMentoring: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
-    governanceAI: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
-    governancePrivacy: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
-    governanceGxP: z
-      .array(
-        z.object({
-          title: z.string(),
-          description: z.string(),
-          icon: iconNameSchema.optional(),
-        })
-      )
-      .optional(),
+    peopleMentoring: z.array(TitledIconItem).optional(),
+    governanceAI: z.array(TitledIconItem).optional(),
+    governancePrivacy: z.array(TitledIconItem).optional(),
+    governanceGxP: z.array(TitledIconItem).optional(),
   }),
   vision: z
     .object({
@@ -316,64 +270,34 @@ const VisionMark = z.discriminatedUnion('kind', [
 export type VisionMark = z.infer<typeof VisionMark>;
 export const visionBoardSchema = z.object({
   header: z.string(),
-  eyebrow: z.string().optional(),
-  intro: z.string().optional(),
-  hubs: z.array(
+  intro: z.string(),
+  snapshot: z.array(MetricItem).optional(),
+  groups: z.array(
     z.object({
       id: z.string(),
       label: z.string(),
       variant: VariantColor,
-      center: VisionMark,
-      satellites: z.array(VisionMark),
+      lead: VisionMark,
+      marks: z.array(VisionMark),
     })
   ),
-  programs: z
-    .array(
-      z.object({
-        title: z.string(),
-        label: z.string(),
-        variant: VariantColor,
-        badge: VisionMark,
-        lines: z.array(z.string()),
-        entity: EntitySlug,
-      })
-    )
-    .optional(),
-  orgHeader: z.string().optional(),
-  orgCards: z
-    .array(
-      z.object({
-        mark: VisionMark,
-        title: z.string(),
-        lines: z.array(z.string()),
-      })
-    )
-    .optional(),
-  principles: z
-    .array(
-      z.object({
-        title: z.string(),
-        description: z.string(),
-        icon: iconNameSchema.optional(),
-      })
-    )
-    .optional(),
-  quote: z
-    .object({
-      tamil: z.string().optional(),
-      translation: z.string(),
-      author: z.string(),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
+  programs: z.array(
+    z.object({
+      title: z.string(),
+      label: z.string(),
+      variant: VariantColor,
+      badge: VisionMark,
+      lines: z.array(z.string()),
+      entity: EntitySlug,
     })
-    .optional(),
-  technicalVision: z
-    .object({
-      heading: z.string(),
-      headingEmphasis: z.string().optional(),
-      paragraphs: z.array(z.string()),
+  ),
+  orgCards: z.array(
+    z.object({
+      mark: VisionMark,
+      title: z.string(),
+      lines: z.array(z.string()),
     })
-    .optional(),
+  ),
 });
 
 /* ── generative-ai (text-item list) ────────────────────────────────────── */
@@ -402,7 +326,6 @@ export const experienceSchema = z.object({
       organization: z.string(),
       entity: EntitySlug,
       location: z.string().optional(),
-      mission: z.string().optional(),
       blurb: z.string().optional(),
       tech: z.array(z.string()).optional(),
       period: z.object({
@@ -412,7 +335,7 @@ export const experienceSchema = z.object({
       }),
       projects: z.array(
         z.object({
-          name: z.string().nullable(),
+          name: z.string(),
           subtitle: z.string().optional(),
           icon: iconNameSchema.optional(),
           bullets: z.array(
@@ -528,13 +451,8 @@ const SpeakingEngagement = z.object({
   location: z.string(),
   date: z.string(),
   dateSort: z.string().optional(),
-  title: z.string(),
+  ...MediaLinkFields,
   description: z.string(),
-  url: z.string().url(),
-  youtube: z.string().url().optional(),
-  image: z.string().optional(),
-  logo: z.string().optional(),
-  logoBadge: z.boolean().optional(),
 });
 
 export const speakersSchema = z.object({

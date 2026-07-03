@@ -30,27 +30,21 @@ const SHOTS = [
   { file: 'kaggle.png', hash: '#recognition', selector: '#kaggle' },
   { file: 'contact_page.png', hash: '#contact', selector: '#contact' },
   {
-    file: 'vision-board.png',
+    file: 'vision-intro.png',
     hash: '#vision',
-    selector: '#vision-board',
+    selector: '#vision-intro',
     revealAll: true,
   },
   {
-    file: 'vision-board-section.png',
+    file: 'vision-programs.png',
     hash: '#vision',
-    selector: '#vision-board',
+    selector: '#vision-programs',
     revealAll: true,
   },
   {
-    file: 'vision-hubs.png',
+    file: 'vision-impact.png',
     hash: '#vision',
-    selector: '.vboard__flow',
-    revealAll: true,
-  },
-  {
-    file: 'vision-org.png',
-    hash: '#vision',
-    selector: '.vboard__org',
+    selector: '#vision-impact',
     revealAll: true,
   },
 ];
@@ -84,9 +78,11 @@ async function forceReveals(page, rootSelector) {
 }
 
 async function prepareVisionSection(page) {
-  await page.locator('.vboard__org').scrollIntoViewIfNeeded();
+  await page.locator('#vision-impact').scrollIntoViewIfNeeded();
   await waitForScrollSettle(page);
-  await forceReveals(page, '#vision-board');
+  await forceReveals(page, '#vision-intro');
+  await forceReveals(page, '#vision-programs');
+  await forceReveals(page, '#vision-impact');
   await page.waitForTimeout(200);
 }
 

@@ -14,7 +14,7 @@ const { domains } = Astro.props;
     {
       domains.map((d) => (
         <li class="domain-map__item">
-          <div class="domain-map__icon">
+          <div class="domain-map__icon icon-tile" aria-hidden="true">
             <Icon name={d.icon} size={22} />
           </div>
           <div>
@@ -43,34 +43,31 @@ const { domains } = Astro.props;
     display: flex;
     gap: var(--space-4);
     align-items: flex-start;
-    padding: var(--space-5);
+    padding: var(--card-padding);
     background: var(--bg-elev);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .domain-map__item:hover {
     border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
-  .domain-map__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background: var(--accent-soft);
-    border: 1px solid var(--border-strong);
-    color: var(--accent-ll);
+  @media (prefers-reduced-motion: no-preference) {
+    .domain-map__item:hover {
+      transform: translateY(var(--card-lift));
+    }
   }
   .domain-map__label {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--accent-ll);
-    margin-bottom: 0.35rem;
+    margin-bottom: var(--space-1);
   }
   .domain-map__detail {
     font-size: 0.85rem;

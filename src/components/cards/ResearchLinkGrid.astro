@@ -30,7 +30,7 @@ const { items } = Astro.props;
 <style>
   .research-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-col-min), 1fr));
     gap: var(--stack-md);
   }
 </style>

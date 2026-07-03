@@ -1,13 +1,13 @@
 {
   "header": "AI Leadership & Strategic Impact",
   "intro": "Independently sourced, pitched, and secured two major AI initiatives — one SVP-sponsored saving $20–50M annually, one Chief Scientist-sponsored within a €14M EU consortium.",
-  "hubs": [
+  "groups": [
     {
       "id": "idea",
       "label": "IDEA",
       "variant": "purple",
-      "center": { "kind": "logo", "asset": "kaggle", "alt": "Kaggle" },
-      "satellites": [
+      "lead": { "kind": "logo", "asset": "kaggle", "alt": "Kaggle" },
+      "marks": [
         {
           "kind": "logo",
           "asset": "logo_innovation_idea",
@@ -40,8 +40,8 @@
       "id": "vision",
       "label": "VISION",
       "variant": "purple",
-      "center": { "kind": "icon", "name": "brain" },
-      "satellites": [
+      "lead": { "kind": "icon", "name": "brain" },
+      "marks": [
         {
           "kind": "logo",
           "asset": "logo_document_file",
@@ -90,9 +90,8 @@
         "alt": "Broad Institute"
       },
       "lines": [
-        "Initiated collaboration",
-        "Dr. Shantanu Singh",
-        "Multimodal computation pipelines"
+        "Initiated collaboration with Dr. Shantanu Singh at the Broad Institute",
+        "Co-developing computational pipelines for Cell Painting and omics"
       ],
       "entity": "broad-institute"
     },
@@ -125,7 +124,6 @@
       "entity": "aacr"
     }
   ],
-  "orgHeader": "Leadership & Organizational Impact",
   "orgCards": [
     {
       "mark": {
@@ -170,7 +168,7 @@
         "alt": "Strategic target"
       },
       "title": "Strategic Team Positioning",
-      "lines": ["Across 7 internal groups", "3 startups"]
+      "lines": ["7 internal groups · 3 startups"]
     },
     {
       "mark": {
@@ -188,7 +186,7 @@
         "alt": "Global locations"
       },
       "title": "Global Team Management",
-      "lines": ["UK, Sweden, India", "Mexico, China"]
+      "lines": ["UK, Sweden, India, Mexico, China"]
     }
   ]
 }

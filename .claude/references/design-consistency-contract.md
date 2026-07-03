@@ -154,12 +154,12 @@ SSOT for variant naming. `Section.astro` accepts a single `variant` prop
 (`'default' | 'alt' | 'full' | 'impact'`); additional variant classes may be layered via
 its `class` prop (e.g. VisionBoard: `variant="full"` + `class="section--alt section--impact"`).
 
-| `variant` prop | Emitted class      | When                                                                                                               |
-| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `default`      | (none)             | Standard band                                                                                                      |
-| `alt`          | `.section--alt`    | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies, vision-programs |
-| `full`         | `.section--full`   | Full-bleed layout (deprecated as of Vision rewrite)                                                                |
-| `impact`       | `.section--impact` | High-emphasis band (deprecated as of Vision rewrite)                                                               |
+| `variant` prop | Emitted class      | When                                                                                                                           |
+| -------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `default`      | (none)             | Standard band                                                                                                                  |
+| `alt`          | `.section--alt`    | Alternate background (`--bg-alt`); Kaggle, Publications, Speakers, Contact, featured-case-studies, vision-programs, experience |
+| `full`         | `.section--full`   | Full-bleed layout (deprecated as of Vision rewrite)                                                                            |
+| `impact`       | `.section--impact` | High-emphasis band (deprecated as of Vision rewrite)                                                                           |
 
 Adjacent sections should alternate `default` / `alt` where possible for visual rhythm.
 Agents cite this table — never ad-hoc class strings.

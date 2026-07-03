@@ -33,11 +33,11 @@ const show = steps.length >= 2;
 
 {
   show && (
-    <div class="pipeline" aria-label="Project delivery pipeline">
+    <div class="pipeline card-tint" aria-label="Project delivery pipeline">
       <ol class="pipeline__list">
         {steps.map((step, i) => (
           <li class="pipeline__step">
-            <div class="pipeline__node">
+            <div class="pipeline__node icon-tile icon-tile--compact icon-tile--round icon-tile--elev">
               <Icon name={step.icon} size={18} />
             </div>
             <span class="pipeline__label">{step.label}</span>
@@ -56,9 +56,6 @@ const show = steps.length >= 2;
 <style>
   .pipeline {
     padding: var(--space-4) var(--space-5);
-    background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
   }
   .pipeline__list {
     list-style: none;
@@ -73,18 +70,6 @@ const show = steps.length >= 2;
     display: flex;
     align-items: center;
     gap: var(--space-2);
-  }
-  .pipeline__node {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-elev);
-    border: 1px solid var(--border-strong);
-    color: var(--accent-ll);
-    flex-shrink: 0;
   }
   .pipeline__label {
     font-family: var(--font-mono);

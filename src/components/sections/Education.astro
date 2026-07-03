@@ -2,6 +2,7 @@
 import Section from '@components/ui/Section.astro';
 import Icon from '@components/ui/Icon.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
+import CardMark from '@components/ui/CardMark.astro';
 import { education, getEntityUrl, logoSrc, site } from '@lib/content';
 import type { IconName } from '@lib/icons';
 
@@ -71,21 +72,16 @@ const stats: StatCell[] = [
   <article class="edu-panel reveal edu-accent">
     <div class="edu-layout">
       <div class="edu-hero">
-        {
-          logo ? (
-            <div class="logo-badge logo-badge--lg edu-hero__logo">
-              <img
-                src={logo}
-                alt={`${record.institution} logo`}
-                loading="lazy"
-              />
-            </div>
-          ) : (
-            <div class="edu-tile__icon edu-hero__icon" aria-hidden="true">
-              <Icon name="graduation" size={24} />
-            </div>
-          )
-        }
+        <CardMark
+          logoUrl={logo}
+          slug={record.entity}
+          altText={record.institution + ' logo'}
+          logoSize="lg"
+          icon="graduation"
+          iconFallback="graduation"
+          variant="recog"
+          class={logo ? 'edu-hero__logo' : 'edu-hero__icon icon-tile--accented'}
+        />
         <p class="edu-degree-short">{degreeShort}</p>
         <h3 class="edu-field">{fieldLabel}</h3>
         <div class="edu-rule" aria-hidden="true"></div>
@@ -96,7 +92,10 @@ const stats: StatCell[] = [
           {
             stats.map((s) => (
               <div class="edu-stat">
-                <span class="edu-tile__icon edu-stat__icon" aria-hidden="true">
+                <span
+                  class="icon-tile icon-tile--recog icon-tile--accented edu-stat__icon"
+                  aria-hidden="true"
+                >
                   <Icon name={s.icon} size={18} />
                 </span>
                 <div class="edu-stat__copy">
@@ -125,9 +124,9 @@ const stats: StatCell[] = [
 
         {
           record.summary && (
-            <div class="edu-highlight">
+            <div class="card-tint card-tint--accent edu-highlight">
               <span
-                class="edu-tile__icon edu-highlight__icon"
+                class="icon-tile icon-tile--recog icon-tile--accented edu-highlight__icon"
                 aria-hidden="true"
               >
                 <Icon name="trophy" size={20} />
@@ -153,7 +152,18 @@ const stats: StatCell[] = [
     border: 1px solid var(--border);
     border-top: 2px solid var(--accent-card, var(--accent-gold));
     border-radius: var(--radius-xl);
-    padding: var(--space-6);
+    padding: var(--card-padding);
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .edu-panel:hover {
+      transform: translateY(var(--card-lift));
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-strong);
+    }
   }
   .edu-panel::before {
     content: '';
@@ -199,7 +209,7 @@ const stats: StatCell[] = [
     display: grid;
     gap: var(--space-6);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) /* --bp-md */ {
     .edu-layout {
       grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
       align-items: start;
@@ -220,23 +230,6 @@ const stats: StatCell[] = [
     margin-bottom: var(--space-1);
   }
 
-  .edu-tile__icon {
-    width: var(--size-icon-tile);
-    height: var(--size-icon-tile);
-    border-radius: var(--radius-lg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-card, var(--accent));
-    background: color-mix(
-      in srgb,
-      var(--accent-card, var(--accent)) 14%,
-      transparent
-    );
-    border: 1px solid
-      color-mix(in srgb, var(--accent-card, var(--accent)) 35%, transparent);
-  }
-
   .edu-degree-short {
     font-family: var(--font-mono);
     font-size: clamp(1.75rem, 3.5vw, 2.5rem);
@@ -247,9 +240,9 @@ const stats: StatCell[] = [
   }
 
   .edu-field {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-size: clamp(1.35rem, 2.8vw, 2.25rem);
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.15;
     color: var(--heading);
     margin: 0;
@@ -274,7 +267,7 @@ const stats: StatCell[] = [
     gap: var(--space-5);
     padding-top: var(--space-2);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) /* --bp-md */ {
     .edu-body {
       padding-top: calc(var(--space-6) + var(--space-2));
     }
@@ -302,7 +295,7 @@ const stats: StatCell[] = [
   .edu-stat__copy {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
     min-width: 0;
   }
   .edu-stat dd {
@@ -324,18 +317,6 @@ const stats: StatCell[] = [
     align-items: flex-start;
     gap: var(--space-4);
     padding: var(--space-5);
-    border: 1px solid
-      color-mix(
-        in srgb,
-        var(--accent-card, var(--accent-gold)) 45%,
-        var(--border)
-      );
-    border-radius: var(--radius-lg);
-    background: color-mix(
-      in srgb,
-      var(--accent-card, var(--accent-gold)) 6%,
-      var(--bg-elev)
-    );
   }
   .edu-highlight__icon {
     flex-shrink: 0;
@@ -348,7 +329,7 @@ const stats: StatCell[] = [
     max-width: none;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 767px) /* --bp-md - 1px */ {
     .edu-panel__badge {
       position: static;
       align-self: flex-start;

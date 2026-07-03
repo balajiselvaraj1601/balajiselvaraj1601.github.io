@@ -37,7 +37,10 @@ const total = items.length;
     {
       LEVELS.map((level) => (
         <div class:list={['recog-tile', `level-${slug(level)}`]}>
-          <div class="recog-tile__icon" aria-hidden="true">
+          <div
+            class="icon-tile icon-tile--recog icon-tile--accented"
+            aria-hidden="true"
+          >
             <Icon name="trophy" size={22} />
           </div>
           <div class="recog-tile__count">{counts[level] ?? 0}</div>
@@ -90,14 +93,14 @@ const total = items.length;
           data-reason={a.reason}
         >
           <Fragment slot="headTop">
-            <div class="recog-icon" aria-hidden="true">
+            <div class="icon-tile icon-tile--accented" aria-hidden="true">
               <Icon name="trophy" size={22} />
             </div>
             <span class="recog-badge">{a.level}</span>
           </Fragment>
-          <h4 slot="title" class="recog-title">
+          <h3 slot="title" class="recog-title">
             {a.title}
-          </h4>
+          </h3>
 
           <dl class="recog-card-fields">
             <div class="recog-card-field">

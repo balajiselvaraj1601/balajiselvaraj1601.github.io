@@ -33,7 +33,7 @@ token — don't decide per element.
 | Section title (`h2`, `.section__title`, BoardHeader, Contact/Vision titles)       | display          | 400     | `--fs-h2`             | —                                                                          |
 | Editorial pull-quote / leadership statement                                       | display          | 400     | large                 | italic                                                                     |
 | Brand wordmark (Header `.brand`)                                                  | display          | —       | —                     | identity mark                                                              |
-| Sub-heading / card title (`h3`; SpeakingCard, OrgImpactCard, Education degree)    | sans             | 600     | `--fs-h3` (1.15rem)   | —                                                                          |
+| Sub-heading / card title (`h3`; SpeakingCard, OrgSnapshotCard, Education degree)  | sans             | 600     | `--fs-h3` (1.15rem)   | —                                                                          |
 | Kicker / micro-label (`h4`)                                                       | **mono**         | 600     | 0.9rem                | uppercase, tracked — a label, not prose                                    |
 | Eyebrow / section label (`.eyebrow`, `Eyebrow`)                                   | mono             | 400–600 | `--fs-eyebrow`        | uppercase, 0.18em                                                          |
 | Tag / chip / badge (Chip, ProgramBadge, AvailabilityBadge, HubCircle, gold-badge) | mono             | 600     | ~0.7rem               | uppercase                                                                  |
@@ -114,11 +114,11 @@ each section lists the fonts it actually surfaces.
 
 ### Vision — `/vision`
 
-| Section          | Component           | Fonts surfaced                                                                      |
-| ---------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| Technical Vision | `Vision.astro`      | h2=display · body=sans                                                              |
-| Vision Board     | `VisionBoard.astro` | BoardHeader=display · Hub/Program labels=mono · OrgImpactCard title=sans, body=sans |
-| Strategic Impact | `Impact.astro`      | h2=display · metric=mono · body=sans                                                |
+| Section          | Component           | Fonts surfaced                                                                        |
+| ---------------- | ------------------- | ------------------------------------------------------------------------------------- |
+| Technical Vision | `Vision.astro`      | h2=display · body=sans                                                                |
+| Vision Board     | `VisionBoard.astro` | Section h2=display · hub/program kickers=mono · OrgSnapshotCard title=sans, body=sans |
+| Strategic Impact | `Impact.astro`      | h2=display · metric=mono · body=sans                                                  |
 
 ### Contact — `/contact`
 

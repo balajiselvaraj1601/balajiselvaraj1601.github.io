@@ -1,0 +1,33 @@
+---
+import Section from '@components/ui/Section.astro';
+import ThemeCard from '@components/cards/ThemeCard.astro';
+import { visionBoard, site } from '@lib/content';
+---
+
+<Section
+  id="vision-impact"
+  title={site.sections['vision-impact'].title}
+  variant="default"
+>
+  {
+    visionBoard.orgCards && visionBoard.orgCards.length > 0 && (
+      <ul
+        class="theme-grid vision-impact__grid reveal"
+        style="--theme-cols: 4"
+        role="list"
+      >
+        {visionBoard.orgCards.map((c) => (
+          <li>
+            <ThemeCard mark={c.mark} title={c.title} lines={c.lines} />
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Section>
+
+<style>
+  .vision-impact__grid {
+    margin-top: 0;
+  }
+</style>

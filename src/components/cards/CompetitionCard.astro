@@ -53,15 +53,15 @@ const visibleStats = stats6.filter((s) => s.value);
   data-tags={(tags ?? []).join(' ')}
 >
   <Fragment slot="headTop">
-    <div class="recog-icon" aria-hidden="true">
+    <div class="icon-tile icon-tile--accented" aria-hidden="true">
       <Icon name={headerIcon} size="lg" />
     </div>
   </Fragment>
-  <h4 slot="title" class="recog-title recog-clamp" style="--clamp: 2">
+  <h3 slot="title" class="recog-title recog-clamp" style="--clamp: 2">
     <a href={url} target="_blank" rel="noopener noreferrer"
       >{name}<span class="visually-hidden"> (opens in new window)</span></a
     >
-  </h4>
+  </h3>
 
   <dl class="blob-stats">
     {

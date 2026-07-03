@@ -41,6 +41,14 @@ interface Props {
   iconSize?: number;
 
   /**
+   * Logo container shape when `useBadge` is true.
+   * `rect` — horizontal wordmark pill (default).
+   * `round` — circular chrome for square emblem marks.
+   * @default 'rect'
+   */
+  shape?: 'rect' | 'round';
+
+  /**
    * Additional CSS classes to apply to the logo-badge container.
    */
   class?: string;
@@ -60,6 +68,7 @@ const {
   size = 'md',
   fallbackIcon = 'diamond',
   iconSize = 22,
+  shape = 'rect',
   class: cls,
   ariaHidden = true,
 } = Astro.props;
@@ -72,6 +81,7 @@ const {
         'logo-badge',
         `logo-badge--${size}`,
         { 'logo-badge--plain': !useBadge },
+        { 'logo-badge--round': useBadge && shape === 'round' },
         cls,
       ]}
     >

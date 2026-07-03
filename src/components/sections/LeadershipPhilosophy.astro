@@ -1,7 +1,6 @@
 ---
 import Section from '@components/ui/Section.astro';
-import Icon from '@components/ui/Icon.astro';
-import LogoBadge from '@components/ui/LogoBadge.astro';
+import CardMark from '@components/ui/CardMark.astro';
 import {
   profile,
   site,
@@ -46,19 +45,17 @@ const cardBlocks = [
           <div class="leadership__card-row reveal">
             <h3 class="leadership__diff-heading">{heading}</h3>
             <ul
-              class="leadership__themes"
-              style={`--card-cols: ${items.length}`}
+              class="theme-grid"
+              style={`--theme-cols: ${items.length}`}
               role="list"
             >
               {items.map((item) => (
-                <li class="leadership__theme card">
+                <li class="theme-card card">
                   {item.icon && (
-                    <span class="leadership__theme-icon" aria-hidden="true">
-                      <Icon name={item.icon} size={22} />
-                    </span>
+                    <CardMark icon={item.icon} context="theme-card" />
                   )}
-                  <h4 class="leadership__theme-title">{item.title}</h4>
-                  <p class="leadership__theme-desc">{item.description}</p>
+                  <h3 class="theme-card__title">{item.title}</h3>
+                  <p class="theme-card__desc">{item.description}</p>
                 </li>
               ))}
             </ul>
@@ -84,11 +81,12 @@ const cardBlocks = [
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <LogoBadge
+                <CardMark
+                  slug={item.logo}
                   logoUrl={src}
                   altText=""
                   useBadge={logoUsesBadge(item.logo)}
-                  size="lg"
+                  logoSize="lg"
                 />
               </a>
             </li>
@@ -107,65 +105,25 @@ const cardBlocks = [
     line-height: var(--lh-body);
   }
   .leadership__diff-heading {
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     font-family: var(--font-mono);
     font-weight: 400;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--accent-ll);
     margin-bottom: var(--space-4);
   }
   .leadership__card-row {
     margin-top: var(--space-10);
   }
-  .leadership__card-row .leadership__themes {
+  .leadership__card-row .theme-grid {
     margin-top: 0;
-    grid-template-columns: repeat(var(--card-cols, 4), minmax(0, 1fr));
-  }
-  .leadership__themes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: var(--stack-sm);
-    list-style: none;
-    padding: 0;
-    margin: var(--space-10) auto 0;
-  }
-  .leadership__theme {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: var(--card-padding);
-  }
-  .leadership__theme-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.5rem;
-    background: var(--accent-soft);
-    border: 1px solid var(--border-strong);
-    color: var(--accent-ll);
-  }
-  .leadership__theme-title {
-    font-size: 1.02rem;
-    font-weight: 700;
-    color: var(--heading);
-    margin: 0;
-  }
-  .leadership__theme-desc {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin: 0;
-    max-width: none;
   }
   .leadership__collabs {
     margin-top: var(--space-10);
   }
   .leadership__collabs-heading {
-    font-size: 0.72rem;
+    font-size: var(--fs-eyebrow);
     font-family: var(--font-mono);
     font-weight: 400;
     letter-spacing: 0.12em;
@@ -200,12 +158,19 @@ const cardBlocks = [
     text-decoration: none;
     transition:
       border-color var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
+      box-shadow var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
   }
   .leadership__collab-mark:hover {
     border-color: var(--accent-light);
-    box-shadow: 0 0 0 1px
-      color-mix(in srgb, var(--accent-light) 25%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent-light) 25%, transparent),
+      var(--shadow-md);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .leadership__collab-mark:hover {
+      transform: translateY(var(--card-lift));
+    }
   }
   .leadership__collab-mark:focus-visible {
     outline: 2px solid var(--focus-ring);
@@ -215,17 +180,9 @@ const cardBlocks = [
     max-width: min(var(--logo-w-max-lg), 100%);
   }
   @media (max-width: 768px) {
-    .leadership__card-row .leadership__themes {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
     .leadership__collabs-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       width: 100%;
-    }
-  }
-  @media (max-width: 480px) {
-    .leadership__card-row .leadership__themes {
-      grid-template-columns: 1fr;
     }
   }
   @media (min-width: 769px) and (max-width: 1024px) {

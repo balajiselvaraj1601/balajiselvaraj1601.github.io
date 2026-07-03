@@ -1,0 +1,125 @@
+---
+/**
+ * CardMark — single entry point for logo/icon/emblem slots inside card shells.
+ * Sizing comes from CSS tokens (--mark-slot, --mark-glyph); no pixel props.
+ */
+import Icon from '@components/ui/Icon.astro';
+import MarkEmblem from '@components/ui/MarkEmblem.astro';
+import LogoBadge from '@components/ui/LogoBadge.astro';
+import { resolveIcon, type IconName } from '@lib/icons';
+import {
+  logoHasOwnRing,
+  logoUsesBadge,
+  resolveLogoSlot,
+} from '@lib/logo-display';
+import type { VisionMark } from '@schemas';
+
+interface Props {
+  slug?: string;
+  logoUrl?: string;
+  mark?: VisionMark;
+  icon?: string;
+  iconFallback?: IconName;
+  useBadge?: boolean;
+  altText?: string;
+  variant?: 'default' | 'recog' | 'compact' | 'accented';
+  context?: 'theme-card' | 'content-card';
+  logoSize?: 'md' | 'lg';
+  /** Pipeline logo_* marks inside theme-card circle chrome (Vision org/program). */
+  emblemInCircle?: boolean;
+  class?: string;
+  ariaHidden?: boolean;
+}
+
+/** Named export for use in typed factory helpers (src/lib/card-mark.ts). */
+export type CardMarkProps = Props;
+
+const {
+  slug,
+  logoUrl,
+  mark,
+  icon,
+  iconFallback = 'diamond',
+  useBadge: useBadgeOverride,
+  altText = '',
+  variant = 'default',
+  context,
+  logoSize = 'md',
+  emblemInCircle = false,
+  class: cls,
+  ariaHidden = true,
+} = Astro.props;
+
+const badge = useBadgeOverride ?? logoUsesBadge(slug);
+const useThemeCircle = context === 'theme-card' || emblemInCircle;
+
+const tileClassList = [
+  'icon-tile',
+  'icon-tile--round',
+  variant === 'recog' && 'icon-tile--recog',
+  variant === 'compact' && 'icon-tile--compact',
+  variant === 'accented' && 'icon-tile--accented',
+  cls,
+];
+
+type RenderMode =
+  'logo' | 'mark-theme' | 'mark-bare' | 'icon-theme' | 'icon-tile' | 'none';
+
+let mode: RenderMode;
+let markIconName: IconName | undefined;
+let iconName: IconName | undefined;
+
+if (logoUrl) {
+  mode = 'logo';
+} else if (mark?.kind === 'icon') {
+  markIconName = mark.name as IconName;
+  mode = useThemeCircle ? 'mark-theme' : 'icon-tile';
+} else if (mark?.kind === 'logo' && logoHasOwnRing(mark.asset)) {
+  mode = useThemeCircle ? 'mark-theme' : 'mark-bare';
+} else {
+  iconName = resolveIcon(icon, iconFallback);
+  mode = useThemeCircle ? 'icon-theme' : 'icon-tile';
+}
+
+const logoSlot = logoUrl
+  ? resolveLogoSlot(slug, { hasLogo: true, useBadge: badge })
+  : undefined;
+---
+
+{
+  mode === 'logo' && logoUrl && (
+    <LogoBadge
+      logoUrl={logoUrl}
+      altText={altText}
+      useBadge={logoSlot !== 'plain'}
+      size={logoSize}
+      class={cls}
+    />
+  )
+}
+{
+  mode === 'mark-theme' && mark && (
+    <div class:list={['theme-card__icon', cls]} aria-hidden={ariaHidden}>
+      {mark.kind === 'icon' && markIconName ? (
+        <Icon name={markIconName} size="md" />
+      ) : (
+        <MarkEmblem mark={mark} />
+      )}
+    </div>
+  )
+}
+{mode === 'mark-bare' && mark && <MarkEmblem mark={mark} class={cls} />}
+{
+  mode === 'icon-theme' && iconName && (
+    <div class:list={['theme-card__icon', cls]} aria-hidden={ariaHidden}>
+      <Icon name={iconName} size="md" />
+    </div>
+  )
+}
+{
+  mode === 'icon-tile' && (iconName || markIconName) && (
+    <div class:list={tileClassList} aria-hidden={ariaHidden}>
+      <Icon name={(markIconName ?? iconName)!} size="md" />
+    </div>
+  )
+}

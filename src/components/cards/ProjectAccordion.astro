@@ -20,7 +20,10 @@ const iconName = resolveIcon(icon, 'folder');
 <details class="proj-card" open={open}>
   <summary class="proj-header">
     <div class="proj-title-row">
-      <div class="proj-icon" aria-hidden="true">
+      <div
+        class="icon-tile icon-tile--compact icon-tile--round icon-tile--elev"
+        aria-hidden="true"
+      >
         <Icon name={iconName} size={18} />
       </div>
       <div>
@@ -49,15 +52,24 @@ const iconName = resolveIcon(icon, 'folder');
   .proj-card {
     background: var(--bg-elev);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius);
     overflow: hidden;
-    transition: border-color var(--dur) var(--ease);
+    transition:
+      border-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
   .proj-card:hover {
     border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .proj-card:hover {
+      transform: translateY(var(--card-lift));
+    }
   }
   .proj-header {
-    padding: 1.25rem 1.5rem;
+    padding: var(--space-5) var(--card-padding);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -71,19 +83,7 @@ const iconName = resolveIcon(icon, 'folder');
   .proj-title-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-  }
-  .proj-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-md);
-    flex-shrink: 0;
-    background: var(--accent-soft);
-    border: 1px solid var(--border-strong);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-ll);
+    gap: var(--space-3);
   }
   .proj-name {
     font-size: 0.92rem;
@@ -106,11 +106,11 @@ const iconName = resolveIcon(icon, 'folder');
     transform: rotate(180deg);
   }
   .proj-inner {
-    padding: 0 1.5rem 1.5rem;
+    padding: 0 var(--card-padding) var(--card-padding);
     border-top: 1px solid var(--border);
   }
   .proj-inner .bullet-list {
-    margin-top: 0.75rem;
+    margin-top: var(--space-3);
   }
   .is-secondary {
     color: var(--text-muted);

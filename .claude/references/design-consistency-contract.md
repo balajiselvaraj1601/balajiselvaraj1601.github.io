@@ -308,6 +308,7 @@ for approved divergences. Append rows; never delete history.
 | EX-009       | research                                       | §2 single grid-col-min token | Two-tier `--grid-col-min` scale (320px compact vs 420px full) matches different content grid widths across research and speaking sections                                                                       | 2026-07-03 |
 | EX-010       | recognition                                    | §2 tokenized gap             | `CompetitionCard` stats grid uses a `1px` hairline `gap` as a visual cell divider (grid background shows through) — not a rhythm value; intentionally off the `--space-*` scale                                  | 2026-07-03 |
 | EX-011       | home                                           | §2 tokenized gap             | `ThirukuralQuote` band uses a responsive `clamp(1rem, 2.5vw, 1.75rem)` gap for the fluid couplet layout; endpoints intentionally straddle `--space-4`/`--space-6` and stay a clamp, not a fixed token           | 2026-07-03 |
+| EX-012       | all (BoardHeader)                              | §2 tokenized margin          | `.bhead__chev :global(svg)` uses `margin-inline: -5px` as an optical overlap nudge to tuck chevrons toward the title — negative icon kerning, not layout rhythm; off the positive `--space-*` grid by design      | 2026-07-03 |
 
 ---
 

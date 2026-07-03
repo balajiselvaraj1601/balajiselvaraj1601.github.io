@@ -110,6 +110,8 @@ async function main() {
       const url = `${BASE.replace(/\/$/, '')}/${shot.hash}`;
       await loadPage(page, url);
       await page.waitForSelector(shot.selector, { timeout: 15000 });
+      await page.locator(shot.selector).scrollIntoViewIfNeeded();
+      await waitForScrollSettle(page);
       await waitForReveal(page, shot.selector);
       if (shot.revealAll) {
         await prepareVisionSection(page);

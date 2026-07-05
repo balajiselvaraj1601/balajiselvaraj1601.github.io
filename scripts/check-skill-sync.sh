@@ -33,9 +33,9 @@ status=0
 if [[ ! -f "$bundled_pipe" ]]; then
     echo "✗ bundle missing scripts/icon_pipeline.py"
     status=1
-elif ! diff <(grep -v '^#SYNC#' "$bundled_pipe") "$PROD" >/tmp/skillsync_pipe.diff 2>&1; then
+elif ! diff <(grep -v '^#SYNC#' "$bundled_pipe") "$PROD" >$work/skillsync_pipe.diff 2>&1; then
     echo "✗ icon_pipeline.py has DRIFTED from svg-icon-generator.py:"
-    sed 's/^/    /' /tmp/skillsync_pipe.diff
+    sed 's/^/    /' $work/skillsync_pipe.diff
     status=1
 else
     echo "✓ icon_pipeline.py in sync with svg-icon-generator.py"
@@ -45,9 +45,9 @@ fi
 if [[ ! -f "$bundled_verify" ]]; then
     echo "✗ bundle missing scripts/verify-icon.py"
     status=1
-elif ! diff "$bundled_verify" "$VERIFY" >/tmp/skillsync_verify.diff 2>&1; then
+elif ! diff "$bundled_verify" "$VERIFY" >$work/skillsync_verify.diff 2>&1; then
     echo "✗ verify-icon.py has DRIFTED:"
-    sed 's/^/    /' /tmp/skillsync_verify.diff
+    sed 's/^/    /' $work/skillsync_verify.diff
     status=1
 else
     echo "✓ verify-icon.py in sync"

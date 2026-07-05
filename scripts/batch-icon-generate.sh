@@ -34,6 +34,11 @@ else
 fi
 EXTRA_FLAGS=("$@")
 
+# Load known icon sets from the configuration.
+known_icon_sets() {
+  python3 -c "import json; print(' '.join(json.load(open('$PROJECT_ROOT/scripts/icon-sets.json'))['icon_sets'].keys()))"
+}
+
 if [[ ! -d "$ICONS_DIR" ]]; then
     echo "✗ icons directory not found: $ICONS_DIR"
     echo "  Pass a directory as the first argument or set ICON_BOX_DIR."
@@ -50,7 +55,7 @@ echo ""
 
 # Normalize source PNGs when this folder is a known Vision icon set.
 set_name=$(basename "$ICONS_DIR")
-known_sets=$(python3 -c "import json; print(' '.join(json.load(open('$PROJECT_ROOT/scripts/icon-sets.json'))['icon_sets'].keys()))")
+known_sets=$(known_icon_sets)
 if [[ "$known_sets" =~ (^| )$set_name( |$) ]]; then
   if [[ -f "$NORMALIZER" ]]; then
     echo "⚖️  Normalizing sources in $set_name"
@@ -103,7 +108,7 @@ done
 
 # Post-trace ink equalizer for Vision icon sets.
 set_name=$(basename "$ICONS_DIR")
-known_sets=$(python3 -c "import json; print(' '.join(json.load(open('$PROJECT_ROOT/scripts/icon-sets.json'))['icon_sets'].keys()))")
+known_sets=$(known_icon_sets)
 if [[ "$known_sets" =~ (^| )$set_name( |$) ]]; then
   if [[ -f "$INK_EQUALIZER" && $count -gt 0 ]]; then
     echo "⚖️  Equalizing SVG ink in $set_name"

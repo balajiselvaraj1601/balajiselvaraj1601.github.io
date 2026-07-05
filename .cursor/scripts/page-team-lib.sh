@@ -35,7 +35,6 @@ page_team_finding_counts() {
   local p0 p1 p2
   p0=$(jq '[.findings[]? | select(.severity=="P0")] | length' "$STATE_FILE" 2>/dev/null || echo 0)
   p1=$(jq '[.findings[]? | select(.severity=="P1")] | length' "$STATE_FILE" 2>/dev/null || echo 0)
-  p2=$(jq '[.findings[]? | select(.severity=="P1")] | length' "$STATE_FILE" 2>/dev/null || echo 0)
   p2=$(jq '[.findings[]? | select(.severity=="P2")] | length' "$STATE_FILE" 2>/dev/null || echo 0)
   echo "$p0 $p1 $p2"
 }

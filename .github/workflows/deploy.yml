@@ -33,6 +33,9 @@ jobs:
       - name: Astro check
         run: npm run check
 
+      - name: Icon token sync
+        run: npm run check:tokens
+
       - name: ESLint
         run: npm run lint
 

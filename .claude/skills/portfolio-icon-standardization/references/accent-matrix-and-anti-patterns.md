@@ -55,14 +55,14 @@ All in `src/styles/global.css` `:root` unless noted.
 
 ## Per-view consistency matrix
 
-| View        | Section IDs                         | Accent source                          | Tier-1 mark color                      | Tier-3 logos                          |
-| ----------- | ----------------------------------- | -------------------------------------- | -------------------------------------- | ------------------------------------- |
-| About       | hero, thirukural, leadership        | `--cat` on focus rows                  | `--accent-card`                        | Collab org logos on white pill        |
-| Experience  | experience                          | default purple                         | Projects: neutral elev tile            | Company `LogoBadge`                   |
-| Research    | publications, conferences, speakers | section ID + `.card-accent`            | `--accent-card` on fallback icons      | Org logos on white pill               |
-| Recognition | awards, kaggle, education           | `--lvl`, `--medal`, gold               | `--accent-card` everywhere in card     | None for pipeline marks               |
-| Vision      | vision-programs, vision-impact      | `accent` key per group/program/orgCard | `--accent-card` via `.vision-accent-*` | Program org logos, accent-tinted pill |
-| Contact     | contact                             | `.card-accent`                         | `--brand-mark` exception in circle     | N/A                                   |
+| View        | Section IDs                         | Accent source                              | Tier-1 mark color                             | Tier-3 logos                          |
+| ----------- | ----------------------------------- | ------------------------------------------ | --------------------------------------------- | ------------------------------------- |
+| About       | hero, thirukural, leadership        | `--cat` on focus rows                      | `--accent-card`                               | Collab org logos on white pill        |
+| Experience  | experience                          | `--lvl` per role seniority (`.xp-level-*`) | Projects: compact accented tile (`--lvl` hue) | Company `LogoBadge`                   |
+| Research    | publications, conferences, speakers | section ID + `.card-accent`                | `--accent-card` on fallback icons             | Org logos on white pill               |
+| Recognition | awards, kaggle, education           | `--lvl`, `--medal`, gold                   | `--accent-card` everywhere in card            | None for pipeline marks               |
+| Vision      | vision-programs, vision-impact      | `accent` key per group/program/orgCard     | `--accent-card` via `.vision-accent-*`        | Program org logos, accent-tinted pill |
+| Contact     | contact                             | `.card-accent`                             | `--brand-mark` exception in circle            | N/A                                   |
 
 ---
 
@@ -77,6 +77,7 @@ All in `src/styles/global.css` `:root` unless noted.
 | `.recog-tile.blob--*` / level classes          | `var(--lvl)` per level              |
 | `.recog-card.blob--silver/bronze`              | `var(--medal)`                      |
 | `.edu-accent`                                  | `var(--accent-gold)`                |
+| `.xp-stop` / `.xp-panel` (via `.xp-level-*`)   | `var(--lvl)` per role seniority     |
 | `.leadership__card-row.cat-*`                  | `var(--cat)`                        |
 | `.vision-accent-{key}` + `.vision-accent-hook` | `var(--cat)` from content `accent`  |
 
@@ -158,7 +159,10 @@ python3 scripts/normalize-mark-viewbox.py apply
 python3 scripts/normalize-mark-viewbox.py check   # must exit 0
 
 # After icon-sets.json / generator changes
-python3 tests/run-icon-tests.py
+npm run test:icons   # = python3 tests/run-icon-tests.py
+
+# Icon size token SSOT (icon-render.ts vs global.css) — also part of npm run verify
+npm run check:tokens
 
 # Build gate
 npm run build

@@ -168,6 +168,7 @@ Set `--accent-card` on the **owning wrapper**; marks inherit automatically.
 | Awards             | `--lvl` per award level                                                                   |
 | Kaggle tiles/cards | `--medal` (silver/bronze classes)                                                         |
 | Education          | `.edu-accent { --accent-card: var(--accent-gold) }`                                       |
+| Experience         | `.xp-level-*` sets `--lvl`; `.xp-stop`/`.xp-panel` map it to `--accent-card`              |
 | Leadership         | `--cat` per category row                                                                  |
 | Research cards     | `.card-accent` + section ID override                                                      |
 | Vision (all slots) | `accent` key in JSON → `.vision-accent-{key}` + `.vision-accent-hook` (`--cat-*` palette) |
@@ -186,7 +187,7 @@ Progress:
 - [ ] Source PNG square-centered (icon-square-center) if from icon_collections
 - [ ] Generate logo_<stem>.svg → public/assets/logos/marks/
 - [ ] normalize-mark-viewbox.py apply && check
-- [ ] tests/run-icon-tests.py (if generator config changed)
+- [ ] npm run test:icons (if generator config changed)
 - [ ] Wire slug in content JSON as { kind: "logo", asset: "logo_..." }
 - [ ] Render via MarkEmblem inside correct tier (accented circle vs bare span)
 - [ ] Set --accent-card on wrapper if contextual hue needed
@@ -212,6 +213,7 @@ batch-icon-generate on this set — destroys line art).
 
 ```bash
 python3 scripts/normalize-mark-viewbox.py check
+npm run check:tokens
 npm run build
 ```
 

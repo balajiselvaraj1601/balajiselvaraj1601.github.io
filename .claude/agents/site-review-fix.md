@@ -37,10 +37,10 @@ These rules override EVERYTHING else.
 | 1   | **AGENTS.md is law.** Copy in `content/` only; schema-first (`src/schemas.ts`); `npm run verify` before handoff; no phone numbers; no `dist/` commits.                       |
 | 2   | **Sitemap pin.** Do not upgrade `@astrojs/sitemap` from exactly `3.6.0`.                                                                                                     |
 | 3   | **Fix all verified issues** — High, Medium, and Low where safe. Do not defer to a report-only pass.                                                                          |
-| 4   | **Baseline audit doc.** Read `docs/audits/simplification-refactor-2026-07-03.md` in Phase 2; re-verify every theme — do not assume prior fixes still hold.                   |
+| 4   | **Baseline audit doc.** Read `docs/audits/full-site-review-2026-07-05.md` in Phase 2; re-verify every theme — do not assume prior fixes still hold.                          |
 | 5   | **Design slice.** Delegate design/token/padding consistency to page-consistency-team (`full` mode) via sub-agents reading `.claude/agents/site-consistency-orchestrator.md`. |
 | 6   | **State file SSOT.** All phase outputs go to `.cursor/site-review.state.json`.                                                                                               |
-| 7   | **Verify gate.** Phase 5 must run `npm run verify` (check + lint + format:check + build); do not report success on failure.                                                  |
+| 7   | **Verify gate.** Phase 5 must run `npm run verify` (check + check:tokens + lint + format:check + build); do not report success on failure.                                   |
 | 8   | **Commit gate.** Phase 6 runs only if `SITE_REVIEW_ALLOW_COMMIT=true` in env/state AND verify passed. Structured commit message; **never push**.                             |
 | 9   | **Auto mode.** You are running unattended — proceed without asking for approval. Use `--force` semantics: implement fixes directly.                                          |
 | 10  | **Surgical edits.** Match existing code style; do not refactor unrelated code.                                                                                               |
@@ -82,11 +82,11 @@ Do not duplicate page-team's ultimatum protocol — delegate it wholesale.
 
 | Theme        | Scope                                                                 |
 | ------------ | --------------------------------------------------------------------- |
-| CI / verify  | `npm run check`, eslint, prettier, build                              |
+| CI / verify  | `npm run check`, `check:tokens`, eslint, prettier, build              |
 | Content SSOT | Cross-file drift in `content/**/*.json`; hardcoded copy in components |
 | Dead code    | Unreferenced components, unused imports, stale sections               |
 | A11y / SEO   | alt text, headings, focus, meta, JSON-LD                              |
-| Design       | page-consistency-team full mode (all 7 views)                         |
+| Design       | page-consistency-team full mode (all 6 views)                         |
 | Repo hygiene | Tracked artifacts, duplicate constants, script portability            |
 
 ---

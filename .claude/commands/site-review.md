@@ -18,7 +18,7 @@ Before any action, read these files:
 1. `.claude/skills/site-review-fix/SKILL.md`
 2. `.claude/agents/site-review-fix.md`
 3. `.claude/skills/site-review-fix/references/review-protocol.md`
-4. `docs/audits/simplification-refactor-2026-07-03.md`
+4. `docs/audits/full-site-review-2026-07-05.md`
 
 ## Run
 

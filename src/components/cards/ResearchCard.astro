@@ -1,7 +1,6 @@
 ---
 import CardMark from '@components/ui/CardMark.astro';
 import { logoSrc } from '@lib/content';
-import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
 
 interface Props {
@@ -29,7 +28,6 @@ const {
   logoBadge: logoBadgeOverride,
 } = Astro.props;
 const isStacked = variant === 'stacked';
-const showLogoBadge = logoUsesBadge(logo, logoBadgeOverride);
 
 const ytId = youtubeId(youtube);
 const ytEmbed = ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null;
@@ -50,7 +48,7 @@ const logoUrl = logoSrc(logo);
         slug={logo}
         logoUrl={logoUrl}
         altText={venue}
-        useBadge={showLogoBadge}
+        useBadge={logoBadgeOverride}
         class="rcard-logo"
       />
     ) : (

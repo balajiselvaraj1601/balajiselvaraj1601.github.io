@@ -41,7 +41,7 @@ export function initRecogGrid(options: RecogGridOptions): void {
     for (const card of cards) {
       const filterValue = card.getAttribute(options.filterAttr) || '';
       const haystack = searchAttrs
-        .map((attr) => card.getAttribute(attr))
+        .map((attr) => card.getAttribute(attr) ?? '')
         .join(' ')
         .toLowerCase();
       const show =

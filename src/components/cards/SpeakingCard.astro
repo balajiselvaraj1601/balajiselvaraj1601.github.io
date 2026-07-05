@@ -1,7 +1,6 @@
 ---
 import CardMark from '@components/ui/CardMark.astro';
 import { logoSrc } from '@lib/content';
-import { logoUsesBadge } from '@lib/logo-display';
 import { youtubeId } from '@lib/youtube';
 import type { Speakers } from '@schemas';
 
@@ -13,7 +12,6 @@ interface Props {
 
 const { item } = Astro.props;
 const logoUrl = logoSrc(item.logo);
-const showLogoBadge = logoUsesBadge(item.logo, item.logoBadge);
 
 const ytId = youtubeId(item.youtube);
 const ytThumb = ytId
@@ -29,7 +27,7 @@ const ytThumb = ytId
           slug={item.logo}
           logoUrl={logoUrl}
           altText={`${item.event} logo`}
-          useBadge={showLogoBadge}
+          useBadge={item.logoBadge}
           class="speaking-card__mark"
         />
       ) : (
@@ -60,7 +58,7 @@ const ytThumb = ytId
     >
   </h3>
   {item.description && <hr class="speaking-card__divider" aria-hidden="true" />}
-  <p class="speaking-card__desc">{item.description}</p>
+  {item.description && <p class="speaking-card__desc">{item.description}</p>}
 
   {
     ytThumb && item.youtube && (

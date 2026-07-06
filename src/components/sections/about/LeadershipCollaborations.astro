@@ -1,0 +1,111 @@
+---
+import CardMark from '@components/ui/CardMark.astro';
+import { collaborations, getEntityUrl, logoSrc } from '@lib/content';
+---
+
+<div class="leadership__collabs reveal">
+  <h3 class="leadership__collabs-heading">{collaborations.title}</h3>
+  <ul class="leadership__collabs-list" role="list">
+    {
+      collaborations.items.map((item) => {
+        const href = getEntityUrl(item.entity);
+        const src = logoSrc(item.logo);
+        if (!href || !src) return null;
+        return (
+          <li>
+            <a
+              href={href}
+              class="leadership__collab-mark"
+              aria-label={item.name}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CardMark
+                slug={item.logo}
+                logoUrl={src}
+                altText=""
+                useBadge={false}
+                logoSize="lg"
+              />
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .leadership__collabs {
+    margin-top: var(--stack-xl);
+  }
+  .leadership__collabs-heading {
+    font-size: var(--fs-eyebrow);
+    font-family: var(--font-mono);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--text-gap-block);
+  }
+  .leadership__collabs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-4);
+    width: 100%;
+    max-width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .leadership__collabs-list li {
+    min-width: 0;
+  }
+  .leadership__collab-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    height: clamp(56px, 7vw, 80px);
+    padding: var(--space-3) var(--logo-pad);
+    background: var(--logo-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .leadership__collab-mark:hover {
+    border-color: var(--accent-light);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent-light) 25%, transparent),
+      var(--shadow-md);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .leadership__collab-mark:hover {
+      transform: translateY(var(--card-lift));
+    }
+  }
+  .leadership__collab-mark:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  .leadership__collab-mark :global(.logo-badge) {
+    max-width: min(var(--logo-w-max-lg), 100%);
+  }
+  @media (max-width: 768px) {
+    .leadership__collabs-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .leadership__collabs-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 90%;
+    }
+  }
+</style>

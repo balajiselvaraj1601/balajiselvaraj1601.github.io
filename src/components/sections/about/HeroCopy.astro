@@ -1,0 +1,219 @@
+---
+import { profile } from '@lib/content';
+import Icon from '@components/ui/Icon.astro';
+import AvailabilityBadge from '@components/ui/AvailabilityBadge.astro';
+
+function isExternal(href: string) {
+  return href.startsWith('http') || href.startsWith('/assets/');
+}
+---
+
+<div class="hero__copy">
+  <div class="hero__intro">
+    {profile.heroTag && <div class="hero-tag">{profile.heroTag}</div>}
+
+    {
+      profile.availability && (
+        <AvailabilityBadge
+          status={profile.availability.status}
+          label={profile.availability.label}
+        />
+      )
+    }
+
+    {profile.greeting && <p class="hero__greeting">{profile.greeting}</p>}
+
+    <h1 id="hero-heading" class="hero__title">
+      {
+        profile.heroTitle ? (
+          <>
+            <span class="hero__title-line">
+              {profile.heroTitle.lead} <em>{profile.heroTitle.emphasis}</em>
+            </span>
+            {profile.heroTitle.tail && (
+              <span class="hero__title-line">{profile.heroTitle.tail}</span>
+            )}
+          </>
+        ) : (
+          profile.name
+        )
+      }
+    </h1>
+  </div>
+
+  <div class="hero-stats" role="list" aria-label="Career highlights">
+    {
+      profile.metrics.map((m) => (
+        <div class="hero-stat" role="listitem">
+          <div class="hero-stat__num">{m.value}</div>
+          <div class="hero-stat__label metric-label">{m.label}</div>
+          {m.detail && (
+            <div class="hero-stat__detail metric-label">{m.detail}</div>
+          )}
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    profile.ctas.length > 0 && (
+      <div class="hero__cta">
+        {profile.ctas.map((cta) => (
+          <a
+            class:list={[
+              'btn',
+              {
+                'btn-primary': cta.variant === 'primary',
+                'btn-secondary': cta.variant === 'secondary',
+              },
+            ]}
+            href={cta.href}
+            {...(isExternal(cta.href)
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+          >
+            {cta.icon && <Icon name={cta.icon} size="sm" />}
+            {cta.label}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: fit-content;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: var(--pill-padding-y) var(--pill-padding-x);
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-wide);
+    color: var(--accent-ll);
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-light);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-tag::before {
+      animation: hero-tag-pulse 2s ease-in-out infinite;
+    }
+  }
+  @keyframes hero-tag-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hero__copy > * {
+    margin: 0;
+  }
+  .hero__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--text-gap-block);
+  }
+  .hero__intro > * {
+    margin: 0;
+  }
+  .hero__intro + .hero-stats {
+    margin-top: var(--text-gap-section);
+  }
+  .hero__greeting {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--accent-ll);
+  }
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-hero);
+    line-height: var(--lh-none);
+    color: var(--heading);
+    font-weight: var(--fw-regular);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+  .hero__title-line {
+    display: block;
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--accent-ll);
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    row-gap: var(--text-gap-section);
+    column-gap: var(--space-8);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .hero-stat {
+    border-left: 2px solid var(--accent);
+    padding-left: var(--space-4);
+  }
+  .hero-stat__num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-hero-metric);
+    font-weight: var(--fw-semibold);
+    color: var(--accent);
+    line-height: var(--lh-none);
+  }
+  /* Dark theme: brighten the stat accent for AA contrast on --bg. The brand
+     --accent (#6c2fbf) is only ~2.3:1 on the dark background; --accent-light
+     (#9b5ee8) is ~4.8:1. Light mode keeps the deeper --accent (already 5.16:1). */
+  :root[data-theme='dark'] .hero-stat {
+    border-left-color: var(--accent-light);
+  }
+  :root[data-theme='dark'] .hero-stat__num {
+    color: var(--accent-light);
+  }
+  .hero-stat__label {
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tracking-snug);
+    margin-top: var(--text-gap-inline);
+    line-height: var(--lh-normal);
+    max-width: none;
+  }
+  .hero-stat__detail {
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tracking-snug);
+    margin-top: var(--text-gap-pair);
+    line-height: var(--lh-normal);
+    max-width: none;
+  }
+  @media (min-width: 640px) {
+    .hero-stat__detail {
+      white-space: nowrap;
+    }
+  }
+  .hero-stats + .hero__cta {
+    margin-top: var(--text-gap-section);
+  }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

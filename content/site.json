@@ -27,7 +27,7 @@
         "vision-impact",
         "contact"
       ],
-      "viewSections": ["hero", "thirukural", "leadership"],
+      "viewSections": ["leadership", "hero", "thirukural"],
       "viewAnchor": "about"
     },
     {

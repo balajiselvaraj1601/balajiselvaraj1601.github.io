@@ -5,7 +5,7 @@
     {
       "id": "idea",
       "label": "IDEA",
-      "accent": "people",
+      "accent": "silver",
       "lead": { "kind": "icon", "name": "kaggle" },
       "marks": [
         {

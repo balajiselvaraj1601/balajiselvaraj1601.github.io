@@ -33,13 +33,14 @@ const LabeledLink = z.object({
 });
 /** Categorical accent keys — map to --cat-* tokens in global.css (shared with About leadership). */
 export const visionAccentSchema = z.enum([
-  'impact', // gold  — Business & P&L, EVP, Education, Speakers
-  'strategic', // blue  — Strategy & sponsorship, Conferences
-  'platform', // teal  — Platform & infrastructure, Publications
-  'people', // pink  — Team & org building
+  'impact', // gold   — Business & P&L, EVP, Education, Speakers
+  'strategic', // blue   — Strategy & sponsorship, Conferences
+  'platform', // teal   — Platform & infrastructure, Publications
+  'people', // pink   — Team & org building
   'ai', // purple — AI governance (site default)
-  'privacy', // red   — Privacy / high-stakes initiatives
-  'gxp', // green — GxP compliance
+  'privacy', // red    — Privacy / high-stakes initiatives
+  'gxp', // green  — GxP compliance
+  'silver', // silver — Medal / recognition
 ]);
 export type VisionAccent = z.infer<typeof visionAccentSchema>;
 /** Titled content block with an optional Lucide icon (leadership & vision lists). */

@@ -36,7 +36,7 @@ npm run preview
 
 ### UX smoke test (preview URL)
 
-- [ ] Light/dark toggle works and persists on reload
+- [ ] Dark theme renders correctly (`html[data-theme="dark"]` on load)
 - [ ] Mobile menu: opens, focus trapped, Esc closes, links navigate
 - [ ] Header highlights the active route and dot navigation highlights active sections where present
 - [ ] All external links open (LinkedIn, Kaggle, publications)

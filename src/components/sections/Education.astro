@@ -163,8 +163,8 @@ const stats: StatCell[] = [
 
 <style>
   .edu-accent {
-    /* One-accent-per-view: Recognition hue (gold). */
-    --accent-card: var(--view-accent-recognition);
+    /* Recognition gold — matches Kaggle summary tiles and icon-standardization SSOT. */
+    --accent-card: var(--accent-gold);
     --mark-fg: var(--accent-card);
   }
 
@@ -243,11 +243,18 @@ const stats: StatCell[] = [
     }
   }
 
+  /* Accent hook + hairline grid — Kaggle .recog-summary / .blob-stats pattern. */
   .edu-stats {
+    --accent-card: var(--view-accent-recognition);
+    --mark-fg: var(--accent-card);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: 1px;
     margin: 0;
+    background: color-mix(in srgb, var(--accent-card) 20%, var(--border));
+    border: 1px solid color-mix(in srgb, var(--accent-card) 20%, var(--border));
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
   .edu-stat {
@@ -255,9 +262,7 @@ const stats: StatCell[] = [
     align-items: flex-start;
     gap: var(--space-3);
     padding: var(--space-4);
-    background: color-mix(in srgb, var(--bg) 55%, var(--bg-elev));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--accent-card) 6%, var(--bg-elev));
   }
   .edu-stat__icon {
     flex-shrink: 0;

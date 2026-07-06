@@ -2,28 +2,6 @@
 import { initSectionViews, type SectionViewsOptions } from './section-views';
 
 export function initSiteChrome(navViewsConfig?: SectionViewsOptions) {
-  const toggle = document.getElementById('theme-toggle');
-  if (toggle) {
-    const syncTogglePressed = () => {
-      const isDark =
-        document.documentElement.getAttribute('data-theme') === 'dark';
-      toggle.setAttribute('aria-pressed', String(isDark));
-    };
-    syncTogglePressed();
-    toggle.addEventListener('click', () => {
-      const root = document.documentElement;
-      const next =
-        root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try {
-        localStorage.setItem('theme', next);
-      } catch {
-        /* persisting theme is best-effort; ignore storage failures */
-      }
-      syncTogglePressed();
-    });
-  }
-
   const navToggle = document.getElementById('nav-toggle');
   const nav = document.getElementById('primary-nav');
   const main = document.getElementById('main');

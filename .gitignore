@@ -49,3 +49,6 @@ scripts/.icon-stage/
 .cursor/site-review.env
 .cursor/site-review.state.json
 .cursor/logs/site-review/
+
+# Misplaced screenshot output from baseline/playwright scripts
+undefined/

@@ -14,7 +14,7 @@
 The About group opens the page: hero and Thirukural couplet share an `AboutLanding` wrapper,
 then the merged profile and leadership section (`leadership`: bio, scan cards, philosophy, themes,
 collaboration logos). All sections are visible on `/` — the page scrolls through every group in
-nav order, and the **About** button scrolls back to the top.
+nav order, and the **About** button scrolls to the leadership section (title: About).
 
 ## Full DOM order on `/`
 

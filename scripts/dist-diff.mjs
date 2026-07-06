@@ -20,6 +20,18 @@
  *     deterministic
  *   - everything else (images, fonts, xml, ...) compared byte-for-byte
  *
+ * --loose (compare flag, applied symmetrically to BOTH sides at compare time;
+ * the stored baseline stays strict):
+ *   - html: runs of 2+ whitespace chars between tags collapse to one space.
+ *     Render-safe in normal flow (no pre/textarea in this site's output);
+ *     zero-vs-some whitespace stays distinguishable.
+ *   - css: rules flattened (media/supports conditions become prefixes,
+ *     keyframes/font-face kept whole) and sorted — comparison is rule-multiset
+ *     equality, insensitive to bundle emission order. Needed when component
+ *     splits reorder per-component CSS in the bundle. CAVEAT: hides
+ *     same-specificity cascade reorders WITHIN a sheet; Astro cid scoping
+ *     prevents cross-component ties, and the screenshot gate covers the rest.
+ *
  * Exit codes: 0 = no differences, 1 = differences found, 2 = usage/build error.
  */
 import {
@@ -202,7 +214,53 @@ function isTextPath(rel) {
   return /\.(html|css|js|mjs|xml|txt|json|svg|webmanifest)$/.test(rel);
 }
 
-function compareDirs(baselineDir, currentDir) {
+/** Collapse runs of 2+ whitespace chars between tags to a single space. */
+function looseHtml(text) {
+  return text.replace(/>[ \t\r\n]{2,}</g, '> <');
+}
+
+/**
+ * Flatten CSS into sortable rule units: rules inside @media/@supports get the
+ * condition as a prefix; @keyframes/@font-face/other at-blocks stay whole.
+ */
+function flattenCssUnits(text, prefix = '') {
+  const units = [];
+  let i = 0;
+  while (i < text.length) {
+    const open = text.indexOf('{', i);
+    if (open === -1) break;
+    const prelude = text.slice(i, open).trim();
+    let depth = 1;
+    let j = open + 1;
+    while (j < text.length && depth > 0) {
+      if (text[j] === '{') depth += 1;
+      else if (text[j] === '}') depth -= 1;
+      j += 1;
+    }
+    const body = text.slice(open + 1, j - 1);
+    if (/^@(media|supports)\b/.test(prelude)) {
+      units.push(...flattenCssUnits(body, `${prefix}${prelude} :: `));
+    } else if (prelude.startsWith('@')) {
+      units.push(`${prefix}${prelude}{${body.trim()}}`);
+    } else {
+      units.push(`${prefix}${prelude}{${body.trim()}}`);
+    }
+    i = j;
+  }
+  return units;
+}
+
+function looseCss(text) {
+  return flattenCssUnits(text).sort().join('\n');
+}
+
+function looseTransform(rel, text) {
+  if (rel.endsWith('.html')) return looseHtml(text);
+  if (rel.endsWith('.css')) return looseCss(text);
+  return text;
+}
+
+function compareDirs(baselineDir, currentDir, loose = false) {
   const baselineFiles = new Set(walk(baselineDir));
   const currentFiles = new Set(walk(currentDir));
 
@@ -210,36 +268,68 @@ function compareDirs(baselineDir, currentDir) {
   const onlyCurrent = [...currentFiles].filter((f) => !baselineFiles.has(f));
   const differing = [];
 
+  const looseDir =
+    loose &&
+    (() => {
+      const dir = mkdtempSync(join(tmpdir(), 'dist-diff-loose-'));
+      mkdirSync(join(dir, 'a'));
+      mkdirSync(join(dir, 'b'));
+      return dir;
+    })();
+
   for (const rel of baselineFiles) {
     if (!currentFiles.has(rel)) continue;
     const a = readFileSync(join(baselineDir, rel));
     const b = readFileSync(join(currentDir, rel));
-    if (!a.equals(b)) differing.push(rel);
-  }
-
-  if (onlyBaseline.length + onlyCurrent.length + differing.length === 0) {
-    console.log(
-      `dist-diff: OK — ${currentFiles.size} files, zero differences vs baseline`
-    );
-    return 0;
-  }
-
-  console.log('dist-diff: DIFFERENCES FOUND');
-  for (const rel of onlyBaseline) console.log(`  only in baseline: ${rel}`);
-  for (const rel of onlyCurrent) console.log(`  only in current:  ${rel}`);
-  for (const rel of differing) console.log(`  differs:          ${rel}`);
-  console.log('');
-  for (const rel of differing) {
-    if (isTextPath(rel)) {
-      printFileDiff(join(baselineDir, rel), join(currentDir, rel), rel);
-    } else {
-      console.log(`--- ${rel}: binary content differs`);
+    if (a.equals(b)) continue;
+    if (loose && isTextPath(rel)) {
+      const at = looseTransform(rel, a.toString('utf8'));
+      const bt = looseTransform(rel, b.toString('utf8'));
+      if (at === bt) continue;
+      // Persist transformed copies so the printed diff matches the comparison.
+      const flat = rel.replace(/\//g, '__');
+      writeFileSync(join(looseDir, 'a', flat), at);
+      writeFileSync(join(looseDir, 'b', flat), bt);
     }
+    differing.push(rel);
   }
-  console.log(
-    `dist-diff: FAIL — ${onlyBaseline.length} removed, ${onlyCurrent.length} added, ${differing.length} changed`
-  );
-  return 1;
+
+  try {
+    if (onlyBaseline.length + onlyCurrent.length + differing.length === 0) {
+      console.log(
+        `dist-diff: OK — ${currentFiles.size} files, zero differences vs baseline${loose ? ' (loose)' : ''}`
+      );
+      return 0;
+    }
+
+    console.log('dist-diff: DIFFERENCES FOUND');
+    for (const rel of onlyBaseline) console.log(`  only in baseline: ${rel}`);
+    for (const rel of onlyCurrent) console.log(`  only in current:  ${rel}`);
+    for (const rel of differing) console.log(`  differs:          ${rel}`);
+    console.log('');
+    for (const rel of differing) {
+      if (!isTextPath(rel)) {
+        console.log(`--- ${rel}: binary content differs`);
+        continue;
+      }
+      const flat = rel.replace(/\//g, '__');
+      if (loose && existsSync(join(looseDir, 'a', flat))) {
+        printFileDiff(
+          join(looseDir, 'a', flat),
+          join(looseDir, 'b', flat),
+          rel
+        );
+      } else {
+        printFileDiff(join(baselineDir, rel), join(currentDir, rel), rel);
+      }
+    }
+    console.log(
+      `dist-diff: FAIL — ${onlyBaseline.length} removed, ${onlyCurrent.length} added, ${differing.length} changed`
+    );
+    return 1;
+  } finally {
+    if (looseDir) rmSync(looseDir, { recursive: true, force: true });
+  }
 }
 
 function captureBaseline(dir) {
@@ -251,7 +341,7 @@ function captureBaseline(dir) {
   );
 }
 
-function compareAgainst(dir) {
+function compareAgainst(dir, loose = false) {
   if (!existsSync(dir)) {
     fail(`baseline dir not found: ${dir} (run --baseline first)`);
   }
@@ -260,7 +350,7 @@ function compareAgainst(dir) {
   const tempDir = mkdtempSync(join(tmpdir(), 'dist-diff-'));
   try {
     normalizeDist(distDir, tempDir);
-    return compareDirs(dir, tempDir);
+    return compareDirs(dir, tempDir, loose);
   } finally {
     rmSync(tempDir, { recursive: true, force: true });
   }
@@ -291,16 +381,17 @@ function resolveDir(value) {
 
 const args = process.argv.slice(2);
 const mode = args[0];
+const loose = args.includes('--loose');
 
 if (mode === '--baseline') {
   captureBaseline(resolveDir(args[1]));
   process.exit(0);
 } else if (mode === '--compare') {
-  process.exit(compareAgainst(resolveDir(args[1])));
+  process.exit(compareAgainst(resolveDir(args[1]), loose));
 } else if (mode === '--self-test') {
   process.exit(selfTest());
 } else {
   fail(
-    'usage: node scripts/dist-diff.mjs --baseline [dir] | --compare [dir] | --self-test'
+    'usage: node scripts/dist-diff.mjs --baseline [dir] | --compare [dir] [--loose] | --self-test'
   );
 }

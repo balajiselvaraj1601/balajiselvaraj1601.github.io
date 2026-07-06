@@ -165,40 +165,6 @@ export const homeSections = homePage.sections.filter(
   (id) => site.sections[id]?.visible !== false
 );
 
-/** Sections included in right-side dot navigation. */
-export const dotNavSections = homeSections.filter(
-  (id) => site.sections[id]?.dotNav !== false
-);
-
-function humanizeSectionId(sectionId: string): string {
-  return sectionId
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-}
-
-/** Dot-nav tooltips — section-specific labels only (never page/view names). */
-export const dotNavLabels: Record<string, string> = {};
-for (const sectionId of dotNavSections) {
-  const meta = site.sections[sectionId];
-  const dotNavLabel = meta?.dotNavLabel?.trim();
-  if (dotNavLabel) {
-    dotNavLabels[sectionId] = dotNavLabel;
-    continue;
-  }
-  const title = meta?.title?.trim();
-  if (title) {
-    dotNavLabels[sectionId] = title;
-    continue;
-  }
-  const eyebrow = meta?.eyebrow?.trim();
-  if (eyebrow) {
-    dotNavLabels[sectionId] = eyebrow;
-    continue;
-  }
-  dotNavLabels[sectionId] = humanizeSectionId(sectionId);
-}
-
 /** Nav views — content pages with view metadata for section filtering. */
 export const navViews = site.pages.flatMap((p) => {
   if (!isContentPage(p) || !p.viewSections?.length) return [];
@@ -266,6 +232,40 @@ for (const sectionId of homeSections) {
     throw new Error(
       `site.json: home section "${sectionId}" has no component in SectionRenderer`
     );
+  }
+}
+
+export type DotNavView = {
+  id: string;
+  label: string;
+  scrollSection: string;
+};
+
+/** Right-side dot nav — Hero plus each header nav view (7 dots on home). */
+export const dotNavViews: DotNavView[] = [
+  { id: 'hero', label: 'Hero', scrollSection: 'hero' },
+  { id: 'about', label: 'About', scrollSection: 'leadership' },
+  ...navViews
+    .filter((v) => v.id !== 'home')
+    .map((v) => ({
+      id: v.viewAnchor,
+      label: v.label,
+      scrollSection: v.viewSections[0],
+    })),
+];
+
+/** Map section id → dot id for scroll-spy (hero band split from About view). */
+export const sectionToDotNav: Record<string, string> = {};
+for (const sectionId of homeSections) {
+  if (sectionId === 'hero' || sectionId === 'thirukural') {
+    sectionToDotNav[sectionId] = 'hero';
+  } else if (sectionId === 'leadership') {
+    sectionToDotNav[sectionId] = 'about';
+  } else {
+    const owner = navViews.find(
+      (v) => v.id !== 'home' && v.viewSections.includes(sectionId)
+    );
+    if (owner) sectionToDotNav[sectionId] = owner.viewAnchor;
   }
 }
 

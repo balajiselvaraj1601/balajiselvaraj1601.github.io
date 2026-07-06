@@ -1,13 +1,25 @@
 // NOTE: listeners/observers here assume MPA full-page loads (no teardown).
 import { initRecogGrid } from './recog-grid';
 import { initXpTimeline } from './xp-timeline';
-import {
-  getScrollOffset,
-  scrollToElement,
-} from './scroll-to-section';
+import { getScrollOffset, scrollToSectionId } from './scroll-to-section';
 
 /** Window (ms) after programmatic scroll during which dot-nav spy is suppressed. */
 const PROGRAMMATIC_SCROLL_SETTLE_MS = 1200;
+
+type DotNavConfig = {
+  orderedSections: string[];
+  sectionToDot: Record<string, string>;
+};
+
+function readDotNavConfig(): DotNavConfig | null {
+  const el = document.getElementById('dot-nav-config');
+  if (!el?.textContent) return null;
+  try {
+    return JSON.parse(el.textContent) as DotNavConfig;
+  } catch {
+    return null;
+  }
+}
 
 function getSectionSpyTarget(sectionId: string): HTMLElement | null {
   return (
@@ -31,31 +43,33 @@ function getActiveSectionId(sectionIds: string[]): string | undefined {
 }
 
 function observeDotNavSections(
-  sectionIds: string[],
-  setActive: (id: string) => void,
+  orderedSections: string[],
+  sectionToDot: Record<string, string>,
+  setActiveDot: (dotId: string) => void,
   getProgrammaticUntil: () => number
 ): void {
-  const spyTargets = sectionIds
+  const spyTargets = orderedSections
     .map((id) => ({ id, el: getSectionSpyTarget(id) }))
-    .filter((entry): entry is { id: string; el: HTMLElement } => entry.el !== null);
+    .filter(
+      (entry): entry is { id: string; el: HTMLElement } => entry.el !== null
+    );
 
   const { headerH, gap } = getScrollOffset();
   const offset = Math.round(headerH + gap);
 
   const updateActive = () => {
     if (Date.now() < getProgrammaticUntil()) return;
-    const active = getActiveSectionId(sectionIds);
-    if (active) setActive(active);
+    const activeSection = getActiveSectionId(orderedSections);
+    if (!activeSection) return;
+    const dotId = sectionToDot[activeSection];
+    if (dotId) setActiveDot(dotId);
   };
 
   if ('IntersectionObserver' in window && spyTargets.length > 0) {
-    const spy = new IntersectionObserver(
-      () => updateActive(),
-      {
-        rootMargin: `-${offset}px 0px -80% 0px`,
-        threshold: [0, 0.5, 1],
-      }
-    );
+    const spy = new IntersectionObserver(() => updateActive(), {
+      rootMargin: `-${offset}px 0px -80% 0px`,
+      threshold: [0, 0.5, 1],
+    });
     spyTargets.forEach(({ el }) => spy.observe(el));
   }
 
@@ -68,14 +82,12 @@ export function initDotNav(): void {
   const nav = document.getElementById('dot-nav');
   if (!nav) return;
 
+  const config = readDotNavConfig();
   const dots = Array.from(nav.querySelectorAll<HTMLElement>('.dot-nav__dot'));
-  const sectionIds = dots
-    .map((d) => d.dataset.target ?? '')
-    .filter((id) => id.length > 0);
 
-  const setActive = (id: string) => {
+  const setActiveDot = (dotId: string) => {
     dots.forEach((d) => {
-      const active = d.dataset.target === id;
+      const active = d.dataset.dotId === dotId;
       d.classList.toggle('is-active', active);
       if (active) d.setAttribute('aria-current', 'true');
       else d.removeAttribute('aria-current');
@@ -87,22 +99,32 @@ export function initDotNav(): void {
   dots.forEach((dot) => {
     dot.hidden = false;
     dot.addEventListener('click', () => {
-      const target = document.getElementById(dot.dataset.target ?? '');
+      const sectionId = dot.dataset.scrollSection;
+      if (!sectionId) return;
+      const target = document.getElementById(sectionId);
       if (!target) return;
       programmaticScrollUntil = Date.now() + PROGRAMMATIC_SCROLL_SETTLE_MS;
-      scrollToElement(target);
-      if (dot.dataset.target) setActive(dot.dataset.target);
+      scrollToSectionId(sectionId);
+      const dotId = dot.dataset.dotId;
+      if (dotId) setActiveDot(dotId);
     });
   });
 
-  const observed = sectionIds
+  const observed = dots
+    .map((d) => d.dataset.scrollSection)
+    .filter((id): id is string => Boolean(id))
     .map((id) => document.getElementById(id))
     .filter((el): el is HTMLElement => el !== null);
 
   nav.hidden = observed.length < 2;
-  if (observed.length < 2) return;
+  if (observed.length < 2 || !config) return;
 
-  observeDotNavSections(sectionIds, setActive, () => programmaticScrollUntil);
+  observeDotNavSections(
+    config.orderedSections,
+    config.sectionToDot,
+    setActiveDot,
+    () => programmaticScrollUntil
+  );
 }
 
 function initBackToTop(): void {

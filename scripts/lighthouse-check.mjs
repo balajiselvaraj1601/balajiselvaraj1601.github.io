@@ -56,7 +56,8 @@ async function main() {
   const report = await runLighthouse();
   const perf = report.categories?.performance;
   const score = Math.round((perf?.score ?? 0) * 100);
-  const lcp = report.audits?.['largest-contentful-paint']?.numericValue ?? Infinity;
+  const lcp =
+    report.audits?.['largest-contentful-paint']?.numericValue ?? Infinity;
 
   console.log(`Performance score: ${score}`);
   console.log(`LCP: ${Math.round(lcp)} ms`);

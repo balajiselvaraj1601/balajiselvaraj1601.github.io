@@ -39,7 +39,9 @@ async function optimizePng(base) {
 
   if (CHECK_ONLY) {
     if (!fs.existsSync(webpOut) || !fs.existsSync(avifOut)) {
-      throw new Error(`Missing modern formats for ${base}.png — run npm run optimize:images`);
+      throw new Error(
+        `Missing modern formats for ${base}.png — run npm run optimize:images`
+      );
     }
     return;
   }

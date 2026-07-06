@@ -26,7 +26,12 @@ const SHOTS = [
   { file: 'thiruvalluvar.png', hash: '#about', selector: '.about-landing' },
   { file: 'publications.png', hash: '#research', selector: '#publications' },
   { file: 'speaking.png', hash: '#research', selector: '#speakers' },
-  { file: 'awards.png', hash: '#recognition', selector: '#awards', revealAll: true },
+  {
+    file: 'awards.png',
+    hash: '#recognition',
+    selector: '#awards',
+    revealAll: true,
+  },
   { file: 'kaggle.png', hash: '#recognition', selector: '#kaggle' },
   { file: 'contact_page.png', hash: '#contact', selector: '#contact' },
   {
@@ -107,7 +112,10 @@ async function main() {
       await waitForScrollSettle(page);
       await waitForReveal(page, shot.selector);
       if (shot.revealAll) {
-        if (shot.selector === '#vision-programs' || shot.selector === '#vision-impact') {
+        if (
+          shot.selector === '#vision-programs' ||
+          shot.selector === '#vision-impact'
+        ) {
           await prepareVisionSection(page);
         } else {
           await forceReveals(page, shot.selector);

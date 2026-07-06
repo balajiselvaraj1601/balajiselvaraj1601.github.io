@@ -97,7 +97,7 @@ The renderer maps `site.json.sections[id].source` → file, and `…title` → h
 ## 5. Navigation behavior
 
 - Sticky header; condense/elevate on scroll (subtle).
-- Active-route indicator in the header; dot navigation spans configured home sections (excluding decorative blocks) and highlights the section currently in view.
+- Active-route indicator in the header; dot navigation shows seven page-level targets (Hero plus the six header nav views) and highlights the active view while scrolling.
 - Anchor clicks smooth-scroll with offset for the sticky header; honor `prefers-reduced-motion`.
 - Mobile menu: focus-trapped while open, `Esc` closes, returns focus to the toggle.
 - "Back to top" affordance in the footer.

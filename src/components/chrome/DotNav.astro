@@ -1,32 +1,30 @@
 ---
-import { dotNavLabels } from '@lib/content';
+import type { DotNavView } from '@lib/content';
 
 interface Props {
-  sections: string[];
+  views: DotNavView[];
 }
-const { sections } = Astro.props;
+const { views } = Astro.props;
 ---
 
 <nav
   class="dot-nav"
   id="dot-nav"
-  aria-label="Section navigation"
-  hidden={sections.length < 2}
+  aria-label="Page navigation"
+  hidden={views.length < 2}
 >
   {
-    sections.map((id) => {
-      const label = dotNavLabels[id] ?? id;
-      return (
-        <button
-          type="button"
-          class="dot-nav__dot"
-          data-target={id}
-          title={label}
-          aria-label={label}
-          hidden
-        />
-      );
-    })
+    views.map((view) => (
+      <button
+        type="button"
+        class="dot-nav__dot"
+        data-dot-id={view.id}
+        data-scroll-section={view.scrollSection}
+        title={view.label}
+        aria-label={view.label}
+        hidden
+      />
+    ))
   }
 </nav>
 
@@ -76,4 +74,3 @@ const { sections } = Astro.props;
     }
   }
 </style>
-

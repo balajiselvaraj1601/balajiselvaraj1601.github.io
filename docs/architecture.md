@@ -123,7 +123,7 @@ JS provides progressive enhancement on `/`:
   scroll position. Without JS, all sections remain visible and hash anchors still jump natively.
 - Theme toggle + `localStorage` persistence
 - Mobile menu (focus trap, Esc to close)
-- Active nav state in header; dot nav lists configured home sections (excluding decorative blocks such as hero/thirukural) and highlights the section heading currently at the read line
+- Active nav state in header; dot nav shows seven page-level dots (Hero + six nav views) and highlights the active view via scroll-spy (`sectionToDotNav` in `content.ts`)
 - Entrance reveal animations (skipped when `prefers-reduced-motion`)
 
 Core content is fully readable without JavaScript.

@@ -97,10 +97,6 @@ export const siteSchema = z
         source: z.string(),
         visible: z.boolean(),
         eyebrow: z.string().optional(),
-        /** When false, section is omitted from right-side dot nav. */
-        dotNav: z.boolean().optional(),
-        /** Tooltip / aria-label override for dot nav (section-specific, not page name). */
-        dotNavLabel: z.string().optional(),
       })
     ),
     seo: z.object({

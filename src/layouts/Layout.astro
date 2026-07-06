@@ -8,14 +8,21 @@ import Footer from '@components/chrome/Footer.astro';
 import DotNav from '@components/chrome/DotNav.astro';
 import SiteChromeBoot from '@components/chrome/SiteChromeBoot.astro';
 import HeroCanvas from '@components/cards/HeroCanvas.astro';
-import { navViews, defaultTheme, profile } from '@lib/content';
+import {
+  navViews,
+  defaultTheme,
+  profile,
+  sectionToDotNav,
+  homeSections,
+  type DotNavView,
+} from '@lib/content';
 
 interface Props {
   title?: string;
   description?: string;
   path?: string;
   chrome?: boolean;
-  dotNavSections?: string[];
+  dotNavViews?: DotNavView[];
   singlePageViews?: boolean;
 }
 const {
@@ -23,7 +30,7 @@ const {
   description,
   path = '/',
   chrome = true,
-  dotNavSections = [],
+  dotNavViews: dotNav = [],
   singlePageViews = false,
 } = Astro.props;
 
@@ -44,6 +51,13 @@ const hashCollisionAnchors =
 const preloadPortrait =
   path === '/' && profile.portrait
     ? { webp: profile.portrait.webp, avif: profile.portrait.avif }
+    : undefined;
+const dotNavConfig =
+  dotNav.length >= 2
+    ? {
+        orderedSections: homeSections,
+        sectionToDot: sectionToDotNav,
+      }
     : undefined;
 ---
 
@@ -73,7 +87,7 @@ const preloadPortrait =
     />
     <script is:inline>
       (function () {
-        var link = document.getElementById('fonts-deferred');
+        const link = document.getElementById('fonts-deferred');
         if (!link) return;
         link.addEventListener('load', function () {
           link.media = 'all';
@@ -97,11 +111,7 @@ const preloadPortrait =
     <HeroCanvas />
     <a href="#main" class="skip-link">Skip to content</a>
     {chrome && <Header singlePageViews={singlePageViews} />}
-    {
-      chrome && dotNavSections.length >= 2 && (
-        <DotNav sections={dotNavSections} />
-      )
-    }
+    {chrome && dotNav.length >= 2 && <DotNav views={dotNav} />}
     <main id="main">
       <slot />
     </main>
@@ -113,6 +123,16 @@ const preloadPortrait =
           type="application/json"
           id="nav-views-config"
           set:html={JSON.stringify(navViewsConfig)}
+        />
+      )
+    }
+    {
+      chrome && dotNavConfig && (
+        <script
+          is:inline
+          type="application/json"
+          id="dot-nav-config"
+          set:html={JSON.stringify(dotNavConfig)}
         />
       )
     }

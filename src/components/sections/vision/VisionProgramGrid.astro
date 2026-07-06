@@ -1,0 +1,147 @@
+---
+import ThemeCard from '@components/cards/ThemeCard.astro';
+import { logoSrc } from '@lib/content';
+import type { VisionBoard } from '@schemas';
+
+type VisionProgram = VisionBoard['programs'][number];
+
+interface Props {
+  programs: VisionBoard['programs'];
+}
+
+const { programs } = Astro.props;
+
+/** Entity slug first, then pipeline badge asset — for uniform rect logo boxes. */
+function resolveProgramLogoSlug(p: VisionProgram): string {
+  const entity = p.entity;
+  if (entity && logoSrc(entity)) return entity;
+  if (p.badge?.kind === 'logo' && logoSrc(p.badge.asset)) return p.badge.asset;
+  return entity ?? '';
+}
+---
+
+{
+  programs && programs.length > 0 && (
+    <div class="vision-flow__cards">
+      <ul
+        class="theme-grid vision-flow__grid"
+        style="--theme-cols: 2"
+        role="list"
+      >
+        {programs.map((p) => (
+          <li class:list={['vision-accent-hook', `vision-accent-${p.accent}`]}>
+            <ThemeCard
+              title={p.title}
+              lines={p.lines}
+              mark={p.badge}
+              slug={p.entity}
+              logoSlug={resolveProgramLogoSlug(p)}
+              markDisplay="rect"
+              altText={p.title}
+              label={p.label}
+              entity={p.entity}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .vision-flow__cards {
+    min-width: 0;
+    justify-self: stretch;
+    /* The hub is a circle whose ring is inset ~4% from its track edge, while the cards
+       are flush to theirs. Inset the cards' left edge by that amount so chevron set 2
+       is optically centred and the hub↔box visible gap matches the hub↔hub gap.
+       margin (not transform) keeps the right edge flush with the container. */
+    margin-inline-start: var(--vision-hub-ring-inset);
+  }
+
+  .vision-flow__grid {
+    margin-top: 0;
+    /* Equal rows: 1fr implicit rows resolve to the tallest row's content, so all
+       four cards are the same size and the block centre — where the hubs and
+       chevrons align — is exactly the midpoint of the gap between the rows. */
+    grid-auto-rows: 1fr;
+  }
+
+  .vision-flow__grid li {
+    display: flex;
+    min-width: 0;
+  }
+
+  /* Program cards color per-item by their JSON accent via .vision-accent-*
+     + .vision-accent-hook cascade. */
+
+  /* Program cards. */
+  .vision-flow__grid :global(.theme-card.card) {
+    flex: 1;
+    height: 100%;
+  }
+
+  .vision-flow__grid :global(.program-card__label) {
+    color: var(--accent-card, var(--accent-ll));
+  }
+
+  .vision-flow__grid :global(.program-card__lines li) {
+    font-size: var(--fs-body);
+  }
+
+  /* Uniform white logo slots in each program quadrant. */
+  .vision-flow__grid :global(.program-card__mark) {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--text-gap-inline);
+    width: 100%;
+  }
+
+  .vision-flow__grid :global(.program-card__logo) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .vision-flow__grid :global(.logo-badge) {
+    width: 100%;
+    min-height: var(--logo-box-h);
+    justify-content: center;
+    background: color-mix(
+      in srgb,
+      var(--accent-card, var(--accent)) 8%,
+      var(--logo-surface)
+    );
+    border-color: color-mix(
+      in srgb,
+      var(--accent-card, var(--accent)) 35%,
+      var(--border)
+    );
+  }
+
+  .vision-flow__grid :global(.logo-badge img) {
+    max-height: var(--logo-h-md);
+    max-width: var(--logo-w-max-md);
+  }
+
+  @media (max-width: 1180px) {
+    /* 1180px — matches --bp-2xl (CSS vars invalid in @media features) */
+    .vision-flow__cards {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      /* Stacked layout: the 2×2 grid spans the full container (matching the
+         impact grid below) — drop the desktop ring-inset nudge. */
+      width: 100%;
+      justify-self: stretch;
+      margin-inline: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    /* 560px — matches --bp-sm */
+    .vision-flow__grid {
+      grid-template-columns: 1fr;
+      /* Single column: content-sized cards (don't force the tallest height ×4). */
+      grid-auto-rows: auto;
+    }
+  }
+</style>

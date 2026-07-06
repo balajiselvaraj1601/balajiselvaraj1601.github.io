@@ -1,0 +1,95 @@
+---
+import type { VisionAccent } from '@schemas';
+
+interface Props {
+  /** Group accent feeding the vision-accent-* → --accent-card cascade. */
+  accent: VisionAccent;
+}
+
+const { accent } = Astro.props;
+---
+
+<span
+  class:list={[
+    'vision-flow__chevrons',
+    'vision-accent-hook',
+    `vision-accent-${accent}`,
+  ]}
+  aria-hidden="true"
+>
+  <span class="vision-flow__chevron vision-flow__chevron--1"></span>
+  <span class="vision-flow__chevron vision-flow__chevron--2"></span>
+  <span class="vision-flow__chevron vision-flow__chevron--3"></span>
+</span>
+
+<style>
+  .vision-flow__chevrons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    min-width: max-content;
+    /* Same centring as the hubs — chevrons sit on the circles' equator line. */
+    align-self: center;
+    gap: 0;
+  }
+
+  .vision-flow__chevron + .vision-flow__chevron {
+    margin-inline-start: calc(-1 * var(--chevron-flow-overlap));
+  }
+
+  .vision-flow__chevron {
+    width: var(--chevron-flow-w);
+    height: var(--chevron-flow-h);
+    clip-path: polygon(0% 0%, 48% 0%, 100% 50%, 48% 100%, 0% 100%, 52% 50%);
+  }
+
+  .vision-flow__chevron--1 {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--accent-card, var(--accent)) 75%, var(--bg-elev)),
+      var(--accent-card, var(--accent))
+    );
+  }
+
+  .vision-flow__chevron--2 {
+    background: linear-gradient(
+      135deg,
+      var(--accent-card, var(--accent)),
+      color-mix(
+        in srgb,
+        var(--accent-card, var(--accent)) 70%,
+        var(--accent-strong)
+      )
+    );
+  }
+
+  .vision-flow__chevron--3 {
+    background: linear-gradient(
+      135deg,
+      color-mix(
+        in srgb,
+        var(--accent-card, var(--accent)) 70%,
+        var(--accent-strong)
+      ),
+      color-mix(in srgb, var(--accent-card, var(--accent)) 45%, var(--bg))
+    );
+  }
+
+  @media (max-width: 1180px) {
+    /* 1180px — matches --bp-2xl (CSS vars invalid in @media features) */
+    .vision-flow__chevrons:first-of-type {
+      grid-column: 2;
+      grid-row: 1;
+      /* Top-aligned row: anchor the chevron to the hub circles' vertical
+         centre via the stacked stage-mid (derived from --vision-hub-w, which
+         the parent .vision-flow redefines at this breakpoint — inherited). */
+      align-self: start;
+      margin-top: calc(var(--vision-hub-stage-mid) - var(--chevron-flow-h) / 2);
+    }
+
+    .vision-flow__chevrons:last-of-type {
+      display: none;
+    }
+  }
+</style>

@@ -1,11 +1,8 @@
 ---
 import Section from '@components/ui/Section.astro';
-import XpProjectCard from '@components/cards/XpProjectCard.astro';
-import CardMark from '@components/ui/CardMark.astro';
-import Chip from '@components/ui/Chip.astro';
-import EntityLink from '@components/ui/EntityLink.astro';
-import { experience, getEntityUrl, logoSrc, site } from '@lib/content';
-import { logoUsesBadge } from '@lib/logo-display';
+import XpCompanyCard from '@components/sections/experience/XpCompanyCard.astro';
+import XpWorkGroup from '@components/sections/experience/XpWorkGroup.astro';
+import { experience, site } from '@lib/content';
 
 function periodLabel(p: {
   start: string;
@@ -77,91 +74,8 @@ function orgShortFallback(organization: string) {
           aria-labelledby={`xp-tab-${role.id}`}
           data-xp-panel
         >
-          <article class="xp-company card">
-            <header class="xp-company__head">
-              {logoSrc(role.entity) && (
-                <CardMark
-                  slug={role.entity}
-                  logoUrl={logoSrc(role.entity)}
-                  altText=""
-                  useBadge={logoUsesBadge(role.entity)}
-                  logoSize="lg"
-                />
-              )}
-              <div class="xp-company__titles">
-                <p class="xp-meta">
-                  {periodLabel(role.period)}
-                  {role.location && (
-                    <>
-                      <span class="xp-meta__sep" aria-hidden="true">
-                        ·
-                      </span>
-                      {role.location}
-                    </>
-                  )}
-                </p>
-                <h3 class="xp-title">{role.position}</h3>
-                <p class="xp-org">
-                  <EntityLink
-                    href={getEntityUrl(role.entity)}
-                    label={role.organization}
-                  />
-                </p>
-              </div>
-            </header>
-            {role.blurb && <p class="xp-blurb">{role.blurb}</p>}
-            {role.tech && role.tech.length > 0 && (
-              <div class="xp-tech">
-                {role.tech.map((t) => (
-                  <Chip>{t}</Chip>
-                ))}
-              </div>
-            )}
-          </article>
-
-          <div class="xp-work">
-            <p class="xp-work__label">Key Projects</p>
-
-            {role.projects.length > 1 && (
-              <div
-                class="recog-filters xp-filters"
-                role="group"
-                aria-label={`Filter projects — ${role.position}`}
-              >
-                <button
-                  type="button"
-                  class="recog-chip is-active"
-                  data-filter="all"
-                  aria-pressed="true"
-                >
-                  All
-                </button>
-                {role.projects.map((project, j) => (
-                  <button
-                    type="button"
-                    class="recog-chip"
-                    data-filter={`p${j + 1}`}
-                    aria-pressed="false"
-                  >
-                    {project.shortName ?? project.name}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <div class="xp-projects" data-xp-projects>
-              {role.projects.map((project, j) => (
-                <XpProjectCard
-                  id={`xp-${role.id}-p${j + 1}`}
-                  data-project={`p${j + 1}`}
-                  name={project.name}
-                  subtitle={project.subtitle}
-                  icon={project.icon}
-                  bullets={project.bullets}
-                />
-              ))}
-            </div>
-          </div>
+          <XpCompanyCard role={role} periodLabel={periodLabel(role.period)} />
+          <XpWorkGroup role={role} />
         </div>
       ))
     }
@@ -308,101 +222,6 @@ function orgShortFallback(organization: string) {
     }
   }
 
-  /* ---- Company block ---- */
-  .xp-company {
-    padding: var(--card-padding-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-  }
-  .xp-company__head {
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-  }
-  .xp-company__titles {
-    display: flex;
-    flex-direction: column;
-    gap: var(--text-gap-pair);
-    min-width: 0;
-  }
-  .xp-meta {
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    letter-spacing: var(--tracking-caps);
-    color: var(--accent-card, var(--accent-ll));
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin: 0;
-  }
-  .xp-meta__sep {
-    color: var(--text-muted);
-    opacity: 0.6;
-  }
-  .xp-title {
-    font-size: var(--fs-xxl);
-    font-weight: var(--fw-bold);
-    color: var(--heading);
-    margin: 0;
-  }
-  .xp-org {
-    font-size: var(--fs-small);
-    color: var(--text-muted);
-    margin: 0;
-  }
-  .xp-blurb {
-    font-size: var(--fs-body);
-    color: var(--text-muted);
-    line-height: var(--lh-relaxed);
-    max-width: var(--maxw-text);
-    margin: 0;
-  }
-  .xp-tech {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  /* ---- Work group: label + selector + boxes, bound to the role via a rail ---- */
-  .xp-work {
-    display: flex;
-    flex-direction: column;
-    gap: var(--stack-sm);
-    border-left: 2px solid var(--border);
-    padding-left: var(--space-6);
-  }
-  .xp-work__label {
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    letter-spacing: var(--tracking-eyebrow);
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin: 0;
-  }
-  .xp-filters {
-    margin: 0;
-  }
-  /* Each project occupies a full row — single-column stack. */
-  .xp-projects {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--stack-sm);
-  }
-
-  @media (max-width: 600px) {
-    .xp-company {
-      padding: var(--card-padding);
-    }
-    .xp-company__head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-4);
-    }
-    /* Reclaim horizontal space — drop the rail on narrow screens. */
-    .xp-work {
-      border-left: 0;
-      padding-left: 0;
-    }
-  }
+  /* Company block styles → experience/XpCompanyCard.astro;
+     work-group (Key Projects) styles → experience/XpWorkGroup.astro. */
 </style>

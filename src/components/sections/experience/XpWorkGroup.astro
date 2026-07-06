@@ -1,0 +1,94 @@
+---
+import XpProjectCard from '@components/cards/XpProjectCard.astro';
+import type { Role } from '@schemas';
+
+interface Props {
+  role: Role;
+}
+
+const { role } = Astro.props;
+---
+
+<div class="xp-work">
+  <p class="xp-work__label">Key Projects</p>
+
+  {
+    role.projects.length > 1 && (
+      <div
+        class="recog-filters xp-filters"
+        role="group"
+        aria-label={`Filter projects — ${role.position}`}
+      >
+        <button
+          type="button"
+          class="recog-chip is-active"
+          data-filter="all"
+          aria-pressed="true"
+        >
+          All
+        </button>
+        {role.projects.map((project, j) => (
+          <button
+            type="button"
+            class="recog-chip"
+            data-filter={`p${j + 1}`}
+            aria-pressed="false"
+          >
+            {project.shortName ?? project.name}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="xp-projects" data-xp-projects>
+    {
+      role.projects.map((project, j) => (
+        <XpProjectCard
+          id={`xp-${role.id}-p${j + 1}`}
+          data-project={`p${j + 1}`}
+          name={project.name}
+          subtitle={project.subtitle}
+          icon={project.icon}
+          bullets={project.bullets}
+        />
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  /* ---- Work group: label + selector + boxes, bound to the role via a rail ---- */
+  .xp-work {
+    display: flex;
+    flex-direction: column;
+    gap: var(--stack-sm);
+    border-left: 2px solid var(--border);
+    padding-left: var(--space-6);
+  }
+  .xp-work__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .xp-filters {
+    margin: 0;
+  }
+  /* Each project occupies a full row — single-column stack. */
+  .xp-projects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--stack-sm);
+  }
+
+  @media (max-width: 600px) {
+    /* Reclaim horizontal space — drop the rail on narrow screens. */
+    .xp-work {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+</style>

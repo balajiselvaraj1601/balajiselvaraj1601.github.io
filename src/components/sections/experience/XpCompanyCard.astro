@@ -1,0 +1,133 @@
+---
+import CardMark from '@components/ui/CardMark.astro';
+import Chip from '@components/ui/Chip.astro';
+import EntityLink from '@components/ui/EntityLink.astro';
+import { getEntityUrl, logoSrc } from '@lib/content';
+import { logoUsesBadge } from '@lib/logo-display';
+import type { Role } from '@schemas';
+
+interface Props {
+  role: Role;
+  /** Pre-formatted period label — the formatter (SSOT) lives in Experience.astro. */
+  periodLabel: string;
+}
+
+const { role, periodLabel } = Astro.props;
+---
+
+<article class="xp-company card">
+  <header class="xp-company__head">
+    {
+      logoSrc(role.entity) && (
+        <CardMark
+          slug={role.entity}
+          logoUrl={logoSrc(role.entity)}
+          altText=""
+          useBadge={logoUsesBadge(role.entity)}
+          logoSize="lg"
+        />
+      )
+    }
+    <div class="xp-company__titles">
+      <p class="xp-meta">
+        {periodLabel}
+        {
+          role.location && (
+            <>
+              <span class="xp-meta__sep" aria-hidden="true">
+                ·
+              </span>
+              {role.location}
+            </>
+          )
+        }
+      </p>
+      <h3 class="xp-title">{role.position}</h3>
+      <p class="xp-org">
+        <EntityLink
+          href={getEntityUrl(role.entity)}
+          label={role.organization}
+        />
+      </p>
+    </div>
+  </header>
+  {role.blurb && <p class="xp-blurb">{role.blurb}</p>}
+  {
+    role.tech && role.tech.length > 0 && (
+      <div class="xp-tech">
+        {role.tech.map((t) => (
+          <Chip>{t}</Chip>
+        ))}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  /* ---- Company block ---- */
+  .xp-company {
+    padding: var(--card-padding-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .xp-company__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .xp-company__titles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--text-gap-pair);
+    min-width: 0;
+  }
+  .xp-meta {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-caps);
+    color: var(--accent-card, var(--accent-ll));
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+  }
+  .xp-meta__sep {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+  .xp-title {
+    font-size: var(--fs-xxl);
+    font-weight: var(--fw-bold);
+    color: var(--heading);
+    margin: 0;
+  }
+  .xp-org {
+    font-size: var(--fs-small);
+    color: var(--text-muted);
+    margin: 0;
+  }
+  .xp-blurb {
+    font-size: var(--fs-body);
+    color: var(--text-muted);
+    line-height: var(--lh-relaxed);
+    max-width: var(--maxw-text);
+    margin: 0;
+  }
+  .xp-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (max-width: 600px) {
+    .xp-company {
+      padding: var(--card-padding);
+    }
+    .xp-company__head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+  }
+</style>

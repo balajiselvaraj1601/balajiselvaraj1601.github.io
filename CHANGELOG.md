@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-07-06
+
+### Added
+
+- Self-hosted DM Serif Display and Inter Variable fonts (`fonts-critical` / `fonts-deferred` CSS)
+- WebP/AVIF siblings for portrait and section images; image optimize pipeline (`scripts/optimize-images.mjs`)
+- Lighthouse check script (`scripts/lighthouse-check.mjs`)
+- `asset-guard` and `init-sections` client scripts (dot nav, back-to-top, section inits)
+- `docs/icon-size-inventory.md` and expanded `docs/README.md` agent/docs index
+- Page-level dot navigation: seven dots (Hero + six nav views) with `sectionToDotNav` scroll-spy
+
+### Changed
+
+- HeroCanvas, Portrait, and card components (CompetitionCard, SpeakingCard, ResearchCard, XpProjectCard) polish and icon standardization
+- Chrome: BaseHead font preload, Header/Footer/SiteChromeBoot cleanup
+- Section updates: Awards, Education, Experience, Hero, Kaggle, LeadershipPhilosophy, ThirukuralQuote, LogoBadge, VisionHub
+- Refreshed SVG logo marks and reference screenshots across views
+- Dot nav scroll-spy maps sections to view dots (hero/thirukural → Hero, leadership → About)
+- Removed `dotNav` / `dotNavLabel` from section schema (dots derived from nav views)
+
 ## [1.0.1] - 2026-07-06
 
 ### Added
@@ -44,6 +64,7 @@ First production release of the Balaji Selvaraj portfolio site.
 - Education stat tiles use Recognition gold hairline grid (aligned with Kaggle summary pattern)
 - Vision board IDEA lane uses `silver` accent for medal/recognition semantics
 
-[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/balajiselvaraj1601/portfolio_site/releases/tag/v1.0.0

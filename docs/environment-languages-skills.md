@@ -23,7 +23,7 @@ This covers **two layers**:
 | **Bash**                      | `.cursor/hooks/*.sh`, `.cursor/scripts/task-runner-*.sh`                   | Task-runner automation, Cursor hook glue                                  |
 | **Python**                    | `scripts/process_logos.py`                                                 | Logo normalization/trim pipeline (Pillow + Playwright)                    |
 | **YAML**                      | `.github/workflows/deploy.yml`                                             | CI build + GitHub Pages deploy                                            |
-| **Markdown**                  | `docs/`, `TASKS.md`, `.cursor/skills/`                                     | Specs, agent instructions, checkbox task queue (operational, not runtime) |
+| **Markdown**                  | `docs/`, `TASKS.md` (per-batch), `.cursor/skills/`                         | Specs, agent instructions, checkbox task queue (operational, not runtime) |
 
 **Not a separate language but essential:** **HTML** (inside Astro), **SVG** (icons/logos in `public/assets/`), **Git** (branch/CI workflow).
 

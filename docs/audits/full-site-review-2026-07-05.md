@@ -93,8 +93,8 @@ don't re-litigate them.
   counterparts of shipped SVG marks under public/assets/logos (dormant since
   the SVG migration), 5 tech logos (aws/docker/foundation-models/langchain/
   rag), 8 metric/education/general SVG marks, 18 docs/reference screenshots,
-  icons-grid.png, src/assets/icons/_work pair. All kept: pipeline inputs /
-  reference material.
+  icons-grid.png (since moved to docs/reference/), src/assets/icons/_work
+  pair. All kept: pipeline inputs / reference material.
 - **Orphan-candidate scripts:** analyze-icon-brightness.py,
   render-icon-montage.py (no callers in npm/docs/shell) — kept as manual
   utilities; document or remove deliberately.

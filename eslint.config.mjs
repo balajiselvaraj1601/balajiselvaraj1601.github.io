@@ -7,7 +7,13 @@ import prettier from 'eslint-config-prettier';
 // Prettier (see .prettierrc); `prettier` last disables any conflicting rules.
 export default tseslint.config(
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', 'public/'],
+    ignores: [
+      'dist/',
+      '.dist-baseline/',
+      '.astro/',
+      'node_modules/',
+      'public/',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

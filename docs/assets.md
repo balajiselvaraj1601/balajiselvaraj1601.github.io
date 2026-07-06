@@ -212,7 +212,7 @@ domain changes.
 
 ## icon_collections refresh pipeline
 
-Square-centered `icon_*.png` assets live in `icon_collections_resized/` and install
+Square-centered `icon_*.png` assets live in `assets/icon-collections-resized/` and install
 into `public/assets/logos/{education,general,kaggle,vision,awards}/`. The live
 site renders matching `logo_*.svg` marks from `public/assets/logos/marks/` via
 `MarkEmblem`. Full repeatable steps:

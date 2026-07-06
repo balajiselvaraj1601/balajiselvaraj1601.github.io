@@ -24,7 +24,7 @@ content/**/*.json
 - Keep route/section order in `content/site.json`; route files stay generic.
 - Run `npm run build` before handoff after any code or content change. The build
   fails fast on schema violations and broken section/view wiring.
-- Batch work: see `TASKS.md`; invoke the `task-runner` skill (`.cursor/skills/task-runner/SKILL.md`).
+- Batch work: see `docs/task-runner.md`; create a per-batch `TASKS.md` queue and invoke the `task-runner` skill (`.cursor/skills/task-runner/SKILL.md`). No `TASKS.md` at the root means no batch is active.
 - Multi-view design consistency: invoke the page-consistency-team skill (`.claude/skills/page-consistency-team/SKILL.md`) or `/page-team` in Claude Code; see `docs/page-team.md`.
 - **Local dev ports:** see [Local servers and ports](#local-servers-and-ports).
 

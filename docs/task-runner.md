@@ -2,6 +2,8 @@
 
 Run multi-step agent work through a persisted markdown checklist (`TASKS.md`) with automatic continuation until every queue item is checked.
 
+`TASKS.md` is created at the repo root per batch and removed when the batch is done — its absence means no batch is active (all hooks short-circuit gracefully when the file is missing).
+
 ## Prerequisites
 
 1. **Run Everything** — Cursor Settings → Agents → Approvals & Execution → Run Everything  
@@ -14,7 +16,7 @@ Run multi-step agent work through a persisted markdown checklist (`TASKS.md`) wi
 ## Quick start
 
 ```bash
-# 1. Add tasks under ## Queue in TASKS.md
+# 1. Create TASKS.md at the repo root with a ## Queue section and add tasks
 # 2. Enable the batch
 ./.cursor/scripts/task-runner-start.sh
 
@@ -25,7 +27,7 @@ The agent processes **one unchecked item at a time**, verifies (usually `npm run
 
 ## Monitor progress
 
-- Watch checkboxes flip in [`TASKS.md`](../TASKS.md)
+- Watch checkboxes flip in `TASKS.md`
 - Check status anytime:
 
 ```bash
@@ -44,7 +46,7 @@ Or delete `.cursor/task-runner.state.json` manually. Runtime state is gitignored
 
 ## Task format
 
-See the **Conventions** section in `TASKS.md`:
+Include a **Conventions** section in `TASKS.md` when you create it:
 
 - One actionable `- [ ]` line per task (imperative, verifiable)
 - Optional `AC: …` on the next indented line
@@ -73,14 +75,14 @@ Checks hero visibility, Thirukural layout, Awards/Kaggle filter isolation, and h
 
 ## Files
 
-| Path                                                   | Role                              |
-| ------------------------------------------------------ | --------------------------------- |
-| `TASKS.md`                                             | Checkbox queue (source of truth)  |
-| `.cursor/skills/task-runner/SKILL.md`                  | Agent workflow skill              |
-| `.cursor/scripts/task-runner-{start,status,cancel}.sh` | Operator helpers                  |
-| `.cursor/hooks/task-runner-stop.sh`                    | Auto-continue on incomplete queue |
-| `.cursor/hooks/task-runner-session.sh`                 | Resume reminder on new session    |
-| `.cursor/task-runner.state.json`                       | Local enable flag (gitignored)    |
+| Path                                                   | Role                                                                        |
+| ------------------------------------------------------ | --------------------------------------------------------------------------- |
+| `TASKS.md`                                             | Checkbox queue (source of truth; created per batch, absent between batches) |
+| `.cursor/skills/task-runner/SKILL.md`                  | Agent workflow skill                                                        |
+| `.cursor/scripts/task-runner-{start,status,cancel}.sh` | Operator helpers                                                            |
+| `.cursor/hooks/task-runner-stop.sh`                    | Auto-continue on incomplete queue                                           |
+| `.cursor/hooks/task-runner-session.sh`                 | Resume reminder on new session                                              |
+| `.cursor/task-runner.state.json`                       | Local enable flag (gitignored)                                              |
 
 ## Safety
 

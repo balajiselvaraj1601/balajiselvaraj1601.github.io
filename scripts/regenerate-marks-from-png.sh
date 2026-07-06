@@ -5,7 +5,7 @@
 # Usage:
 #   ./scripts/regenerate-marks-from-png.sh [SOURCE_DIR]
 #
-# Default SOURCE_DIR: $PROJECT_ROOT/icon_collections_resized
+# Default SOURCE_DIR: $PROJECT_ROOT/assets/icon-collections-resized
 #
 # Does NOT run normalize-icon-sources.py or batch-icon-generate.sh.
 # After this script, run:
@@ -15,7 +15,7 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SOURCE="${1:-$PROJECT_ROOT/icon_collections_resized}"
+SOURCE="${1:-$PROJECT_ROOT/assets/icon-collections-resized}"
 GENERATOR="$PROJECT_ROOT/scripts/svg-icon-generator.py"
 INSTALLER="$PROJECT_ROOT/scripts/install-vision-logos.sh"
 CONFIG="$PROJECT_ROOT/scripts/icon-sets.json"

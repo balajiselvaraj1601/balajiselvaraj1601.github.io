@@ -1,12 +1,12 @@
 # Refresh icon_collections icons
 
 Repeatable pipeline for installing square-centered raster icons from
-`icon_collections_resized/` and updating the live `logo_*.svg` marks the site
+`assets/icon-collections-resized/` and updating the live `logo_*.svg` marks the site
 renders via `MarkEmblem`.
 
 ## Source folder
 
-`icon_collections_resized/` at the repo root holds `icon_*.png` files after
+`assets/icon-collections-resized/` holds `icon_*.png` files after
 square-and-center processing. Naming follows `icon_<set>_<name>.png` (see
 [`AGENTS.md`](../AGENTS.md) Icon / Logo Asset Pipeline).
 
@@ -33,7 +33,7 @@ Use [`.claude/skills/icon-square-center/SKILL.md`](../.claude/skills/icon-square
 ```bash
 S=.claude/skills/icon-square-center/scripts
 SRC=~/workspace/icon_collections          # or your source batch
-OUT=icon_collections_resized              # repo root, or a staging dir
+OUT=assets/icon-collections-resized       # in-repo source dir, or a staging dir
 
 python3 $S/square-and-center-icon.py --src $SRC --out $OUT --all
 python3 $S/validate-square-center.py --src $SRC --out $OUT --all
@@ -61,7 +61,7 @@ by prefix rule. Exits non-zero if any file has no routing rule.
 ```bash
 ./scripts/regenerate-marks-from-png.sh
 # optional custom source:
-./scripts/regenerate-marks-from-png.sh icon_collections_resized
+./scripts/regenerate-marks-from-png.sh assets/icon-collections-resized
 ```
 
 This traces each PNG with `svg-icon-generator.py` (`--tight --no-badge
@@ -91,14 +91,14 @@ npm run preview   # spot-check Recognition + Vision views
 ## Icons not in resized set
 
 These four PNGs may exist under `public/assets/logos/` but are often absent
-from `icon_collections_resized/` until square-centered separately:
+from `assets/icon-collections-resized/` until square-centered separately:
 
 - `icon_trophy_awards.png` → `awards/`
 - `icon_trophy_kaggle.png` → `kaggle/`
 - `icon_metric_kaggle_evaluation.png` → `kaggle/`
 - `icon_metric_kaggle_summary.png` → `kaggle/`
 
-Run the square-center skill on them, add to `icon_collections_resized/`, then
+Run the square-center skill on them, add to `assets/icon-collections-resized/`, then
 re-run steps 2–5.
 
 ## Header chrome

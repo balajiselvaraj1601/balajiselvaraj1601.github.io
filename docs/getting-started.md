@@ -106,7 +106,7 @@ Spot-check:
 ## Long-running batches
 
 For multi-step agent work through a persisted checklist, see [Task runner](./task-runner.md).
-Start with `./.cursor/scripts/task-runner-start.sh` after filling `TASKS.md`.
+Start with `./.cursor/scripts/task-runner-start.sh` after creating and filling `TASKS.md`.
 
 ## Next steps
 

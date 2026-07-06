@@ -50,7 +50,7 @@ import { visionBoard, site } from '@lib/content';
      circle (--mark-slot unchanged). Scoped here so Recognition/About marks keep
      the site-default 22px. */
   .vision-impact__grid :global(.theme-card__icon) {
-    --mark-glyph: 32px;
+    --mark-glyph: var(--vision-mark-glyph);
   }
 
   /* 1180px — matches --bp-2xl (CSS vars invalid in @media features).

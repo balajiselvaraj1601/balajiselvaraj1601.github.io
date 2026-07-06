@@ -1,6 +1,7 @@
 ---
 import Section from '@components/ui/Section.astro';
 import CardMark from '@components/ui/CardMark.astro';
+import RecogCardShell from '@components/ui/RecogCardShell.astro';
 import RecogControls from '@components/ui/RecogControls.astro';
 import RecogTile from '@components/ui/RecogTile.astro';
 import { awards, site } from '@lib/content';
@@ -39,21 +40,19 @@ const total = items.length;
   class="section--compact-bottom"
 >
   <!-- Summary stat tiles — counts by nominator level -->
-  <ul class="theme-grid awards-summary reveal" role="list">
+  <div class="recog-summary reveal">
     {
       LEVELS.map((level) => (
-        <li>
-          <RecogTile
-            class={`level-${slug(level)}`}
-            icon="trophy"
-            markSlug="logo_trophy_badge"
-            count={counts[level] ?? 0}
-            label={level}
-          />
-        </li>
+        <RecogTile
+          class={`level-${slug(level)}`}
+          icon="trophy"
+          markSlug="logo_trophy_badge"
+          count={counts[level] ?? 0}
+          label={level}
+        />
       ))
     }
-  </ul>
+  </div>
 
   <RecogControls
     countLabel="All Awards"
@@ -91,14 +90,14 @@ const total = items.length;
     {
       items.map((a) => (
         <li>
-          <article
-            class:list={['theme-card', 'card', `level-${slug(a.level)}`]}
+          <RecogCardShell
+            class:list={[`level-${slug(a.level)}`]}
             data-level={a.level}
             data-title={a.title}
             data-nominator={a.nominator}
             data-reason={a.reason}
           >
-            <div class="awards-card__top">
+            <Fragment slot="headTop">
               <CardMark
                 mark={{ kind: 'logo', asset: 'logo_trophy_badge' }}
                 icon="trophy"
@@ -106,16 +105,29 @@ const total = items.length;
                 emblemInCircle
               />
               <p class="awards-card__kicker">{a.level}</p>
-            </div>
-            <h3 class="theme-card__title">{a.title}</h3>
-            <div class="recog-card-divider" aria-hidden="true" />
-            <div class="awards-card__meta">
-              <p class="theme-card__desc">
-                {a.nominator} · {a.designation}
-              </p>
-              <p class="theme-card__desc">{a.reason}</p>
-              {a.date && <p class="theme-card__desc">{a.date}</p>}
-            </div>
+            </Fragment>
+            <h3 slot="title" class="recog-title theme-card__title">
+              {a.title}
+            </h3>
+
+            <dl class="awards-card__meta">
+              <div class="awards-card__meta-pair">
+                <dt class="recog-label">Nominator</dt>
+                <dd class="recog-value">
+                  {a.nominator} · {a.designation}
+                </dd>
+              </div>
+              <div class="awards-card__meta-pair">
+                <dt class="recog-label">Reason</dt>
+                <dd class="recog-value">{a.reason}</dd>
+              </div>
+              {a.date && (
+                <div class="awards-card__meta-pair">
+                  <dt class="recog-label">Date</dt>
+                  <dd class="recog-value">{a.date}</dd>
+                </div>
+              )}
+            </dl>
             <div class="recog-card-divider" aria-hidden="true" />
             <p
               class="theme-card__desc recog-clamp awards-card__message"
@@ -123,7 +135,7 @@ const total = items.length;
             >
               {a.message}
             </p>
-          </article>
+          </RecogCardShell>
         </li>
       ))
     }
@@ -161,20 +173,9 @@ const total = items.length;
      item's per-level --lvl so every award level shows its own hue, falling back to
      the Recognition accent (gold) when an element has no level class.
      Scoped to #awards so the rule doesn't bleed into About/Vision theme-cards. */
-  :global(#awards .theme-card.card) {
+  :global(#awards .recog-card) {
     --accent-card: var(--lvl, var(--view-accent-recognition));
     --mark-fg: var(--accent-card);
-  }
-
-  .awards-summary {
-    --theme-cols: 3;
-    margin-bottom: var(--text-gap-section);
-  }
-
-  @media (min-width: 900px) {
-    .awards-summary {
-      --theme-cols: 6;
-    }
   }
 
   .awards-grid {
@@ -188,7 +189,7 @@ const total = items.length;
     grid-template-rows: subgrid;
   }
 
-  :global(#awards .awards-grid > li > .theme-card.card) {
+  :global(#awards .awards-grid > li > .recog-card) {
     display: grid;
     grid-row: span 6;
     grid-template-rows: subgrid;
@@ -209,7 +210,18 @@ const total = items.length;
   .awards-card__meta {
     display: flex;
     flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .awards-card__meta-pair {
+    display: flex;
+    flex-direction: column;
     gap: var(--text-gap-pair);
+  }
+
+  .awards-card__meta dd {
+    margin: 0;
   }
 
   @media (max-width: 980px) {
@@ -225,7 +237,6 @@ const total = items.length;
     }
   }
 
-  .awards-summary :global(li),
   .awards-grid :global(li) {
     min-width: 0;
   }
@@ -234,7 +245,7 @@ const total = items.length;
     margin-block: var(--text-gap-inline);
   }
 
-  :global(#awards .theme-card.card .recog-card-divider) {
+  :global(#awards .recog-card .recog-card-divider) {
     background: color-mix(
       in srgb,
       var(--accent-card, var(--accent)) 40%,
@@ -253,7 +264,7 @@ const total = items.length;
     max-width: none;
   }
 
-  :global(#awards .theme-card.card.hidden) {
+  :global(#awards .recog-card.hidden) {
     display: none;
   }
 </style>

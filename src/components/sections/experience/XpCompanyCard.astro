@@ -15,7 +15,7 @@ interface Props {
 const { role, periodLabel } = Astro.props;
 ---
 
-<article class="xp-company card">
+<article class="xp-company content-card">
   <header class="xp-company__head">
     {
       logoSrc(role.entity) && (
@@ -97,8 +97,9 @@ const { role, periodLabel } = Astro.props;
     opacity: 0.6;
   }
   .xp-title {
-    font-size: var(--fs-xxl);
-    font-weight: var(--fw-bold);
+    font-size: var(--fs-card-title-lg);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
     color: var(--heading);
     margin: 0;
   }
@@ -120,7 +121,7 @@ const { role, periodLabel } = Astro.props;
     gap: var(--space-2);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 560px) /* --bp-sm */ {
     .xp-company {
       padding: var(--card-padding);
     }

@@ -64,14 +64,14 @@ const { role } = Astro.props;
     flex-direction: column;
     gap: var(--stack-sm);
     border-left: 2px solid var(--border);
-    padding-left: var(--space-6);
+    padding-left: var(--stack-md);
   }
   .xp-work__label {
     font-family: var(--font-mono);
     font-size: var(--fs-eyebrow);
     letter-spacing: var(--tracking-eyebrow);
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--accent-card, var(--accent-ll));
     margin: 0;
   }
   .xp-filters {
@@ -84,7 +84,7 @@ const { role } = Astro.props;
     gap: var(--stack-sm);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 560px) /* --bp-sm */ {
     /* Reclaim horizontal space — drop the rail on narrow screens. */
     .xp-work {
       border-left: 0;

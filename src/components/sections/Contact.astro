@@ -12,9 +12,7 @@ type ContactType = z.infer<typeof contactTypeSchema>;
 
 const { contactPage } = profile;
 
-// Every contact entry with a link (location has none → stays hidden).
-// Deliberately broader than Footer.astro's filter, which also excludes type 'location' explicitly — do not merge into a shared predicate.
-const linked = profile.contact.filter((c) => c.href);
+const contactChannels = profile.contact;
 
 const isExternal = (href: string) => href.startsWith('http');
 
@@ -82,17 +80,12 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
 
       <div class="connect-grid">
         {
-          linked.map((c) => {
+          contactChannels.map((c) => {
             const external = c.href ? isExternal(c.href) : false;
-            return (
+            return c.href ? (
               <a
-                class:list={[
-                  'connect-card',
-                  'card',
-                  'card-accent',
-                  `connect-card--${c.type}`,
-                ]}
-                href={c.href!}
+                class:list={['connect-card', 'card', 'card-accent']}
+                href={c.href}
                 {...(external
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
@@ -107,8 +100,28 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
                 <span class="connect-action">
                   {actionLabel(c.type)}
                   <Icon name="arrow-right" size="sm" />
+                  {external && (
+                    <span class="visually-hidden"> (opens in new window)</span>
+                  )}
                 </span>
               </a>
+            ) : (
+              <div
+                class:list={[
+                  'connect-card',
+                  'card',
+                  'card-accent',
+                  'connect-card--static',
+                ]}
+              >
+                <CardMark
+                  icon={c.icon}
+                  iconFallback="link"
+                  variant="accented"
+                />
+                <h3 class="connect-name">{c.label}</h3>
+                <p class="connect-val">{c.value}</p>
+              </div>
             );
           })
         }
@@ -192,6 +205,15 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
     padding: var(--card-padding);
     text-decoration: none;
     height: 100%;
+  }
+  .connect-card--static:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: color-mix(
+      in srgb,
+      var(--accent-card, var(--accent)) 40%,
+      var(--border)
+    );
   }
   .connect-card :global(.icon-tile) {
     margin-bottom: var(--space-3);

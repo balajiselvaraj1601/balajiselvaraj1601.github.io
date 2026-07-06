@@ -233,7 +233,7 @@ Images sourced from `icon_collections/` follow `icon_<set>_<name>.png`. The `<se
 When replacing a `<Icon>` with a PNG, always keep the SVG fallback so the page degrades gracefully if the asset is missing:
 
 ```astro
-const imgSrc = logoSrc('icon_<set>_<name>'
+const imgSrc = logoSrc('icon_<set>_<name>');
 {
   imgSrc ? (
     <img src={imgSrc} alt="" class="my-img" aria-hidden="true" />

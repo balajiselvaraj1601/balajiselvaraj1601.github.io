@@ -38,9 +38,11 @@ npm run screenshots:baseline
 - reads the base URL from `PREVIEW_URL` env, defaulting to
   `http://127.0.0.1:${PREVIEW_PORT}` (`scripts/ports.mjs`);
 - launches headless Chromium at a 1440×900 viewport;
-- for each entry in the `SHOTS` list: navigates to the section's hash, scrolls the
-  selector into view, waits the scroll-settle interval, forces/awaits reveal, and
-  screenshots just that element;
+- for each theme (dark, then light — applied via `data-theme` after load) and each
+  entry in the `SHOTS` list: navigates to the section's hash, re-scrolls the
+  selector until its position is stable (`content-visibility: auto` makes a single
+  scrollIntoView overshoot), waits the scroll-settle interval, forces/awaits
+  reveal, and screenshots just that element;
 - logs `wrote <path>` per shot, and on failure prints
   `Failed — is the preview server running at <BASE>?` (the #1 real cause).
 
@@ -48,9 +50,11 @@ To point at a non-default server, set `PREVIEW_URL` rather than editing the scri
 
 ## 3. Where output lands
 
-`docs/reference/screenshots/` (the script's `OUT_DIR`). Filenames come from each
-`SHOTS[].file` — e.g. `thirukural.png`, `publications.png`, `awards.png`,
-`vision-programs.png`, `vision-impact.png`. These are the same committed baselines.
+`docs/reference/screenshots/` (the script's `OUT_DIR`) for the dark theme and
+`docs/reference/screenshots/light/` for the light theme. Filenames come from each
+`SHOTS[].file` — e.g. `hero.png`, `experience.png`, `thirukural.png`,
+`publications.png`, `awards.png`, `vision-programs.png`, `vision-impact.png`.
+These are the same committed baselines.
 
 ## 4. Diff against the committed baselines
 

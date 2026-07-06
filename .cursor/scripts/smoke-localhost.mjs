@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
  * Localhost smoke checks for portfolio_site.
- * Prerequisite: npm run dev (http://127.0.0.1:4321/)
+ * Prerequisite: npm run dev (http://127.0.0.1:<DEV_PORT>/)
  */
 import { chromium } from 'playwright';
+import { DEV_PORT } from '../../scripts/ports.mjs';
 
-const BASE = process.env.SMOKE_BASE_URL ?? 'http://127.0.0.1:4321/';
+const BASE = process.env.SMOKE_BASE_URL ?? `http://127.0.0.1:${DEV_PORT}/`;
 const results = [];
 
 function pass(name, detail = '') {

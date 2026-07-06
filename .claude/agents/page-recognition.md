@@ -56,10 +56,10 @@ Shelved (never enable, never audit): —
 
 ### awards — `src/components/sections/Awards.astro` (interior: `RecogCardShell.astro`)
 
-- **Object:** §6 `default` band › §5 Tier C `.recog-tile` (summary) + `.recog-card` (grid, via `RecogCardShell`) › §5 mark: `.icon-tile.icon-tile--round.icon-tile--accented` (tiles), same on card headTop
+- **Object:** §6 `default` band › §5 Tier C `RecogTile` summary tiles (`.theme-card.card`; the `.recog-tile` block class was deleted in 94269ae — only `__count`/`__label` element classes remain) + `.recog-card` (grid, via `RecogCardShell`) › §5 mark: `.icon-tile.icon-tile--round.icon-tile--accented` (tiles), same on card headTop
 - **Text (reading order):**
   - `h2.section__title` (Section `title`) → **T2** section title
-  - _Summary tiles ×6 (`.recog-tile`):_
+  - _Summary tiles ×6 (`RecogTile`):_
     - `.recog-tile__count` → **T10** metric number
     - `.recog-tile__label` → **T8** caps label
   - _Controls (`RecogControls`, shared/guardian-owned, audit-only):_ `.recog-chip` filter → **T8** caps label; count/search are UI chrome, off the prose ladder
@@ -75,10 +75,10 @@ Shelved (never enable, never audit): —
 
 ### kaggle — `src/components/sections/Kaggle.astro` (cards: `CompetitionCard.astro` → `RecogCardShell.astro`)
 
-- **Object:** §6 `alt` band › §5 Tier C `.recog-tile` (summary) + `.recog-card` (grid, via `CompetitionCard`) › §5 mark: `.icon-tile.icon-tile--round.icon-tile--accented` (tiles), same on card headTop
+- **Object:** §6 `alt` band › §5 Tier C `RecogTile` summary tiles (`.theme-card.card`) + `.recog-card` (grid, via `CompetitionCard`) › §5 mark: `.icon-tile.icon-tile--round.icon-tile--accented` (tiles), same on card headTop
 - **Text (reading order):**
   - `h2.section__title` (Section `title`) → **T2** section title
-  - _Summary tiles ×4 (`.recog-tile`):_
+  - _Summary tiles ×4 (`RecogTile`):_
     - `.recog-tile__count` → **T10** metric number
     - `.recog-tile__label` (incl. Global Rank denominator `<span>`) → **T8** caps label
   - _Controls (`RecogControls`, shared/guardian-owned, audit-only):_ `.recog-chip` medal filter → **T8** caps label; "View Kaggle profile" `.btn.btn-secondary` → **T8** button label
@@ -111,21 +111,21 @@ Shelved (never enable, never audit): —
 
 **Element theming (colour tokens, per §3e):**
 
-| Element                              | Text colour     | Surface                      | Accent/hover    |
-| ------------------------------------ | --------------- | ---------------------------- | --------------- |
-| `h2.section__title`                  | `--heading`     | —                            | —               |
-| `p.section__subtitle` (education)    | `--text-muted`  | —                            | —               |
-| `.recog-tile` summary                | —               | `--bg-elev`                  | `--accent-card` |
-| `.recog-tile__count`                 | `--accent-card` | —                            | —               |
-| `.recog-tile__label`                 | `--text-muted`  | —                            | —               |
-| `.icon-tile--accented` (tiles/cards) | `--accent-card` | color-mix w/ `--accent-card` | —               |
-| `.recog-card` (awards/kaggle)        | —               | `--bg-elev` (gradient)       | `--accent-card` |
-| `.recog-title`                       | `--heading`     | —                            | —               |
-| `.awards-card__kicker`               | `--accent-card` | —                            | —               |
-| `dt.recog-label`                     | `--text-muted`  | —                            | —               |
-| `dd.recog-value`                     | `--text`        | —                            | —               |
-| `p.recog-body`                       | `--text`        | —                            | —               |
-| `.edu-panel` (education)             | —               | `--bg-elev`                  | `--accent-gold` |
-| `.edu-degree-short`                  | `--accent-card` | —                            | —               |
-| `.edu-field`                         | `--heading`     | —                            | —               |
-| `.edu-highlight__text` (callout)     | `--text`        | —                            | —               |
+| Element                                  | Text colour     | Surface                      | Accent/hover    |
+| ---------------------------------------- | --------------- | ---------------------------- | --------------- |
+| `h2.section__title`                      | `--heading`     | —                            | —               |
+| `p.section__subtitle` (education)        | `--text-muted`  | —                            | —               |
+| `RecogTile` summary (`.theme-card.card`) | —               | `--bg-elev`                  | `--accent-card` |
+| `.recog-tile__count`                     | `--accent-card` | —                            | —               |
+| `.recog-tile__label`                     | `--text-muted`  | —                            | —               |
+| `.icon-tile--accented` (tiles/cards)     | `--accent-card` | color-mix w/ `--accent-card` | —               |
+| `.recog-card` (awards/kaggle)            | —               | `--bg-elev` (gradient)       | `--accent-card` |
+| `.recog-title`                           | `--heading`     | —                            | —               |
+| `.awards-card__kicker`                   | `--accent-card` | —                            | —               |
+| `dt.recog-label`                         | `--text-muted`  | —                            | —               |
+| `dd.recog-value`                         | `--text`        | —                            | —               |
+| `p.recog-body`                           | `--text`        | —                            | —               |
+| `.edu-panel` (education)                 | —               | `--bg-elev`                  | `--accent-gold` |
+| `.edu-degree-short`                      | `--accent-card` | —                            | —               |
+| `.edu-field`                             | `--heading`     | —                            | —               |
+| `.edu-highlight__text` (callout)         | `--text`        | —                            | —               |

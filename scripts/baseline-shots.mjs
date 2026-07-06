@@ -20,8 +20,18 @@ const BASE = (
 /** Match section-views.ts PROGRAMMATIC_SCROLL_SETTLE_MS + smooth scroll buffer. */
 const SCROLL_SETTLE_MS = 1400;
 
+/** Both themes are captured: dark into OUT_DIR (committed baselines), light into OUT_DIR/light. */
+const THEMES = ['dark', 'light'];
+
 /** @type {{ file: string; hash: string; selector: string; revealAll?: boolean }[]} */
 const SHOTS = [
+  { file: 'hero.png', hash: '', selector: '#hero' },
+  {
+    file: 'experience.png',
+    hash: '#experience',
+    selector: '#experience',
+    revealAll: true,
+  },
   { file: 'thirukural.png', hash: '#about', selector: '#thirukural' },
   { file: 'thiruvalluvar.png', hash: '#about', selector: '.about-landing' },
   { file: 'publications.png', hash: '#research', selector: '#publications' },
@@ -66,6 +76,32 @@ async function waitForScrollSettle(page) {
   await page.waitForTimeout(SCROLL_SETTLE_MS);
 }
 
+/**
+ * `content-visibility: auto` on section roots makes a single scrollIntoView
+ * overshoot as offscreen sections gain real height. Re-scroll until the
+ * target's top is stable between settle intervals.
+ */
+async function scrollUntilStable(page, selector, maxPasses = 5) {
+  let prevTop = Number.NaN;
+  for (let pass = 0; pass < maxPasses; pass++) {
+    await page.locator(selector).scrollIntoViewIfNeeded();
+    await waitForScrollSettle(page);
+    const top = await page.$eval(
+      selector,
+      (el) => el.getBoundingClientRect().top
+    );
+    if (Math.abs(top - prevTop) < 2) return;
+    prevTop = top;
+  }
+}
+
+async function applyTheme(page, theme) {
+  await page.evaluate((t) => {
+    document.documentElement.setAttribute('data-theme', t);
+  }, theme);
+  await page.waitForTimeout(250);
+}
+
 async function forceReveals(page, rootSelector) {
   await page.evaluate((sel) => {
     const root = document.querySelector(sel);
@@ -94,37 +130,38 @@ async function loadPage(page, url) {
 }
 
 async function main() {
-  mkdirSync(OUT_DIR, { recursive: true });
-
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({
     viewport: { width: 1440, height: 900 },
   });
 
   try {
-    await loadPage(page, BASE);
+    for (const theme of THEMES) {
+      const outDir = theme === 'dark' ? OUT_DIR : resolve(OUT_DIR, theme);
+      mkdirSync(outDir, { recursive: true });
 
-    for (const shot of SHOTS) {
-      const url = `${BASE.replace(/\/$/, '')}/${shot.hash}`;
-      await loadPage(page, url);
-      await page.waitForSelector(shot.selector, { timeout: 15000 });
-      await page.locator(shot.selector).scrollIntoViewIfNeeded();
-      await waitForScrollSettle(page);
-      await waitForReveal(page, shot.selector);
-      if (shot.revealAll) {
-        if (
-          shot.selector === '#vision-programs' ||
-          shot.selector === '#vision-impact'
-        ) {
-          await prepareVisionSection(page);
-        } else {
-          await forceReveals(page, shot.selector);
-          await page.waitForTimeout(200);
+      for (const shot of SHOTS) {
+        const url = `${BASE.replace(/\/$/, '')}/${shot.hash}`;
+        await loadPage(page, url);
+        await applyTheme(page, theme);
+        await page.waitForSelector(shot.selector, { timeout: 15000 });
+        await scrollUntilStable(page, shot.selector);
+        await waitForReveal(page, shot.selector);
+        if (shot.revealAll) {
+          if (
+            shot.selector === '#vision-programs' ||
+            shot.selector === '#vision-impact'
+          ) {
+            await prepareVisionSection(page);
+          } else {
+            await forceReveals(page, shot.selector);
+            await page.waitForTimeout(200);
+          }
         }
+        const outPath = resolve(outDir, shot.file);
+        await page.locator(shot.selector).screenshot({ path: outPath });
+        console.log(`wrote ${outPath}`);
       }
-      const outPath = resolve(OUT_DIR, shot.file);
-      await page.locator(shot.selector).screenshot({ path: outPath });
-      console.log(`wrote ${outPath}`);
     }
   } catch (err) {
     console.error(

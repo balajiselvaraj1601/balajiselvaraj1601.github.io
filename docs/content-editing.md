@@ -22,11 +22,11 @@ If the change affects page structure, section order, or the overall narrative, u
 | File                         | Sections affected              | Typical edits                                                                                                                |
 | ---------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | `site.json`                  | Global meta, nav, pages, SEO   | Title, tagline, nav labels, page sections, hide a section                                                                    |
-| `person/profile.json`        | Hero, Leadership, Contact      | Headline, metrics, CTAs, `leadershipPhilosophy.*`, `contactIntro`, `contactPage`, contact channels                           |
+| `person/profile.json`        | Hero, Leadership, Contact      | `heroTag`/`heroTitle`, metrics, CTAs, `leadershipPhilosophy.*`, `contactIntro`, `contactPage`, contact channels              |
 | `person/collaborations.json` | Collaborations strip on About  | Organization names; optional `logo` slug → `public/assets/logos/{slug}.png`; optional `entity` slug → URL in `entities.json` |
 | `entities.json`              | Entity links (global registry) | Slug → `{ name, url }` for organizations referenced across sections                                                          |
 | `work/vision-board.json`     | Vision view (`/#vision`)       | Infographic hubs, program cards, org impact cards                                                                            |
-| `work/experience.json`       | Experience                     | Roles, optional `mission`, `intro`, `headline`, nested `projects[]`, bullets, tier                                           |
+| `work/experience.json`       | Experience                     | Roles, optional `intro`, role `blurb`/`level` tier, nested `projects[]`, bullets                                             |
 | `research/publications.json` | Publications                   | Title + URL links                                                                                                            |
 | `research/conferences.json`  | Conferences                    | Title + URL links                                                                                                            |
 | `research/speakers.json`     | Speaking engagements           | Title + URL links                                                                                                            |

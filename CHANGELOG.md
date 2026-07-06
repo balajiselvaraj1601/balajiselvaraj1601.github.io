@@ -44,5 +44,6 @@ First production release of the Balaji Selvaraj portfolio site.
 - Education stat tiles use Recognition gold hairline grid (aligned with Kaggle summary pattern)
 - Vision board IDEA lane uses `silver` accent for medal/recognition semantics
 
-[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/balajiselvaraj1601/portfolio_site/releases/tag/v1.0.0

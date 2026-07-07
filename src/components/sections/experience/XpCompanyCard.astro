@@ -42,7 +42,7 @@ const { role, periodLabel } = Astro.props;
           )
         }
       </p>
-      <h3 class="xp-title">{role.position}</h3>
+      <h3 class="card-title xp-title">{role.position}</h3>
       <p class="xp-org">
         <EntityLink
           href={getEntityUrl(role.entity)}
@@ -95,13 +95,6 @@ const { role, periodLabel } = Astro.props;
   .xp-meta__sep {
     color: var(--text-muted);
     opacity: 0.6;
-  }
-  .xp-title {
-    font-size: var(--fs-card-title);
-    font-weight: var(--fw-semibold);
-    line-height: var(--lh-snug);
-    color: var(--heading);
-    margin: 0;
   }
   .xp-org {
     font-size: var(--fs-small);

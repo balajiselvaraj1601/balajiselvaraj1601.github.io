@@ -45,7 +45,7 @@ const logoUrl = logoSrc(item.logo);
     </div>
   </header>
 
-  <h3 class="speaking-card__title">
+  <h3 class="card-title speaking-card__title">
     <a href={item.url} target="_blank" rel="noopener noreferrer"
       >{item.title}<span class="visually-hidden">
         (opens in new window)</span
@@ -92,9 +92,10 @@ const logoUrl = logoSrc(item.logo);
   }
 
   .speaking-card__event {
-    font-size: var(--fs-lg);
-    font-weight: var(--fw-semibold);
+    font-size: var(--fs-subtitle);
+    font-weight: var(--fw-regular);
     color: var(--heading);
+    line-height: var(--lh-body);
   }
 
   .speaking-card__when {
@@ -120,14 +121,6 @@ const logoUrl = logoSrc(item.logo);
     color: var(--text-muted);
     white-space: nowrap;
     line-height: var(--lh-normal);
-  }
-
-  .speaking-card__title {
-    font-family: var(--font-sans);
-    font-size: var(--fs-card-title);
-    font-weight: var(--fw-semibold);
-    line-height: var(--lh-snug);
-    margin: 0;
   }
 
   .speaking-card__title a {

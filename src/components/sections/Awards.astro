@@ -109,7 +109,7 @@ const total = items.length;
                 context="theme-card"
                 emblemInCircle
               />
-              <p class="awards-card__kicker">{a.level}</p>
+              <p class="subhead-kicker">{a.level}</p>
             </Fragment>
             <h3 slot="title" class="recog-title">
               {a.title}
@@ -250,17 +250,6 @@ const total = items.length;
       var(--accent-card, var(--accent)) 40%,
       var(--border)
     );
-  }
-
-  .awards-card__kicker {
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    font-weight: var(--fw-semibold);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--accent-card, var(--accent-ll));
-    margin: 0;
-    max-width: none;
   }
 
   :global(#awards .awards-grid > li.hidden) {

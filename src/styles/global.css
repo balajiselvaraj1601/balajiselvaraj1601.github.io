@@ -531,6 +531,60 @@ button {
 .eyebrow--red {
   color: var(--accent-red-light);
 }
+
+/* T3 — card / block title (standard tier; research uses --fs-card-title-sm, EX-008) */
+.card-title,
+.theme-card__title,
+.recog-title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--heading);
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* T5 — in-section eyebrow sub-head */
+.subhead-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-ll);
+  margin: 0 0 var(--text-gap-block);
+  line-height: var(--lh-tight);
+}
+.subhead-eyebrow--muted {
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-muted);
+}
+
+/* T9 — in-card kicker above title */
+.subhead-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--accent-card, var(--accent-ll));
+  margin: 0;
+  max-width: none;
+  line-height: var(--lh-tight);
+}
+
+/* Section-internal bar label (filter count, etc.) */
+.subhead-bar {
+  font-family: var(--font-sans);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--heading);
+  margin: 0;
+}
+
 .metric-label {
   font-family: var(--font-mono);
   color: var(--text-muted);
@@ -554,16 +608,6 @@ button {
 }
 .theme-card__icon {
   margin-bottom: var(--text-gap-inline);
-}
-.theme-card__title {
-  font-family: var(--font-sans);
-  text-transform: none;
-  letter-spacing: normal;
-  font-size: var(--fs-card-title);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-snug);
-  color: var(--heading);
-  margin: 0;
 }
 .theme-card__desc {
   font-size: var(--fs-base);
@@ -917,9 +961,6 @@ button {
   margin-bottom: var(--stack-md);
 }
 .recog-controls__count {
-  font-size: var(--fs-ml);
-  font-weight: var(--fw-semibold);
-  color: var(--heading);
   margin-right: auto;
 }
 .recog-tools {
@@ -1109,13 +1150,6 @@ html:not(.js) .recog-toggle {
 }
 
 /* shared type scale — title / label / value / body */
-.recog-title {
-  font-size: var(--fs-card-title);
-  font-weight: var(--fw-semibold);
-  line-height: var(--lh-snug);
-  color: var(--heading);
-  margin: 0;
-}
 .recog-title a {
   color: inherit;
   text-decoration: none;

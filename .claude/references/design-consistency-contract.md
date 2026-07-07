@@ -114,6 +114,11 @@ reads as T8 in one section it must not be styled as T9 in another. New elements 
 they never invent a font/size/weight/tracking combination outside the ladder. Every axis —
 font, **weight**, size, tracking, line-height — resolves to a token; no numeric literal.
 
+**Shared heading utilities (global.css):** `.card-title` (T3 standard tier, aliases
+`.theme-card__title` / `.recog-title`) · `.subhead-eyebrow` / `.subhead-eyebrow--muted` (T5
+in-section sub-heads) · `.subhead-kicker` (T9 in-card kickers) · `.subhead-bar` (section-internal
+filter/count labels). Prefer these over ad-hoc component-scoped title/kicker CSS.
+
 ### 3b. Object hierarchy (surface levels)
 
 Text sits inside surfaces; the surface hierarchy is fixed by the card tiers in **§5**

@@ -112,7 +112,7 @@ each section lists the fonts it actually surfaces.
 | Section            | Component                                                | Fonts surfaced                                                                      |
 | ------------------ | -------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Vision Programs    | `VisionPrograms.astro`                                   | Section h2=display · eyebrow=mono · hub/program kickers=mono · ThemeCard title=sans |
-| Vision Impact grid | `vision/VisionImpactGrid.astro` (inside vision-programs) | h3 sub-heading=display · ThemeCard title=sans, body=sans                            |
+| Vision Impact grid | `vision/VisionImpactGrid.astro` (inside vision-programs) | h3 sub-heading=sans T3 (`.card-title`) · ThemeCard title=sans, body=sans            |
 
 ### Contact — `/contact`
 

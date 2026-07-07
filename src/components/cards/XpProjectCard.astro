@@ -30,7 +30,7 @@ const iconName = resolveIcon(icon, 'folder');
     </div>
     <div class="xp-proj__titles">
       {subtitle && <p class="xp-proj__meta">{subtitle}</p>}
-      <h4 class="xp-proj__name">{name}</h4>
+      <h3 class="card-title xp-proj__name">{name}</h3>
     </div>
   </header>
   <ul class="bullet-list">
@@ -75,17 +75,6 @@ const iconName = resolveIcon(icon, 'folder');
     letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     color: var(--accent-card, var(--accent-ll));
-    margin: 0;
-  }
-  .xp-proj__name {
-    /* h4 is a mono kicker globally; this one is a flagship card title (.cs-name anatomy) */
-    font-family: var(--font-sans);
-    font-size: var(--fs-card-title);
-    font-weight: var(--fw-semibold);
-    color: var(--heading);
-    line-height: var(--lh-snug);
-    letter-spacing: normal;
-    text-transform: none;
     margin: 0;
   }
   .is-secondary {

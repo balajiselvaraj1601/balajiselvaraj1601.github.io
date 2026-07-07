@@ -95,7 +95,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
                   iconFallback="link"
                   variant="accented"
                 />
-                <h3 class="connect-name">{c.label}</h3>
+                <h3 class="card-title connect-name">{c.label}</h3>
                 <p class="connect-val">{c.value}</p>
                 <span class="connect-action">
                   {actionLabel(c.type)}
@@ -119,7 +119,7 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
                   iconFallback="link"
                   variant="accented"
                 />
-                <h3 class="connect-name">{c.label}</h3>
+                <h3 class="card-title connect-name">{c.label}</h3>
                 <p class="connect-val">{c.value}</p>
               </div>
             );
@@ -222,11 +222,6 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
      accent (blue) instead of neutral --brand-mark ink. */
   .connect-card :global(.icon--brand) {
     color: var(--accent-card, var(--accent));
-  }
-  .connect-name {
-    font-size: var(--fs-card-title);
-    font-weight: var(--fw-semibold);
-    color: var(--heading);
   }
   .connect-val {
     font-size: var(--fs-sm);

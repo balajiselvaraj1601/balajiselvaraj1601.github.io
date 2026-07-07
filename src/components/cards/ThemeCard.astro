@@ -93,7 +93,7 @@ const rectLogoSlug =
   {
     label ? (
       <>
-        <p class="program-card__label">{label}</p>
+        <p class="subhead-kicker program-card__label">{label}</p>
         <ul class="program-card__lines">
           {lines.map((line) => (
             <li>{line}</li>
@@ -116,16 +116,9 @@ const rectLogoSlug =
     max-width: 100%;
   }
 
-  /* Program label kicker (mono, uppercase) */
+  /* Program label kicker — margin after title */
   .program-card__label {
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    font-weight: var(--fw-semibold);
-    letter-spacing: var(--tracking-wider);
-    text-transform: uppercase;
-    color: var(--accent-card, var(--accent-ll));
     margin: var(--text-gap-pair) 0 0;
-    max-width: none;
   }
 
   /* Program bullet list */

@@ -10,7 +10,7 @@ const { role } = Astro.props;
 ---
 
 <div class="xp-work">
-  <p class="xp-work__label">Key Projects</p>
+  <p class="subhead-eyebrow xp-work__label">Key Projects</p>
 
   {
     role.projects.length > 1 && (
@@ -67,12 +67,8 @@ const { role } = Astro.props;
     padding-left: var(--stack-md);
   }
   .xp-work__label {
-    font-family: var(--font-mono);
-    font-size: var(--fs-eyebrow);
-    letter-spacing: var(--tracking-eyebrow);
-    text-transform: uppercase;
     color: var(--accent-card, var(--accent-ll));
-    margin: 0;
+    margin-bottom: 0;
   }
   .xp-filters {
     margin: 0;

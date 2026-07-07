@@ -83,7 +83,7 @@ const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
         class:list={['leadership__card-row', 'reveal', `cat-${key}`]}
         data-category={key}
       >
-        <h3 class="leadership__diff-heading">{heading}</h3>
+        <p class="subhead-eyebrow leadership__diff-heading">{heading}</p>
         <ul class="theme-grid" role="list">
           {(items ?? []).map((item) => (
             <li class="theme-card card">
@@ -149,13 +149,7 @@ const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
      keyed to --accent-card (== --cat on each row). */
 
   .leadership__diff-heading {
-    font-size: var(--fs-eyebrow);
-    font-family: var(--font-mono);
-    font-weight: var(--fw-regular);
-    letter-spacing: var(--tracking-eyebrow);
-    text-transform: uppercase;
     color: var(--accent-card, var(--accent-ll));
-    margin-bottom: var(--text-gap-block);
   }
 
   .leadership__blocks {

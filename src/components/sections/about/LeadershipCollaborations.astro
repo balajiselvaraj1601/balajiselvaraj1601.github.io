@@ -4,7 +4,9 @@ import { collaborations, getEntityUrl, logoSrc } from '@lib/content';
 ---
 
 <div class="leadership__collabs reveal">
-  <h3 class="leadership__collabs-heading">{collaborations.title}</h3>
+  <p class="subhead-eyebrow subhead-eyebrow--muted leadership__collabs-heading">
+    {collaborations.title}
+  </p>
   <ul class="leadership__collabs-list" role="list">
     {
       collaborations.items.map((item) => {
@@ -40,12 +42,6 @@ import { collaborations, getEntityUrl, logoSrc } from '@lib/content';
     margin-top: var(--stack-xl);
   }
   .leadership__collabs-heading {
-    font-size: var(--fs-eyebrow);
-    font-family: var(--font-mono);
-    font-weight: var(--fw-regular);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-muted);
     margin-bottom: var(--text-gap-block);
   }
   .leadership__collabs-list {

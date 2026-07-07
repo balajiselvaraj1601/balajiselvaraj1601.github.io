@@ -66,6 +66,17 @@ export const profileSchema = z.object({
       governancePrivacy: z.string(),
       governanceGxP: z.string(),
     }),
+    blockSubheadings: z
+      .object({
+        strategicVision: z.string().optional(),
+        businessImpact: z.string().optional(),
+        platform: z.string().optional(),
+        peopleMentoring: z.string().optional(),
+        governanceAI: z.string().optional(),
+        governancePrivacy: z.string().optional(),
+        governanceGxP: z.string().optional(),
+      })
+      .optional(),
     strategicVision: z.array(TitledIconItem).optional(),
     businessImpact: z.array(TitledIconItem).optional(),
     platform: z.array(TitledIconItem).optional(),

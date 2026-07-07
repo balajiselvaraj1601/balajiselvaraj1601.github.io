@@ -4,6 +4,7 @@ import { profile } from '@lib/content';
 
 const {
   blockHeadings,
+  blockSubheadings,
   strategicVision,
   businessImpact,
   platform,
@@ -17,32 +18,43 @@ const cardBlocks = [
   {
     key: 'strategicVision',
     heading: blockHeadings.strategicVision,
+    subheading: blockSubheadings?.strategicVision,
     items: strategicVision,
   },
   {
     key: 'businessImpact',
     heading: blockHeadings.businessImpact,
+    subheading: blockSubheadings?.businessImpact,
     items: businessImpact,
   },
-  { key: 'platform', heading: blockHeadings.platform, items: platform },
+  {
+    key: 'platform',
+    heading: blockHeadings.platform,
+    subheading: blockSubheadings?.platform,
+    items: platform,
+  },
   {
     key: 'peopleMentoring',
     heading: blockHeadings.peopleMentoring,
+    subheading: blockSubheadings?.peopleMentoring,
     items: peopleMentoring,
   },
   {
     key: 'governanceAI',
     heading: blockHeadings.governanceAI,
+    subheading: blockSubheadings?.governanceAI,
     items: governanceAI,
   },
   {
     key: 'governancePrivacy',
     heading: blockHeadings.governancePrivacy,
+    subheading: blockSubheadings?.governancePrivacy,
     items: governancePrivacy,
   },
   {
     key: 'governanceGxP',
     heading: blockHeadings.governanceGxP,
+    subheading: blockSubheadings?.governanceGxP,
     items: governanceGxP,
   },
 ];
@@ -78,12 +90,17 @@ const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
 
 <div class="leadership__blocks" data-about-grid>
   {
-    visibleBlocks.map(({ key, heading, items }) => (
+    visibleBlocks.map(({ key, heading, subheading, items }) => (
       <div
         class:list={['leadership__card-row', 'reveal', `cat-${key}`]}
         data-category={key}
       >
         <p class="subhead-eyebrow leadership__diff-heading">{heading}</p>
+        {subheading && (
+          <p class="subhead-eyebrow subhead-eyebrow--muted leadership__block-subheading">
+            {subheading}
+          </p>
+        )}
         <ul class="theme-grid" role="list">
           {(items ?? []).map((item) => (
             <li class="theme-card card">
@@ -150,6 +167,11 @@ const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
 
   .leadership__diff-heading {
     color: var(--accent-card, var(--accent-ll));
+  }
+
+  .leadership__block-subheading {
+    margin-top: var(--text-gap-pair);
+    margin-bottom: 0;
   }
 
   .leadership__blocks {

@@ -37,16 +37,22 @@
       "icon": "funding"
     },
     {
-      "value": "5 Countries",
-      "label": "Globally distributed team",
-      "detail": "India, UK, Sweden, Mexico, China",
-      "icon": "globe"
-    },
-    {
       "value": "2",
       "label": "Secured & delivered",
       "detail": "Executive projects · Chief Scientist & SVP",
       "icon": "target"
+    },
+    {
+      "value": "10+",
+      "label": "AI Projects delivered",
+      "detail": "Across Product, Service, Startup Ecosystem",
+      "icon": "chart"
+    },
+    {
+      "value": "5 Countries",
+      "label": "Globally distributed team",
+      "detail": "India, UK, Sweden, Mexico, China",
+      "icon": "globe"
     }
   ],
   "ctas": [],
@@ -60,9 +66,7 @@
   },
   "leadershipPhilosophy": {
     "intro": [
-      "I lead AI the way a CTO does — securing the sponsorship and setting the strategy before the first model exists.",
-      "Then building the platform, team, and guardrails that turn conviction into shipped, regulated value.",
-      "My edge: a biomedical engineer across 400+ surgeries and 5 specialties, now architecting production AI — science, business case, and system in one conversation."
+      "Hands-on Technical AI Lead with 12+ years spanning product, services, and startup environments."
     ],
     "blockHeadings": {
       "strategicVision": "Strategy & Sponsorship",
@@ -73,10 +77,13 @@
       "governancePrivacy": "Privacy & Data Protection",
       "governanceGxP": "GxP Compliance"
     },
+    "blockSubheadings": {
+      "governancePrivacy": "Partnered with the Data Office"
+    },
     "strategicVision": [
       {
-        "title": "Sell first, build next",
-        "description": "Secure executive sponsorship and align portfolios before data or infrastructure exist — turning five ambiguous, competing directions into 2 funded, company-scale programs.",
+        "title": "Executive Sponsorship & Portfolio Strategy",
+        "description": "Secured executive sponsorship and built consensus around a shared strategic direction, transforming five ambiguous initiatives into two funded, enterprise-scale programs.",
         "icon": "handshake"
       },
       {
@@ -85,74 +92,79 @@
         "icon": "institution"
       },
       {
-        "title": "Positioned across the org",
-        "description": "Positioned a newly formed AI team across 7 internal groups and 3 startups by delivering differentiated and strategically valuable AI capabilities, aligned to AstraZeneca's 3 R&D priority areas — Oncology, Biopharma R&D, and CPSS — over three consecutive years.",
+        "title": "Enterprise Positioning",
+        "description": "Established a newly formed AI team as a trusted enterprise partner across seven internal business groups and three startups through differentiated AI capabilities aligned to strategic business needs.",
         "icon": "link"
       },
       {
-        "title": "Authored the 2030 roadmap",
-        "description": "Shaped an innovative multimodal AI vision aligned with AstraZeneca's 2030 Gene & Cell Therapy ambitions, later submitted to Gartner by GITC Chennai.",
+        "title": "3 Scorecards",
+        "description": "Delivered AI programs across Oncology, Biopharma R&D, and CPSS, aligning with AstraZeneca's 3 R&D priority areas over 3 consecutive years.",
+        "icon": "chart"
+      },
+      {
+        "title": "Authored the 2030 AI Vision",
+        "description": "Authored a multimodal AI vision aligned with AstraZeneca's 2030 Gene & Cell Therapy strategy, later submitted to Gartner by GITC Chennai.",
         "icon": "vision"
       }
     ],
     "businessImpact": [
       {
         "title": "$20–50M projected annual savings",
-        "description": "Business case for the flagship $3M+ SVP-sponsored drug-safety AI platform — building predictive toxicology models that reduce animal studies and compress safety timelines from 5 to 3 years.",
+        "description": "Secured and delivered a $3M+ SVP-sponsored drug safety initiative, developing predictive AI toxicology models projected to save $20M–$50M annually.",
         "icon": "funding"
       },
       {
-        "title": "5 years → 3 years",
-        "description": "Compressed drug-safety study timelines by two years, converting model performance into regulated program speed.",
+        "title": "5 Years → 3 Years",
+        "description": "Accelerated drug safety programs by two years, reducing study timelines from five years to three through predictive AI toxicology.",
         "icon": "clock"
       },
       {
-        "title": "$40K/yr + $3K/month recovered",
-        "description": "Restructured tooling to recover $40K/yr in licensing and $3K/month in idle GPU spend, with cost treated as a design constraint.",
-        "icon": "save"
-      },
-      {
-        "title": "~6 months capacity freed",
-        "description": "Refocused AI investments by retiring low-probability initiatives, recovering 6 months of delivery capacity and reducing infrastructure costs.",
+        "title": "Portfolio Optimization",
+        "description": "Optimized the AI investment portfolio, recovering approximately six months of delivery capacity while reducing infrastructure costs.",
         "icon": "hand"
       }
     ],
     "platform": [
       {
-        "title": "The internal AI platform the org ships on",
-        "description": "Built a reusable, cross-platform foundation-model framework to standardize training, inference, and evaluation of vision foundation models across 3 clinical imaging modalities and 3 internal infrastructures.",
+        "title": "Enterprise AI Platform",
+        "description": "Built and deployed a foundation-model platform that standardized training, inference, and evaluation across three clinical imaging modalities and 3 internal infrastructures.",
         "icon": "blocks"
       },
       {
-        "title": "GxP-compliant production AI",
-        "description": "First on the team to deploy AWS SageMaker training and Lambda inference inside AstraZeneca's GxP-compliant AI-Bench — establishing the regulated path others build on.",
+        "title": "GxP-Compliant Production AI",
+        "description": "Engineered production AI pipelines within AstraZeneca's GxP-compliant platform, supporting validated, traceable, and audit-ready AI deployment.",
         "icon": "cloud"
       },
       {
-        "title": "Distributed training at scale",
-        "description": "FSDP/DeepSpeed with spot-instance checkpointing, engineered so large-model training runs with cost as a first-class design constraint.",
+        "title": "Distributed Foundation Model Training",
+        "description": "Built distributed training infrastructure with FSDP and DeepSpeed, reducing training bottlenecks and enabling enterprise-scale foundation model development.",
         "icon": "layers"
+      },
+      {
+        "title": "Cost-Optimized Platform Design",
+        "description": "Designed a cost-efficient AI tooling strategy that reduced annual licensing costs by $40K while preserving enterprise capabilities.",
+        "icon": "save"
       }
     ],
     "peopleMentoring": [
       {
-        "title": "Scaled 1 → 12 across 5 countries",
-        "description": "Scaled a multicultural AI engineering team from 1 to 12 members across India (6), UK (2), Sweden (2), Mexico (1), and China (1).",
+        "title": "Global Team Scaling",
+        "description": "Built and led a multicultural AI engineering team spanning five countries, scaling from 1 to 12 engineers.",
         "icon": "team"
       },
       {
-        "title": "Career mentoring",
-        "description": "Mentored 7 AI/ML graduate trainees across AstraZeneca and HCL — 4 progressed to full-time industry roles, with others advancing to postgraduate studies.",
+        "title": "Talent Development",
+        "description": "Mentored 10 AI/ML graduate trainees across AstraZeneca and HCL, with 8 transitioning to full-time industry roles and others progressing to postgraduate studies.",
         "icon": "graduation"
       },
       {
-        "title": "Kaggle coaching",
-        "description": "Mentored a team of junior engineers (3) to secure a Kaggle Bronze (Top 6%, 76th/1,220).",
+        "title": "AI Talent Development",
+        "description": "Developed and coached a team of three junior engineers to earn a Kaggle Bronze Medal, ranking 76th of 1,220 teams (Top 6%).",
         "icon": "trophy"
       },
       {
-        "title": "Hackathon mentoring",
-        "description": "Coached a 4-student team to a Top 4 national finish at Smart India Hackathon (2019).",
+        "title": "Emerging Talent Development",
+        "description": "Developed and coached a four-student team to a Top 4 national finish at the Smart India Hackathon (2019).",
         "icon": "target"
       }
     ],
@@ -170,28 +182,17 @@
     ],
     "governancePrivacy": [
       {
-        "title": "GDPR & HIPAA in clinical AI",
-        "description": "Partnered with the Data Office to ensure AI pipelines processing patient and clinical data comply with GDPR and HIPAA — data minimisation, purpose limitation, and subject access rights built into the data architecture.",
+        "title": "Regulated Data Architecture",
+        "description": "Ensured AI pipelines processing patient and clinical data complied with GDPR and HIPAA by embedding privacy and regulatory controls into the data architecture.",
         "icon": "clipboard"
       },
       {
-        "title": "FAIR data for AI training",
-        "description": "Governed training data under FAIR principles (Findable, Accessible, Interoperable, Reusable) in partnership with the Data Office — ensuring scientific rigour and cross-study reusability across AI models.",
+        "title": "FAIR Data Governance",
+        "description": "Ensured AI training data adhered to FAIR (Findable, Accessible, Interoperable, Reusable) principles, enabling scientifically rigorous, interoperable, and reusable datasets across clinical studies and AI models.",
         "icon": "globe"
       }
     ],
-    "governanceGxP": [
-      {
-        "title": "GxP-compliant AI delivery",
-        "description": "Shipped AI inside regulated GxP boundaries, making compliance a build-time property rather than a release-time audit.",
-        "icon": "document"
-      },
-      {
-        "title": "Validation & audit trails",
-        "description": "Enforced change control and maintained end-to-end audit trails for AI systems in GxP settings — keeping documentation inspection-ready and reducing regulatory exposure at deployment.",
-        "icon": "scan"
-      }
-    ]
+    "governanceGxP": []
   },
   "contactIntro": "Open to discussing AI leadership opportunities, research collaborations, and advisory roles.",
   "contactPage": {

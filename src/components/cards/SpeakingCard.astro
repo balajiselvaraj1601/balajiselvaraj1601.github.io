@@ -1,7 +1,7 @@
 ---
 import SpeakingMedia from '@components/cards/speaking/SpeakingMedia.astro';
 import CardMark from '@components/ui/CardMark.astro';
-import { logoSrc } from '@lib/content';
+import { logoSrc, site } from '@lib/content';
 import type { Speakers } from '@schemas';
 
 type Item = Speakers['items'][number];
@@ -12,6 +12,7 @@ interface Props {
 
 const { item } = Astro.props;
 const logoUrl = logoSrc(item.logo);
+const { common } = site.ui;
 ---
 
 <article class="speaking-card content-card card-accent">
@@ -48,7 +49,7 @@ const logoUrl = logoSrc(item.logo);
   <h3 class="card-title speaking-card__title">
     <a href={item.url} target="_blank" rel="noopener noreferrer"
       >{item.title}<span class="visually-hidden">
-        (opens in new window)</span
+        {common.opensInNewWindow}</span
       ></a
     >
   </h3>

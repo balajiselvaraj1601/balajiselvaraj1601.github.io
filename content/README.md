@@ -14,28 +14,27 @@ re-derive these files rather than editing both independently.
 
 - **No phone number.** The resume's phone field is omitted everywhere (public-site privacy).
 - **No References.** The resume's `references` section is private and is not surfaced.
-- **Contact** in `person/profile.json` includes email, LinkedIn, Kaggle, GitHub, and location (no phone).
+- **Contact** in `pages/06_contact.json` includes email, LinkedIn, Kaggle, GitHub, and location (no phone).
 - **Kaggle:** uses the compact list (`kaggle_compact` in the resume); the duplicate raw
   `kaggle` list with per-competition descriptions is intentionally dropped.
 
 ## Files
 
-| File                         | Drives                              | Source in resume                |
-| ---------------------------- | ----------------------------------- | ------------------------------- |
-| `site.json`                  | Site meta, nav, SEO defaults, theme | derived                         |
-| `person/profile.json`        | Hero, About, Contact                | `personal` (no phone)           |
-| `person/collaborations.json` | Collaborations strip                | derived                         |
-| `work/vision-board.json`     | Vision (programs + org impact)      | derived                         |
-| `work/experience.json`       | Experience timeline                 | `sections[id="experience"]`     |
-| `research/publications.json` | Publications                        | `sections[id="publications"]`   |
-| `research/conferences.json`  | Conferences                         | `sections[id="conferences"]`    |
-| `research/speakers.json`     | Speaking Engagements                | derived                         |
-| `recognition/education.json` | Education                           | `sections[id="education"]`      |
-| `recognition/awards.json`    | Awards & Recognition                | `sections[id="awards"]`         |
-| `recognition/kaggle.json`    | Kaggle Competitions                 | `sections[id="kaggle_compact"]` |
-| `entities.json`              | Entity URL/name registry            | derived                         |
+All production content JSON now lives in `content/pages/`, numbered by visible
+nav-view order.
 
-Project narratives are nested inside `work/experience.json` → `roles[].projects[]`.
+| File                        | Drives                                                         | Source in resume                |
+| --------------------------- | -------------------------------------------------------------- | ------------------------------- |
+| `pages/00_site.json`        | Site meta, nav, SEO defaults, section wiring, shared UI labels | derived                         |
+| `pages/01_about.json`       | Hero, Thirukural, About, collaborations                        | `personal` + derived            |
+| `pages/02_experience.json`  | Experience timeline                                            | `sections[id="experience"]`     |
+| `pages/03_research.json`    | Publications, conferences, speaking engagements                | research sections + derived     |
+| `pages/04_recognition.json` | Awards, Kaggle competitions, education                         | recognition sections            |
+| `pages/05_vision.json`      | Vision programs + organizational impact                        | derived                         |
+| `pages/06_contact.json`     | Contact page copy and public contact channels                  | `personal.contact[]` (no phone) |
+| `pages/99_entities.json`    | Shared entity URL/name registry                                | derived                         |
+
+Project narratives are nested inside `pages/02_experience.json` → `roles[].projects[]`.
 
 ## Editing guide
 

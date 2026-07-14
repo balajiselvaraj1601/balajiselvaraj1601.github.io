@@ -1,6 +1,6 @@
 ---
 import CardMark from '@components/ui/CardMark.astro';
-import { logoSrc } from '@lib/content';
+import { logoSrc, site } from '@lib/content';
 import { youtubeId } from '@lib/youtube';
 
 interface Props {
@@ -32,6 +32,7 @@ const isStacked = variant === 'stacked';
 const ytId = youtubeId(youtube);
 const ytEmbed = ytId ? `https://www.youtube-nocookie.com/embed/${ytId}` : null;
 const logoUrl = logoSrc(logo);
+const { common } = site.ui;
 ---
 
 <article
@@ -67,7 +68,7 @@ const logoUrl = logoSrc(logo);
       <h3>
         <a href={href} target="_blank" rel="noopener noreferrer">
           {title}
-          <span class="visually-hidden"> (opens in new window)</span>
+          <span class="visually-hidden">{common.opensInNewWindow}</span>
         </a>
       </h3>
     ) : (
@@ -101,7 +102,7 @@ const logoUrl = logoSrc(logo);
       <div class="rcard-video">
         <iframe
           src={ytEmbed}
-          title={`${title} — video`}
+          title={`${title}${common.videoTitleSuffix}`}
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"

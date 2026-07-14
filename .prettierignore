@@ -5,6 +5,8 @@ node_modules/
 public/
 package-lock.json
 *.log
+.claude/
+tmp/
 src/lib/icon-paths.json
 docs/audits/
 content/drafts/competitions/

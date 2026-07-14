@@ -62,9 +62,9 @@ simultaneously — dev stays on 4321, preview on 4331.
 | Goal                               | Edit                                                | Do not edit                   |
 | ---------------------------------- | --------------------------------------------------- | ----------------------------- |
 | Change site copy                   | JSON under `content/`                               | Section components (for copy) |
-| Change route sections / visibility | `content/site.json`                                 | `src/pages/*.astro` order     |
+| Change route sections / visibility | `content/pages/00_site.json`                        | `src/pages/*.astro` order     |
 | Change styling                     | `src/styles/global.css`, component `<style>` blocks | —                             |
-| Change SEO defaults                | `content/site.json` → `seo`                         | Hardcode meta in components   |
+| Change SEO defaults                | `content/pages/00_site.json` → `seo`                | Hardcode meta in components   |
 | Replace résumé / OG image          | `public/assets/**`                                  | —                             |
 | Change live URL                    | `astro.config.mjs` + `public/robots.txt`            | —                             |
 

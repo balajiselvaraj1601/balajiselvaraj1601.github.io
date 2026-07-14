@@ -20,7 +20,12 @@ export function initSiteChrome(navViewsConfig?: SectionViewsOptions) {
   function setMenu(open: boolean) {
     nav?.classList.toggle('is-open', open);
     navToggle?.setAttribute('aria-expanded', String(open));
-    navToggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    const openLabel =
+      navToggle?.getAttribute('data-open-label') ??
+      navToggle?.getAttribute('aria-label') ??
+      '';
+    const closeLabel = navToggle?.getAttribute('data-close-label') ?? openLabel;
+    navToggle?.setAttribute('aria-label', open ? closeLabel : openLabel);
     document.body.style.overflow = open ? 'hidden' : '';
     main?.toggleAttribute('inert', open);
     footer?.toggleAttribute('inert', open);

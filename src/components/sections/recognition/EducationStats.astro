@@ -2,7 +2,7 @@
 import Icon from '@components/ui/Icon.astro';
 import MarkEmblem from '@components/ui/MarkEmblem.astro';
 import EntityLink from '@components/ui/EntityLink.astro';
-import { getEntityUrl, logoSrc } from '@lib/content';
+import { getEntityUrl, logoSrc, site } from '@lib/content';
 import type { IconName } from '@lib/icons';
 import type { EducationRecord } from '@schemas';
 
@@ -21,6 +21,7 @@ function formatGpa(value?: string) {
 const achievementLines = [record.achievement, record.achievementDetail].filter(
   (line): line is string => Boolean(line)
 );
+const labels = site.ui.recognition.education;
 
 type StatCell = {
   icon: IconName;
@@ -36,7 +37,7 @@ const stats: StatCell[] = [
   {
     icon: 'institution',
     img: 'logo_education_institution',
-    label: 'Institution',
+    label: labels.institutionLabel,
     value: record.institution,
     href: entityUrl,
     linkLabel: record.institution,
@@ -44,7 +45,7 @@ const stats: StatCell[] = [
   {
     icon: 'calendar',
     img: 'logo_education_calendar',
-    label: 'Period',
+    label: labels.periodLabel,
     value: record.period,
   },
   ...(record.gpa
@@ -52,7 +53,7 @@ const stats: StatCell[] = [
         {
           icon: 'chart' as IconName,
           img: 'logo_education_cgpa',
-          label: 'GPA',
+          label: labels.gpaLabel,
           value: formatGpa(record.gpa)!,
         },
       ]
@@ -62,7 +63,7 @@ const stats: StatCell[] = [
         {
           icon: 'trophy' as IconName,
           img: 'logo_education_medal',
-          label: 'Achievement',
+          label: labels.achievementLabel,
           lines: achievementLines,
         },
       ]

@@ -126,7 +126,14 @@ export async function savePage(): Promise<void> {
     setTimeout(() => URL.revokeObjectURL(objectUrl), 10_000);
   } catch (err) {
     console.error('[save-page] Failed to save page:', err);
-    if (btn) btn.setAttribute('aria-label', 'Save failed — try again');
+    if (btn) {
+      btn.setAttribute(
+        'aria-label',
+        btn.getAttribute('data-save-failed-label') ??
+          btn.getAttribute('aria-label') ??
+          ''
+      );
+    }
   } finally {
     if (btn) {
       btn.removeAttribute('aria-busy');

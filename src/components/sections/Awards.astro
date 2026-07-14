@@ -43,6 +43,8 @@ const items = [...awards.items].sort(
 const featuredCount = items.filter((a) =>
   (DEFAULT_LEVELS as readonly string[]).includes(a.level)
 ).length;
+const { common, recognition } = site.ui;
+const { awards: awardsUi } = recognition;
 ---
 
 <Section
@@ -68,13 +70,13 @@ const featuredCount = items.filter((a) =>
   </div>
 
   <RecogControls
-    countLabel="All Awards"
+    countLabel={awardsUi.countLabel}
     total={featuredCount}
     countDataAttr="data-awards-count"
     searchDataAttr="data-awards-search"
-    searchPlaceholder="Search awards…"
-    searchAriaLabel="Search awards by title, nominator, or reason"
-    filterGroupLabel="Filter by nominator level"
+    searchPlaceholder={awardsUi.searchPlaceholder}
+    searchAriaLabel={awardsUi.searchAriaLabel}
+    filterGroupLabel={awardsUi.filterGroupLabel}
   >
     <button
       type="button"
@@ -82,7 +84,7 @@ const featuredCount = items.filter((a) =>
       data-filter="featured"
       aria-pressed="true"
     >
-      Leadership
+      {awardsUi.featuredFilter}
     </button>
     <button
       type="button"
@@ -90,7 +92,7 @@ const featuredCount = items.filter((a) =>
       data-filter="all"
       aria-pressed="false"
     >
-      All
+      {common.all}
     </button>
     {
       LEVELS.map((level) => (
@@ -140,18 +142,18 @@ const featuredCount = items.filter((a) =>
 
             <dl class="awards-card__meta">
               <div class="awards-card__meta-pair">
-                <dt class="recog-label">Nominator</dt>
+                <dt class="recog-label">{awardsUi.nominatorLabel}</dt>
                 <dd class="recog-value">
                   {a.nominator} · {a.designation}
                 </dd>
               </div>
               <div class="awards-card__meta-pair">
-                <dt class="recog-label">Reason</dt>
+                <dt class="recog-label">{awardsUi.reasonLabel}</dt>
                 <dd class="recog-value">{a.reason}</dd>
               </div>
               {a.date && (
                 <div class="awards-card__meta-pair">
-                  <dt class="recog-label">Date</dt>
+                  <dt class="recog-label">{awardsUi.dateLabel}</dt>
                   <dd class="recog-value">{a.date}</dd>
                 </div>
               )}
@@ -170,7 +172,7 @@ const featuredCount = items.filter((a) =>
   </ul>
 
   <p class="recog-empty" data-awards-empty hidden>
-    No awards match your search.
+    {awardsUi.emptyState}
   </p>
 </Section>
 

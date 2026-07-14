@@ -24,7 +24,7 @@ them exactly — they are part of your instructions:
 
 | #   | Rule                                                                                                                                                                                               |
 | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| V1  | Content source: `content/recognition/*.json` only (awards, kaggle, education).                                                                                                                     |
+| V1  | Content source: `content/pages/04_recognition.json` only (awards, kaggle, education).                                                                                                              |
 | V2  | Your card shells must match the contract §5 reference implementation (ResearchCard) — compare padding/radius/lift during audit and cite §5.                                                        |
 | V3  | Section variants per contract §6: awards `default`, kaggle `alt`, education `default`.                                                                                                             |
 | V4  | Medal/level colors use `--lvl-*` / `--medal-*` tokens.                                                                                                                                             |
@@ -36,9 +36,9 @@ Page brief: `docs/page-briefs/recognition.md`
 
 | Section id | Component                                 | Content                              |
 | ---------- | ----------------------------------------- | ------------------------------------ |
-| awards     | `src/components/sections/Awards.astro`    | `content/recognition/awards.json`    |
-| kaggle     | `src/components/sections/Kaggle.astro`    | `content/recognition/kaggle.json`    |
-| education  | `src/components/sections/Education.astro` | `content/recognition/education.json` |
+| awards     | `src/components/sections/Awards.astro`    | `content/pages/04_recognition.json` |
+| kaggle     | `src/components/sections/Kaggle.astro`    | `content/pages/04_recognition.json` |
+| education  | `src/components/sections/Education.astro` | `content/pages/04_recognition.json` |
 
 Guardian-owned shared components used here (audit-only, never edit):
 `RecogCardShell.astro`, `RecogControls.astro`, `CompetitionCard.astro`, `RecogTile.astro`

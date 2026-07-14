@@ -24,7 +24,7 @@ them exactly — they are part of your instructions:
 
 | #   | Rule                                                                                                                                                                                                                                           |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| V1  | Content source: `content/person/profile.json` and `content/person/collaborations.json` only.                                                                                                                                                   |
+| V1  | Content source: `content/pages/01_about.json` only.                                                                                                                                                   |
 | V2  | Hero + thirukural are wrapped by `HeroLanding.astro`, not `Section.astro` directly (contract §1); always audit HeroLanding when auditing either.                                                                                               |
 | V3  | About uses `Section.astro` with `variant="alt"` and `section--compact-top` (zero top padding — Thirukural `margin-bottom` owns the hero-band → about gap).                                                                                     |
 | V4  | Tamil text renders in Inter — never DM Serif (contract §3).                                                                                                                                                                                    |
@@ -39,9 +39,9 @@ Page brief: `docs/page-briefs/home.md`
 
 | Section id | Component                                                                         | Content                                                             |
 | ---------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| hero       | `src/components/sections/Hero.astro`, `src/components/sections/HeroLanding.astro` | `content/person/profile.json`                                       |
-| thirukural | `src/components/sections/ThirukuralQuote.astro`                                   | `content/person/profile.json`                                       |
-| about      | `src/components/sections/About.astro`                                             | `content/person/profile.json`, `content/person/collaborations.json` |
+| hero       | `src/components/sections/Hero.astro`, `src/components/sections/HeroLanding.astro` | `content/pages/01_about.json`                                       |
+| thirukural | `src/components/sections/ThirukuralQuote.astro`                                   | `content/pages/01_about.json`                                       |
+| about      | `src/components/sections/About.astro`                                             | `content/pages/01_about.json`                                       |
 
 Guardian-owned shared components used here (audit-only, never edit):
 `Portrait.astro`, `CardMark.astro`, `HeroCanvas.astro` (site-wide hero backdrop —

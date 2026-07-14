@@ -24,14 +24,14 @@ meant to add a new field — extend the schema first (see
 ## 2. Entity slug resolution
 
 After load, `assertEntitySlug()` checks every `entity` slug against the keys of
-`content/entities.json`, for Experience roles, Collaborations, Education records,
+`content/pages/99_entities.json`, for Experience roles, Collaborations, Education records,
 and Vision programs. A dangling slug throws:
 
 ```
 <context>: unknown entity slug "<slug>"
 ```
 
-**Fix:** add `"<slug>": { "name": …, "url": … }` to `content/entities.json`
+**Fix:** add `"<slug>": { "name": …, "url": … }` to `content/pages/99_entities.json`
 (the `url` must itself be a valid URL, enforced by `entitiesSchema`), or correct
 the slug in the content file.
 
@@ -55,7 +55,7 @@ or remove/correct the `logo`/`asset` reference. (Adding the _image itself_ is th
 ## 4. Section / view wiring
 
 Still in `content.ts`, after nav derivation, several assertions guard
-`content/site.json` wiring. Each throws a distinct message:
+`content/pages/00_site.json` wiring. Each throws a distinct message:
 
 | Condition                                                  | Message (from `content.ts`)                                      |
 | ---------------------------------------------------------- | ---------------------------------------------------------------- |

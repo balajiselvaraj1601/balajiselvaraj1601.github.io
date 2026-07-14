@@ -1,0 +1,85 @@
+{
+  "publications": {
+    "title": "Publications",
+    "items": [
+      {
+        "label": "Journal for ImmunoTherapy of Cancer • 2021",
+        "title": "GraphITE: Unsupervised Graph Embeddings for Multiplex Immunofluorescence Image Exploration",
+        "description": "Developed an unsupervised graph embedding framework for interactive exploration and visualization of multiplex immunofluorescence images.",
+        "url": "https://jitc.bmj.com/lookup/doi/10.1136/jitc-2021-SITC2021.822",
+        "logo": "jitc"
+      },
+      {
+        "label": "bioRxiv • 2021",
+        "title": "Image Model Embeddings for Digital Pathology and Drug Development via Self-Supervised Learning",
+        "description": "Proposed self-supervised image representation learning for pathology images to support downstream tasks in drug discovery and development.",
+        "url": "https://doi.org/10.1101/2021.09.20.461088",
+        "logo": "biorxiv"
+      },
+      {
+        "label": "bioRxiv • 2021",
+        "title": "An Unsupervised Graph Embeddings Approach to Multiplex Immunofluorescence Image Exploration",
+        "description": "Early version of GraphITE: unsupervised graph embeddings for exploring multiplex immunofluorescence images.",
+        "url": "https://doi.org/10.1101/2021.06.09.447654",
+        "logo": "biorxiv"
+      }
+    ]
+  },
+  "conferences": {
+    "title": "Conferences",
+    "items": [
+      {
+        "label": "American Association for Cancer Research (AACR) • 2024",
+        "title": "Fast, Interactive, AI-Assisted 3D Lung Tumor Segmentation",
+        "description": "Presented a fast, interactive AI-assisted 3D lung tumor segmentation approach for clinical CT imaging.",
+        "url": "https://aacrjournals.org/cancerres/article/84/6_Supplement/887/741446/Abstract-887-Fast-interactive-AI-assisted-3D-lung",
+        "logo": "aacr"
+      },
+      {
+        "label": "American Association for Cancer Research (AACR) • 2023",
+        "title": "Improving Non-Small Cell Lung Cancer Segmentation on a Challenging Dataset",
+        "description": "Presented segmentation methods that improved performance on challenging non-small cell lung cancer cohorts.",
+        "url": "https://aacrjournals.org/cancerres/article/83/7_Supplement/5427/719631/Abstract-5427-Improving-non-small-cell-lung-cancer",
+        "logo": "aacr"
+      },
+      {
+        "label": "American Association for Cancer Research (AACR) • 2021",
+        "title": "Leveraging Graphs to Do Hypothesis & Data-Driven Research Using Multiplex Immunofluorescence Images",
+        "description": "Presented graph-based methods for hypothesis- and data-driven research using multiplex immunofluorescence images.",
+        "url": "https://aacrjournals.org/clincancerres/article/27/5_Supplement/PR-05/32768/Abstract-PR-05-Leveraging-graphs-to-do-novel",
+        "logo": "aacr"
+      }
+    ]
+  },
+  "speakers": {
+    "title": "Speaking Engagements",
+    "items": [
+      {
+        "role": "SPEAKER",
+        "event": "Gothenburg Artificial Intelligence Alliance (GAIA) 2025",
+        "location": "Gothenburg, Sweden",
+        "date": "April 10–11, 2025",
+        "dateSort": "2025-04-10",
+        "title": "Transformative AI and single-cell technologies revolutionizing healthcare",
+        "description": "Explored how foundation models and single-cell technologies are reshaping precision medicine and accelerating therapeutic discovery.",
+        "url": "https://www.gaia.fish/2025",
+        "youtube": "https://www.youtube.com/watch?v=YOtXxiU048M",
+        "logo": "gaia"
+      },
+      {
+        "role": "PRESENTER",
+        "event": "American Association for Cancer Research (AACR) 2025",
+        "location": "Chicago, IL, USA",
+        "date": "April 25-30, 2025",
+        "dateSort": "2025-04-25",
+        "title": "AI-driven identification of drug-tolerant persister cells in lung cancer",
+        "description": "A novel framework combining single-cell transcriptomics and machine learning to detect treatment-resistant persister cell populations.",
+        "url": "https://aacrjournals.org/cancerres/article/85/8_Supplement_1/6312/759545/Abstract-6312-AI-Driven-Identification-of-Drug",
+        "image": "/assets/images/aacr-2025.png",
+        "imageWebp": "/assets/images/aacr-2025.webp",
+        "imageAvif": "/assets/images/aacr-2025.avif",
+        "logo": "aacr"
+      }
+    ]
+  }
+}

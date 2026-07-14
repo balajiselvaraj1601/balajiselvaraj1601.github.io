@@ -1,5 +1,6 @@
 ---
 import XpProjectCard from '@components/cards/XpProjectCard.astro';
+import { site } from '@lib/content';
 import type { Role } from '@schemas';
 
 interface Props {
@@ -7,17 +8,20 @@ interface Props {
 }
 
 const { role } = Astro.props;
+const { common, experience: experienceUi } = site.ui;
 ---
 
 <div class="xp-work">
-  <p class="subhead-eyebrow xp-work__label">Key Projects</p>
+  <p class="subhead-eyebrow xp-work__label">
+    {experienceUi.keyProjectsLabel}
+  </p>
 
   {
     role.projects.length > 1 && (
       <div
         class="recog-filters xp-filters"
         role="group"
-        aria-label={`Filter projects — ${role.position}`}
+        aria-label={`${experienceUi.filterProjectsPrefix} — ${role.position}`}
       >
         <button
           type="button"
@@ -25,7 +29,7 @@ const { role } = Astro.props;
           data-filter="all"
           aria-pressed="true"
         >
-          All
+          {common.all}
         </button>
         {role.projects.map((project, j) => (
           <button

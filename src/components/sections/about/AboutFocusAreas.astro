@@ -1,6 +1,6 @@
 ---
 import CardMark from '@components/ui/CardMark.astro';
-import { profile } from '@lib/content';
+import { profile, site } from '@lib/content';
 
 const {
   blockHeadings,
@@ -52,12 +52,13 @@ const cardBlocks = [
   },
 ];
 const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
+const { common, about: aboutUi } = site.ui;
 ---
 
 <div
   class="about__filters reveal"
   role="group"
-  aria-label="Filter About focus areas"
+  aria-label={aboutUi.filterLabel}
 >
   <button
     type="button"
@@ -65,7 +66,7 @@ const visibleBlocks = cardBlocks.filter((b) => b.items && b.items.length > 0);
     data-filter="all"
     aria-pressed="true"
   >
-    All
+    {common.all}
   </button>
   {
     visibleBlocks.map((b) => (

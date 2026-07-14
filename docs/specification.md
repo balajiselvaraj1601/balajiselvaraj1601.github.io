@@ -7,7 +7,7 @@ is the "how it's structured".
 ## 1. Information architecture
 
 Primary structure: **single-page home** with **nav views**. All sections render once on `/` in
-DOM order (`content/site.json → pages[id=home].sections`). Header nav scrolls to a view's first
+DOM order (`content/pages/00_site.json → pages[id=home].sections`). Header nav scrolls to a view's first
 section using hash URLs (`/#experience`, `/#research`, …). All sections remain visible on scroll.
 Legacy paths redirect to the matching hash on `/`.
 
@@ -26,7 +26,7 @@ The resume PDF remains a static asset at `public/assets/resume/balaji-selvaraj-r
 (direct-linkable), but has no nav entry and no site-config wiring.
 
 Each section id appears in exactly one `viewSections` group (exclusive nav grouping — no section
-is duplicated across nav buttons). Section ids and grouping are defined in `content/site.json → pages`.
+is duplicated across nav buttons). Section ids and grouping are defined in `content/pages/00_site.json → pages`.
 The renderer (`SectionRenderer`) iterates the home section list — do not hardcode section order in markup.
 
 **Full home DOM order** (12 section ids): `hero` → `thirukural` → `about` →

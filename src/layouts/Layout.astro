@@ -13,6 +13,7 @@ import {
   defaultTheme,
   homeViewAnchor,
   profile,
+  site,
   sectionToDotNav,
   homeSections,
   type DotNavView,
@@ -109,7 +110,7 @@ const dotNavConfig =
   </head>
   <body>
     <HeroCanvas />
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">{site.ui.common.skipToContent}</a>
     {chrome && <Header singlePageViews={singlePageViews} />}
     {chrome && dotNav.length >= 2 && <DotNav views={dotNav} />}
     <main id="main">

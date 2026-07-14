@@ -3,14 +3,14 @@
  * (`src/lib/content.ts`, layout/chrome components) and the client nav scripts
  * (`src/scripts/section-views.ts`, `src/scripts/init-sections.ts`).
  *
- * Data SSOT: `content/site.json` owns every per-view anchor string (each
+ * Data SSOT: `content/pages/00_site.json` owns every per-view anchor string (each
  * page's `viewAnchor`) and the view→section wiring — those values are loaded
  * and validated in `src/lib/content.ts` and must never be duplicated here.
  * This module holds only structural literals defined by the code itself:
  * synthetic ids, DOM attribute contracts, and shared timing.
  */
 
-/** Page id `content/site.json` must define for the root (`/`) page. */
+/** Page id `content/pages/00_site.json` must define for the root (`/`) page. */
 export const HOME_PAGE_ID = 'home';
 
 /** Synthetic dot-nav id for the hero band (not a nav view in site.json). */

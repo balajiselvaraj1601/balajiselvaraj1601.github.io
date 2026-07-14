@@ -1,5 +1,6 @@
 ---
 import { youtubeId } from '@lib/youtube';
+import { site } from '@lib/content';
 import type { Speakers } from '@schemas';
 
 type Item = Speakers['items'][number];
@@ -15,6 +16,7 @@ const ytThumb = ytId
   ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`
   : null;
 const hasModernImage = Boolean(item.imageWebp || item.imageAvif);
+const { common } = site.ui;
 ---
 
 {
@@ -24,11 +26,11 @@ const hasModernImage = Boolean(item.imageWebp || item.imageAvif);
       href={item.youtube}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Watch ${item.title} on YouTube (opens in new window)`}
+      aria-label={`${common.watchOnYouTubePrefix} ${item.title}${common.onYouTubeSuffix}${common.opensInNewWindow}`}
     >
       <img
         src={ytThumb}
-        alt={`Video thumbnail: ${item.title}`}
+        alt={`${common.videoThumbnailPrefix}${item.title}`}
         width={480}
         height={360}
         loading="lazy"

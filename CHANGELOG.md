@@ -104,7 +104,7 @@ Post-refactor site review pass: design consistency, accessibility, content fixes
 - Location contact card restored to the contact grid as a static block
 - Visually hidden screen-reader hints for external links in Contact
 - Dual-theme visual baselines (dark + light) with hero and experience shots; re-scroll-until-stable capture guard in `baseline-shots.mjs`
-- `task.md` — verified open items for follow-up agents
+- `docs/audits/open-tasks-2026-07-06.md` — verified open items for follow-up agents
 
 ### Changed
 
@@ -133,7 +133,7 @@ visual change is the Contact copy/spacing edit. Full ledger: `docs/audits/refact
 
 - Contact view copy and spacing: title "important" → "impactful"; subtitle moved below the section header (only visual change in this release)
 - `src/schemas.ts` split into `src/schemas/` modules behind the `@schemas` barrel; icon/logo pipeline scripts moved to `scripts/icons/`
-- Root restructure: `icons-grid.png` → `docs/reference/`, `SVG-ICON-SKILL-SETUP.md` → `docs/`, `icon_collections_resized/` → `assets/icon-collections-resized/`
+- Root restructure: `icons-grid.png` → `docs/reference/`, `SVG-ICON-SKILL-SETUP.md` → `docs/`, `icon_collections_resized/` → `assets/source/icon-collections-resized/`
 - Large components decomposed into sub-components (Experience, VisionPrograms, Hero, LeadershipPhilosophy, CompetitionCard, Education, SpeakingCard) — dist-verified render-identical
 - SSOT consolidation: typed `SECTIONS` registry, derived `homeViewAnchor`, table-driven content validation, `isContentPage` dedup, `medalCount()` helper
 - Agent-infra consolidation: page-agent skeletons deduplicated into the shared playbook, ports documentation SSOT moved to `docs/troubleshooting.md`, `AGENT-SYSTEM-SUMMARY.md` refreshed

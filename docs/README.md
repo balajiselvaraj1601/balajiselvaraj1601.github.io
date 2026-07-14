@@ -24,34 +24,27 @@ deployed to GitHub Pages at https://balajiselvaraj1601.github.io.
 | [Design direction](./design-direction.md)                                       | Visual tokens, typography, motion principles         |
 | [Typography](./typography.md)                                                   | Font mapping: three typefaces, element → font spec   |
 | [Box color history](./box-color-history.md)                                     | Color system decision history and token cascade      |
-| [About page content](./about-page-content.md)                                   | Resume-sourced About section content candidates      |
 | [Case study experience info standard](./case-study-experience-info-standard.md) | Ideal format for Experience role and project entries |
 
 ## Icons & assets
 
-| Doc                                                       | Purpose                                                |
-| --------------------------------------------------------- | ------------------------------------------------------ |
-| [Icon blend strategy](./icon-blend-strategy.md)           | Vector delivery, rendered sizes, color blending        |
-| [Icon collections install](./icon-collections-install.md) | Square-center PNG → SVG marks refresh pipeline         |
-| [Icon size inventory](./icon-size-inventory.md)           | Every icon rendered on-site with effective pixel sizes |
+| Doc                                                          | Purpose                                         |
+| ------------------------------------------------------------ | ----------------------------------------------- |
+| [Icon blend strategy](./icon-blend-strategy.md)              | Vector delivery, rendered sizes, color blending |
+| [Icon collections install](./icon-collections-install.md)    | Square-center PNG → SVG marks refresh pipeline  |
+| [SVG icon generator](../scripts/icons/SVG-ICON-GENERATOR.md) | Raster → vector icon pipeline reference         |
 
 ## Quality & platform
 
-| Doc                                     | Purpose                                                                                                                                                                                                             |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [SEO](./seo.md)                         | Meta tags, OG/Twitter, JSON-LD, sitemap, robots                                                                                                                                                                     |
-| [Accessibility](./accessibility.md)     | WCAG 2.1 AA checklist                                                                                                                                                                                               |
-| [Deployment](./deployment.md)           | GitHub Pages target, CI/CD, artifact checklist                                                                                                                                                                      |
-| [Troubleshooting](./troubleshooting.md) | Common build, deploy, and content errors                                                                                                                                                                            |
-| Audits                                  | [simplification-refactor-2026-07-03.md](./audits/simplification-refactor-2026-07-03.md), [logo-manifest.csv](./audits/logo-manifest.csv), [full-site-review-2026-07-05.md](./audits/full-site-review-2026-07-05.md) | Changelog and logo inventory |
-| [Page team](./page-team.md)             | Multi-agent design consistency workflow                                                                                                                                                                             |
-| [Task runner](./task-runner.md)         | Long-running multi-step agent batches                                                                                                                                                                               |
-
-## Agent system
-
-| Doc                                               | Purpose                                               |
-| ------------------------------------------------- | ----------------------------------------------------- |
-| [Agent system summary](./AGENT-SYSTEM-SUMMARY.md) | Full agent ecosystem assessment and specialist agents |
+| Doc                                     | Purpose                                                                                                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [SEO](./seo.md)                         | Meta tags, OG/Twitter, JSON-LD, sitemap, robots                                                                                                                                       |
+| [Accessibility](./accessibility.md)     | WCAG 2.1 AA checklist                                                                                                                                                                 |
+| [Deployment](./deployment.md)           | GitHub Pages target, CI/CD, artifact checklist                                                                                                                                        |
+| [Troubleshooting](./troubleshooting.md) | Common build, deploy, and content errors                                                                                                                                              |
+| Audits                                  | [refactor-2026-07-06.md](./audits/refactor-2026-07-06.md), [logo-manifest.csv](./audits/logo-manifest.csv), [full-site-review-2026-07-05.md](./audits/full-site-review-2026-07-05.md) | Changelog and logo inventory |
+| [Page team](./page-team.md)             | Multi-agent design consistency workflow                                                                                                                                               |
+| [Task runner](./task-runner.md)         | Long-running multi-step agent batches                                                                                                                                                 |
 
 ## Page briefs
 
@@ -71,7 +64,7 @@ Per-view content intent and section weights — used by page agents during audit
 | File                                         | Purpose                                     |
 | -------------------------------------------- | ------------------------------------------- |
 | [../README.md](../README.md)                 | Project overview and quick commands         |
-| [../AGENTS.md](../AGENTS.md)                 | Agent/AI coding guidelines                  |
+| [../AGENTS.md](../AGENTS.md)                 | Agent/AI coding guidelines and agent system |
 | [../content/README.md](../content/README.md) | Content layer provenance and curation rules |
 
 ## Documentation map

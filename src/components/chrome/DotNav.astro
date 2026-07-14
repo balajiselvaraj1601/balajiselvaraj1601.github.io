@@ -1,16 +1,18 @@
 ---
 import type { DotNavView } from '@lib/content';
+import { site } from '@lib/content';
 
 interface Props {
   views: DotNavView[];
 }
 const { views } = Astro.props;
+const { dotNav } = site.ui;
 ---
 
 <nav
   class="dot-nav"
   id="dot-nav"
-  aria-label="Page navigation"
+  aria-label={dotNav.ariaLabel}
   hidden={views.length < 2}
 >
   {

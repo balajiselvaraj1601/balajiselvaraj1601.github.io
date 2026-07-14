@@ -8,9 +8,10 @@ from two content SSOTs — never hand-written — and rendered as an `is:inline`
 
 ## Sources
 
-- `content/person/profile.json` — the person's identity and links.
-- `content/site.json` → `seo.keywords` and `location`.
-- `content/work/experience.json` — first role's organization (for `worksFor`).
+- `content/pages/01_about.json` — the person's identity.
+- `content/pages/06_contact.json` — the person's public contact links.
+- `content/pages/00_site.json` → `seo.keywords` and `location`.
+- `content/pages/02_experience.json` — first role's organization (for `worksFor`).
 - `SITE_URL` (`astro.config.mjs`, via `Astro.site`) — the `url`.
 
 Read those files for the live values. Do **not** paste the assembled blob anywhere as a
@@ -42,7 +43,7 @@ Changing a value in its owning JSON updates the blob automatically. The failure 
   link **silently disappears** from the JSON-LD — no build error.
 - **`address` keys off literal strings.** `addressLocality` is everything before the first
   comma in `site.location`; `addressCountry` is `'SE'` only when `site.location` contains
-  the word `'Sweden'`. Moving country means updating `site.location` in `content/site.json`,
+  the word `'Sweden'`. Moving country means updating `site.location` in `content/pages/00_site.json`,
   and the `'Sweden'` → `'SE'` mapping is hardcoded in `BaseHead.astro` — a new country needs
   a code added there.
 - **`knowsAbout` mirrors `seo.keywords`.** Editing keywords for SEO also rewrites the

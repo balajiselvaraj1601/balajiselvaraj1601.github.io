@@ -24,7 +24,7 @@ them exactly — they are part of your instructions:
 
 | #   | Rule                                                                                                 |
 | --- | ---------------------------------------------------------------------------------------------------- |
-| V1  | Content source: `content/work/experience.json` only.                                                 |
+| V1  | Content source: `content/pages/02_experience.json` only.                                             |
 | V2  | `experience` carries the eyebrow text `"Experience"` (required per contract §4) via `Section.astro`. |
 | V3  | Timeline rail spacing uses `--stack-*` tokens.                                                       |
 | V4  | No invented metrics — facts only from content JSON.                                                  |
@@ -35,7 +35,7 @@ Page brief: `docs/page-briefs/experience.md`
 
 | Section id | Component                                  | Content                        |
 | ---------- | ------------------------------------------ | ------------------------------ |
-| experience | `src/components/sections/Experience.astro` | `content/work/experience.json` |
+| experience | `src/components/sections/Experience.astro` | `content/pages/02_experience.json` |
 
 Guardian-owned shared components used here (audit-only, never edit):
 `Chip.astro`, `CardMark.astro`, `XpProjectCard.astro`
@@ -44,7 +44,7 @@ Shelved (never enable, never audit): —
 
 Note: the former standalone Projects view was removed (2026-07-04); those project case
 studies now render inline in this timeline as `XpProjectCard` (§5 Tier D). Content is
-still `content/work/experience.json` only.
+still `content/pages/02_experience.json` only.
 
 ## Appendix B — Audit checklist (view-specific)
 

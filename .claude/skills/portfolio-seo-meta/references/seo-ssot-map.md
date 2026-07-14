@@ -10,9 +10,9 @@ here.
 
 | Tag / output                             | Owner (edit here)                           | Notes                                                           |
 | ---------------------------------------- | ------------------------------------------- | --------------------------------------------------------------- |
-| `<title>`                                | `content/site.json` → `seo.title`           | Per-page override via `BaseHead` `title` prop; defaults to site |
-| `<meta name="description">`              | `content/site.json` → `seo.description`     | Per-page override via `description` prop                        |
-| `<meta name="keywords">`                 | `content/site.json` → `seo.keywords`        | Joined with `, ` in `BaseHead`; also feeds JSON-LD `knowsAbout` |
+| `<title>`                                | `content/pages/00_site.json` → `seo.title`  | Per-page override via `BaseHead` `title` prop; defaults to site |
+| `<meta name="description">`              | `content/pages/00_site.json` → `seo.description` | Per-page override via `description` prop                   |
+| `<meta name="keywords">`                 | `content/pages/00_site.json` → `seo.keywords` | Joined with `, ` in `BaseHead`; also feeds JSON-LD `knowsAbout` |
 | `<link rel="canonical">`                 | `SITE_URL` (`astro.config.mjs`) + page path | `new URL(path, Astro.site)` in `BaseHead`                       |
 | `<meta name="viewport">`                 | `BaseHead.astro` (static)                   | `width=device-width, initial-scale=1`                           |
 | `<meta name="theme-color">` (light/dark) | `src/lib/theme-colors` (`THEME_BG`)         | Two `media`-scoped variants                                     |
@@ -30,7 +30,7 @@ here.
 | `og:image` / `twitter:image`             | `site.seo.ogImage` + `SITE_URL`                | Path resolved to absolute; file 1200×630, < 1 MB |
 | `og:image:alt` / `twitter:image:alt`     | `profile.name` + `profile.title`               | Emitted as `${name} — ${title}`                  |
 | `og:locale`                              | `BaseHead.astro` (static)                      | `en`                                             |
-| `twitter:card`                           | `content/site.json` → `seo.twitterCard`        | `summary_large_image`                            |
+| `twitter:card`                           | `content/pages/00_site.json` → `seo.twitterCard` | `summary_large_image`                         |
 
 ## JSON-LD `Person`
 
@@ -39,14 +39,14 @@ Assembled in `BaseHead.astro` frontmatter, emitted as one `is:inline`
 
 | JSON-LD field   | Source                                                  |
 | --------------- | ------------------------------------------------------- |
-| `name`          | `profile.json` → `name`                                 |
-| `jobTitle`      | `profile.json` → `title`                                |
-| `email`         | `profile.json` → `contact[type=email].value`            |
-| `address`       | `content/site.json` → `location` (locality + country)   |
+| `name`          | `content/pages/01_about.json` → `name`                  |
+| `jobTitle`      | `content/pages/01_about.json` → `title`                 |
+| `email`         | `content/pages/06_contact.json` → `contact[type=email].value` |
+| `address`       | `content/pages/00_site.json` → `location` (locality + country) |
 | `url`           | `SITE_URL` (root)                                       |
-| `sameAs`        | `profile.json` → `contact[]` linkedin / github / kaggle |
-| `knowsAbout`    | `content/site.json` → `seo.keywords`                    |
-| `worksFor.name` | `experience.json` → first role's organization           |
+| `sameAs`        | `content/pages/06_contact.json` → `contact[]` linkedin / github / kaggle |
+| `knowsAbout`    | `content/pages/00_site.json` → `seo.keywords`           |
+| `worksFor.name` | `content/pages/02_experience.json` → first role's organization |
 
 ## Sitemap + robots
 

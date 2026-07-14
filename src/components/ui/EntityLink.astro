@@ -1,4 +1,6 @@
 ---
+import { site } from '@lib/content';
+
 interface Props {
   href?: string;
   label: string;
@@ -7,6 +9,7 @@ interface Props {
 
 const { href, label, class: className } = Astro.props;
 const isExternal = !!href && /^https?:\/\//.test(href);
+const { common } = site.ui;
 ---
 
 {
@@ -18,7 +21,7 @@ const isExternal = !!href && /^https?:\/\//.test(href);
     >
       {label}
       {isExternal && (
-        <span class="visually-hidden"> (opens in new window)</span>
+        <span class="visually-hidden">{common.opensInNewWindow}</span>
       )}
     </a>
   ) : (

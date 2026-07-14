@@ -26,14 +26,14 @@ public/
 
 ## Required assets
 
-| Asset       | Path                                              | Referenced by                        |
-| ----------- | ------------------------------------------------- | ------------------------------------ |
-| Résumé PDF  | `public/assets/resume/balaji-selvaraj-resume.pdf` | **Asset only** — not in nav/header   |
-| OG image    | `public/assets/og/og-image.png`                   | `content/site.json` -> `seo.ogImage` |
-| Favicon SVG | `public/favicon.svg`                              | `BaseHead.astro`, manifest           |
-| Favicon ICO | `public/favicon.ico`                              | `BaseHead.astro`                     |
-| PNG icons   | `public/assets/icons/*.png`                       | `site.webmanifest`, `BaseHead.astro` |
-| `.nojekyll` | `public/.nojekyll`                                | GitHub Pages (empty file is fine)    |
+| Asset       | Path                                              | Referenced by                                 |
+| ----------- | ------------------------------------------------- | --------------------------------------------- |
+| Résumé PDF  | `public/assets/resume/balaji-selvaraj-resume.pdf` | **Asset only** — not in nav/header            |
+| OG image    | `public/assets/og/og-image.png`                   | `content/pages/00_site.json` -> `seo.ogImage` |
+| Favicon SVG | `public/favicon.svg`                              | `BaseHead.astro`, manifest                    |
+| Favicon ICO | `public/favicon.ico`                              | `BaseHead.astro`                              |
+| PNG icons   | `public/assets/icons/*.png`                       | `site.webmanifest`, `BaseHead.astro`          |
+| `.nojekyll` | `public/.nojekyll`                                | GitHub Pages (empty file is fine)             |
 
 After replacing any asset, run `npm run build && npm run preview` and verify the URL loads
 (e.g. http://localhost:4331/assets/resume/balaji-selvaraj-resume.pdf).
@@ -44,7 +44,7 @@ After replacing any asset, run `npm run build && npm run preview` and verify the
 
 The PDF is a **static asset only** — it ships from `public/assets/resume/` and is
 direct-linkable (e.g. for email signatures or LinkedIn), but it is **not** linked from
-header nav, contact CTAs, or `content/site.json`. To wire it into the site UI later,
+header nav, contact CTAs, or `content/pages/00_site.json`. To wire it into the site UI later,
 add a `resume` block to `site.json` and update the header/contact components.
 
 To update the file:
@@ -106,13 +106,13 @@ Manifest icons:
 ## Optional images
 
 `public/assets/images/` holds optimized headshots and section imagery served by the site
-(e.g. `balaji.png`, referenced from `content/person/profile.json` -> `photo`).
+(e.g. `balaji.png`, referenced from `content/pages/01_about.json` -> `portrait`).
 
 To add or replace a headshot:
 
 1. Compress the source image outside the repo or in a temporary working folder.
 2. Place only the published copy in `public/assets/images/`.
-3. Set `content/person/profile.json` -> `photo` to the public path (e.g. `/assets/images/balaji.png`).
+3. Set `content/pages/01_about.json` -> `portrait` to the public path (e.g. `/assets/images/balaji.png`).
 4. Always include descriptive `alt` text in the content/component.
 
 Keep published files optimized — prefer WebP, reasonable dimensions, lazy-load below the fold.
@@ -139,7 +139,7 @@ The home-page hero (`src/components/sections/Hero.astro`) renders a square portr
 | `public/assets/images/balaji.webp` | WebP   | LCP (preloaded)   |
 | `public/assets/images/balaji.avif` | AVIF   | Modern browsers   |
 
-References from content: `content/person/profile.json` → `portrait.src`, `portrait.webp`,
+References from content: `content/pages/01_about.json` → `portrait.src`, `portrait.webp`,
 `portrait.avif`, `portrait.alt`, `portrait.width`, `portrait.height`.
 
 ### Image optimization pipeline
@@ -212,10 +212,10 @@ domain changes.
 
 ## icon_collections refresh pipeline
 
-Square-centered `icon_*.png` assets live in `assets/icon-collections-resized/` and install
-into `public/assets/logos/{education,general,kaggle,vision,awards}/`. The live
-site renders matching `logo_*.svg` marks from `public/assets/logos/marks/` via
-`MarkEmblem`. Full repeatable steps:
+Square-centered `icon_*.png` sources live in `~/workspace/icon_collections/` (external
+workspace). Regenerate live `logo_*.svg` marks in `public/assets/logos/marks/` via
+`./scripts/icons/regenerate-marks-from-png.sh`. The site no longer ships redundant
+`icon_*.png` rasters under `public/assets/logos/`. Full repeatable steps:
 
 → [`docs/icon-collections-install.md`](./icon-collections-install.md)
 

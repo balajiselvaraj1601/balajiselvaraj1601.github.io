@@ -24,7 +24,7 @@ them exactly — they are part of your instructions:
 
 | #   | Rule                                                                                                                                                 |
 | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| V1  | Content source: `content/research/*.json` only (publications, conferences, speakers).                                                                |
+| V1  | Content source: `content/pages/03_research.json` only (publications, conferences, speakers).                                                         |
 | V2  | Your cards follow the contract §5 reference implementation (`ResearchCard.astro`) — cite §5 in cross-view findings; do not claim authority yourself. |
 | V3  | Link rows use `--stack-md` gap; metadata in `--font-mono`.                                                                                           |
 | V4  | SpeakingCard stays consistent with the ResearchCard shell.                                                                                           |
@@ -35,9 +35,9 @@ Page brief: `docs/page-briefs/research.md`
 
 | Section id   | Component                                    | Content                              |
 | ------------ | -------------------------------------------- | ------------------------------------ |
-| publications | `src/components/sections/Publications.astro` | `content/research/publications.json` |
-| conferences  | `src/components/sections/Conferences.astro`  | `content/research/conferences.json`  |
-| speakers     | `src/components/sections/Speakers.astro`     | `content/research/speakers.json`     |
+| publications | `src/components/sections/Publications.astro` | `content/pages/03_research.json` |
+| conferences  | `src/components/sections/Conferences.astro`  | `content/pages/03_research.json` |
+| speakers     | `src/components/sections/Speakers.astro`     | `content/pages/03_research.json` |
 
 Guardian-owned shared components used here (audit-only, never edit):
 `ResearchCard.astro`, `ResearchLinkGrid.astro`, `SpeakingCard.astro`

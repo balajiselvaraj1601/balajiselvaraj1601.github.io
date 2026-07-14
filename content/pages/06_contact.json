@@ -1,0 +1,45 @@
+{
+  "name": "Balaji Selvaraj",
+  "title": "Technical AI Leader",
+  "location": "Gothenburg, Sweden",
+  "contactIntro": "Open to discussing AI leadership opportunities, research collaborations, and advisory roles.",
+  "contactPage": {
+    "title": "Let's create impact",
+    "titleHighlight": "impact",
+    "eyebrow": "Contact",
+    "responseTime": "Typically respond within 24–48 hours.",
+    "connectHeading": "Connect with me",
+    "bookCallLabel": "Book a Call",
+    "bookingHref": null
+  },
+  "contact": [
+    {
+      "type": "email",
+      "label": "Email",
+      "value": "balaji.selvaraj.ai@outlook.com",
+      "href": "mailto:balaji.selvaraj.ai@outlook.com",
+      "icon": "gmail"
+    },
+    {
+      "type": "linkedin",
+      "label": "LinkedIn",
+      "value": "balaji-selvaraj-ai",
+      "href": "https://www.linkedin.com/in/balaji-selvaraj-a2987572/",
+      "icon": "linkedin"
+    },
+    {
+      "type": "github",
+      "label": "GitHub",
+      "value": "balajiselvaraj1601",
+      "href": "https://github.com/balajiselvaraj1601",
+      "icon": "github"
+    },
+    {
+      "type": "kaggle",
+      "label": "Kaggle",
+      "value": "@dhakshiin1601",
+      "href": "https://www.kaggle.com/dhakshiin1601",
+      "icon": "kaggle"
+    }
+  ]
+}

@@ -62,7 +62,7 @@ resolve to the `--fw-*` ladder — `--fw-regular` 400 · `--fw-medium` 500 · `-
 
 ## Page-by-page / section-by-section map
 
-Pages are content-driven: `content/site.json` defines the ordered section list per page,
+Pages are content-driven: `content/pages/00_site.json` defines the ordered section list per page,
 and `src/components/SectionRenderer.astro` maps each section `type` to a component. Below,
 each section lists the fonts it actually surfaces.
 

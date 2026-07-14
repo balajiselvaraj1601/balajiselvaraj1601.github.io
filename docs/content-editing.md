@@ -4,35 +4,31 @@ How to change what the site says without touching components.
 
 ## Golden rule
 
-**All copy lives in JSON under `content/`.** Components render data; they do not embed text.
+**All copy lives in JSON under `content/pages/`.** Components render data; they do not embed text.
 If you need a new field, update `src/schemas/` first, then the JSON, then the component.
 
 ## Workflow
 
-1. Edit the relevant JSON file under `content/`.
+1. Edit the relevant numbered JSON file under `content/pages/`.
 2. Run `npm run build` — Zod validation runs automatically.
 3. Fix any schema errors (the build output shows the exact field path).
 4. Preview with `npm run preview` and spot-check the section.
 
 If the change affects page structure, section order, or the overall narrative, update
-`content/site.json` first and keep the route files generic.
+`content/pages/00_site.json` first and keep the route files generic.
 
 ## File reference
 
-| File                         | Sections affected              | Typical edits                                                                                                                |
-| ---------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `site.json`                  | Global meta, nav, pages, SEO   | Title, tagline, nav labels, page sections, hide a section                                                                    |
-| `person/profile.json`        | Hero, About, Contact           | `heroTag`/`heroTitle`, metrics, CTAs, `about.*`, `contactIntro`, `contactPage`, contact channels                             |
-| `person/collaborations.json` | Collaborations strip on About  | Organization names; optional `logo` slug → `public/assets/logos/{slug}.png`; optional `entity` slug → URL in `entities.json` |
-| `entities.json`              | Entity links (global registry) | Slug → `{ name, url }` for organizations referenced across sections                                                          |
-| `work/vision-board.json`     | Vision view (`/#vision`)       | Infographic hubs, program cards, org impact cards                                                                            |
-| `work/experience.json`       | Experience                     | Roles, optional `intro`, role `blurb`/`level` tier, nested `projects[]`, bullets                                             |
-| `research/publications.json` | Publications                   | Title + URL links                                                                                                            |
-| `research/conferences.json`  | Conferences                    | Title + URL links                                                                                                            |
-| `research/speakers.json`     | Speaking engagements           | Title + URL links                                                                                                            |
-| `recognition/education.json` | Education                      | Degree records (`intro`, `records[]` with `id`, `field`, `achievementDetail`, `summary`)                                     |
-| `recognition/awards.json`    | Awards                         | Label + detail rows                                                                                                          |
-| `recognition/kaggle.json`    | Kaggle (Recognition view)      | Global rank + 9 competition case-study cards (rank-ordered)                                                                  |
+| File                        | Sections affected                            | Typical edits                                                                           |
+| --------------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `pages/00_site.json`        | Global meta, nav, pages, SEO, shared UI text | Title, tagline, nav labels, page sections, hide a section, filters/buttons/empty states |
+| `pages/01_about.json`       | Hero, Thirukural, About, collaborations      | Hero title/subtitle, metrics, quote, `about.*`, collaboration strip                     |
+| `pages/02_experience.json`  | Experience                                   | Roles, optional `intro`, role `blurb`/`level` tier, nested `projects[]`, bullets        |
+| `pages/03_research.json`    | Publications, conferences, speaking          | `publications`, `conferences`, and `speakers` title + URL cards                         |
+| `pages/04_recognition.json` | Awards, Kaggle, Education                    | Award rows, Kaggle global rank + case-study cards, education record                     |
+| `pages/05_vision.json`      | Vision view (`/#vision`)                     | Infographic hubs, program cards, org impact cards                                       |
+| `pages/06_contact.json`     | Contact                                      | `contactIntro`, `contactPage`, public contact channels                                  |
+| `pages/99_entities.json`    | Entity links (global registry)               | Slug → `{ name, url }` for organizations referenced across sections                     |
 
 Provenance and résumé mapping: [Content map](./content-map.md) · [content/README.md](../content/README.md).
 
@@ -43,7 +39,7 @@ Ideal field set + format rules for Experience roles:
 
 ### Change the headline or tagline
 
-Edit `content/site.json`:
+Edit `content/pages/00_site.json`:
 
 ```json
 {
@@ -56,7 +52,7 @@ Also update `person/profile.json` → `title` if the hero should match.
 
 ### Reorder, move, or hide a section
 
-Edit `content/site.json`:
+Edit `content/pages/00_site.json`:
 
 - **Reorder on `/`** — change the order of ids in `pages[id=home].sections` (full DOM order).
 - **Change which nav view shows a section** — edit that page's `viewSections` array (each section
@@ -68,7 +64,7 @@ Do **not** reorder sections in `src/pages/index.astro` — it reads the home sec
 
 ### Update SEO meta
 
-Edit `content/site.json` → `seo`:
+Edit `content/pages/00_site.json` → `seo`:
 
 ```json
 {
@@ -86,7 +82,7 @@ OG image path is relative to site root. Implementation: [SEO](./seo.md).
 
 ### Add an experience bullet
 
-Edit `content/work/experience.json` → find the role → project → `bullets` array:
+Edit `content/pages/02_experience.json` → find the role → project → `bullets` array:
 
 ```json
 {
@@ -102,7 +98,7 @@ Project narratives live inside each role's `projects[]` array in `work/experienc
 
 ### Update contact links
 
-Edit `content/person/profile.json` → `contact` array. Allowed public types: `email`, `linkedin`,
+Edit `content/pages/06_contact.json` → `contact` array. Allowed public types: `email`, `linkedin`,
 `github`, `kaggle`, `location`.
 
 ```json
@@ -119,7 +115,7 @@ Edit `content/person/profile.json` → `contact` array. Allowed public types: `e
 
 ### Link an organization
 
-1. Add or verify the slug in `content/entities.json`:
+1. Add or verify the slug in `content/pages/99_entities.json`:
 
 ```json
 {
@@ -164,7 +160,7 @@ Adding a new field:
 
 When the upstream résumé changes (`resume_builder/.../resume_healthcare.json`):
 
-1. Re-derive affected JSON files under `content/` (do not edit resume and portfolio independently).
+1. Re-derive affected JSON files under `content/pages/` (do not edit resume and portfolio independently).
 2. Follow the mapping in [Content map](./content-map.md).
 3. Re-run privacy greps — no phone, no references:
 

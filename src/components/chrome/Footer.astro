@@ -10,6 +10,7 @@ const socialLinks = profile.contact.filter(
 );
 const tagline = site.tagline.trim();
 const SOCIAL_ICON_SIZE = 18;
+const { footer } = site.ui;
 ---
 
 <footer class="site-footer">
@@ -23,11 +24,11 @@ const SOCIAL_ICON_SIZE = 18;
       {tagline && <p class="site-footer__tagline">{tagline}</p>}
       <p class="site-footer__copyright">
         © {year}
-        {site.name}. All rights reserved.
+        {site.name}. {footer.allRightsReserved}
       </p>
     </div>
 
-    <ul class="site-footer__social" aria-label="Social links">
+    <ul class="site-footer__social" aria-label={footer.socialLinksLabel}>
       {
         socialLinks.map((c) => {
           const external = c.href!.startsWith('http');
@@ -37,7 +38,7 @@ const SOCIAL_ICON_SIZE = 18;
                 class="site-footer__social-link"
                 href={c.href!}
                 aria-label={
-                  external ? `${c.label} (opens in new tab)` : c.label
+                  external ? `${c.label}${footer.opensInNewTabSuffix}` : c.label
                 }
                 {...(external
                   ? { target: '_blank', rel: 'noopener noreferrer' }
@@ -54,7 +55,9 @@ const SOCIAL_ICON_SIZE = 18;
       }
     </ul>
 
-    <a href="#main" class="site-footer__top" id="back-to-top">Back to top</a>
+    <a href="#main" class="site-footer__top" id="back-to-top">
+      {footer.backToTop}
+    </a>
   </div>
 </footer>
 

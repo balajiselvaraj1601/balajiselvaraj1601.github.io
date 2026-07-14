@@ -40,7 +40,7 @@ Order matters — the schema owns the shape and all types derive from it via
 2. Append the new object to the JSON array with every required field. Match an
    existing sibling entry as a template for field coverage.
 3. If the item references an organization via `entity`, ensure that slug exists
-   in `content/entities.json` (add `{ name, url }` first if not). If it carries a
+   in `content/pages/99_entities.json` (add `{ name, url }` first if not). If it carries a
    `logo` / logo-mark `asset`, ensure the asset file exists under
    `public/assets/logos/` — the loader throws otherwise (see
    `validation-cascade.md`).
@@ -52,7 +52,7 @@ Order matters — the schema owns the shape and all types derive from it via
    `src/components/SectionRenderer.astro` and the `SECTION_COMPONENT_IDS` list in
    `src/lib/section-ids.ts` (these two must agree — `content.ts` asserts every
    home section has a component).
-2. Add the section to `content/site.json → sections` (`title`, `source`,
+2. Add the section to `content/pages/00_site.json → sections` (`title`, `source`,
    `visible`).
 3. Insert the id into `pages[id=home].sections` at the right DOM position **and**
    into exactly one `pages[].viewSections` group.
@@ -64,5 +64,5 @@ Order matters — the schema owns the shape and all types derive from it via
 - **One definition.** A value that already lives in `entities.json`, a schema
   enum, or `:root` tokens is imported/referenced, never re-typed into content.
 - **Route files stay generic.** Never reorder sections in `src/pages/*.astro`;
-  order lives in `content/site.json`.
+  order lives in `content/pages/00_site.json`.
 - **Privacy.** No phone, no References — see `privacy-and-curation.md`.

@@ -33,8 +33,7 @@ into any npm script or gate.
 
 ## Sources
 
-PNG sources live in `assets/icon-collections-resized/` (in-repo) and the
-external `~/workspace/icon_collections*` folders — filenames follow a
+PNG sources live in `~/workspace/icon_collections/` (external workspace). Filenames follow a
 name-parity contract (same stem across folders; see
 `docs/icon-collections-install.md`). `.icon-stage/` is a gitignored working
 area created by `export-icon-svgs.mjs`.

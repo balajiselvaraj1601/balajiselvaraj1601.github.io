@@ -15,7 +15,7 @@ wrapped by `HeroLanding.astro` (hero + thirukural band).
 
 | Check | Rule                                                                    | Evidence                             |
 | ----- | ----------------------------------------------------------------------- | ------------------------------------ |
-| S1    | Section has `id` matching section registry key                          | `content/site.json → sections`       |
+| S1    | Section has `id` matching section registry key                          | `content/pages/00_site.json → sections`       |
 | S2    | Uses `.section` class via `Section.astro`                               | No ad-hoc `<section>` without tokens |
 | S3    | Inner layout uses `.container`                                          | Provided by `Section.astro`          |
 | S4    | Variant matches intent: `default`, `alt`, `full`                        | `variant` prop or equivalent class   |
@@ -354,7 +354,7 @@ Use token media queries — prefer `var(--bp-md)` etc. over raw `768px`.
 
 | Check | Rule                                                                     |
 | ----- | ------------------------------------------------------------------------ |
-| C1    | Section order from `content/site.json → home.sections` only              |
+| C1    | Section order from `content/pages/00_site.json → home.sections` only     |
 | C2    | Each section id in exactly one `viewSections` group                      |
 | C3    | Copy changes in `content/` paths listed in site.json `sections.*.source` |
 | C4    | Schema changes precede content (`src/schemas/`)                          |

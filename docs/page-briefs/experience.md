@@ -5,9 +5,9 @@
 
 ## Items
 
-| Item (section id) | Source                         | Question                          | Weight |
-| ----------------- | ------------------------------ | --------------------------------- | ------ |
-| `experience`      | `content/work/experience.json` | What is this? / How does it work? | heavy  |
+| Item (section id) | Source                             | Question                          | Weight |
+| ----------------- | ---------------------------------- | --------------------------------- | ------ |
+| `experience`      | `content/pages/02_experience.json` | What is this? / How does it work? | heavy  |
 
 ## Structure
 

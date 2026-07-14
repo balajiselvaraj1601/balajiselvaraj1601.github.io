@@ -41,3 +41,21 @@ export type { Kaggle, KaggleCompetition, KaggleMedal } from './recognition';
 /* ── research (publications.json, conferences.json, speakers.json) ─────── */
 export { linkListSchema, speakersSchema } from './research';
 export type { LinkList, Speakers } from './research';
+
+/* ── pages (numbered page JSON files under content/pages/) ─────────────── */
+export {
+  aboutPageSchema,
+  contactPageContentSchema,
+  experiencePageSchema,
+  recognitionPageSchema,
+  researchPageSchema,
+  visionPageSchema,
+} from './pages';
+export type {
+  AboutPage,
+  ContactPageContent,
+  ExperiencePage,
+  RecognitionPage,
+  ResearchPage,
+  VisionPage,
+} from './pages';

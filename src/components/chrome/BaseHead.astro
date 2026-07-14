@@ -23,7 +23,7 @@ const origin = Astro.site ?? new URL(Astro.url.origin);
 const canonical = new URL(path, origin).href;
 const ogImage = new URL(site.seo.ogImage, origin).href;
 
-// JSON-LD Person — derived from content/person/profile.json.
+// JSON-LD Person — derived from content/pages/01_about.json and 06_contact.json.
 const linkedin = profile.contact.find((c) => c.type === 'linkedin')?.href;
 const github = profile.contact.find((c) => c.type === 'github')?.href;
 const kaggle = profile.contact.find((c) => c.type === 'kaggle')?.href;

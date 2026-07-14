@@ -1,5 +1,6 @@
 ---
 import Icon from '@components/ui/Icon.astro';
+import { site } from '@lib/content';
 
 // Shared recognition-card interior layout (Awards, Education, …).
 // `collapsible` opts a card into the details toggle: the header stays visible
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const { class: cls, collapsible = false, detailsId, ...rest } = Astro.props;
+const { details, hide } = site.ui.recognition.cardToggle;
 ---
 
 <article
@@ -41,8 +43,8 @@ const { class: cls, collapsible = false, detailsId, ...rest } = Astro.props;
           aria-expanded="false"
           aria-controls={detailsId}
         >
-          <span class="recog-toggle__show">Details</span>
-          <span class="recog-toggle__hide">Hide</span>
+          <span class="recog-toggle__show">{details}</span>
+          <span class="recog-toggle__hide">{hide}</span>
           <Icon name="chevron" size="sm" />
         </button>
       </>

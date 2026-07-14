@@ -3,7 +3,7 @@ import Icon from '@components/ui/Icon.astro';
 import MarkEmblem from '@components/ui/MarkEmblem.astro';
 import type { IconName } from '@lib/icons';
 import type { KaggleCompetition } from '@schemas';
-import { logoSrc } from '@lib/content';
+import { logoSrc, site } from '@lib/content';
 
 type Props = Pick<
   KaggleCompetition,
@@ -15,6 +15,7 @@ const { role, medal, rank, percentile, period, stats } = Astro.props;
 // Total Entrants is DERIVED from stats.entrants — single source of truth, never
 // a separate content field.
 const totalEntrants = stats?.entrants;
+const labels = site.ui.recognition.kaggle.stats;
 
 // Fixed stat row mirroring the reference layout. Entries with no value drop out.
 // img slugs are logo_metric_kaggle_* (pipeline SVGs for MarkEmblem tinting — D5/TC2).
@@ -24,37 +25,37 @@ const stats6: { icon: IconName; img: string; label: string; value?: string }[] =
     {
       icon: 'target',
       img: 'logo_metric_kaggle_role',
-      label: 'Role',
+      label: labels.role,
       value: role,
     },
     {
       icon: 'trophy',
       img: 'logo_metric_kaggle_medal',
-      label: 'Medal',
+      label: labels.medal,
       value: medal,
     },
     {
       icon: 'chart',
       img: 'logo_metric_kaggle_rank',
-      label: 'Rank',
+      label: labels.rank,
       value: rank,
     },
     {
       icon: 'diamond',
       img: 'logo_metric_kaggle_percentile',
-      label: 'Percentile',
+      label: labels.percentile,
       value: percentile,
     },
     {
       icon: 'calendar',
       img: 'logo_metric_kaggle_time_period',
-      label: 'Period',
+      label: labels.period,
       value: period,
     },
     {
       icon: 'team',
       img: 'logo_metric_kaggle_entrants',
-      label: 'Total Entrants',
+      label: labels.totalEntrants,
       value: totalEntrants,
     },
   ];

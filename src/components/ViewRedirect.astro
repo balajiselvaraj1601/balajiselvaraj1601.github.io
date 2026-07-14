@@ -1,5 +1,5 @@
 ---
-import { homeViewAnchor } from '@lib/content';
+import { homeViewAnchor, site } from '@lib/content';
 import { viewHash } from '@lib/views';
 
 interface Props {
@@ -14,7 +14,7 @@ const target = anchor === homeViewAnchor ? '/' : `/${viewHash(anchor)}`;
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="noindex" />
-    <title>Redirecting…</title>
+    <title>{site.ui.redirect.title}</title>
     <script is:inline define:vars={{ target }}>
       location.replace(target);
     </script>

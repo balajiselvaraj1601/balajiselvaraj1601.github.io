@@ -26,7 +26,7 @@ their "Load first" block. Do not restate playbook content in agent files.
 | Orchestrator        | `.claude/agents/site-consistency-orchestrator.md` | `site-consistency-orchestrator`        |
 
 - Names are lowercase + hyphens (canonical subagent format); `name` == filename stem.
-- `view_id` stays as in `content/site.json → pages[].id` (`home` is represented by `page-about`).
+- `view_id` stays as in `content/pages/00_site.json → pages[].id` (`home` is represented by `page-about`).
 - One agent per file.
 
 ---

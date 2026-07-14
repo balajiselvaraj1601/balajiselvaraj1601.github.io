@@ -23,7 +23,7 @@ them exactly — they are part of your instructions:
 
 | #   | Rule                                                                                                                                                                                                                                                                      |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| V1  | Content source: contact fields in `content/person/profile.json` only.                                                                                                                                                                                                     |
+| V1  | Content source: contact fields in `content/pages/06_contact.json` only.                                                                                                                                                                                                   |
 | V2  | Playbook P5 (no phone numbers, no References section) is the highest-priority rule for this view — verify build output contains no phone number in Phase 4.                                                                                                               |
 | V3  | Contact uses `variant="alt"` (contract §6).                                                                                                                                                                                                                               |
 | V4  | CTA buttons use `.btn` tokens and `--section-cta-gap`; social/contact links go through `EntityLink`.                                                                                                                                                                      |
@@ -35,7 +35,7 @@ Page brief: `docs/page-briefs/contact.md`
 
 | Section id | Component                               | Content                                        |
 | ---------- | --------------------------------------- | ---------------------------------------------- |
-| contact    | `src/components/sections/Contact.astro` | `content/person/profile.json` (contact fields) |
+| contact    | `src/components/sections/Contact.astro` | `content/pages/06_contact.json` |
 
 Guardian-owned shared components used here (audit-only, never edit):
 `EntityLink.astro`, `AvailabilityBadge.astro`, `Icon.astro`

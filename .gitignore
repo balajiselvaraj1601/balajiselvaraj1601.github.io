@@ -27,12 +27,18 @@ Thumbs.db
 .env.*
 !.env.example
 
+# Local temp notes and generated planning artifacts
+tmp/
+
+# Local Python tooling envs
+.venv-codespell/
+
+# Pipeline source workspace (outputs live in public/assets/logos/)
+/assets/source/
+
 # Python pipeline cache
 __pycache__/
 *.pyc
-
-# Logo-pipeline source workspace (processed output goes to public/assets/logos/)
-/assets/source/logos/
 
 # Icon-pipeline generated intermediates (final SVGs go to public/assets/logos/)
 src/assets/icons/_work/

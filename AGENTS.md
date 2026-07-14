@@ -8,7 +8,7 @@ Every piece of public copy renders from a Zod-validated JSON content layer — c
 read data, they do not hardcode copy.
 
 ```text
-content/**/*.json
+content/pages/*.json
   → src/schemas/        (Zod schemas; types via z.infer)
   → src/lib/content.ts    (loads + validates each file, derives nav/views)
   → src/components/SectionRenderer.astro  (section id → component)
@@ -18,10 +18,10 @@ content/**/*.json
 ## Working Rules
 
 - Keep changes surgical and aligned with the existing Astro/component style.
-- Change public copy in `content/`, never in components.
+- Change public copy in `content/pages/`, never in components.
 - Update `src/schemas/` first when adding or changing a JSON field — types are
   derived from the schema (`z.infer`), so the schema is the single source of truth.
-- Keep route/section order in `content/site.json`; route files stay generic.
+- Keep route/section order in `content/pages/00_site.json`; route files stay generic.
 - Run `npm run build` before handoff after any code or content change. The build
   fails fast on schema violations and broken section/view wiring.
 - Batch work: see `docs/task-runner.md`; create a per-batch `TASKS.md` queue and invoke the `task-runner` skill (`.cursor/skills/task-runner/SKILL.md`). No `TASKS.md` at the root means no batch is active.
@@ -40,7 +40,7 @@ Legacy paths (`/experience`, `/research`, `/recognition`, `/vision`,
 browser to `/#{anchor}` on `/`. The anchor is the page **id** (e.g.
 `src/pages/experience.astro` → `<ViewRedirect anchor="experience" />`).
 
-Routing and view wiring live in `content/site.json → pages`:
+Routing and view wiring live in `content/pages/00_site.json → pages`:
 
 - **`home.sections`** — full DOM order on `/` (each section id appears once).
 - **`pages[].viewSections`** — sections grouped under each nav item (scroll target + spy).
@@ -67,27 +67,27 @@ Section contracts: `docs/specification.md` and `docs/page-briefs/`.
 /#experience   Experience view  → experience
 /#research     Research view    → publications, conferences, speakers
 /#recognition  Recognition view → awards, kaggle, education
-/#vision       Vision view      → vision-programs, vision-impact
+/#vision       Vision view      → vision-programs
 /#contact      Contact view     → contact
 /experience … /contact         → ViewRedirect stubs → /#{anchor}
 ```
 
 | View            | Page id       | Nav label   | `viewSections`                      |
 | --------------- | ------------- | ----------- | ----------------------------------- |
-| `/` (default)   | `home`        | About       | hero, thirukural, leadership        |
+| `/` (default)   | `home`        | About       | about                               |
 | `/#experience`  | `experience`  | Experience  | experience                          |
 | `/#research`    | `research`    | Research    | publications, conferences, speakers |
 | `/#recognition` | `recognition` | Recognition | awards, kaggle, education           |
-| `/#vision`      | `vision`      | Vision      | vision-programs, vision-impact      |
+| `/#vision`      | `vision`      | Vision      | vision-programs                     |
 | `/#contact`     | `contact`     | Contact     | contact                             |
 
-**Full home DOM order** (13 sections): hero → thirukural → leadership →
+**Full home DOM order** (12 sections): hero → thirukural → about →
 experience →
 publications → conferences → speakers → awards → kaggle → education →
-vision-programs → vision-impact → contact.
+vision-programs → contact.
 
 **Résumé PDF:** `public/assets/resume/balaji-selvaraj-resume.pdf` ships as a static asset
-(direct-linkable) but is **not** wired in header nav or `content/site.json`.
+(direct-linkable) but is **not** wired in header nav or `content/pages/00_site.json`.
 
 Each section id appears in exactly one `viewSections` group (no duplication across nav
 buttons). `content.ts` fails the build if a home section is unassigned or a

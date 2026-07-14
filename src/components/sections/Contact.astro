@@ -4,7 +4,7 @@ import CardMark from '@components/ui/CardMark.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Icon from '@components/ui/Icon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
-import { profile } from '@lib/content';
+import { profile, site } from '@lib/content';
 import type { z } from 'zod';
 import { contactTypeSchema } from '@schemas';
 
@@ -18,11 +18,11 @@ const isExternal = (href: string) => href.startsWith('http');
 
 // Type-safe map of contact types to action labels.
 const actionLabelMap: Record<ContactType, string> = {
-  email: 'Send email',
-  linkedin: 'View profile',
-  github: 'View profile',
-  kaggle: 'View profile',
-  location: 'View location',
+  email: site.ui.contact.actions.email,
+  linkedin: site.ui.contact.actions.linkedin,
+  github: site.ui.contact.actions.github,
+  kaggle: site.ui.contact.actions.kaggle,
+  location: site.ui.contact.actions.location,
 };
 
 const actionLabel = (type: ContactType): string => actionLabelMap[type];
@@ -101,7 +101,9 @@ const actionLabel = (type: ContactType): string => actionLabelMap[type];
                   {actionLabel(c.type)}
                   <Icon name="arrow-right" size="sm" />
                   {external && (
-                    <span class="visually-hidden"> (opens in new window)</span>
+                    <span class="visually-hidden">
+                      {site.ui.common.opensInNewWindow}
+                    </span>
                   )}
                 </span>
               </a>

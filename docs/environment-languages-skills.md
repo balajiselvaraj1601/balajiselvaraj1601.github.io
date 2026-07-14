@@ -19,7 +19,7 @@ This covers **two layers**:
 | **TypeScript** (`.ts`)        | `src/schemas/`, `src/lib/content.ts`, `src/scripts/*.ts`                   | Schema contracts, content loading, client-side nav/theme/save-page        |
 | **JavaScript (ESM)** (`.mjs`) | `astro.config.mjs`, `scripts/*.mjs`, `.cursor/scripts/smoke-localhost.mjs` | Build config, icon tooling, Playwright smoke tests                        |
 | **CSS**                       | `src/styles/global.css`                                                    | Hand-rolled design tokens and layout (no Tailwind/framework)              |
-| **JSON**                      | `content/**/*.json`, `content/site.json`                                   | **Single source of truth for all public copy** and route/section wiring   |
+| **JSON**                      | `content/pages/*.json`                                                     | **Single source of truth for all public copy** and route/section wiring   |
 | **Bash**                      | `.cursor/hooks/*.sh`, `.cursor/scripts/task-runner-*.sh`                   | Task-runner automation, Cursor hook glue                                  |
 | **Python**                    | `scripts/icons/process_logos.py`                                           | Logo normalization/trim pipeline (Pillow + Playwright)                    |
 | **YAML**                      | `.github/workflows/deploy.yml`                                             | CI build + GitHub Pages deploy                                            |
@@ -94,7 +94,7 @@ flowchart TB
 - Component frontmatter: props, imports, scoped `<style>` blocks.
 - Static data loading at build time (`import` from `@lib/content`, not runtime fetches).
 - Minimal hydration — prefer server-rendered HTML plus small client scripts in `src/scripts/`.
-- Section wiring via `SectionRenderer.astro` + `content/site.json` (`home.sections`, `viewSections`).
+- Section wiring via `SectionRenderer.astro` + `content/pages/00_site.json` (`home.sections`, `viewSections`).
 
 **TypeScript 5.9** (extends `astro/tsconfigs/strict`)
 
@@ -141,10 +141,10 @@ flowchart TB
 
 ### SEO, sitemap, and metadata
 
-**Canonical URLs and OG tags** (`BaseHead.astro`, `content/site.json` → `seo`)
+**Canonical URLs and OG tags** (`BaseHead.astro`, `content/pages/00_site.json` → `seo`)
 
 - Single source of truth: `SITE_URL` in `astro.config.mjs`; keep `public/robots.txt` in sync.
-- JSON-LD `Person` schema derived from `content/person/profile.json`.
+- JSON-LD `Person` schema derived from `content/pages/01_about.json` and `content/pages/06_contact.json`.
 - Open Graph and Twitter card meta; absolute OG image URLs from `Astro.site`.
 
 **@astrojs/sitemap 3.6.0** (pinned — do not upgrade on Astro 4)
@@ -179,14 +179,14 @@ flowchart TB
 
 ### Cross-stack skill clusters
 
-| Task                        | Stack skills involved                                            |
-| --------------------------- | ---------------------------------------------------------------- |
-| Add a content field         | Zod → JSON → Astro component → optional CSS                      |
-| Add a nav view/section      | `site.json` wiring + `SectionRenderer` + `content.ts` validation |
-| Change theme/layout tokens  | `global.css` + component `<style>` blocks                        |
-| Touch head/meta/SEO         | `BaseHead.astro` + `content/site.json` → `seo` + `SITE_URL`      |
-| Fix deploy/CI               | GitHub Actions YAML + `astro.config.mjs` + `robots.txt`          |
-| Regressions after UI change | Playwright smoke + manual a11y spot-check                        |
+| Task                        | Stack skills involved                                                |
+| --------------------------- | -------------------------------------------------------------------- |
+| Add a content field         | Zod → JSON → Astro component → optional CSS                          |
+| Add a nav view/section      | `site.json` wiring + `SectionRenderer` + `content.ts` validation     |
+| Change theme/layout tokens  | `global.css` + component `<style>` blocks                            |
+| Touch head/meta/SEO         | `BaseHead.astro` + `content/pages/00_site.json` → `seo` + `SITE_URL` |
+| Fix deploy/CI               | GitHub Actions YAML + `astro.config.mjs` + `robots.txt`              |
+| Regressions after UI change | Playwright smoke + manual a11y spot-check                            |
 
 ---
 
@@ -214,7 +214,7 @@ Grouped by how much of day-to-day work each skill unlocks.
 
 2. **Zod schema-first design** — add/change JSON fields in schema first, then content, then components. Build fails fast on mismatch (`npm run build`).
 
-3. **JSON content editing** — all public copy lives under `content/`; route/section order in `content/site.json`. No copy in components.
+3. **JSON content editing** — all public copy lives under `content/pages/`; route/section order in `content/pages/00_site.json`. No copy in components.
 
 4. **Astro 4 static site model** — components, layouts, minimal client JS, section map in `SectionRenderer.astro`.
 

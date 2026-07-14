@@ -3,7 +3,7 @@
 The canonical reference for **what an experience role and its nested projects must contain, and in
 what format**, in the site's most information-dense section:
 
-- **Experience** — `content/work/experience.json` → `Experience.astro`
+- **Experience** — `content/pages/02_experience.json` → `Experience.astro`
 
 Use it when adding or editing a role or nested project so every item is complete, comparable, and
 easy for anyone to analyze at a glance.

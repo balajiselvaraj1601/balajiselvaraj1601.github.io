@@ -68,7 +68,7 @@ portfolio_site/
 | `astro.config.mjs`                        | `SITE_URL`, `base: '/'`, sitemap integration                                  |
 | `src/schemas/`                            | Content shape contracts (SSOT for types)                                      |
 | `src/lib/content.ts`                      | Imports JSON, validates, exports typed data                                   |
-| `content/site.json`                       | Page/route definitions (`pages`), section visibility, SEO, résumé path        |
+| `content/pages/00_site.json`              | Page/route definitions (`pages`), section visibility, SEO, résumé path        |
 | `src/pages/index.astro`                   | Home route — renders all sections via `SectionRenderer` with scroll-spy views |
 | `src/pages/{view}.astro` (stubs)          | Legacy paths redirect to `/#anchor` via `ViewRedirect` (no section rendering) |
 | `src/components/SectionRenderer.astro`    | Section id → component map (SSOT); renders an ordered list of section ids     |

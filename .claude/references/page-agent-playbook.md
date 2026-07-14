@@ -28,7 +28,7 @@ Follow phases sequentially; do not reorder operations.
 | P11 | **State file.** Write phase outputs to `.cursor/page-team.state.json` when orchestrator requests.                                                                                                                                                                                                                          |
 | P12 | **One objection max.** In Accept, either accept all decisions or raise exactly one blocking objection with evidence.                                                                                                                                                                                                       |
 | P13 | **Eyebrows per contract.** Eyebrow presence exactly per contract §4 table — never restate or reinterpret the policy.                                                                                                                                                                                                       |
-| P14 | **Shelved stays shelved.** Never enable, restyle, or audit shelved components (listed in your Appendix A). Flag accidental re-enabling (`visible: true` in `content/site.json`) as a P1 `structure` finding.                                                                                                               |
+| P14 | **Shelved stays shelved.** Never enable, restyle, or audit shelved components (listed in your Appendix A). Flag accidental re-enabling (`visible: true` in `content/pages/00_site.json`) as a P1 `structure` finding.                                                                                                    |
 
 ---
 

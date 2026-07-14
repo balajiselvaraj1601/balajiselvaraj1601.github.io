@@ -7,7 +7,7 @@ import CompetitionBlock from '@components/cards/competition/CompetitionBlock.ast
 import { competitionIcon, resolveIcon } from '@lib/icons';
 import type { KaggleCompetition } from '@schemas';
 import { medalClass } from '@lib/recognition';
-import { logoSrc } from '@lib/content';
+import { logoSrc, site } from '@lib/content';
 
 type Props = KaggleCompetition;
 
@@ -36,6 +36,8 @@ const medalCls = medalClass(medal);
 // Slugs for summary/eval block icons (logo_* → MarkEmblem; Icon fallback per BC5).
 const summarySlug = 'logo_metric_kaggle_summary';
 const evalSlug = 'logo_metric_kaggle_evaluation';
+const { common, recognition } = site.ui;
+const { kaggle: kaggleUi } = recognition;
 ---
 
 <RecogCardShell
@@ -68,7 +70,7 @@ const evalSlug = 'logo_metric_kaggle_evaluation';
   </Fragment>
   <h3 slot="title" class="recog-title recog-clamp" style="--clamp: 2">
     <a href={url} target="_blank" rel="noopener noreferrer"
-      >{name}<span class="visually-hidden"> (opens in new window)</span></a
+      >{name}<span class="visually-hidden">{common.opensInNewWindow}</span></a
     >
   </h3>
 
@@ -86,7 +88,7 @@ const evalSlug = 'logo_metric_kaggle_evaluation';
       <CompetitionBlock
         slug={summarySlug}
         fallbackIcon="target"
-        label="Summary"
+        label={kaggleUi.summaryLabel}
         clamp={3}
         body={summary}
       />
@@ -99,7 +101,7 @@ const evalSlug = 'logo_metric_kaggle_evaluation';
         <CompetitionBlock
           slug={evalSlug}
           fallbackIcon="pulse"
-          label="Evaluation Metric"
+          label={kaggleUi.evaluationMetricLabel}
           clamp={2}
           body={evaluationMetric}
           isEval

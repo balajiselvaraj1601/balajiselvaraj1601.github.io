@@ -39,7 +39,7 @@ per-file résumé source).
 - **Kaggle** uses the compact list (`kaggle_compact` in the résumé). The raw
   per-competition `kaggle` list is intentionally dropped; don't reintroduce it.
 - **One definition.** Organization names/URLs live once in
-  `content/entities.json` and are referenced by slug — never re-typed per section.
+  `content/pages/99_entities.json` and are referenced by slug — never re-typed per section.
 
 ## When authoring new content
 

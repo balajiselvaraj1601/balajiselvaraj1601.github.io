@@ -5,11 +5,11 @@
 
 ## About view (`viewSections`)
 
-| Item (section id) | Source                                                              | Question                                      | Weight |
-| ----------------- | ------------------------------------------------------------------- | --------------------------------------------- | ------ |
-| `hero`            | `content/person/profile.json`                                       | What is this?                                 | heavy  |
-| `thirukural`      | `content/person/profile.json` (`heroQuote`)                         | What grounds it?                              | light  |
-| `about`           | `content/person/profile.json`, `content/person/collaborations.json` | Who are they, and why trust their leadership? | heavy  |
+| Item (section id) | Source                                      | Question                                      | Weight |
+| ----------------- | ------------------------------------------- | --------------------------------------------- | ------ |
+| `hero`            | `content/pages/01_about.json`               | What is this?                                 | heavy  |
+| `thirukural`      | `content/pages/01_about.json` (`heroQuote`) | What grounds it?                              | light  |
+| `about`           | `content/pages/01_about.json`               | Who are they, and why trust their leadership? | heavy  |
 
 The About group opens the page: hero and Thirukural couplet share a `HeroLanding` wrapper
 (`#hero-landing`) that forms the **hero band** — it ends flush above the about section.
@@ -44,4 +44,4 @@ visible; nav buttons scroll to a view's first section.
 `vision-programs` _(Vision)_ →
 `contact` _(Contact)_
 
-Each nav button maps to exactly one view; see `content/site.json → pages[].viewSections`.
+Each nav button maps to exactly one view; see `content/pages/00_site.json → pages[].viewSections`.

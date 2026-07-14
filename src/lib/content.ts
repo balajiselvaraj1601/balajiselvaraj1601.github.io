@@ -8,31 +8,24 @@ import { SECTION_COMPONENT_ID_SET } from './section-ids';
 import { HERO_DOT_ID, HOME_PAGE_ID, viewHash } from './views';
 import {
   siteSchema,
-  profileSchema,
-  visionBoardSchema,
-  experienceSchema,
-  educationSchema,
-  awardsSchema,
-  linkListSchema,
-  speakersSchema,
-  kaggleSchema,
-  collaborationsSchema,
+  aboutPageSchema,
+  contactPageContentSchema,
+  experiencePageSchema,
+  recognitionPageSchema,
+  researchPageSchema,
+  visionPageSchema,
   entitiesSchema,
 } from '@schemas';
 import type { VisionMark } from '@schemas';
 
-import siteRaw from '@content/site.json';
-import profileRaw from '@content/person/profile.json';
-import collaborationsRaw from '@content/person/collaborations.json';
-import visionBoardRaw from '@content/work/vision-board.json';
-import experienceRaw from '@content/work/experience.json';
-import publicationsRaw from '@content/research/publications.json';
-import conferencesRaw from '@content/research/conferences.json';
-import speakersRaw from '@content/research/speakers.json';
-import educationRaw from '@content/recognition/education.json';
-import awardsRaw from '@content/recognition/awards.json';
-import kaggleRaw from '@content/recognition/kaggle.json';
-import entitiesRaw from '@content/entities.json';
+import siteRaw from '@content/pages/00_site.json';
+import aboutPageRaw from '@content/pages/01_about.json';
+import experiencePageRaw from '@content/pages/02_experience.json';
+import researchPageRaw from '@content/pages/03_research.json';
+import recognitionPageRaw from '@content/pages/04_recognition.json';
+import visionPageRaw from '@content/pages/05_vision.json';
+import contactPageRaw from '@content/pages/06_contact.json';
+import entitiesRaw from '@content/pages/99_entities.json';
 
 function load<T extends z.ZodTypeAny>(
   name: string,
@@ -49,46 +42,54 @@ function load<T extends z.ZodTypeAny>(
   return result.data;
 }
 
-export const site = load('site.json', siteSchema, siteRaw);
-export const profile = load('person/profile.json', profileSchema, profileRaw);
-export const visionBoard = load(
-  'work/vision-board.json',
-  visionBoardSchema,
-  visionBoardRaw
+export const site = load('pages/00_site.json', siteSchema, siteRaw);
+export const aboutPage = load(
+  'pages/01_about.json',
+  aboutPageSchema,
+  aboutPageRaw
 );
 export const experience = load(
-  'work/experience.json',
-  experienceSchema,
-  experienceRaw
+  'pages/02_experience.json',
+  experiencePageSchema,
+  experiencePageRaw
 );
-export const education = load(
-  'recognition/education.json',
-  educationSchema,
-  educationRaw
+export const researchPage = load(
+  'pages/03_research.json',
+  researchPageSchema,
+  researchPageRaw
 );
-export const awards = load('recognition/awards.json', awardsSchema, awardsRaw);
-export const publications = load(
-  'research/publications.json',
-  linkListSchema,
-  publicationsRaw
+export const recognitionPage = load(
+  'pages/04_recognition.json',
+  recognitionPageSchema,
+  recognitionPageRaw
 );
-export const conferences = load(
-  'research/conferences.json',
-  linkListSchema,
-  conferencesRaw
+export const visionBoard = load(
+  'pages/05_vision.json',
+  visionPageSchema,
+  visionPageRaw
 );
-export const speakers = load(
-  'research/speakers.json',
-  speakersSchema,
-  speakersRaw
+export const contactPageContent = load(
+  'pages/06_contact.json',
+  contactPageContentSchema,
+  contactPageRaw
 );
-export const kaggle = load('recognition/kaggle.json', kaggleSchema, kaggleRaw);
-export const collaborations = load(
-  'person/collaborations.json',
-  collaborationsSchema,
-  collaborationsRaw
+export const entities = load(
+  'pages/99_entities.json',
+  entitiesSchema,
+  entitiesRaw
 );
-export const entities = load('entities.json', entitiesSchema, entitiesRaw);
+
+const { collaborations: aboutCollaborations, ...aboutProfile } = aboutPage;
+
+/** Compatibility export for components that render hero, about, and contact copy. */
+export const profile = { ...aboutProfile, ...contactPageContent };
+export const collaborations = aboutCollaborations;
+export const publications = researchPage.publications;
+export const conferences = researchPage.conferences;
+export const speakers = researchPage.speakers;
+export const awards = recognitionPage.awards;
+export const kaggle = recognitionPage.kaggle;
+export const education = recognitionPage.education;
 
 /** Resolve a canonical entity URL from a content slug (or logo slug). */
 export function getEntityUrl(slug?: string): string | undefined {
@@ -334,54 +335,54 @@ function refCheck<T>(check: ContentRefCheck<T>): ContentRefCheck<unknown> {
 
 const contentRefChecks = [
   refCheck({
-    context: 'work/experience.json',
+    context: 'pages/02_experience.json',
     items: experience.roles,
     getEntity: (role) => role.entity,
   }),
   refCheck({
-    context: 'person/collaborations.json',
+    context: 'pages/01_about.json collaborations',
     items: collaborations.items,
     getEntity: (item) => item.entity,
     getLogos: (item) => [item.logo],
   }),
   refCheck({
-    context: 'recognition/education.json',
+    context: 'pages/04_recognition.json education',
     items: education.records,
     getEntity: (record) => record.entity,
   }),
   refCheck({
-    context: 'work/vision-board.json programs',
+    context: 'pages/05_vision.json programs',
     items: visionBoard.programs ?? [],
     getEntity: (program) => program.entity,
     getLogos: (program) => [logoMarkAsset(program.badge)],
   }),
   refCheck({
-    context: 'work/vision-board.json groups',
+    context: 'pages/05_vision.json groups',
     items: visionBoard.groups,
     getLogos: (group) => [group.lead, ...group.marks].map(logoMarkAsset),
   }),
   refCheck({
-    context: 'work/vision-board.json orgCards',
+    context: 'pages/05_vision.json orgCards',
     items: visionBoard.orgCards ?? [],
     getLogos: (card) => [logoMarkAsset(card.mark)],
   }),
   refCheck({
-    context: 'research/publications.json',
+    context: 'pages/03_research.json publications',
     items: publications.items,
     getLogos: (item) => [item.logo],
   }),
   refCheck({
-    context: 'research/conferences.json',
+    context: 'pages/03_research.json conferences',
     items: conferences.items,
     getLogos: (item) => [item.logo],
   }),
   refCheck({
-    context: 'research/speakers.json',
+    context: 'pages/03_research.json speakers',
     items: speakers.items,
     getLogos: (item) => [item.logo],
   }),
   refCheck({
-    context: 'recognition/kaggle.json',
+    context: 'pages/04_recognition.json kaggle',
     items: kaggle.items,
     getLogos: (item) => [item.logo],
   }),

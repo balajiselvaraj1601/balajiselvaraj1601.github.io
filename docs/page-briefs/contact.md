@@ -5,9 +5,9 @@
 
 ## Items
 
-| Item (section id) | Source                                                              | Question               | Weight |
-| ----------------- | ------------------------------------------------------------------- | ---------------------- | ------ |
-| `contact`         | `content/person/profile.json`, `content/recognition/education.json` | What should I do next? | heavy  |
+| Item (section id) | Source                          | Question               | Weight |
+| ----------------- | ------------------------------- | ---------------------- | ------ |
+| `contact`         | `content/pages/06_contact.json` | What should I do next? | heavy  |
 
 ## Structure
 

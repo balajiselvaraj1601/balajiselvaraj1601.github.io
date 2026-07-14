@@ -33,10 +33,11 @@ skill or a new file as a second authority. Cite the owning file below and read i
 | `docs/seo.md`                              | The full SEO contract — the human spec every change is checked against           |
 | `astro.config.mjs` → `SITE_URL`            | The single source of truth for all canonical / OG / sitemap absolute URLs        |
 | `astro.config.mjs` → `REDIRECT_STUB_PATHS` | The sitemap exclusion list (legacy `noindex` redirect stubs kept out of sitemap) |
-| `content/site.json` → `seo`                | `title`, `description`, `keywords`, `ogImage` path, `twitterCard`                |
+| `content/pages/00_site.json` → `seo`       | `title`, `description`, `keywords`, `ogImage` path, `twitterCard`                |
 | `src/components/chrome/BaseHead.astro`     | The renderer — emits every meta/OG/Twitter tag and the JSON-LD `<script>`        |
 | `public/robots.txt`                        | `Allow`/`Disallow` + the hand-written `Sitemap:` URL line                        |
-| `content/person/profile.json`              | The JSON-LD `Person` source (name, title, `contact[]`, location)                 |
+| `content/pages/01_about.json`              | JSON-LD `Person` identity source (name, title)                                   |
+| `content/pages/06_contact.json`            | JSON-LD `Person` contact source (`contact[]`, location)                          |
 
 Name the file; never re-hardcode a URL, keyword, or blob that already lives in one of these.
 
@@ -44,7 +45,7 @@ Name the file; never re-hardcode a URL, keyword, or blob that already lives in o
 
 > **The renderer derives; the hand-synced files must be pushed.**
 > `BaseHead.astro` computes canonical + OG + Twitter URLs and the JSON-LD Person
-> automatically from `Astro.site` (i.e. `SITE_URL`), `site.seo`, and `profile.json`
+> automatically from `Astro.site` (i.e. `SITE_URL`), `site.seo`, and numbered page JSON
 > — those are correct by construction. The **only** places that can drift are the
 > ones no build step touches: the `Sitemap:` line in `public/robots.txt`, an
 > optional `public/CNAME`, and `REDIRECT_STUB_PATHS`. Every SEO change reduces to:
@@ -54,10 +55,10 @@ Name the file; never re-hardcode a URL, keyword, or blob that already lives in o
 
 | Concern                            | Owner (edit here)                          | Auto-derived by build?                    |
 | ---------------------------------- | ------------------------------------------ | ----------------------------------------- |
-| `<title>` / description / keywords | `content/site.json` → `seo`                | Yes — read by `BaseHead.astro`            |
+| `<title>` / description / keywords | `content/pages/00_site.json` → `seo`       | Yes — read by `BaseHead.astro`            |
 | Canonical + `og:url`               | `SITE_URL` (`astro.config.mjs`)            | Yes — `new URL(path, Astro.site)`         |
 | `og:image` / `twitter:image` URL   | `site.seo.ogImage` + `SITE_URL`            | Yes — resolved to absolute in `BaseHead`  |
-| JSON-LD `Person`                   | `profile.json` + `site.seo.keywords`       | Yes — assembled in `BaseHead` frontmatter |
+| JSON-LD `Person`                   | `01_about.json` + `06_contact.json` + `site.seo.keywords` | Yes — assembled in `BaseHead` frontmatter |
 | Sitemap contents                   | `@astrojs/sitemap` + `REDIRECT_STUB_PATHS` | Yes — **do not** hand-write sitemap XML   |
 | `robots.txt` `Sitemap:` URL        | `public/robots.txt`                        | **No — hand-synced to SITE_URL**          |
 | Custom-domain `CNAME`              | `public/CNAME` (absent by default)         | **No — hand-created on domain move**      |

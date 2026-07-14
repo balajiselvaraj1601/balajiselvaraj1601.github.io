@@ -18,6 +18,8 @@ const items = [...kaggle.items].sort(
 const total = items.length;
 const silver = medalCount(items, 'Silver');
 const bronze = medalCount(items, 'Bronze');
+const { common, recognition } = site.ui;
+const { kaggle: kaggleUi } = recognition;
 ---
 
 <Section
@@ -32,27 +34,27 @@ const bronze = medalCount(items, 'Bronze');
       class="blob--competitions"
       icon="kaggle"
       count={total}
-      label="Competitions"
+      label={kaggleUi.competitionsLabel}
     />
     <RecogTile
       class="blob--silver"
       icon="trophy"
       markSlug="logo_trophy_badge"
       count={silver}
-      label="Silver"
+      label={kaggleUi.silverLabel}
     />
     <RecogTile
       class="blob--bronze"
       icon="trophy"
       markSlug="logo_trophy_badge"
       count={bronze}
-      label="Bronze"
+      label={kaggleUi.bronzeLabel}
     />
     <RecogTile
       class="blob--rank"
       icon="target"
       count={kaggle.rank}
-      label="Global Rank"
+      label={kaggleUi.globalRankLabel}
     >
       {
         kaggle.rankDenominator && (
@@ -63,13 +65,13 @@ const bronze = medalCount(items, 'Bronze');
   </div>
 
   <RecogControls
-    countLabel="Competitions"
+    countLabel={kaggleUi.competitionsLabel}
     total={total}
     countDataAttr="data-kaggle-count"
     searchDataAttr="data-kaggle-search"
-    searchPlaceholder="Search competitions…"
-    searchAriaLabel="Search competitions by name, domain, or tag"
-    filterGroupLabel="Filter by medal"
+    searchPlaceholder={kaggleUi.searchPlaceholder}
+    searchAriaLabel={kaggleUi.searchAriaLabel}
+    filterGroupLabel={kaggleUi.filterGroupLabel}
   >
     <a
       slot="tools"
@@ -78,7 +80,7 @@ const bronze = medalCount(items, 'Bronze');
       target="_blank"
       rel="noopener noreferrer"
     >
-      View Kaggle profile
+      {kaggleUi.profileLinkLabel}
     </a>
     <button
       type="button"
@@ -86,7 +88,7 @@ const bronze = medalCount(items, 'Bronze');
       data-filter="all"
       aria-pressed="true"
     >
-      All
+      {common.all}
     </button>
     {
       MEDALS.map((m) => (
@@ -108,7 +110,7 @@ const bronze = medalCount(items, 'Bronze');
   </div>
 
   <p class="recog-empty" data-kaggle-empty hidden>
-    No competitions match your search.
+    {kaggleUi.emptyState}
   </p>
 </Section>
 

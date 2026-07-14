@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-07-14
+
+Awards filter label update.
+
+### Changed
+
+- Awards featured filter chip label: Leadership → Default
+
 ## [1.6.0] - 2026-07-09
 
 About view restructure, Thirukural alignment, and recognition filter updates.
@@ -201,7 +209,9 @@ First production release of the Balaji Selvaraj portfolio site.
 - Education stat tiles use Recognition gold hairline grid (aligned with Kaggle summary pattern)
 - Vision board IDEA lane uses `silver` accent for medal/recognition semantics
 
-[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.6.1...HEAD
+[1.6.1]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.6.0...v1.6.1
+[1.6.0]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.5.1...v1.6.0
 [1.2.0]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/balajiselvaraj1601/portfolio_site/compare/v1.0.0...v1.0.1

@@ -220,7 +220,7 @@
         "searchPlaceholder": "Search awards…",
         "searchAriaLabel": "Search awards by title, nominator, or reason",
         "filterGroupLabel": "Filter by nominator level",
-        "featuredFilter": "Leadership",
+        "featuredFilter": "Default",
         "nominatorLabel": "Nominator",
         "reasonLabel": "Reason",
         "dateLabel": "Date",

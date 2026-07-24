@@ -62,3 +62,8 @@ scripts/icons/.icon-stage/
 # Misplaced screenshot output from baseline/playwright scripts
 undefined/
 /row*.png
+
+# Claude skills live only in /home/engineer/agentspace/collection_skill.
+# Local .claude/skills entries are machine-local symlinks — do not commit them.
+.claude/skills/
+
